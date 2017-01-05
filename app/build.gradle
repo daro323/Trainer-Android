@@ -1,4 +1,10 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+
+kapt {
+  generateStubs = true
+}
 
 android {
   compileSdkVersion 25
@@ -17,6 +23,9 @@ android {
       proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
     }
   }
+  sourceSets {
+    main.java.srcDirs += 'src/main/kotlin'
+  }
 }
 
 dependencies {
@@ -33,9 +42,8 @@ dependencies {
   compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 
   // Dagger 2
-  annotationProcessor "com.google.dagger:dagger-compiler:$dagger_version"
   compile "com.google.dagger:dagger:$dagger_version"
-  provided 'javax.annotation:jsr250-api:1.0'
+  kapt "com.google.dagger:dagger-compiler:$dagger_version"
 
   // Rx
   compile 'io.reactivex:rxandroid:1.2.1'
@@ -57,4 +65,7 @@ dependencies {
   testCompile "junit:junit:$junit_version"
   testCompile "org.powermock:powermock-module-junit4:$powermock_version"
   testCompile "org.powermock:powermock-api-mockito2:$powermock_version"
+}
+repositories {
+  mavenCentral()
 }

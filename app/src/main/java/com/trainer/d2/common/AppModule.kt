@@ -3,6 +3,7 @@ package com.trainer.d2.common
 import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
+import com.google.gson.Gson
 import com.trainer.base.BaseApplication
 import com.trainer.d2.qualifier.ForApplication
 import com.trainer.d2.scope.ApplicationScope
@@ -27,5 +28,10 @@ class AppModule(private val app: BaseApplication) {
   @Provides @ApplicationScope
   fun provideSharedPreferences(application: Application): SharedPreferences {
     return application.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+  }
+
+  @Provides @ApplicationScope
+  fun provideGson(): Gson {
+    return Gson()
   }
 }
