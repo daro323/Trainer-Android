@@ -26,6 +26,9 @@ android {
   sourceSets {
     main.java.srcDirs += 'src/main/kotlin'
   }
+  packagingOptions {
+    exclude 'META-INF/LICENSE'
+  }
 }
 
 dependencies {
@@ -58,8 +61,8 @@ dependencies {
   // Threeten
   compile "com.jakewharton.threetenabp:threetenabp:$threeten_version"
 
-  // Gson
-  compile "com.google.code.gson:gson:$gson_version"
+  // Jackson
+  compile "com.fasterxml.jackson.module:jackson-module-kotlin:2.8.4"
 
   // TESTING
   testCompile "junit:junit:$junit_version"

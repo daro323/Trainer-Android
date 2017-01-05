@@ -1,7 +1,7 @@
 package com.trainer.modules.training
 
 import android.content.SharedPreferences
-import com.google.gson.Gson
+import com.fasterxml.jackson.databind.ObjectMapper
 import com.trainer.d2.scope.ApplicationScope
 import com.trainer.extensions.saveString
 import javax.inject.Inject
@@ -11,19 +11,19 @@ import javax.inject.Inject
  */
 @ApplicationScope
 class TrainingRepository @Inject constructor(val sharedPrefs: SharedPreferences,
-                                             val gson: Gson) {
+                                             val mapper: ObjectMapper) {
 
-  fun getTrainingDay(name: String): TrainingDay {
-    val trainingDay = sharedPrefs.getString(name, null)
-    require(trainingDay != null) { "No Training day found for name= $name" }
+  fun getTrainingDay(name: Training): TrainingDay {
+    val trainingDayJson = sharedPrefs.getString(name.toString(), null)
+    require(trainingDayJson != null) { "No Training day found for name= $name" }
 
-    return gson.fromJson(trainingDay, TrainingDay::class.java)
+    return mapper.readValue(trainingDayJson, TrainingDay::class.java)
   }
 
   /**
    * Replaces currently stored Training day with the one from parameter.
    */
   fun saveTrainingDay(trainingDay: TrainingDay) {
-    sharedPrefs.saveString(trainingDay.name, gson.toJson(trainingDay))
+    sharedPrefs.saveString(trainingDay.name.toString(), mapper.writeValueAsString(trainingDay))
   }
 }

@@ -3,7 +3,11 @@ package com.trainer.d2.common
 import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
-import com.google.gson.Gson
+import com.fasterxml.jackson.annotation.JsonAutoDetect
+import com.fasterxml.jackson.annotation.PropertyAccessor
+import com.fasterxml.jackson.databind.DeserializationFeature
+import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.module.kotlin.registerKotlinModule
 import com.trainer.base.BaseApplication
 import com.trainer.d2.qualifier.ForApplication
 import com.trainer.d2.scope.ApplicationScope
@@ -30,8 +34,11 @@ class AppModule(private val app: BaseApplication) {
     return application.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
   }
 
-  @Provides @ApplicationScope
-  fun provideGson(): Gson {
-    return Gson()
+  @Provides
+  @ApplicationScope
+  internal fun provideJackson() = ObjectMapper().apply {
+    registerKotlinModule()
+    setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY)
+    configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
   }
 }
