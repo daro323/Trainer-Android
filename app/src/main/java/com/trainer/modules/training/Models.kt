@@ -18,7 +18,8 @@ enum class Training {
 
 data class TrainingDay(val name: Training,
                        val workout: Workout,
-                       val lastWorkout: Workout = Workout(emptyList()))
+                       val lastWorkout: Workout = Workout(emptyList()),
+                       val totalDone: Int = 0)
 
 data class Workout(val series: List<Series>)
 

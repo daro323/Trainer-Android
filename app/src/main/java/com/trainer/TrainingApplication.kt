@@ -12,7 +12,7 @@ import dagger.Component
  */
 class TrainingApplication : BaseApplication() {
 
-  override fun onCreateAppComponent(): AppComponent? {
+  override fun onCreateAppComponent(): AppComponent {
     return DaggerTrainingApplication_TrainingAppComponent.builder().appModule(AppModule(this)).build()
   }
 

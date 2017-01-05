@@ -25,9 +25,9 @@ abstract class BaseApplication : Application() {
   }
 
   private fun initDagger2() {
-    appComponent = onCreateAppComponent()!!
+    appComponent = onCreateAppComponent()
     appComponent.inject(this)
   }
 
-  protected abstract fun onCreateAppComponent(): AppComponent?
+  protected abstract fun onCreateAppComponent(): AppComponent
 }
