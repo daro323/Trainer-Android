@@ -1,0 +1,60 @@
+apply plugin: 'com.android.application'
+
+android {
+  compileSdkVersion 25
+  buildToolsVersion "25.0.0"
+  defaultConfig {
+    applicationId "com.trainer"
+    minSdkVersion 15
+    targetSdkVersion 25
+    versionCode 1
+    versionName "1.0"
+    testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+  }
+  buildTypes {
+    release {
+      minifyEnabled false
+      proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+    }
+  }
+}
+
+dependencies {
+  compile fileTree(dir: 'libs', include: ['*.jar'])
+  androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+    exclude group: 'com.android.support', module: 'support-annotations'
+  })
+
+  // Google
+  compile "com.android.support:appcompat-v7:$support_lib_version"
+  compile "com.android.support:support-annotations:$support_lib_version"
+
+  // Kotlin
+  compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+
+  // Dagger 2
+  annotationProcessor "com.google.dagger:dagger-compiler:$dagger_version"
+  compile "com.google.dagger:dagger:$dagger_version"
+  provided 'javax.annotation:jsr250-api:1.0'
+
+  // Rx
+  compile 'io.reactivex:rxandroid:1.2.1'
+  compile 'io.reactivex:rxjava:1.2.4'
+
+  // Picasso
+  compile "com.squareup.picasso:picasso:$picasso_version"
+
+  // Cupboard
+  compile "nl.qbusict:cupboard:$cupboard_version"
+
+  // Threeten
+  compile "com.jakewharton.threetenabp:threetenabp:$threeten_version"
+
+  // Gson
+  compile "com.google.code.gson:gson:$gson_version"
+
+  // TESTING
+  testCompile "junit:junit:$junit_version"
+  testCompile "org.powermock:powermock-module-junit4:$powermock_version"
+  testCompile "org.powermock:powermock-api-mockito2:$powermock_version"
+}
