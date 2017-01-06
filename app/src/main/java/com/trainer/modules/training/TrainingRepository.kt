@@ -13,7 +13,7 @@ import javax.inject.Inject
 class TrainingRepository @Inject constructor(val sharedPrefs: SharedPreferences,
                                              val mapper: ObjectMapper) {
 
-  fun getTrainingDay(name: Training): TrainingDay {
+  fun getTrainingDay(name: TrainingCategory): TrainingDay {
     val trainingDayJson = sharedPrefs.getString(name.toString(), null)
     require(trainingDayJson != null) { "No Training day found for name= $name" }
 
@@ -24,6 +24,6 @@ class TrainingRepository @Inject constructor(val sharedPrefs: SharedPreferences,
    * Replaces currently stored Training day with the one from parameter.
    */
   fun saveTrainingDay(trainingDay: TrainingDay) {
-    sharedPrefs.saveString(trainingDay.name.toString(), mapper.writeValueAsString(trainingDay))
+    sharedPrefs.saveString(trainingDay.category.toString(), mapper.writeValueAsString(trainingDay))
   }
 }
