@@ -7,7 +7,7 @@ import javax.inject.Inject
 /**
  * Created by dariusz on 06/01/17.
  */
-class WorkoutWizard @Inject constructor() {
+class WorkoutPresenter @Inject constructor() {
 
   lateinit var trainingDay: TrainingDay
   val workoutEventsSubject = BehaviorSubject.create<WorkoutEvent>()
@@ -15,4 +15,10 @@ class WorkoutWizard @Inject constructor() {
   fun onWorkoutEvent() = workoutEventsSubject.asObservable()
 
   fun getWorkoutList() = trainingDay.workout.series
+
+  fun getWorkoutTitle() = trainingDay.category.name
+
+  fun selectSerie(index: Int) {
+    // TODO
+  }
 }

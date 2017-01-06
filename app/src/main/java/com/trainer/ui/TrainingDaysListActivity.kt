@@ -3,11 +3,13 @@ package com.trainer.ui
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import com.trainer.R
 import com.trainer.base.BaseActivity
 import com.trainer.extensions.ioMain
+import com.trainer.extensions.startActivity
 import com.trainer.modules.training.TrainingManager
+import com.trainer.ui.model.TrainingDayItem
+import com.trainer.ui.model.TrainingDayItemHolder
 import com.trainer.utils.bindView
 import com.trainer.utils.typedviewholder.TypedViewHolderAdapter
 import rx.Observable
@@ -30,7 +32,8 @@ class TrainingDaysListActivity : BaseActivity(R.layout.activity_list) {
   }
 
   private val onTrainingDayClicked = { item: TrainingDayItem ->
-    Log.w("xxx", "onTrainingDayClicked not implemented yet, but clicked ${item.trainingCategory.name}")
+    trainingManager.startWorkout(item.trainingCategory)
+    startActivity<WorkoutListActivity>()
   }
 
   override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,6 +43,7 @@ class TrainingDaysListActivity : BaseActivity(R.layout.activity_list) {
 
   override fun onStart() {
     super.onStart()
+    title = getString(R.string.select_training)
     recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
     recyclerView.adapter = typedAdapter
     subscribeForTrainingDays()

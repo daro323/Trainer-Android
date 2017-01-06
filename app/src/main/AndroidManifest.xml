@@ -10,16 +10,15 @@
       android:supportsRtl="true"
       android:theme="@style/AppTheme">
     <activity
-        android:name=".ui.TrainingDaysListActivity"
-        android:label="@string/select_training">
+        android:name=".ui.TrainingDaysListActivity">
       <intent-filter>
         <action android:name="android.intent.action.MAIN"/>
 
         <category android:name="android.intent.category.LAUNCHER"/>
       </intent-filter>
     </activity>
-    <activity android:name=".ui.WorkoutListActivity">
-    </activity>
+    <activity android:name=".ui.WorkoutListActivity"/>
+    <activity android:name=".ui.SetActivity"/>
   </application>
 
 </manifest>
