@@ -30,11 +30,12 @@ class TrainingDayItemHolder(parent: ViewGroup,
   }
 
   lateinit var model: TrainingDayItem
+  private val container: ViewGroup by bindView(R.id.content_container)
   private val nameText: TextView by bindView(R.id.name)
   private val countText: TextView by bindView(R.id.count)
 
   init {
-    nameText.setOnClickListener { onClick(model) }
+    container.setOnClickListener { onClick(model) }
   }
 
   override fun bind(dataItem: TrainingDayItem) {
@@ -68,16 +69,16 @@ class SuperSetItemHolder(parent: ViewGroup,
     container.setOnClickListener { onClick(model) }
   }
 
-  // TODO: Fix meeee
   override fun bind(dataItem: SuperSetItem) {
+    model = dataItem
     require(dataItem.imageResList.size == dataItem.namesList.size) { "Super set adapter item invalid - list of images is not the same size as list of names!" }
-    dataItem.imageResList.forEachIndexed { imageRes, i ->
+    dataItem.imageResList.forEachIndexed { i, imageRes ->
       container.addView(createSetView(LayoutInflater.from(context), imageRes, dataItem.namesList[i], i == dataItem.imageResList.lastIndex))
     }
   }
 
   private fun createSetView(inflater: LayoutInflater, @DrawableRes setImageRes: Int, setName: String, isLast: Boolean): View {
-    val view = inflater.inflate(if(isLast) R.layout.set_item else R.layout.super_set_item, container, false)
+    val view = inflater.inflate(if (isLast) R.layout.set_item else R.layout.super_set_item, container, false)
     val image = view.findViewById(R.id.image) as ImageView
     val name = view.findViewById(R.id.name) as TextView
 

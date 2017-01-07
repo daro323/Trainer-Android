@@ -49,8 +49,12 @@ class WorkoutListActivity : BaseActivity(R.layout.activity_list) {
   }
 
   override fun onBackPressed() {
-    if(trainingManager.isWorkoutStarted()) showAlert()
-    else super.onBackPressed()
+    if (trainingManager.isWorkoutStarted()) {
+      showPopupAlert(R.string.confirm_workout_abort, {
+        trainingManager.abortWorkout()
+        finish()
+      })
+    } else super.onBackPressed()
   }
 
   private fun showWorkoutList(list: List<Series>) {
@@ -77,11 +81,6 @@ class WorkoutListActivity : BaseActivity(R.layout.activity_list) {
           namesList.add(exercise.name)
         }
     return SuperSetItem(imageResList, namesList)
-  }
-
-  private fun showAlert() {
-    // TODO
-    trainingManager.abortWorkout()
   }
 
   private fun openSerie(index: Int) {
