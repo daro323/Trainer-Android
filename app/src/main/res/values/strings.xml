@@ -6,4 +6,6 @@
 
   <string name="ok">OK</string>
   <string name="cancel">Cancel</string>
+
+  <string name="set_progress_text" formatted="false">%s / %s</string>
 </resources>

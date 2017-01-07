@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.GridLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:columnCount="2">
+
+  <TextView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_margin="12dp"
+      tools:text="List"
+      app:layout_gravity="top"/>
+
+  <TextView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_margin="12dp"
+      android:textAppearance="@style/TextAppearance.Trainer.List"
+      tools:text="This is a list item"
+      app:layout_gravity="fill_horizontal|center_vertical"/>
+
+  <TextView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_margin="12dp"
+      tools:text="Headline"
+      app:layout_gravity="top" />
+
+  <TextView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_margin="12dp"
+      android:textAppearance="@style/Textappearance.Trainer.Headline"
+      tools:text="This is a headline"
+      app:layout_gravity="fill_horizontal|center_vertical" />
+
+</android.support.v7.widget.GridLayout>
