@@ -11,15 +11,30 @@
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_margin="12dp"
-      tools:text="List"
+      tools:text="ListHeadline"
       app:layout_gravity="top"/>
 
   <TextView
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_margin="12dp"
-      android:textAppearance="@style/TextAppearance.Trainer.List"
-      tools:text="This is a list item"
+      android:textAppearance="@style/TextAppearance.Trainer.ListHeadline"
+      tools:text="List item headline"
+      app:layout_gravity="fill_horizontal|center_vertical"/>
+
+  <TextView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_margin="12dp"
+      tools:text="ListSubHeadline"
+      app:layout_gravity="top"/>
+
+  <TextView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_margin="12dp"
+      android:textAppearance="@style/TextAppearance.Trainer.ListSubHeadline"
+      tools:text="List item sub headline"
       app:layout_gravity="fill_horizontal|center_vertical"/>
 
   <TextView
@@ -34,6 +49,21 @@
       android:layout_height="wrap_content"
       android:layout_margin="12dp"
       android:textAppearance="@style/Textappearance.Trainer.Headline"
+      tools:text="This is a headline"
+      app:layout_gravity="fill_horizontal|center_vertical" />
+
+  <TextView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_margin="12dp"
+      tools:text="Label"
+      app:layout_gravity="top" />
+
+  <TextView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_margin="12dp"
+      android:textAppearance="@style/Textappearance.Trainer.Label"
       tools:text="This is a headline"
       app:layout_gravity="fill_horizontal|center_vertical" />
 

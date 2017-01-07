@@ -15,28 +15,41 @@
       tools:src="@drawable/ex_bench_press"/>
 
   <TextView
+      android:id="@+id/name_text"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_toRightOf="@id/exercise_image"
+      android:gravity="center"
+      android:textAppearance="@style/Textappearance.Trainer.Headline"
+      tools:text="Wyciskanie sztangi"/>
+
+  <TextView
       android:id="@+id/set_progress_text"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:layout_toRightOf="@id/exercise_image"
+      android:layout_alignBottom="@id/exercise_image"
+      android:layout_below="@id/name_text"
       android:gravity="center"
       android:text="@string/set_progress_text"
       android:textAppearance="@style/Textappearance.Trainer.Headline"
       tools:text="1 / 4 Series"/>
 
-  <TextView
-      android:id="@+id/name_text"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_below="@id/exercise_image"
-      android:paddingTop="@dimen/default_padding"
-      android:textAppearance="@style/Textappearance.Trainer.Headline"
-      tools:text="Wyciskanie sztangi"/>
-
   <include
       android:id="@+id/parenarea_divider"
       layout="@layout/divider_horizontal"
-      android:layout_below="@id/name_text"
+      android:layout_marginTop="@dimen/default_padding"
+      android:layout_marginBottom="@dimen/default_padding"
+      android:layout_below="@id/exercise_image"
       android:layout_width="match_parent"
       android:layout_height="1dp" />
+
+  <TextView
+      android:id="@+id/guidelines_label"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_below="@id/parenarea_divider"
+      android:textAppearance="@style/Textappearance.Trainer.Label"
+      tools:text="Wytyczne"/>
+
 </RelativeLayout>

@@ -24,7 +24,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingLeft="@dimen/list_item_padding"
-        android:textAppearance="@style/TextAppearance.Trainer.List"
+        android:textAppearance="@style/TextAppearance.Trainer.ListHeadline"
         tools:text="List Item number 1" />
   </LinearLayout>
 
