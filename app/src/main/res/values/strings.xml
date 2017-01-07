@@ -8,4 +8,8 @@
   <string name="cancel">Cancel</string>
 
   <string name="set_progress_text" formatted="false">%s / %s</string>
+  <string name="guidelines">Guidelines</string>
+  <string name="current">Curent</string>
+  <string name="last">Last</string>
+  <string name="submit">Submit</string>
 </resources>

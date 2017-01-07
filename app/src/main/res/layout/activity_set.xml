@@ -42,7 +42,7 @@
       android:layout_marginBottom="@dimen/default_padding"
       android:layout_below="@id/exercise_image"
       android:layout_width="match_parent"
-      android:layout_height="1dp" />
+      android:layout_height="1dp"/>
 
   <TextView
       android:id="@+id/guidelines_label"
@@ -50,6 +50,126 @@
       android:layout_height="wrap_content"
       android:layout_below="@id/parenarea_divider"
       android:textAppearance="@style/Textappearance.Trainer.Label"
-      tools:text="Wytyczne"/>
+      android:text="@string/guidelines"/>
+
+  <TextView
+      android:id="@+id/guidelines_text"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_below="@id/guidelines_label"
+      android:textAppearance="@style/Textappearance.Trainer.ContinuousText"
+      tools:text="- Brace your butt to prevent from farting\n- Don't cheat by not lifting at all"/>
+
+  <include
+      android:id="@+id/parenarea_divider2"
+      layout="@layout/divider_horizontal"
+      android:layout_marginTop="@dimen/default_padding"
+      android:layout_marginBottom="@dimen/default_padding"
+      android:layout_below="@id/guidelines_text"
+      android:layout_width="match_parent"
+      android:layout_height="1dp"/>
+
+  <View
+      android:id="@+id/sep"
+      android:layout_width="1dp"
+      android:layout_height="1dp"
+      android:layout_below="@id/parenarea_divider2"
+      android:layout_marginLeft="@dimen/default_padding"
+      android:layout_marginRight="@dimen/default_padding"
+      android:layout_alignTop="@id/parenarea_divider2"
+      android:layout_alignBottom="@id/parenarea_divider3"
+      android:layout_centerHorizontal="true"
+      android:background="@color/colorPrimaryDark"/>
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_below="@id/parenarea_divider2"
+      android:layout_toLeftOf="@id/sep"
+      android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/current_progress_label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:paddingBottom="@dimen/small_padding"
+        android:textAppearance="@style/Textappearance.Trainer.Label"
+        android:text="@string/current"/>
+
+    <TextView
+        android:id="@+id/current_progress_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:textAppearance="@style/Textappearance.Trainer.ContinuousText"
+        tools:text="10kg x 15\n12,5kg x 12\n__kg x 10"/>
+  </LinearLayout>
+
+  <LinearLayout
+      android:id="@+id/last_container"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_below="@id/parenarea_divider2"
+      android:layout_toRightOf="@id/sep"
+      android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/last_progress_label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:paddingBottom="@dimen/small_padding"
+        android:textAppearance="@style/Textappearance.Trainer.Label"
+        android:text="@string/last"/>
+
+    <TextView
+        android:id="@+id/last_progress_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:textAppearance="@style/Textappearance.Trainer.ContinuousText"
+        tools:text="10kg x 15\n12,5kg x 12\n15kg x 10"/>
+  </LinearLayout>
+
+  <include
+      android:id="@+id/parenarea_divider3"
+      layout="@layout/divider_horizontal"
+      android:layout_marginTop="@dimen/default_padding"
+      android:layout_marginBottom="@dimen/default_padding"
+      android:layout_below="@id/last_container"
+      android:layout_width="match_parent"
+      android:layout_height="1dp"/>
+
+  <View
+      android:id="@+id/sep2"
+      android:layout_width="0dp"
+      android:layout_height="0dp"
+      android:layout_below="@id/parenarea_divider3"
+      android:layout_marginLeft="@dimen/default_padding"
+      android:layout_marginRight="@dimen/default_padding"
+      android:layout_centerHorizontal="true"/>
+
+  <NumberPicker
+      android:id="@+id/weight_picker"
+      android:layout_width="wrap_content"
+      android:layout_height="46dp"
+      android:layout_below="@id/parenarea_divider3"
+      android:layout_toLeftOf="@id/sep2"/>
+
+  <NumberPicker
+      android:id="@+id/rep_picker"
+      android:layout_width="wrap_content"
+      android:layout_height="46dp"
+      android:layout_below="@id/parenarea_divider3"
+      android:layout_toRightOf="@id/sep2"/>
+
+  <Button
+      android:id="@+id/submit_button"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_below="@id/weight_picker"
+      android:layout_marginTop="@dimen/default_padding"
+      android:text="@string/submit"/>
 
 </RelativeLayout>

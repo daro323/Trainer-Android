@@ -67,4 +67,19 @@
       tools:text="This is a headline"
       app:layout_gravity="fill_horizontal|center_vertical" />
 
+  <TextView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_margin="12dp"
+      tools:text="ContinuousText"
+      app:layout_gravity="top" />
+
+  <TextView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_margin="12dp"
+      android:textAppearance="@style/Textappearance.Trainer.ContinuousText"
+      tools:text="This is a continuous text"
+      app:layout_gravity="fill_horizontal|center_vertical" />
+
 </android.support.v7.widget.GridLayout>
