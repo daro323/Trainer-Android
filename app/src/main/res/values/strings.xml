@@ -9,7 +9,12 @@
 
   <string name="set_progress_text" formatted="false">%s / %s</string>
   <string name="guidelines">Guidelines</string>
+  <string name="comments">Comments</string>
   <string name="current">Curent</string>
   <string name="last">Last</string>
   <string name="submit">Submit</string>
+  <string name="per_x">x</string>
+  <string name="reps">reps</string>
+  <string name="skip">Skip</string>
+  <string name="take_rest">Take a rest…</string>
 </resources>

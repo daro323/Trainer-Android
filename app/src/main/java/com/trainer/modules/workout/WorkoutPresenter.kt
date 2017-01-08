@@ -1,7 +1,7 @@
 package com.trainer.modules.workout
 
 import com.trainer.modules.training.TrainingDay
-import rx.subjects.BehaviorSubject
+import rx.subjects.PublishSubject
 import javax.inject.Inject
 
 /**
@@ -10,7 +10,7 @@ import javax.inject.Inject
 class WorkoutPresenter @Inject constructor() {
 
   lateinit var trainingDay: TrainingDay
-  val workoutEventsSubject = BehaviorSubject.create<WorkoutEvent>()
+  val workoutEventsSubject = PublishSubject.create<WorkoutEvent>()
 
   fun onWorkoutEvent() = workoutEventsSubject.asObservable()
 

@@ -3,6 +3,7 @@ package com.trainer.d2.common
 import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
+import android.os.Vibrator
 import com.fasterxml.jackson.annotation.JsonAutoDetect
 import com.fasterxml.jackson.annotation.PropertyAccessor
 import com.fasterxml.jackson.databind.DeserializationFeature
@@ -32,6 +33,11 @@ class AppModule(private val app: BaseApplication) {
   @Provides @ApplicationScope
   fun provideSharedPreferences(application: Application): SharedPreferences {
     return application.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+  }
+
+  @Provides @ApplicationScope
+  fun provideVibrator(application: Application): Vibrator {
+    return application.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
   }
 
   @Provides

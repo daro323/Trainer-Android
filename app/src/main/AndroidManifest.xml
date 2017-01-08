@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="com.trainer">
 
+  <uses-permission android:name="android.permission.VIBRATE" />
+
   <application
       android:name=".TrainingApplication"
       android:allowBackup="true"
@@ -10,15 +12,22 @@
       android:supportsRtl="true"
       android:theme="@style/AppTheme">
     <activity
-        android:name=".ui.TrainingDaysListActivity">
+        android:name=".ui.TrainingDaysListActivity"
+        android:screenOrientation="portrait">
       <intent-filter>
         <action android:name="android.intent.action.MAIN"/>
 
         <category android:name="android.intent.category.LAUNCHER"/>
       </intent-filter>
     </activity>
-    <activity android:name=".ui.WorkoutListActivity"/>
-    <activity android:name=".ui.SetActivity"/>
+    <activity android:name=".ui.WorkoutListActivity"
+              android:screenOrientation="portrait"/>
+    <activity android:name=".ui.SetActivity"
+              android:screenOrientation="portrait"/>
+    <activity android:name=".ui.RestActivity"
+              android:screenOrientation="portrait"
+              android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"/>
+
   </application>
 
 </manifest>

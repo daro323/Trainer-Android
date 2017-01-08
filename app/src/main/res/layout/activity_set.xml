@@ -57,15 +57,32 @@
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:layout_below="@id/guidelines_label"
+      android:paddingBottom="@dimen/small_padding"
       android:textAppearance="@style/Textappearance.Trainer.ContinuousText"
       tools:text="- Brace your butt to prevent from farting\n- Don't cheat by not lifting at all"/>
+
+  <TextView
+      android:id="@+id/comments_label"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_below="@id/guidelines_text"
+      android:textAppearance="@style/Textappearance.Trainer.Label"
+      android:text="@string/comments"/>
+
+  <TextView
+      android:id="@+id/comments_text"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_below="@id/comments_label"
+      android:textAppearance="@style/Textappearance.Trainer.ContinuousText"
+      tools:text="- This exercise sucks if you do it backwards\n- Sucks even more when done properly"/>
 
   <include
       android:id="@+id/parenarea_divider2"
       layout="@layout/divider_horizontal"
       android:layout_marginTop="@dimen/default_padding"
       android:layout_marginBottom="@dimen/default_padding"
-      android:layout_below="@id/guidelines_text"
+      android:layout_below="@id/comments_text"
       android:layout_width="match_parent"
       android:layout_height="1dp"/>
 
@@ -77,7 +94,7 @@
       android:layout_marginLeft="@dimen/default_padding"
       android:layout_marginRight="@dimen/default_padding"
       android:layout_alignTop="@id/parenarea_divider2"
-      android:layout_alignBottom="@id/parenarea_divider3"
+      android:layout_alignBottom="@+id/parenarea_divider3"
       android:layout_centerHorizontal="true"
       android:background="@color/colorPrimaryDark"/>
 
@@ -133,7 +150,7 @@
   </LinearLayout>
 
   <include
-      android:id="@+id/parenarea_divider3"
+      android:id="@id/parenarea_divider3"
       layout="@layout/divider_horizontal"
       android:layout_marginTop="@dimen/default_padding"
       android:layout_marginBottom="@dimen/default_padding"
@@ -143,33 +160,73 @@
 
   <View
       android:id="@+id/sep2"
-      android:layout_width="0dp"
-      android:layout_height="0dp"
+      android:layout_width="6dp"
+      android:layout_height="6dp"
       android:layout_below="@id/parenarea_divider3"
       android:layout_marginLeft="@dimen/default_padding"
       android:layout_marginRight="@dimen/default_padding"
       android:layout_centerHorizontal="true"/>
 
-  <NumberPicker
-      android:id="@+id/weight_picker"
-      android:layout_width="wrap_content"
+  <EditText
+      android:id="@+id/weight_input"
+      android:layout_width="70dp"
       android:layout_height="46dp"
       android:layout_below="@id/parenarea_divider3"
-      android:layout_toLeftOf="@id/sep2"/>
+      android:inputType="numberDecimal"
+      android:layout_toLeftOf="@id/sep2"
+      android:gravity="center"
+      tools:text="10"/>
 
-  <NumberPicker
-      android:id="@+id/rep_picker"
+  <TextView
       android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_below="@id/weight_input"
+      android:layout_alignLeft="@id/sep2"
+      android:layout_alignRight="@id/sep2"
+      android:gravity="center_horizontal"
+      android:textAppearance="@style/Textappearance.Trainer.ContinuousText"
+      android:text="@string/per_x"/>
+
+  <TextView
+      android:id="@+id/weight_type_text"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:labelFor="@id/weight_input"
+      android:layout_below="@id/weight_input"
+      android:layout_alignLeft="@id/weight_input"
+      android:layout_alignRight="@id/weight_input"
+      android:gravity="center_horizontal"
+      android:textAppearance="@style/Textappearance.Trainer.Label"
+      tools:text="kg"/>
+
+  <EditText
+      android:id="@+id/rep_input"
+      android:layout_width="70dp"
       android:layout_height="46dp"
       android:layout_below="@id/parenarea_divider3"
-      android:layout_toRightOf="@id/sep2"/>
+      android:inputType="numberDecimal"
+      android:layout_toRightOf="@id/sep2"
+      android:gravity="center"
+      tools:text="15"/>
+
+  <TextView
+      android:id="@+id/rep_label"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:labelFor="@id/rep_input"
+      android:layout_below="@id/rep_input"
+      android:layout_alignLeft="@id/rep_input"
+      android:layout_alignRight="@id/rep_input"
+      android:gravity="center_horizontal"
+      android:textAppearance="@style/Textappearance.Trainer.Label"
+      android:text="@string/reps"/>
 
   <Button
       android:id="@+id/submit_button"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:layout_below="@id/weight_picker"
-      android:layout_marginTop="@dimen/default_padding"
+      android:layout_below="@id/weight_input"
+      android:layout_marginTop="32dp"
       android:text="@string/submit"/>
 
 </RelativeLayout>
