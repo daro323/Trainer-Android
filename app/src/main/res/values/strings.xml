@@ -17,4 +17,5 @@
   <string name="reps">reps</string>
   <string name="skip">Skip</string>
   <string name="take_rest">Take a rest…</string>
+  <string name="countdown_text">%s sec</string>
 </resources>

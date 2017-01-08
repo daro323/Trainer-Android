@@ -13,19 +13,25 @@
       android:layout_gravity="center_horizontal"
       android:text="@string/take_rest"/>
 
-  <com.eralp.circleprogressview.CircleProgressView
-      android:id="@+id/circle_progress_view"
+  <io.netopen.hotbitmapgg.library.view.RingProgressBar
+      android:id="@+id/progress_view"
+      android:layout_width="180dp"
+      android:layout_height="180dp"
+      android:layout_gravity="center"
+      app:ringColor="@color/gray"
+      app:ringProgressColor="@color/colorPrimary"
+      app:ringWidth="8dp"
+      app:style="STROKE"
+      app:textIsShow="false"
+      app:textSize="16sp" />
+
+  <TextView
+      android:id="@+id/countdown_text"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_gravity="center"
-      android:layout_margin="56dp"
-      app:cpv_circle_color="@color/green"
-      app:cpv_circle_width="12dp"
-      app:cpv_background_circle_width="4dp"
-      app:cpv_background_circle_color="@color/colorPrimaryDark"
-      app:cpv_text_prefix=""
-      app:cpv_text_size="40"
-      app:cpv_text_color="@color/colorPrimaryDark"/>
+      android:textAppearance="@style/Textappearance.Trainer.Label"
+      tools:text="120 sec"/>
 
   <Button
       android:id="@+id/skip_rest_btn"

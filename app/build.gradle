@@ -67,7 +67,7 @@ dependencies {
   compile "com.fasterxml.jackson.module:jackson-module-kotlin:2.8.4"
 
   // Circle progress view
-  compile 'com.github.eralpyucel:CircleProgressView:v1.0'
+  compile 'com.github.HotBitmapGG:RingProgressBar:V1.2.2'
 
   // TESTING
   testCompile "junit:junit:$junit_version"

@@ -2,13 +2,13 @@ package com.trainer.ui
 
 import android.os.Bundle
 import android.os.Vibrator
-import android.view.animation.AccelerateDecelerateInterpolator
 import android.widget.Button
-import com.eralp.circleprogressview.CircleProgressView
+import android.widget.TextView
 import com.trainer.R
 import com.trainer.base.BaseActivity
 import com.trainer.extensions.extra
 import com.trainer.utils.bindView
+import io.netopen.hotbitmapgg.library.view.RingProgressBar
 import rx.Observable
 import rx.Subscription
 import rx.android.schedulers.AndroidSchedulers
@@ -20,7 +20,8 @@ class RestActivity : BaseActivity(R.layout.activity_rest) {
 
   @Inject lateinit var vibrator: Vibrator
   private val restTimeSec: Int by extra(EXTRA_REST_TIME_SEC)
-  private val progressView: CircleProgressView by bindView(R.id.circle_progress_view)
+  private val progressView: RingProgressBar by bindView(R.id.progress_view)
+  private val countDownText: TextView by bindView(R.id.countdown_text)
   private val skipButton: Button by bindView(R.id.skip_rest_btn)
   private var timerSubscription: Subscription = Subscriptions.unsubscribed()
 
@@ -37,9 +38,9 @@ class RestActivity : BaseActivity(R.layout.activity_rest) {
     super.onStart()
     if (timerSubscription.isUnsubscribed) {
       progressView.apply {
-        interpolator = AccelerateDecelerateInterpolator()
-        progress = 100f
+        max = restTimeSec
       }
+      updateCountDown(restTimeSec)
       skipButton.setOnClickListener { finish() }
       subscribeForTimer()
     }
@@ -54,14 +55,19 @@ class RestActivity : BaseActivity(R.layout.activity_rest) {
     // Block back button (just via skip can exit)
   }
 
+  private fun updateCountDown(countDown: Int) {
+    progressView.progress = countDown
+    countDownText.text = String.format(getString(R.string.countdown_text), countDown)
+  }
+
   private fun subscribeForTimer() {
     timerSubscription = Observable.interval(1, TimeUnit.SECONDS)
-        .map { (((restTimeSec - it) * 100) / restTimeSec).toFloat() }
+        .map { (restTimeSec - it).toInt() }
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe {
-          progressView.progress = it
-          if (it == 0f) {
-            vibrator.vibrate(800)
+          updateCountDown(it)
+          if (it == 0) {
+            vibrator.vibrate(1000)
             timerSubscription.unsubscribe()
             finish()
           }
