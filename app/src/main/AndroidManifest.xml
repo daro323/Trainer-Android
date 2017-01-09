@@ -22,7 +22,7 @@
     </activity>
     <activity android:name=".ui.WorkoutListActivity"
               android:screenOrientation="portrait"/>
-    <activity android:name=".ui.SetActivity"
+    <activity android:name=".ui.SeriePagerActivity"
               android:screenOrientation="portrait"/>
     <activity android:name=".ui.RestActivity"
               android:screenOrientation="portrait"

@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_margin="@dimen/activity_margin"
-    tools:context="com.trainer.ui.SetActivity">
+    tools:context="com.trainer.ui.SeriePagerActivity">
 
   <ImageView
       android:id="@+id/exercise_image"

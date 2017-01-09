@@ -56,7 +56,7 @@ class TrainingDaysListActivity : BaseActivity(R.layout.activity_list) {
 
   private fun subscribeForTrainingDays() {
     trainingDaysSubscription.unsubscribe()
-    trainingDaysSubscription = trainingManager.getAllTrainingDaysData()
+    trainingDaysSubscription = trainingManager.getTrainingDays()
         .flatMap { Observable.from(it) }
         .map { TrainingDayItem(it.category, it.totalDone) }
         .toList()

@@ -42,7 +42,7 @@ class WorkoutListActivity : BaseActivity(R.layout.activity_list) {
     recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
     recyclerView.adapter = typedAdapter
 
-    trainingManager.getCurrentWorkoutPresenter()?.apply {
+    trainingManager.workoutPresenter?.apply {
       title = String.format(getString(R.string.workout), this.getWorkoutTitle())
       showWorkoutList(this.getWorkoutList())
     }
@@ -84,9 +84,9 @@ class WorkoutListActivity : BaseActivity(R.layout.activity_list) {
   }
 
   private fun openSerie(index: Int) {
-    trainingManager.getCurrentWorkoutPresenter()?.apply {
+    trainingManager.workoutPresenter?.apply {
       selectSerie(index)
-      startActivity<SetActivity>()
+      startActivity<SeriePagerActivity>()
     }
   }
 }

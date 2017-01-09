@@ -19,7 +19,7 @@ class TrainingDataInitializer @Inject constructor(val trainingRepo: TrainingRepo
     TrainingCategory.values().forEach { training ->
       if (isTrainingInitialized(training).not()) {
         Log.d(TAG, "init $training")
-        trainingRepo.saveTrainingDay(TrainingDay(training, workoutProvider.provideFor(training)))
+        trainingRepo.saveTrainingDay(TrainingDay(training, workoutProvider.provide(training)))
       }
     }
   }

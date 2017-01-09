@@ -9,16 +9,21 @@ import javax.inject.Inject
  */
 class WorkoutPresenter @Inject constructor() {
 
-  lateinit var trainingDay: TrainingDay
+  lateinit var trainingDay: TrainingDay   // operates on training day
   val workoutEventsSubject = PublishSubject.create<WorkoutEvent>()
+  private var currentSerieIdx: Int = -1
 
   fun onWorkoutEvent() = workoutEventsSubject.asObservable()
 
   fun getWorkoutList() = trainingDay.workout.series
 
+  fun isWorkoutComplete() = trainingDay.workout.isComplete()
+
   fun getWorkoutTitle() = trainingDay.category.name
 
+  fun getCurrentSerie() = trainingDay.workout.series[currentSerieIdx]
+
   fun selectSerie(index: Int) {
-    // TODO
+    currentSerieIdx = index
   }
 }

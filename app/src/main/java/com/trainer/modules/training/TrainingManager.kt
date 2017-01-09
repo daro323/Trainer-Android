@@ -13,13 +13,8 @@ import javax.inject.Provider
 class TrainingManager @Inject constructor(val repo: TrainingRepository,
                                           val workoutPresenterProvider: Provider<WorkoutPresenter>) {
 
-  private var workoutPresenter: WorkoutPresenter? = null  // state
-
-  fun getAllTrainingDaysData(): Observable<List<TrainingDay>> {
-    return Observable.from(TrainingCategory.values())
-        .map { repo.getTrainingDay(it) }
-        .toList()
-  }
+  var workoutPresenter: WorkoutPresenter? = null
+    private set
 
   fun startWorkout(forCategory: TrainingCategory) {
     require(isWorkoutStarted().not()) { "Can't start new workout - there is one already started!" }
@@ -34,7 +29,19 @@ class TrainingManager @Inject constructor(val repo: TrainingRepository,
     workoutPresenter = null
   }
 
-  fun getCurrentWorkoutPresenter(): WorkoutPresenter? {
-    return workoutPresenter
+  fun completeWorkout() { // TODO
+    // Clean up the TrainingDay (move workout to last workout)
+
+    // Increase totalDone count
+
+    // Save training day
+
+    // Clear workout presenter
+  }
+
+  fun getTrainingDays(): Observable<List<TrainingDay>> {
+    return Observable.from(TrainingCategory.values())
+        .map { repo.getTrainingDay(it) }
+        .toList()
   }
 }

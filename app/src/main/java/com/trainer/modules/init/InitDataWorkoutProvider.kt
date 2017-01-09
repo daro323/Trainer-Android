@@ -12,11 +12,11 @@ import com.trainer.modules.training.WorkoutProvider
  */
 class InitDataWorkoutProvider : WorkoutProvider {
 
-  override fun provideFor(trainingCategory: TrainingCategory): Workout {
-    return when(trainingCategory) {
+  override fun provide(forTrainingCategory: TrainingCategory): Workout {
+    return when(forTrainingCategory) {
       CHEST -> ChestInitData.CHEST_WORKOUT
       else -> {
-        Log.w("INIT_DATA_PROVIDER", "No init data available for training= $trainingCategory - returning an empty workout...")
+        Log.w("INIT_DATA_PROVIDER", "No init data available for training= $forTrainingCategory - returning an empty workout...")
         Workout(emptyList())
       }
     }

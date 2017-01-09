@@ -3,7 +3,7 @@ package com.trainer.modules.init.data
 import com.trainer.R
 import com.trainer.modules.training.Exercise
 import com.trainer.modules.training.Series
-import com.trainer.modules.training.Series.Set
+import com.trainer.modules.training.Series.Set.Companion.createSet
 import com.trainer.modules.training.Series.SuperSet
 import com.trainer.modules.training.Workout
 
@@ -54,35 +54,35 @@ class ChestInitData private constructor() {
 
     val CHEST_WORKOUT = Workout(arrayListOf(
         SuperSet(arrayListOf<Series>(
-            Set(BENCH_PRESS,
+            createSet(BENCH_PRESS,
                 "Zrób 3 serie po 15, 10 i 8 repet. Po ostatniej od razu max z 80% obciążeniem.",
                 4, 0),
-            Set(PULL_UPS,
+            createSet(PULL_UPS,
                 "Zrób 3 serie na max repet",
                 3, 60))
         ),
         SuperSet(arrayListOf<Series>(
-            Set(INCLINE_PRESS,
+            createSet(INCLINE_PRESS,
                 "Zrób 3 serie po 15, 10 i 8 repet. Po ostatniej od razu max z 80% obciążeniem.",
                 4, 0),
-            Set(DUMBELL_ROW,
+            createSet(DUMBELL_ROW,
                 "Zrób 3 serie po 15, 12 i 10 repet. Po ostatniej od razu max z 80% obciążeniem.",
                 4, 60)
 
         )),
         SuperSet(arrayListOf<Series>(
-            Set(SWEED_PUSHUP,
+            createSet(SWEED_PUSHUP,
                 "Zrób 2 na max repet",
                 2, 0),
-            Set(DUMBELL_PUSHUP,
+            createSet(DUMBELL_PUSHUP,
                 "Zrób 2 serie po 10 repet",
                 2, 60))
         ),
         SuperSet(arrayListOf<Series>(
-            Set(TRICEPS_EXTENSIONS,
+            createSet(TRICEPS_EXTENSIONS,
                 "Zrób 15 repet a następnie 10 repet sciągając w dół. Zrób 3 takie serie.",
                 3, 0),
-            Set(DUMBELL_CURL,
+            createSet(DUMBELL_CURL,
                 "Zrób 3 serie po 10",
                 3, 60))
         )
