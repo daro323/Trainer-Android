@@ -6,7 +6,7 @@ import android.support.v7.widget.RecyclerView
 import com.trainer.R
 import com.trainer.base.BaseActivity
 import com.trainer.extensions.ioMain
-import com.trainer.extensions.startActivity
+import com.trainer.extensions.start
 import com.trainer.modules.training.TrainingManager
 import com.trainer.ui.model.TrainingDayItem
 import com.trainer.ui.model.TrainingDayItemHolder
@@ -33,7 +33,7 @@ class TrainingDaysListActivity : BaseActivity(R.layout.activity_list) {
 
   private val onTrainingDayClicked = { item: TrainingDayItem ->
     trainingManager.startWorkout(item.trainingCategory)
-    startActivity<WorkoutListActivity>()
+    start<WorkoutListActivity>()
   }
 
   override fun onCreate(savedInstanceState: Bundle?) {

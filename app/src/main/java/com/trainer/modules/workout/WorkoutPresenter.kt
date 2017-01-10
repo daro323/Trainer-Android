@@ -1,5 +1,6 @@
 package com.trainer.modules.workout
 
+import com.trainer.modules.training.Series
 import com.trainer.modules.training.Series.Set
 import com.trainer.modules.training.Series.SuperSet
 import com.trainer.modules.training.TrainingDay
@@ -29,7 +30,12 @@ class WorkoutPresenter @Inject constructor() {
 
   fun getWorkoutTitle() = trainingDay.category.name
 
-  fun getCurrentSerie() = trainingDay.workout.series[currentSerieIdx]
+  fun getRestTime() = getCurrentSet().restTimeSec
+
+  fun getCurrentSerie(): Series {
+    require(currentSerieIdx != -1) { "Current serie idx is not set!" }
+    return trainingDay.workout.series[currentSerieIdx]
+  }
 
   fun getSet(setId: String) = trainingDay.workout.series.find {
     when (it) {

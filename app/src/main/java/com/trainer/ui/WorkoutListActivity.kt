@@ -5,7 +5,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import com.trainer.R
 import com.trainer.base.BaseActivity
-import com.trainer.extensions.startActivity
+import com.trainer.extensions.start
 import com.trainer.modules.training.Series
 import com.trainer.modules.training.Series.Set
 import com.trainer.modules.training.Series.SuperSet
@@ -88,7 +88,7 @@ class WorkoutListActivity : BaseActivity(R.layout.activity_list) {
   private fun openSerie(index: Int) {
     trainingManager.workoutPresenter?.apply {
       selectSerie(index)
-      startActivity<SeriePagerActivity>()
+      start<SeriePagerActivity>()
     }
   }
 }
