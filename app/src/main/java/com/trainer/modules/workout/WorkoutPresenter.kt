@@ -6,6 +6,7 @@ import com.trainer.modules.training.TrainingDay
 import com.trainer.modules.training.WeightType.BODY_WEIGHT
 import rx.subjects.PublishSubject
 import javax.inject.Inject
+import kotlin.comparisons.compareBy
 
 /**
  * Operates on a training day.
@@ -40,6 +41,7 @@ class WorkoutPresenter @Inject constructor() {
 
   fun selectSerie(index: Int) {
     currentSerieIdx = index
+    refreshCurrentSetIdx()
   }
 
   fun saveSetResult(weight: Float, rep: Int) {
@@ -47,9 +49,29 @@ class WorkoutPresenter @Inject constructor() {
     // TODO
     // Add repetition to current set's progress
 
-    // Update currentSetIdx to next unfinished Set in this Serie (if this is just Set then ignore)
-
+    refreshCurrentSetIdx()
     // Fire event (rest or next Set or complete)
+  }
+
+  fun isCurrentSet(setId: String) = getCurrentSet().id() == setId
+
+  /**
+   * Updates currentSetIdx in current Serie to next unfinished Set with the least progress.
+   * If this is just Set then ignore.
+   */
+  private fun refreshCurrentSetIdx() {
+    val currentSerie = getCurrentSerie()
+    currentSetIdx = when (currentSerie) {
+      is Set -> -1
+      is SuperSet -> currentSerie.setList
+          .filter { it.isComplete().not() }
+          .sortedWith(compareBy { it.progress.size })
+          .first()
+          .run {
+            currentSerie.setList.indexOf(this)
+          }
+      else -> throw IllegalStateException("Can't refreshCurrentSetIdx for unsupported serie type= ${currentSerie.javaClass}")
+    }
   }
 
   private fun getCurrentSet(): Set {

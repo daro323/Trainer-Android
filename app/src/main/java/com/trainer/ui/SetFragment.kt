@@ -1,6 +1,8 @@
 package com.trainer.ui
 
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
@@ -41,6 +43,8 @@ class SetFragment : BaseFragment(R.layout.fragment_set) {
   private val repInputView: EditText by bindView(R.id.rep_input)
   private val submitButton: Button by bindView(R.id.submit_button)
   private val weightTypeView: TextView by bindView(R.id.weight_type_text)
+  private val inputSeparatorLabelView: TextView by bindView(R.id.input_separator_label)
+  private val repInputLabelView: TextView by bindView(R.id.rep_label)
 
   companion object {
     const val SET_ID = "SET_ID"
@@ -72,6 +76,7 @@ class SetFragment : BaseFragment(R.layout.fragment_set) {
       weightInputView.isEnabled = weightType != BODY_WEIGHT
       weightTypeView.text = if (weightType == BODY_WEIGHT) "N/A" else weightType.toString()
     }
+    setInputActive(presenter.isCurrentSet(setId))
   }
 
   private fun weightValue() = if (weightInputView.isEnabled) weightInputView.text.toString().toFloat() else -1f
@@ -80,6 +85,17 @@ class SetFragment : BaseFragment(R.layout.fragment_set) {
   private val onSubmitHandler = { v: View ->
     if (FormValidator.validate(activity, fieldsToValidate, SimpleErrorPopupCallback(activity))) {
       presenter.saveSetResult(weightValue(), repValue())
+    }
+  }
+
+  private fun setInputActive(isActive: Boolean) {
+    (if (isActive) VISIBLE else GONE).apply {
+      weightInputView.visibility = this
+      weightTypeView.visibility = this
+      repInputView.visibility = this
+      repInputLabelView.visibility = this
+      inputSeparatorLabelView.visibility = this
+      submitButton.visibility = this
     }
   }
 }
