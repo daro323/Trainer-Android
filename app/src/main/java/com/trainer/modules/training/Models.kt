@@ -18,7 +18,7 @@ enum class TrainingCategory {
 
 data class TrainingDay(val category: TrainingCategory,
                        val workout: Workout,
-                       val lastWorkout: Workout = Workout(emptyList()),
+                       val lastWorkout: Workout,
                        val totalDone: Int = 0)
 
 data class Workout(val series: List<Series>) {
@@ -30,8 +30,11 @@ data class Exercise(val name: String,
                     val comments: List<String>,
                     @DrawableRes val imageRes: Int)
 
-data class Repetition(val repCount: Int,
-                      val weight: String)
+data class Repetition(val repCount: Int,  // TODO: Add weight type info
+                      val weight: Int) {
+
+  override fun toString() = "$weight x $repCount"
+}
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY)
 @JsonSubTypes(
@@ -41,23 +44,22 @@ interface Series {
   fun id(): String
   fun isStarted(): Boolean
   fun isComplete(): Boolean
+  fun skipRemaining()
 
-  data class Set private constructor(val _id: String,
+  data class Set private constructor(private val _id: String,
                                      val exercise: Exercise,
-                                     val guidelines: String,
+                                     val guidelines: List<String>,
                                      val seriesCount: Int,
                                      val restTimeSec: Int,
-                                     val progress: List<Repetition> = emptyList(),
-                                     val comments: List<String> = emptyList()) : Series {
+                                     val progress: MutableList<Repetition>) : Series {
     companion object {
       var instanceCounter: Int = 0
       /* Automatically adds IDs as instance count */
       fun createSet(exercise: Exercise,
-                    guidelines: String,
+                    guidelines: List<String>,
                     seriesCount: Int,
                     restTimeSec: Int,
-                    progress: List<Repetition> = emptyList(),
-                    comments: List<String> = emptyList()) = Set((++instanceCounter).toString(), exercise, guidelines, seriesCount, restTimeSec, progress, comments)
+                    progress: MutableList<Repetition> = mutableListOf()) = Set((++instanceCounter).toString(), exercise, guidelines, seriesCount, restTimeSec, progress)
     }
 
     override fun id() = _id
@@ -65,16 +67,22 @@ interface Series {
     override fun isStarted() = progress.size in 1 until seriesCount
 
     override fun isComplete() = progress.size == seriesCount
+
+    override fun skipRemaining() {
+      while (progress.size < seriesCount) progress.add(Repetition(0, 0))
+    }
   }
 
-  data class SuperSet(val seriesList: List<Series>) : Series {
-    override fun id() = seriesList
+  data class SuperSet(val setList: List<Set>) : Series {
+    override fun id() = setList
         .map(Series::id)
         .reduce { acc, item -> "$acc$item" }
 
-    override fun isStarted() = seriesList.any(Series::isStarted)
+    override fun isStarted() = setList.any(Series::isStarted)
 
-    override fun isComplete() = seriesList.all(Series::isComplete)
+    override fun isComplete() = setList.all(Series::isComplete)
+
+    override fun skipRemaining() = setList.forEach(Series::skipRemaining)
   }
 }
 

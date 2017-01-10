@@ -24,14 +24,14 @@
       tools:text="Wyciskanie sztangi"/>
 
   <TextView
-      android:id="@+id/set_progress_text"
+      android:id="@+id/set_text"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:layout_toRightOf="@id/exercise_image"
       android:layout_alignBottom="@id/exercise_image"
       android:layout_below="@id/name_text"
       android:gravity="center"
-      android:text="@string/set_progress_text"
+      android:text="@string/set_number_text"
       android:textAppearance="@style/Textappearance.Trainer.Headline"
       tools:text="1 / 4 Series"/>
 
@@ -115,7 +115,7 @@
         android:text="@string/current"/>
 
     <TextView
-        android:id="@+id/current_progress_text"
+        android:id="@+id/progress_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"

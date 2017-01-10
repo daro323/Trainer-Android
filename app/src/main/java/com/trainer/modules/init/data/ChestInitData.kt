@@ -2,7 +2,6 @@ package com.trainer.modules.init.data
 
 import com.trainer.R
 import com.trainer.modules.training.Exercise
-import com.trainer.modules.training.Series
 import com.trainer.modules.training.Series.Set.Companion.createSet
 import com.trainer.modules.training.Series.SuperSet
 import com.trainer.modules.training.Workout
@@ -52,38 +51,38 @@ class ChestInitData private constructor() {
             "Wracaj powoli"),
         R.drawable.ex_dumbell_curl)
 
-    val CHEST_WORKOUT = Workout(arrayListOf(
-        SuperSet(arrayListOf<Series>(
+    fun createNewWorkout() = Workout(arrayListOf(
+        SuperSet(arrayListOf(
             createSet(BENCH_PRESS,
-                "Zrób 3 serie po 15, 10 i 8 repet. Po ostatniej od razu max z 80% obciążeniem.",
+                arrayListOf("Zrób 3 serie po 15, 10 i 8 repet.", "Po ostatniej od razu max z 80% obciążeniem."),
                 4, 0),
             createSet(PULL_UPS,
-                "Zrób 3 serie na max repet",
+                arrayListOf("Zrób 3 serie na max repet"),
                 3, 60))
         ),
-        SuperSet(arrayListOf<Series>(
+        SuperSet(arrayListOf(
             createSet(INCLINE_PRESS,
-                "Zrób 3 serie po 15, 10 i 8 repet. Po ostatniej od razu max z 80% obciążeniem.",
+                arrayListOf("Zrób 3 serie po 15, 10 i 8 repet.", "Po ostatniej od razu max z 80% obciążeniem."),
                 4, 0),
             createSet(DUMBELL_ROW,
-                "Zrób 3 serie po 15, 12 i 10 repet. Po ostatniej od razu max z 80% obciążeniem.",
+                arrayListOf("Zrób 3 serie po 15, 12 i 10 repet.", "Po ostatniej od razu max z 80% obciążeniem."),
                 4, 60)
 
         )),
-        SuperSet(arrayListOf<Series>(
+        SuperSet(arrayListOf(
             createSet(SWEED_PUSHUP,
-                "Zrób 2 na max repet",
+                arrayListOf("Zrób 2 na max repet"),
                 2, 0),
             createSet(DUMBELL_PUSHUP,
-                "Zrób 2 serie po 10 repet",
+                arrayListOf("Zrób 2 serie po 10 repet"),
                 2, 60))
         ),
-        SuperSet(arrayListOf<Series>(
+        SuperSet(arrayListOf(
             createSet(TRICEPS_EXTENSIONS,
-                "Zrób 15 repet a następnie 10 repet sciągając w dół. Zrób 3 takie serie.",
+                arrayListOf("Zrób 15 repet a następnie 10 repet sciągając w dół.", "Zrób 3 takie serie."),
                 3, 0),
             createSet(DUMBELL_CURL,
-                "Zrób 3 serie po 10",
+                arrayListOf("Zrób 3 serie po 10"),
                 3, 60))
         )
     ))

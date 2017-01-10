@@ -69,6 +69,9 @@ dependencies {
   // Circle progress view
   compile 'com.github.HotBitmapGG:RingProgressBar:V1.2.2'
 
+  // Form validation
+  compile 'eu.inmite.android.lib:android-validation-komensky:0.9.4@aar'
+
   // TESTING
   testCompile "junit:junit:$junit_version"
   testCompile "org.powermock:powermock-module-junit4:$powermock_version"

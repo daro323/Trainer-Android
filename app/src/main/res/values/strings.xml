@@ -7,7 +7,7 @@
   <string name="ok">OK</string>
   <string name="cancel">Cancel</string>
 
-  <string name="set_progress_text" formatted="false">%s / %s</string>
+  <string name="set_number_text" formatted="false">%s / %s Series</string>
   <string name="guidelines">Guidelines</string>
   <string name="comments">Comments</string>
   <string name="current">Curent</string>
@@ -18,4 +18,5 @@
   <string name="skip">Skip</string>
   <string name="take_rest">Take a rest…</string>
   <string name="countdown_text">%s sec</string>
+  <string name="empty_field">Empty field!</string>
 </resources>

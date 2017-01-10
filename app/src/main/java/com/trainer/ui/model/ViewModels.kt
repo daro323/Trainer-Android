@@ -4,6 +4,7 @@ import android.support.annotation.DrawableRes
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -12,6 +13,7 @@ import com.trainer.modules.training.TrainingCategory
 import com.trainer.utils.bindView
 import com.trainer.utils.typedviewholder.TypedViewHolder
 import com.trainer.utils.typedviewholder.TypedViewHolderFactory
+import eu.inmite.android.lib.validations.form.annotations.NotEmpty
 
 /**
  * Created by dariusz on 06/01/17.
@@ -87,3 +89,10 @@ class SuperSetItemHolder(parent: ViewGroup,
     return view
   }
 }
+
+class SetFragmentFieldValidator constructor(
+    @NotEmpty(messageId = R.string.empty_field)
+    val weightInput: EditText,
+    @NotEmpty(messageId = R.string.empty_field)
+    val repInput: EditText
+)

@@ -71,11 +71,11 @@ class WorkoutListActivity : BaseActivity(R.layout.activity_list) {
   }
 
   private fun createSuperSetItem(superSet: SuperSet): SuperSetItem {
-    val imageResList = ArrayList<Int>(superSet.seriesList.size)
-    val namesList = ArrayList<String>(superSet.seriesList.size)
+    val imageResList = ArrayList<Int>(superSet.setList.size)
+    val namesList = ArrayList<String>(superSet.setList.size)
 
-    superSet.seriesList
-        .flatMap { series -> listOf((series as Set).exercise) }
+    superSet.setList
+        .flatMap { series -> listOf((series).exercise) }
         .forEach { exercise ->
           imageResList.add(exercise.imageRes)
           namesList.add(exercise.name)
