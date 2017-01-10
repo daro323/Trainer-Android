@@ -90,6 +90,32 @@ class SuperSetItemHolder(parent: ViewGroup,
   }
 }
 
+class SetItemHolder(parent: ViewGroup,
+                            private val onClick: (SetItem) -> Any) : TypedViewHolder<SetItem>(R.layout.set_item, parent) {
+  companion object {
+    fun factory(listener: (SetItem) -> Any) = object : TypedViewHolderFactory<SetItem>(SetItem::class.java) {
+      override fun build(parent: ViewGroup): TypedViewHolder<SetItem> {
+        return SetItemHolder(parent, listener)
+      }
+    }
+  }
+
+  lateinit var model: SetItem
+  private val container: ViewGroup by bindView(R.id.content_container)
+  private val imageView: ImageView by bindView(R.id.image)
+  private val nameText: TextView by bindView(R.id.name)
+
+  init {
+    container.setOnClickListener { onClick(model) }
+  }
+
+  override fun bind(dataItem: SetItem) {
+    model = dataItem
+    nameText.text = model.name
+    imageView.setImageResource(model.imageRes)
+  }
+}
+
 class SetFragmentFieldValidator constructor(
     @NotEmpty(messageId = R.string.empty_field)
     val weightInput: EditText,

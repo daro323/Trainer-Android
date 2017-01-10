@@ -11,3 +11,14 @@ fun SharedPreferences.saveString(key: String, value: String) {
       .putString(key, value)
       .apply()
 }
+
+inline fun <S, T: S> Iterable<T>.reduceWithDefault(default: S, firstOperation: (S) -> S, operation: (S, T) -> S): S {
+  val iterator = this.iterator()
+  if (!iterator.hasNext()) return default
+  var accumulator: S = firstOperation(iterator.next())
+
+  while (iterator.hasNext()) {
+    accumulator = operation(accumulator, iterator.next())
+  }
+  return accumulator
+}

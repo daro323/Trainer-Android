@@ -1,7 +1,6 @@
 package com.trainer.modules.workout
 
 import com.trainer.modules.training.Repetition
-import com.trainer.modules.training.Series
 import com.trainer.modules.training.Series.Set
 import com.trainer.modules.training.Series.SuperSet
 import com.trainer.modules.training.TrainingDay
@@ -31,9 +30,13 @@ class WorkoutPresenter @Inject constructor() {
 
   fun getCurrentSerie() = trainingDay.workout.series[currentSerieIdx]
 
-  fun getLastSet(setId: String) = doGetSet(setId, trainingDay.lastWorkout.series)
-
-  fun getSet(setId: String) = doGetSet(setId, trainingDay.workout.series)
+  fun getSet(setId: String) = trainingDay.workout.series.find {
+    when (it) {
+      is Set -> it.id() == setId
+      is SuperSet -> it.setList.any { it.id() == setId }
+      else -> throw IllegalArgumentException("Unsupported serie type= ${it.javaClass}")
+    }
+  }?.run { if (this is SuperSet) setList.find { it.id() == setId } else this } as Set? ?: throw IllegalArgumentException("No set found for ID= $setId")
 
   fun selectSerie(index: Int) {
     currentSerieIdx = index
@@ -52,19 +55,10 @@ class WorkoutPresenter @Inject constructor() {
     val currentSerie = getCurrentSerie()
     if (currentSerie is SuperSet && currentSetIdx == -1) throw IllegalStateException("current Set idx was not set for current SuperSet!")
 
-    return when(currentSerie) {
+    return when (currentSerie) {
       is Set -> currentSerie
       is SuperSet -> currentSerie.setList[currentSetIdx]
       else -> throw IllegalArgumentException("Can't getCurrentSet for unsupported serie type= ${currentSerie.javaClass}")
     }
   }
-
-  private fun doGetSet(setId: String, series: List<Series>) =
-      series.find {
-        when (it) {
-          is Set -> it.id() == setId
-          is SuperSet -> it.setList.any { it.id() == setId }
-          else -> throw IllegalArgumentException("Unsupported serie type= ${it.javaClass}")
-        }
-      }?.run { if (this is SuperSet) setList.find { it.id() == setId } else this } as Set? ?: throw IllegalArgumentException("No set found for ID= $setId")
 }

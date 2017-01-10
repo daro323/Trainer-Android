@@ -25,8 +25,6 @@ class TrainingRepository @Inject constructor(val sharedPrefs: SharedPreferences,
    * It expects to have the current workout cleaned out (workout data moved to lastWorkout)
    */
   fun saveTrainingDay(trainingDay: TrainingDay) {
-    require(trainingDay.workout.isStarted().not()) { "Attempt to save a TrainingDay which is not cleaned up!" }
-    require(trainingDay.lastWorkout.isComplete()) { "Attempt to save a TrainingDay with last training not complete!" }
     sharedPrefs.saveString(trainingDay.category.toString(), mapper.writeValueAsString(trainingDay))
   }
 }

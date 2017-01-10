@@ -47,7 +47,6 @@ class SeriePagerActivity : BaseActivity(R.layout.activity_set_pager) {
     superSetPager.visibility = GONE
     supportFragmentManager.beginTransaction().apply {
       add(R.id.container, SetFragment().with(SET_ID to set.id()))
-      addToBackStack(null)
     }.commit()
   }
 

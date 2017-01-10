@@ -2,7 +2,10 @@ package com.trainer.modules.init
 
 import android.util.Log
 import com.trainer.d2.scope.ApplicationScope
-import com.trainer.modules.training.*
+import com.trainer.modules.training.TrainingCategory
+import com.trainer.modules.training.TrainingDay
+import com.trainer.modules.training.TrainingRepository
+import com.trainer.modules.training.WorkoutProvider
 import javax.inject.Inject
 
 /**
@@ -13,16 +16,13 @@ class TrainingDataInitializer @Inject constructor(val trainingRepo: TrainingRepo
                                                   val workoutProvider: WorkoutProvider) {
   companion object {
     val TAG = "INIT"
-    private fun completeEmptyWorkout(workout: Workout) = workout.series.forEach(Series::skipRemaining)
   }
 
   init {
     TrainingCategory.values().forEach { training ->
       if (isTrainingInitialized(training).not()) {
         Log.d(TAG, "init $training")
-        val emptyWorkout = workoutProvider.provide(training)
-        val completedEmptyWorkout = workoutProvider.provide(training).apply { completeEmptyWorkout(this) }
-        trainingRepo.saveTrainingDay(TrainingDay(training, emptyWorkout, completedEmptyWorkout))
+        trainingRepo.saveTrainingDay(TrainingDay(training, workoutProvider.provide(training)))
       }
     }
   }

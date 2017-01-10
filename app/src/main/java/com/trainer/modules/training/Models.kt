@@ -18,7 +18,6 @@ enum class TrainingCategory {
 
 data class TrainingDay(val category: TrainingCategory,
                        val workout: Workout,
-                       val lastWorkout: Workout,
                        val totalDone: Int = 0)
 
 data class Workout(val series: List<Series>) {
@@ -51,7 +50,8 @@ interface Series {
                                      val guidelines: List<String>,
                                      val seriesCount: Int,
                                      val restTimeSec: Int,
-                                     val progress: MutableList<Repetition>) : Series {
+                                     var progress: MutableList<Repetition>,
+                                     var lastProgress: List<Repetition>) : Series {
     companion object {
       var instanceCounter: Int = 0
       /* Automatically adds IDs as instance count */
@@ -59,7 +59,8 @@ interface Series {
                     guidelines: List<String>,
                     seriesCount: Int,
                     restTimeSec: Int,
-                    progress: MutableList<Repetition> = mutableListOf()) = Set((++instanceCounter).toString(), exercise, guidelines, seriesCount, restTimeSec, progress)
+                    progress: MutableList<Repetition> = mutableListOf(),
+                    lastProgress: List<Repetition> = (1..seriesCount).map { Repetition(0, 0) }.toList()) = Set((++instanceCounter).toString(), exercise, guidelines, seriesCount, restTimeSec, progress, lastProgress)
     }
 
     override fun id() = _id

@@ -14,7 +14,7 @@ class InitDataWorkoutProvider : WorkoutProvider {
 
   override fun provide(forTrainingCategory: TrainingCategory): Workout {
     return when(forTrainingCategory) {
-      CHEST -> ChestInitData.createNewWorkout()
+      CHEST -> ChestInitData.CHEST_WORKOUT
       else -> {
         Log.w("INIT_DATA_PROVIDER", "No init data available for training= $forTrainingCategory - returning an empty workout...")
         Workout(emptyList())

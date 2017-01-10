@@ -1,232 +1,237 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_set"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_margin="@dimen/activity_margin"
-    tools:context="com.trainer.ui.SeriePagerActivity">
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-  <ImageView
-      android:id="@+id/exercise_image"
-      android:layout_width="@dimen/avatar_image_size"
-      android:layout_height="@dimen/avatar_image_size"
-      tools:src="@drawable/ex_bench_press"/>
-
-  <TextView
-      android:id="@+id/name_text"
+  <RelativeLayout
+      android:id="@+id/activity_set"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:layout_toRightOf="@id/exercise_image"
-      android:gravity="center"
-      android:textAppearance="@style/Textappearance.Trainer.Headline"
-      tools:text="Wyciskanie sztangi"/>
+      android:focusableInTouchMode="true"
+      tools:context="com.trainer.ui.SeriePagerActivity">
 
-  <TextView
-      android:id="@+id/set_text"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_toRightOf="@id/exercise_image"
-      android:layout_alignBottom="@id/exercise_image"
-      android:layout_below="@id/name_text"
-      android:gravity="center"
-      android:text="@string/set_number_text"
-      android:textAppearance="@style/Textappearance.Trainer.Headline"
-      tools:text="1 / 4 Series"/>
-
-  <include
-      android:id="@+id/parenarea_divider"
-      layout="@layout/divider_horizontal"
-      android:layout_marginTop="@dimen/default_padding"
-      android:layout_marginBottom="@dimen/default_padding"
-      android:layout_below="@id/exercise_image"
-      android:layout_width="match_parent"
-      android:layout_height="1dp"/>
-
-  <TextView
-      android:id="@+id/guidelines_label"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_below="@id/parenarea_divider"
-      android:textAppearance="@style/Textappearance.Trainer.Label"
-      android:text="@string/guidelines"/>
-
-  <TextView
-      android:id="@+id/guidelines_text"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_below="@id/guidelines_label"
-      android:paddingBottom="@dimen/small_padding"
-      android:textAppearance="@style/Textappearance.Trainer.ContinuousText"
-      tools:text="- Brace your butt to prevent from farting\n- Don't cheat by not lifting at all"/>
-
-  <TextView
-      android:id="@+id/comments_label"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_below="@id/guidelines_text"
-      android:textAppearance="@style/Textappearance.Trainer.Label"
-      android:text="@string/comments"/>
-
-  <TextView
-      android:id="@+id/comments_text"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_below="@id/comments_label"
-      android:textAppearance="@style/Textappearance.Trainer.ContinuousText"
-      tools:text="- This exercise sucks if you do it backwards\n- Sucks even more when done properly"/>
-
-  <include
-      android:id="@+id/parenarea_divider2"
-      layout="@layout/divider_horizontal"
-      android:layout_marginTop="@dimen/default_padding"
-      android:layout_marginBottom="@dimen/default_padding"
-      android:layout_below="@id/comments_text"
-      android:layout_width="match_parent"
-      android:layout_height="1dp"/>
-
-  <View
-      android:id="@+id/sep"
-      android:layout_width="1dp"
-      android:layout_height="1dp"
-      android:layout_below="@id/parenarea_divider2"
-      android:layout_marginLeft="@dimen/default_padding"
-      android:layout_marginRight="@dimen/default_padding"
-      android:layout_alignTop="@id/parenarea_divider2"
-      android:layout_alignBottom="@+id/parenarea_divider3"
-      android:layout_centerHorizontal="true"
-      android:background="@color/colorPrimaryDark"/>
-
-  <LinearLayout
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_below="@id/parenarea_divider2"
-      android:layout_toLeftOf="@id/sep"
-      android:orientation="vertical">
+    <ImageView
+        android:id="@+id/exercise_image"
+        android:layout_width="@dimen/avatar_image_size"
+        android:layout_height="@dimen/avatar_image_size"
+        tools:src="@drawable/ex_bench_press"/>
 
     <TextView
-        android:id="@+id/current_progress_label"
+        android:id="@+id/name_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:paddingBottom="@dimen/small_padding"
+        android:layout_toRightOf="@id/exercise_image"
+        android:gravity="center"
+        android:textAppearance="@style/Textappearance.Trainer.Headline"
+        tools:text="Wyciskanie sztangi"/>
+
+    <TextView
+        android:id="@+id/set_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/exercise_image"
+        android:layout_alignBottom="@id/exercise_image"
+        android:layout_below="@id/name_text"
+        android:gravity="center"
+        android:text="@string/set_number_text"
+        android:textAppearance="@style/Textappearance.Trainer.Headline"
+        tools:text="1 / 4 Series"/>
+
+    <include
+        android:id="@+id/parenarea_divider"
+        layout="@layout/divider_horizontal"
+        android:layout_marginTop="@dimen/default_padding"
+        android:layout_marginBottom="@dimen/default_padding"
+        android:layout_below="@id/exercise_image"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
+
+    <TextView
+        android:id="@+id/guidelines_label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/parenarea_divider"
         android:textAppearance="@style/Textappearance.Trainer.Label"
-        android:text="@string/current"/>
+        android:text="@string/guidelines"/>
 
     <TextView
-        android:id="@+id/progress_text"
+        android:id="@+id/guidelines_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/guidelines_label"
+        android:paddingBottom="@dimen/small_padding"
+        android:textAppearance="@style/Textappearance.Trainer.ContinuousText"
+        tools:text="- Brace your butt to prevent from farting\n- Don't cheat by not lifting at all"/>
+
+    <TextView
+        android:id="@+id/comments_label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/guidelines_text"
+        android:textAppearance="@style/Textappearance.Trainer.Label"
+        android:text="@string/comments"/>
+
+    <TextView
+        android:id="@+id/comments_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/comments_label"
+        android:textAppearance="@style/Textappearance.Trainer.ContinuousText"
+        tools:text="- This exercise sucks if you do it backwards\n- Sucks even more when done properly"/>
+
+    <include
+        android:id="@+id/parenarea_divider2"
+        layout="@layout/divider_horizontal"
+        android:layout_marginTop="@dimen/default_padding"
+        android:layout_marginBottom="@dimen/default_padding"
+        android:layout_below="@id/comments_text"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
+
+    <View
+        android:id="@+id/sep"
+        android:layout_width="1dp"
+        android:layout_height="1dp"
+        android:layout_below="@id/parenarea_divider2"
+        android:layout_marginLeft="@dimen/default_padding"
+        android:layout_marginRight="@dimen/default_padding"
+        android:layout_alignTop="@id/parenarea_divider2"
+        android:layout_alignBottom="@+id/parenarea_divider3"
+        android:layout_centerHorizontal="true"
+        android:background="@color/colorPrimaryDark"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/parenarea_divider2"
+        android:layout_toLeftOf="@id/sep"
+        android:orientation="vertical">
+
+      <TextView
+          android:id="@+id/current_progress_label"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:gravity="center_horizontal"
+          android:paddingBottom="@dimen/small_padding"
+          android:textAppearance="@style/Textappearance.Trainer.Label"
+          android:text="@string/current"/>
+
+      <TextView
+          android:id="@+id/progress_text"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:gravity="center_horizontal"
+          android:textAppearance="@style/Textappearance.Trainer.ContinuousText"
+          tools:text="10kg x 15\n12,5kg x 12\n__kg x 10"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/last_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/parenarea_divider2"
+        android:layout_toRightOf="@id/sep"
+        android:orientation="vertical">
+
+      <TextView
+          android:id="@+id/last_progress_label"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:gravity="center_horizontal"
+          android:paddingBottom="@dimen/small_padding"
+          android:textAppearance="@style/Textappearance.Trainer.Label"
+          android:text="@string/last"/>
+
+      <TextView
+          android:id="@+id/last_progress_text"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:gravity="center_horizontal"
+          android:textAppearance="@style/Textappearance.Trainer.ContinuousText"
+          tools:text="10kg x 15\n12,5kg x 12\n15kg x 10"/>
+    </LinearLayout>
+
+    <include
+        android:id="@id/parenarea_divider3"
+        layout="@layout/divider_horizontal"
+        android:layout_marginTop="@dimen/default_padding"
+        android:layout_marginBottom="@dimen/default_padding"
+        android:layout_below="@id/last_container"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
+
+    <View
+        android:id="@+id/sep2"
+        android:layout_width="6dp"
+        android:layout_height="6dp"
+        android:layout_below="@id/parenarea_divider3"
+        android:layout_marginLeft="@dimen/default_padding"
+        android:layout_marginRight="@dimen/default_padding"
+        android:layout_centerHorizontal="true"/>
+
+    <EditText
+        android:id="@+id/weight_input"
+        android:layout_width="70dp"
+        android:layout_height="46dp"
+        android:layout_below="@id/parenarea_divider3"
+        android:inputType="numberDecimal"
+        android:layout_toLeftOf="@id/sep2"
+        android:gravity="center"
+
+        tools:text="10"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/weight_input"
+        android:layout_alignLeft="@id/sep2"
+        android:layout_alignRight="@id/sep2"
         android:gravity="center_horizontal"
         android:textAppearance="@style/Textappearance.Trainer.ContinuousText"
-        tools:text="10kg x 15\n12,5kg x 12\n__kg x 10"/>
-  </LinearLayout>
-
-  <LinearLayout
-      android:id="@+id/last_container"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_below="@id/parenarea_divider2"
-      android:layout_toRightOf="@id/sep"
-      android:orientation="vertical">
+        android:text="@string/per_x"/>
 
     <TextView
-        android:id="@+id/last_progress_label"
-        android:layout_width="match_parent"
+        android:id="@+id/weight_type_text"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:labelFor="@id/weight_input"
+        android:layout_below="@id/weight_input"
+        android:layout_alignLeft="@id/weight_input"
+        android:layout_alignRight="@id/weight_input"
         android:gravity="center_horizontal"
-        android:paddingBottom="@dimen/small_padding"
         android:textAppearance="@style/Textappearance.Trainer.Label"
-        android:text="@string/last"/>
+        tools:text="kg"/>
+
+    <EditText
+        android:id="@+id/rep_input"
+        android:layout_width="70dp"
+        android:layout_height="46dp"
+        android:layout_below="@id/parenarea_divider3"
+        android:inputType="numberDecimal"
+        android:layout_toRightOf="@id/sep2"
+        android:gravity="center"
+        tools:text="15"/>
 
     <TextView
-        android:id="@+id/last_progress_text"
+        android:id="@+id/rep_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:labelFor="@id/rep_input"
+        android:layout_below="@id/rep_input"
+        android:layout_alignLeft="@id/rep_input"
+        android:layout_alignRight="@id/rep_input"
+        android:gravity="center_horizontal"
+        android:textAppearance="@style/Textappearance.Trainer.Label"
+        android:text="@string/reps"/>
+
+    <Button
+        android:id="@+id/submit_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:textAppearance="@style/Textappearance.Trainer.ContinuousText"
-        tools:text="10kg x 15\n12,5kg x 12\n15kg x 10"/>
-  </LinearLayout>
+        android:layout_below="@id/weight_input"
+        android:layout_marginTop="32dp"
+        android:text="@string/submit"/>
 
-  <include
-      android:id="@id/parenarea_divider3"
-      layout="@layout/divider_horizontal"
-      android:layout_marginTop="@dimen/default_padding"
-      android:layout_marginBottom="@dimen/default_padding"
-      android:layout_below="@id/last_container"
-      android:layout_width="match_parent"
-      android:layout_height="1dp"/>
-
-  <View
-      android:id="@+id/sep2"
-      android:layout_width="6dp"
-      android:layout_height="6dp"
-      android:layout_below="@id/parenarea_divider3"
-      android:layout_marginLeft="@dimen/default_padding"
-      android:layout_marginRight="@dimen/default_padding"
-      android:layout_centerHorizontal="true"/>
-
-  <EditText
-      android:id="@+id/weight_input"
-      android:layout_width="70dp"
-      android:layout_height="46dp"
-      android:layout_below="@id/parenarea_divider3"
-      android:inputType="numberDecimal"
-      android:layout_toLeftOf="@id/sep2"
-      android:gravity="center"
-      tools:text="10"/>
-
-  <TextView
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_below="@id/weight_input"
-      android:layout_alignLeft="@id/sep2"
-      android:layout_alignRight="@id/sep2"
-      android:gravity="center_horizontal"
-      android:textAppearance="@style/Textappearance.Trainer.ContinuousText"
-      android:text="@string/per_x"/>
-
-  <TextView
-      android:id="@+id/weight_type_text"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:labelFor="@id/weight_input"
-      android:layout_below="@id/weight_input"
-      android:layout_alignLeft="@id/weight_input"
-      android:layout_alignRight="@id/weight_input"
-      android:gravity="center_horizontal"
-      android:textAppearance="@style/Textappearance.Trainer.Label"
-      tools:text="kg"/>
-
-  <EditText
-      android:id="@+id/rep_input"
-      android:layout_width="70dp"
-      android:layout_height="46dp"
-      android:layout_below="@id/parenarea_divider3"
-      android:inputType="numberDecimal"
-      android:layout_toRightOf="@id/sep2"
-      android:gravity="center"
-      tools:text="15"/>
-
-  <TextView
-      android:id="@+id/rep_label"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:labelFor="@id/rep_input"
-      android:layout_below="@id/rep_input"
-      android:layout_alignLeft="@id/rep_input"
-      android:layout_alignRight="@id/rep_input"
-      android:gravity="center_horizontal"
-      android:textAppearance="@style/Textappearance.Trainer.Label"
-      android:text="@string/reps"/>
-
-  <Button
-      android:id="@+id/submit_button"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_below="@id/weight_input"
-      android:layout_marginTop="32dp"
-      android:text="@string/submit"/>
-
-</RelativeLayout>
+  </RelativeLayout>
+</ScrollView>

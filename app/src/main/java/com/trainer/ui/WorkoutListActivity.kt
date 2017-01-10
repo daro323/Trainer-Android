@@ -11,6 +11,7 @@ import com.trainer.modules.training.Series.Set
 import com.trainer.modules.training.Series.SuperSet
 import com.trainer.modules.training.TrainingManager
 import com.trainer.ui.model.SetItem
+import com.trainer.ui.model.SetItemHolder
 import com.trainer.ui.model.SuperSetItem
 import com.trainer.ui.model.SuperSetItemHolder
 import com.trainer.utils.bindView
@@ -29,6 +30,7 @@ class WorkoutListActivity : BaseActivity(R.layout.activity_list) {
   private val typedAdapter: TypedViewHolderAdapter<Any> by lazy {
     TypedViewHolderAdapter.Builder<Any>()
         .addFactory(SuperSetItemHolder.factory{ openSerie(typedAdapter.data.indexOf(it)) })
+        .addFactory(SetItemHolder.factory{ openSerie(typedAdapter.data.indexOf(it)) })
         .build()
   }
 

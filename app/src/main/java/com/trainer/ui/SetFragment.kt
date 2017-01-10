@@ -9,6 +9,7 @@ import com.trainer.R
 import com.trainer.base.BaseFragment
 import com.trainer.d2.common.ActivityComponent
 import com.trainer.extensions.arg
+import com.trainer.extensions.reduceWithDefault
 import com.trainer.modules.training.Repetition
 import com.trainer.modules.training.Series.Set
 import com.trainer.modules.training.TrainingManager
@@ -50,23 +51,23 @@ class SetFragment : BaseFragment(R.layout.fragment_set) {
 
   override fun onStart() {
     super.onStart()
-    createUI(presenter.getSet(setId), presenter.getLastSet(setId))
+    createUI(presenter.getSet(setId))
     submitButton.setOnClickListener(onSubmitHandler)
   }
 
-  private fun createUI(set: Set, lastSet: Set) {
+  private fun createUI(set: Set) {
     set.apply {
       val iteration = if (progress.isEmpty()) 0 else progress.indexOf(progress.last())    // Counted from zero!
 
       imageView.setImageResource(set.exercise.imageRes)
       nameView.text = exercise.name
       setNumberView.text = String.format(getString(R.string.set_number_text), iteration + 1, seriesCount)
-      guidelinesView.text = guidelines.reduce { acc, guideline -> "$acc\n- $guideline" }
-      commentsView.text = exercise.comments.reduce { acc, comment -> "$acc\n- $comment" }
-      progressView.text = progress.map { "$it" }.reduce { acc, repetition -> "$acc\n$repetition"  }
-      lastProgressView.text = lastSet.progress.map { "$it" }.reduce { acc, repetition -> "$acc\n$repetition"  }
-      weightInputView.setText(lastSet.progress[iteration].weight)
-      repInputView.setText(lastSet.progress[iteration].repCount)
+      guidelinesView.text = guidelines.reduceWithDefault("", { item -> "- $item"}, { acc, guideline -> "$acc\n- $guideline" })
+      commentsView.text = exercise.comments.reduceWithDefault("", { item -> "- $item"}, { acc, guideline -> "$acc\n- $guideline" })
+      progressView.text = progress.map { "$it" }.reduceWithDefault("", { item -> item }, { acc, repetition -> "$acc\n$repetition"  })
+      lastProgressView.text = lastProgress.map { "$it" }.reduce { acc, repetition -> "$acc\n$repetition"  }
+      weightInputView.setText(lastProgress[iteration].weight.toString())
+      repInputView.setText(lastProgress[iteration].repCount.toString())
     }
   }
 

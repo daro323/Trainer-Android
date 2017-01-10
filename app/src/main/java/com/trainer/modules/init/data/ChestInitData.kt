@@ -51,24 +51,18 @@ class ChestInitData private constructor() {
             "Wracaj powoli"),
         R.drawable.ex_dumbell_curl)
 
-    fun createNewWorkout() = Workout(arrayListOf(
+    val CHEST_WORKOUT = Workout(arrayListOf(
         SuperSet(arrayListOf(
             createSet(BENCH_PRESS,
-                arrayListOf("Zrób 3 serie po 15, 10 i 8 repet.", "Po ostatniej od razu max z 80% obciążeniem."),
+                arrayListOf("Zrób 3 serie po 15, 10 i 8 repet.", "Po ostatniej od razu max z 80% obciążeniem.", "Dupa dupa dupa", "Dupa dupa dupa"),
                 4, 0),
             createSet(PULL_UPS,
                 arrayListOf("Zrób 3 serie na max repet"),
                 3, 60))
         ),
-        SuperSet(arrayListOf(
-            createSet(INCLINE_PRESS,
-                arrayListOf("Zrób 3 serie po 15, 10 i 8 repet.", "Po ostatniej od razu max z 80% obciążeniem."),
-                4, 0),
-            createSet(DUMBELL_ROW,
-                arrayListOf("Zrób 3 serie po 15, 12 i 10 repet.", "Po ostatniej od razu max z 80% obciążeniem."),
-                4, 60)
-
-        )),
+        createSet(INCLINE_PRESS,
+            arrayListOf("Zrób 3 serie po 15, 10 i 8 repet.", "Po ostatniej od razu max z 80% obciążeniem."),
+            4, 0),
         SuperSet(arrayListOf(
             createSet(SWEED_PUSHUP,
                 arrayListOf("Zrób 2 na max repet"),
