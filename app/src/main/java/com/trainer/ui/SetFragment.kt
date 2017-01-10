@@ -10,9 +10,9 @@ import com.trainer.base.BaseFragment
 import com.trainer.d2.common.ActivityComponent
 import com.trainer.extensions.arg
 import com.trainer.extensions.reduceWithDefault
-import com.trainer.modules.training.Repetition
 import com.trainer.modules.training.Series.Set
 import com.trainer.modules.training.TrainingManager
+import com.trainer.modules.training.WeightType.BODY_WEIGHT
 import com.trainer.modules.workout.WorkoutPresenter
 import com.trainer.ui.model.SetFragmentFieldValidator
 import com.trainer.utils.bindView
@@ -40,6 +40,7 @@ class SetFragment : BaseFragment(R.layout.fragment_set) {
   private val weightInputView: EditText by bindView(R.id.weight_input)
   private val repInputView: EditText by bindView(R.id.rep_input)
   private val submitButton: Button by bindView(R.id.submit_button)
+  private val weightTypeView: TextView by bindView(R.id.weight_type_text)
 
   companion object {
     const val SET_ID = "SET_ID"
@@ -58,7 +59,7 @@ class SetFragment : BaseFragment(R.layout.fragment_set) {
   private fun createUI(set: Set) {
     set.apply {
       val iteration = if (progress.isEmpty()) 0 else progress.indexOf(progress.last())    // Counted from zero!
-
+      val weightType = exercise.weightType
       imageView.setImageResource(set.exercise.imageRes)
       nameView.text = exercise.name
       setNumberView.text = String.format(getString(R.string.set_number_text), iteration + 1, seriesCount)
@@ -68,15 +69,17 @@ class SetFragment : BaseFragment(R.layout.fragment_set) {
       lastProgressView.text = lastProgress.map { "$it" }.reduce { acc, repetition -> "$acc\n$repetition"  }
       weightInputView.setText(lastProgress[iteration].weight.toString())
       repInputView.setText(lastProgress[iteration].repCount.toString())
+      weightInputView.isEnabled = weightType != BODY_WEIGHT
+      weightTypeView.text = if (weightType == BODY_WEIGHT) "N/A" else weightType.toString()
     }
   }
 
-  private fun weightValue() = Integer.valueOf(weightInputView.text.toString())
-  private fun repValue() = Integer.valueOf(repInputView.text.toString())
+  private fun weightValue() = if (weightInputView.isEnabled) weightInputView.text.toString().toFloat() else -1f
+  private fun repValue() = repInputView.text.toString().toInt()
 
   private val onSubmitHandler = { v: View ->
     if (FormValidator.validate(activity, fieldsToValidate, SimpleErrorPopupCallback(activity))) {
-      presenter.saveSetResult(Repetition(repValue(), weightValue()))
+      presenter.saveSetResult(weightValue(), repValue())
     }
   }
 }

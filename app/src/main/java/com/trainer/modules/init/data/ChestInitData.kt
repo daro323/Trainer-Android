@@ -4,6 +4,7 @@ import com.trainer.R
 import com.trainer.modules.training.Exercise
 import com.trainer.modules.training.Series.Set.Companion.createSet
 import com.trainer.modules.training.Series.SuperSet
+import com.trainer.modules.training.WeightType.BODY_WEIGHT
 import com.trainer.modules.training.Workout
 
 /**
@@ -20,7 +21,8 @@ class ChestInitData private constructor() {
         arrayListOf("Drążek musisz minąć brodą",
             "Ruch zatrzymuj na sekundę na górze",
             "Nogi skrzyżuj w kostkach i ugnij w kolanach"),
-        R.drawable.ex_pullups)
+        R.drawable.ex_pullups,
+        BODY_WEIGHT)
 
     private val INCLINE_PRESS = Exercise("Wyciskanie hantli na ławce skośnej",
         emptyList(),
@@ -32,7 +34,8 @@ class ChestInitData private constructor() {
 
     private val SWEED_PUSHUP = Exercise("Pompka szwedzka",
         emptyList(),
-        R.drawable.ex_sweed_pushup)
+        R.drawable.ex_sweed_pushup,
+        BODY_WEIGHT)
 
     private val DUMBELL_PUSHUP = Exercise("Pompka na hantlach",
         arrayListOf("Po obniżeniu zatrzymaj na sekundę ruch.",
@@ -60,9 +63,14 @@ class ChestInitData private constructor() {
                 arrayListOf("Zrób 3 serie na max repet"),
                 3, 60))
         ),
-        createSet(INCLINE_PRESS,
-            arrayListOf("Zrób 3 serie po 15, 10 i 8 repet.", "Po ostatniej od razu max z 80% obciążeniem."),
-            4, 0),
+        SuperSet(arrayListOf(
+            createSet(INCLINE_PRESS,
+                arrayListOf("Zrób 3 serie po 15, 10 i 8 repet.", "Po ostatniej od razu max z 80% obciążeniem."),
+                4, 0),
+            createSet(DUMBELL_ROW,
+                arrayListOf("Zrób 3 serie po 15, 12 i 10 repet.", "Po ostatniej od razu max z 80% obciążeniem."),
+                4, 60)
+        )),
         SuperSet(arrayListOf(
             createSet(SWEED_PUSHUP,
                 arrayListOf("Zrób 2 na max repet"),

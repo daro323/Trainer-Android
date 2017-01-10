@@ -3,10 +3,17 @@ package com.trainer.modules.training
 import android.support.annotation.DrawableRes
 import com.fasterxml.jackson.annotation.JsonSubTypes
 import com.fasterxml.jackson.annotation.JsonTypeInfo
+import com.trainer.modules.training.WeightType.BODY_WEIGHT
+import com.trainer.modules.training.WeightType.KG
 
 /**
  * Created by dariusz on 05/01/17.
  */
+
+enum class WeightType {
+  KG,
+  BODY_WEIGHT   // For this the weight value is not applicable
+}
 
 enum class TrainingCategory {
   CHEST,
@@ -27,12 +34,17 @@ data class Workout(val series: List<Series>) {
 
 data class Exercise(val name: String,
                     val comments: List<String>,
-                    @DrawableRes val imageRes: Int)
+                    @DrawableRes val imageRes: Int,
+                    val weightType: WeightType = KG)
 
-data class Repetition(val repCount: Int,  // TODO: Add weight type info
-                      val weight: Int) {
+data class Repetition(val repCount: Int,
+                      val weight: Float,
+                      val weightType: WeightType) {
 
-  override fun toString() = "$weight x $repCount"
+  override fun toString() = when(weightType) {
+    BODY_WEIGHT -> "$repCount reps"
+    else -> "$weight $weightType  [x]  $repCount"
+  }
 }
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY)
@@ -60,7 +72,7 @@ interface Series {
                     seriesCount: Int,
                     restTimeSec: Int,
                     progress: MutableList<Repetition> = mutableListOf(),
-                    lastProgress: List<Repetition> = (1..seriesCount).map { Repetition(0, 0) }.toList()) = Set((++instanceCounter).toString(), exercise, guidelines, seriesCount, restTimeSec, progress, lastProgress)
+                    lastProgress: List<Repetition> = (1..seriesCount).map { Repetition(0, 0f, exercise.weightType) }.toList()) = Set((++instanceCounter).toString(), exercise, guidelines, seriesCount, restTimeSec, progress, lastProgress)
     }
 
     override fun id() = _id
@@ -70,7 +82,7 @@ interface Series {
     override fun isComplete() = progress.size == seriesCount
 
     override fun skipRemaining() {
-      while (progress.size < seriesCount) progress.add(Repetition(0, 0))
+      while (progress.size < seriesCount) progress.add(Repetition(0, 0f, exercise.weightType))
     }
   }
 

@@ -1,9 +1,9 @@
 package com.trainer.modules.workout
 
-import com.trainer.modules.training.Repetition
 import com.trainer.modules.training.Series.Set
 import com.trainer.modules.training.Series.SuperSet
 import com.trainer.modules.training.TrainingDay
+import com.trainer.modules.training.WeightType.BODY_WEIGHT
 import rx.subjects.PublishSubject
 import javax.inject.Inject
 
@@ -42,7 +42,8 @@ class WorkoutPresenter @Inject constructor() {
     currentSerieIdx = index
   }
 
-  fun saveSetResult(result: Repetition) {
+  fun saveSetResult(weight: Float, rep: Int) {
+    if (weight < 0 && getCurrentSet().exercise.weightType != BODY_WEIGHT) throw IllegalArgumentException("Missing weight value! It's expected in saveSetResult for weight type= ${getCurrentSet().exercise.weightType}")
     // TODO
     // Add repetition to current set's progress
 
