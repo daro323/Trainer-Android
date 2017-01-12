@@ -12,7 +12,7 @@ interface ActivityComponent {
   fun inject(activity: BaseActivity)
   fun inject(activity: TrainingDaysListActivity)
   fun inject(activity: WorkoutListActivity)
-  fun inject(activity: SeriePagerActivity)
+  fun inject(activity: SerieActivity)
   fun inject(activity: RestActivity)
   fun inject(setFragment: SetFragment)
 }

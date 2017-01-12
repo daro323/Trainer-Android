@@ -23,6 +23,13 @@ enum class TrainingCategory {
   LEGS
 }
 
+enum class WorkoutEvent {
+  REST,
+  DO_NEXT_SET,
+  SERIE_COMPLETED,
+  WORKOUT_COMPLETED
+}
+
 data class TrainingDay(val category: TrainingCategory,
                        val workout: Workout,
                        val totalDone: Int = 0)
@@ -45,6 +52,10 @@ data class Repetition(val weight: Float,
     BODY_WEIGHT -> "$repCount reps"
     else -> "$weight $weightType  [x]  $repCount"
   }
+}
+
+interface WorkoutProvider {
+  fun provide(forTrainingCategory: TrainingCategory): Workout
 }
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY)
@@ -113,8 +124,4 @@ interface Series {
     
     override fun hashCode() = setList.hashCode()
   }
-}
-
-interface WorkoutProvider {
-  fun provide(forTrainingCategory: TrainingCategory): Workout
 }

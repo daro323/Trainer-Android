@@ -15,7 +15,8 @@ import com.trainer.extensions.reduceWithDefault
 import com.trainer.modules.training.Series.Set
 import com.trainer.modules.training.TrainingManager
 import com.trainer.modules.training.WeightType.BODY_WEIGHT
-import com.trainer.modules.workout.WorkoutPresenter
+import com.trainer.modules.training.WorkoutPresenter
+import com.trainer.modules.training.WorkoutPresenter.Companion.WEIGHT_NA_VALUE
 import com.trainer.ui.model.SetFragmentFieldValidator
 import com.trainer.utils.bindView
 import eu.inmite.android.lib.validations.form.FormValidator
@@ -103,7 +104,7 @@ class SetFragment : BaseFragment(R.layout.fragment_set) {
     }
   }
 
-  private fun weightValue() = if (weightInputView.isEnabled) weightInputView.text.toString().toFloat() else -1f
+  private fun weightValue() = if (weightInputView.isEnabled) weightInputView.text.toString().toFloat() else WEIGHT_NA_VALUE
   private fun repValue() = repInputView.text.toString().toInt()
 
   private val onSubmitHandler = { v: View ->

@@ -3,6 +3,8 @@ package com.trainer.ui
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.view.ViewPager
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View.GONE
 import android.widget.FrameLayout
 import com.trainer.R
@@ -14,16 +16,18 @@ import com.trainer.modules.training.Series
 import com.trainer.modules.training.Series.Set
 import com.trainer.modules.training.Series.SuperSet
 import com.trainer.modules.training.TrainingManager
-import com.trainer.modules.workout.WorkoutEvent
-import com.trainer.modules.workout.WorkoutEvent.*
-import com.trainer.modules.workout.WorkoutPresenter
+import com.trainer.modules.training.WorkoutEvent
+import com.trainer.modules.training.WorkoutEvent.*
+import com.trainer.modules.training.WorkoutPresenter
 import com.trainer.ui.RestActivity.Companion.EXTRA_REST_TIME_SEC
 import com.trainer.ui.SetFragment.Companion.SET_ID
 import com.trainer.utils.bindView
 import rx.subscriptions.Subscriptions
 import javax.inject.Inject
 
-class SeriePagerActivity : BaseActivity(R.layout.activity_set_pager) {
+
+
+class SerieActivity : BaseActivity(R.layout.activity_set_pager) {
 
   companion object {
     private val REST_REQUEST_CODE = 666
@@ -60,6 +64,22 @@ class SeriePagerActivity : BaseActivity(R.layout.activity_set_pager) {
     }
   }
 
+  override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+    val inflater = menuInflater
+    inflater.inflate(R.menu.serie_menu, menu)
+    return true
+  }
+
+  override fun onOptionsItemSelected(item: MenuItem): Boolean {
+    when(item.itemId) {
+      R.id.skip_serie -> {
+        presenter.skipSerie()
+        return true
+      }
+      else -> return super.onOptionsItemSelected(item)
+    }
+  }
+
   private fun subscribeForWorkoutEvents() {
     workoutEventsSubscription.unsubscribe()
     workoutEventsSubscription = presenter.onWorkoutEvent()
@@ -72,6 +92,7 @@ class SeriePagerActivity : BaseActivity(R.layout.activity_set_pager) {
       REST -> startForResult<RestActivity>(REST_REQUEST_CODE) { putExtra(EXTRA_REST_TIME_SEC, presenter.getRestTime()) }
       DO_NEXT_SET -> goToNextSet()
       SERIE_COMPLETED -> finish()
+      WORKOUT_COMPLETED -> NotImplementedError("WORKOUT_COMPLETED support todo")  // TODO
     }
   }
 

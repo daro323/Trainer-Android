@@ -1,7 +1,6 @@
 package com.trainer.modules.training
 
 import com.trainer.d2.scope.ApplicationScope
-import com.trainer.modules.workout.WorkoutPresenter
 import rx.Observable
 import javax.inject.Inject
 import javax.inject.Provider

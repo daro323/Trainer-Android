@@ -88,7 +88,7 @@ class WorkoutListActivity : BaseActivity(R.layout.activity_list) {
   private fun openSerie(index: Int) {
     trainingManager.workoutPresenter?.apply {
       selectSerie(index)
-      start<SeriePagerActivity>()
+      start<SerieActivity>()
     }
   }
 }

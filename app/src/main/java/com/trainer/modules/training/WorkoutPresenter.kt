@@ -1,12 +1,10 @@
-package com.trainer.modules.workout
+package com.trainer.modules.training
 
-import com.trainer.modules.training.Repetition
-import com.trainer.modules.training.Series
 import com.trainer.modules.training.Series.Set
 import com.trainer.modules.training.Series.SuperSet
-import com.trainer.modules.training.TrainingDay
 import com.trainer.modules.training.WeightType.BODY_WEIGHT
-import com.trainer.modules.workout.WorkoutEvent.REST
+import com.trainer.modules.training.WorkoutEvent.REST
+import com.trainer.modules.training.WorkoutEvent.SERIE_COMPLETED
 import rx.subjects.PublishSubject
 import javax.inject.Inject
 import kotlin.comparisons.compareBy
@@ -16,6 +14,10 @@ import kotlin.comparisons.compareBy
  * Created by dariusz on 06/01/17.
  */
 class WorkoutPresenter @Inject constructor() {
+
+  companion object {
+    val WEIGHT_NA_VALUE = -1f   // value for weight which is considered not applicable
+  }
 
   lateinit var trainingDay: TrainingDay
 
@@ -73,10 +75,28 @@ class WorkoutPresenter @Inject constructor() {
     if (restTime > 0) workoutEventsSubject.onNext(REST) else determineNextStep()
   }
 
+  fun skipSerie() {
+    val currentSerie = getCurrentSerie()
+    if (currentSerie.isComplete().not()) {
+      when(currentSerie) {
+        is Set -> skipSet(currentSerie)
+        is SuperSet -> currentSerie.setList.forEach { skipSet(it) }
+        else -> throw IllegalStateException("Can't skipSerie for unsupported serie type= ${currentSerie.javaClass}")
+      }
+    }
+    workoutEventsSubject.onNext(SERIE_COMPLETED)
+  }
+
   fun isCurrentSet(set: Set) = if (getCurrentSerie().isComplete()) false else getCurrentSet() == set  // TODO: Handle requests from other series
 
   fun restComplete() {
     determineNextStep()
+  }
+
+  private fun skipSet(set: Set) {
+    while (set.progress.size < set.seriesCount) {
+      set.progress.add(zeroRepetition(set))
+    }
   }
 
   /**
@@ -100,11 +120,16 @@ class WorkoutPresenter @Inject constructor() {
 
   private fun determineNextStep() {
     if (getCurrentSerie().isComplete()) {
-      workoutEventsSubject.onNext(WorkoutEvent.SERIE_COMPLETED)
+      workoutEventsSubject.onNext(SERIE_COMPLETED)
     } else {
       refreshCurrentSetIdx()
       workoutEventsSubject.onNext(WorkoutEvent.DO_NEXT_SET)
     }
+  }
+
+  private fun zeroRepetition(forSet: Set): Repetition {
+    val weightType = forSet.exercise.weightType
+    return Repetition(if (weightType == BODY_WEIGHT) WEIGHT_NA_VALUE else 0f, 0, weightType)
   }
 
   private fun getCurrentWeightType() = getCurrentSet().exercise.weightType
