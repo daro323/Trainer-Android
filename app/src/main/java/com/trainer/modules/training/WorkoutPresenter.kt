@@ -5,9 +5,8 @@ import com.trainer.modules.training.ProgressStatus.STARTED
 import com.trainer.modules.training.Series.Set
 import com.trainer.modules.training.Series.SuperSet
 import com.trainer.modules.training.WeightType.BODY_WEIGHT
-import com.trainer.modules.training.WorkoutEvent.REST
-import com.trainer.modules.training.WorkoutEvent.SERIE_COMPLETED
-import rx.subjects.PublishSubject
+import com.trainer.modules.training.WorkoutEvent.*
+import rx.subjects.BehaviorSubject
 import javax.inject.Inject
 
 /**
@@ -19,11 +18,12 @@ class WorkoutPresenter @Inject constructor() {
   companion object {
     val WEIGHT_NA_VALUE = -1f   // value for weight which is considered not applicable
     val NOT_SET_VALUE = -1
+    val DEFAULT_SET_INDEX = 0
   }
 
   lateinit var trainingDay: TrainingDay
 
-  val workoutEventsSubject = PublishSubject.create<WorkoutEvent>()
+  val workoutEventsSubject = BehaviorSubject.create<WorkoutEvent>()
 
   private var currentSerieIdx: Int = NOT_SET_VALUE
   private var currentSetIdx: Int = NOT_SET_VALUE
@@ -64,7 +64,7 @@ class WorkoutPresenter @Inject constructor() {
 
   fun selectSerie(index: Int) {
     currentSerieIdx = index
-    if (getCurrentSerie().getStatus() != COMPLETE) refreshCurrentSetIdx() else currentSetIdx = 0      // Upon open, show first set for completed serie by default
+    if (getCurrentSerie().getStatus() != COMPLETE) refreshCurrentSetIdx() else currentSetIdx = DEFAULT_SET_INDEX
   }
 
   fun saveSetResult(weight: Float, rep: Int) {
@@ -88,6 +88,14 @@ class WorkoutPresenter @Inject constructor() {
 
   fun restComplete() {
     determineNextStep()
+  }
+
+  fun serieCompleteHandled() {
+    if (getWorkoutStatus() == COMPLETE) {
+      workoutEventsSubject.onNext(WORKOUT_COMPLETED)
+    } else {
+      workoutEventsSubject.onNext(WorkoutEvent.DO_NEXT_SET)
+    }
   }
 
   private fun hasOtherSerieStarted() = getWorkoutList()
@@ -114,7 +122,10 @@ class WorkoutPresenter @Inject constructor() {
   }
 
   private fun determineNextStep() {
-    if (getCurrentSerie().getStatus() == COMPLETE) {
+    if (getWorkoutStatus() == COMPLETE) {
+      workoutEventsSubject.onNext(WORKOUT_COMPLETED)
+    } else if (getCurrentSerie().getStatus() == COMPLETE) {
+      currentSetIdx = DEFAULT_SET_INDEX
       workoutEventsSubject.onNext(SERIE_COMPLETED)
     } else {
       refreshCurrentSetIdx()

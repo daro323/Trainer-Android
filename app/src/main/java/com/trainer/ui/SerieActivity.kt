@@ -12,7 +12,6 @@ import com.trainer.base.BaseActivity
 import com.trainer.extensions.ioMain
 import com.trainer.extensions.startForResult
 import com.trainer.extensions.with
-import com.trainer.modules.training.ProgressStatus.COMPLETE
 import com.trainer.modules.training.Series
 import com.trainer.modules.training.Series.Set
 import com.trainer.modules.training.Series.SuperSet
@@ -61,10 +60,7 @@ class SerieActivity : BaseActivity(R.layout.activity_set_pager) {
   override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
     super.onActivityResult(requestCode, resultCode, data)
     when(requestCode) {
-      REST_REQUEST_CODE -> {
-        presenter.restComplete()
-        if (presenter.getCurrentSerie().getStatus() == COMPLETE) finish()
-      }
+      REST_REQUEST_CODE -> presenter.restComplete()
     }
   }
 
@@ -95,7 +91,10 @@ class SerieActivity : BaseActivity(R.layout.activity_set_pager) {
     when(workoutEvent) {
       REST -> startForResult<RestActivity>(REST_REQUEST_CODE) { putExtra(EXTRA_REST_TIME_SEC, presenter.getRestTime()) }
       DO_NEXT_SET -> goToNextSet()
-      SERIE_COMPLETED -> finish()
+      SERIE_COMPLETED -> {
+        presenter.serieCompleteHandled()
+        finish()
+      }
       else -> {}  // Ignore
     }
   }

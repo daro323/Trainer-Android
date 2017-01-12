@@ -29,6 +29,7 @@ class TrainingManager @Inject constructor(val repo: TrainingRepository,
   }
 
   fun completeWorkout() { // TODO
+    require(isWorkoutActive()) { "Can't complete workout - there is no workout started!" }
     // Clean up the TrainingDay (move workout to last workout)
 
     // Increase totalDone count
@@ -36,6 +37,7 @@ class TrainingManager @Inject constructor(val repo: TrainingRepository,
     // Save training day
 
     // Clear workout presenter
+    workoutPresenter = null
   }
 
   fun getTrainingDays(): Observable<List<TrainingDay>> {

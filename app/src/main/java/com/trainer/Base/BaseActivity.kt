@@ -22,7 +22,7 @@ abstract class BaseActivity(@LayoutRes private val layoutRes: Int = -1) : AppCom
     if (layoutRes != -1) setContentView(layoutRes)
   }
 
-  protected fun showPopupAlert(@StringRes messageId: Int, action: () -> Unit) {
+  protected fun showCancelablePopupAlert(@StringRes messageId: Int, action: () -> Unit) {
     showDialogSubscription.unsubscribe()
     val dialog = AlertDialog.Builder(this)
         .setMessage(messageId)
@@ -32,6 +32,20 @@ abstract class BaseActivity(@LayoutRes private val layoutRes: Int = -1) : AppCom
           dialog.dismiss()
         })
         .setNegativeButton(R.string.cancel, { dialog, which -> dialog.dismiss() })
+        .create()
+    dialog.show()
+    showDialogSubscription = Subscriptions.create { dialog.dismiss() }
+  }
+
+  protected fun showConfirmPopupAlert(@StringRes messageId: Int, action: () -> Unit) {
+    showDialogSubscription.unsubscribe()
+    val dialog = AlertDialog.Builder(this)
+        .setMessage(messageId)
+        .setCancelable(false)
+        .setPositiveButton(R.string.ok, { dialog, which ->
+          action()
+          dialog.dismiss()
+        })
         .create()
     dialog.show()
     showDialogSubscription = Subscriptions.create { dialog.dismiss() }
