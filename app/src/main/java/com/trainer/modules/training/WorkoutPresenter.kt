@@ -1,6 +1,7 @@
 package com.trainer.modules.training
 
 import com.trainer.modules.training.ProgressStatus.COMPLETE
+import com.trainer.modules.training.ProgressStatus.STARTED
 import com.trainer.modules.training.Series.Set
 import com.trainer.modules.training.Series.SuperSet
 import com.trainer.modules.training.WeightType.BODY_WEIGHT
@@ -18,14 +19,15 @@ class WorkoutPresenter @Inject constructor() {
 
   companion object {
     val WEIGHT_NA_VALUE = -1f   // value for weight which is considered not applicable
+    val NOT_SET_VALUE = -1
   }
 
   lateinit var trainingDay: TrainingDay
 
   val workoutEventsSubject = PublishSubject.create<WorkoutEvent>()
 
-  private var currentSerieIdx: Int = -1
-  private var currentSetIdx: Int = -1
+  private var currentSerieIdx: Int = NOT_SET_VALUE
+  private var currentSetIdx: Int = NOT_SET_VALUE
 
   fun onWorkoutEvent() = workoutEventsSubject.asObservable()
 
@@ -38,7 +40,7 @@ class WorkoutPresenter @Inject constructor() {
   fun getRestTime() = getCurrentSet().restTimeSec
 
   fun getCurrentSerie(): Series {
-    require(currentSerieIdx != -1) { "Current serie idx is not set!" }
+    require(currentSerieIdx != NOT_SET_VALUE) { "Current serie idx is not set!" }
     return trainingDay.workout.series[currentSerieIdx]
   }
 
@@ -52,7 +54,7 @@ class WorkoutPresenter @Inject constructor() {
 
   fun getCurrentSet(): Set {
     val currentSerie = getCurrentSerie()
-    if (currentSerie is SuperSet && currentSetIdx == -1) throw IllegalStateException("current Set idx was not set for current SuperSet!")
+    if (currentSerie is SuperSet && currentSetIdx == NOT_SET_VALUE) throw IllegalStateException("current Set idx was not set for current SuperSet!")
 
     return when (currentSerie) {
       is Set -> currentSerie
@@ -83,11 +85,15 @@ class WorkoutPresenter @Inject constructor() {
     workoutEventsSubject.onNext(SERIE_COMPLETED)
   }
 
-  fun isCurrentSet(set: Set) = if (getCurrentSerie().getStatus() == COMPLETE) false else getCurrentSet() == set  // TODO: Handle requests from other series
+  fun isCurrentSet(set: Set) = if (getCurrentSerie().getStatus() == COMPLETE || hasOtherSerieStarted()) false else getCurrentSet() == set
 
   fun restComplete() {
     determineNextStep()
   }
+
+  private fun hasOtherSerieStarted() = getWorkoutList()
+      .filter { it != getCurrentSerie() }
+      .any { it.getStatus() == STARTED }
 
   /**
    * Updates currentSetIdx in current Serie to next unfinished Set with the least progress.
@@ -96,7 +102,7 @@ class WorkoutPresenter @Inject constructor() {
   private fun refreshCurrentSetIdx() {
     val currentSerie = getCurrentSerie()
     currentSetIdx = when (currentSerie) {
-      is Set -> -1
+      is Set -> NOT_SET_VALUE
       is SuperSet -> currentSerie.setList
           .filter { it.getStatus() != COMPLETE }
           .sortedWith(compareBy { it.progress.size })
