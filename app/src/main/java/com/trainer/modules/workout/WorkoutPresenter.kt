@@ -99,7 +99,7 @@ class WorkoutPresenter @Inject constructor() {
   }
 
   private fun determineNextStep() {
-    if (getCurrentSet().isComplete()) {
+    if (getCurrentSerie().isComplete()) {
       workoutEventsSubject.onNext(WorkoutEvent.SERIE_COMPLETED)
     } else {
       refreshCurrentSetIdx()

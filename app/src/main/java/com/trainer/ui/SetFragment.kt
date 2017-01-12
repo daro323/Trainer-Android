@@ -31,6 +31,7 @@ class SetFragment : BaseFragment(R.layout.fragment_set) {
   private val presenter: WorkoutPresenter by lazy { trainingManager.workoutPresenter ?: throw IllegalStateException("Current workout not set!") }  // can call this only after component.inject()!
   private var setId: String by arg(SET_ID)
   private val fieldsToValidate: SetFragmentFieldValidator by lazy { SetFragmentFieldValidator(weightInputView, repInputView) }
+//  private val onInputViewClickListener = { view: View -> (view as EditText).setText("") }
 
   private val imageView: ImageView by bindView(R.id.exercise_image)
   private val nameView: TextView by bindView(R.id.name_text)
@@ -75,12 +76,14 @@ class SetFragment : BaseFragment(R.layout.fragment_set) {
       val weightType = exercise.weightType
       imageView.setImageResource(set.exercise.imageRes)
       nameView.text = exercise.name
-      guidelinesView.text = guidelines.reduceWithDefault("", { item -> "- $item"}, { acc, guideline -> "$acc\n- $guideline" })
-      commentsView.text = exercise.comments.reduceWithDefault("", { item -> "- $item"}, { acc, guideline -> "$acc\n- $guideline" })
-      lastProgressView.text = lastProgress.map { "$it" }.reduce { acc, repetition -> "$acc\n$repetition"  }
+      guidelinesView.text = guidelines.reduceWithDefault("", { item -> "- $item" }, { acc, guideline -> "$acc\n- $guideline" })
+      commentsView.text = exercise.comments.reduceWithDefault("", { item -> "- $item" }, { acc, guideline -> "$acc\n- $guideline" })
+      lastProgressView.text = lastProgress.map { "$it" }.reduce { acc, repetition -> "$acc\n$repetition" }
       weightInputView.isEnabled = weightType != BODY_WEIGHT
       weightTypeView.text = if (weightType == BODY_WEIGHT) "N/A" else weightType.toString()
-
+      // TODO: Fix mee
+//      weightInputView.setOnClickListener(onInputViewClickListener)
+//      repInputView.setOnClickListener(onInputViewClickListener)
       // create dynamic content
       refreshUi(this)
     }
@@ -88,11 +91,14 @@ class SetFragment : BaseFragment(R.layout.fragment_set) {
 
   private fun refreshUi(forSet: Set) {
     forSet.apply {
-      val iteration = if (progress.isEmpty()) 0 else progress.size   // Counted from zero!
-      setNumberView.text = String.format(getString(R.string.set_number_text), iteration + 1, seriesCount)
+      val iterationIdx = if (forSet.isComplete()) seriesCount - 1 else progress.size   // Counted from zero!
+      val iterationNumber = iterationIdx + 1
+      require(iterationNumber <= seriesCount) { "Invalid state! current iteration nr= $iterationNumber exceeded the total series count= $seriesCount" }
+
+      setNumberView.text = String.format(getString(R.string.set_number_text), iterationNumber, seriesCount)
       progressView.text = progress.map { "$it" }.reduceWithDefault("", { item -> item }, { acc, repetition -> "$acc\n$repetition" })
-      weightInputView.setText(lastProgress[iteration].weight.toString())
-      repInputView.setText(lastProgress[iteration].repCount.toString())
+      weightInputView.setText(lastProgress[iterationIdx].weight.toString())
+      repInputView.setText(lastProgress[iterationIdx].repCount.toString())
       setInputActive(presenter.isCurrentSet(forSet))
     }
   }
