@@ -36,6 +36,7 @@ class RestActivity : BaseActivity(R.layout.activity_rest) {
 
   override fun onStart() {
     super.onStart()
+    require(restTimeSec > 0) { "RestActivity invoked for a not set restTime value" }
     if (timerSubscription.isUnsubscribed) {
       progressView.apply {
         max = restTimeSec

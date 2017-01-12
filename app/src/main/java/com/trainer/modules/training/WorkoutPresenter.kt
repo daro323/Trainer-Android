@@ -9,7 +9,6 @@ import com.trainer.modules.training.WorkoutEvent.REST
 import com.trainer.modules.training.WorkoutEvent.SERIE_COMPLETED
 import rx.subjects.PublishSubject
 import javax.inject.Inject
-import kotlin.comparisons.compareBy
 
 /**
  * Operates on a training day.
@@ -58,14 +57,14 @@ class WorkoutPresenter @Inject constructor() {
 
     return when (currentSerie) {
       is Set -> currentSerie
-      is SuperSet -> if (currentSerie.getStatus() == COMPLETE) currentSerie.setList[0] else currentSerie.setList[currentSetIdx]  // show first set if serie completed
+      is SuperSet -> currentSerie.setList[currentSetIdx]
       else -> throw IllegalArgumentException("Can't getCurrentSet for unsupported serie type= ${currentSerie.javaClass}")
     }
   }
 
   fun selectSerie(index: Int) {
     currentSerieIdx = index
-    if (getCurrentSerie().getStatus() != COMPLETE) refreshCurrentSetIdx()
+    if (getCurrentSerie().getStatus() != COMPLETE) refreshCurrentSetIdx() else currentSetIdx = 0      // Upon open, show first set for completed serie by default
   }
 
   fun saveSetResult(weight: Float, rep: Int) {
@@ -105,7 +104,7 @@ class WorkoutPresenter @Inject constructor() {
       is Set -> NOT_SET_VALUE
       is SuperSet -> currentSerie.setList
           .filter { it.getStatus() != COMPLETE }
-          .sortedWith(compareBy { it.progress.size })
+          .sortedBy { it.progress.size }
           .first()
           .run {
             currentSerie.setList.indexOf(this)

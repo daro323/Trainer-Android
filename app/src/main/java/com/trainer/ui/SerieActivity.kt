@@ -12,6 +12,7 @@ import com.trainer.base.BaseActivity
 import com.trainer.extensions.ioMain
 import com.trainer.extensions.startForResult
 import com.trainer.extensions.with
+import com.trainer.modules.training.ProgressStatus.COMPLETE
 import com.trainer.modules.training.Series
 import com.trainer.modules.training.Series.Set
 import com.trainer.modules.training.Series.SuperSet
@@ -60,7 +61,10 @@ class SerieActivity : BaseActivity(R.layout.activity_set_pager) {
   override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
     super.onActivityResult(requestCode, resultCode, data)
     when(requestCode) {
-      REST_REQUEST_CODE -> presenter.restComplete()
+      REST_REQUEST_CODE -> {
+        presenter.restComplete()
+        if (presenter.getCurrentSerie().getStatus() == COMPLETE) finish()
+      }
     }
   }
 
@@ -92,7 +96,7 @@ class SerieActivity : BaseActivity(R.layout.activity_set_pager) {
       REST -> startForResult<RestActivity>(REST_REQUEST_CODE) { putExtra(EXTRA_REST_TIME_SEC, presenter.getRestTime()) }
       DO_NEXT_SET -> goToNextSet()
       SERIE_COMPLETED -> finish()
-      WORKOUT_COMPLETED -> NotImplementedError("WORKOUT_COMPLETED support todo")  // TODO
+      else -> {}  // Ignore
     }
   }
 
@@ -123,5 +127,6 @@ class SerieActivity : BaseActivity(R.layout.activity_set_pager) {
     setContainer.visibility = GONE
     adapter = SuperSetPagerAdapter(supportFragmentManager, superSet.setList)
     superSetPager.adapter = adapter
+    goToNextSet()
   }
 }
