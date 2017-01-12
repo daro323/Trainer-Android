@@ -1,5 +1,6 @@
 package com.trainer.ui
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v4.view.ViewPager
 import android.view.View.GONE
@@ -14,7 +15,7 @@ import com.trainer.modules.training.Series.Set
 import com.trainer.modules.training.Series.SuperSet
 import com.trainer.modules.training.TrainingManager
 import com.trainer.modules.workout.WorkoutEvent
-import com.trainer.modules.workout.WorkoutEvent.REST
+import com.trainer.modules.workout.WorkoutEvent.*
 import com.trainer.modules.workout.WorkoutPresenter
 import com.trainer.ui.RestActivity.Companion.EXTRA_REST_TIME_SEC
 import com.trainer.ui.SetFragment.Companion.SET_ID
@@ -24,9 +25,13 @@ import javax.inject.Inject
 
 class SeriePagerActivity : BaseActivity(R.layout.activity_set_pager) {
 
+  companion object {
+    private val REST_REQUEST_CODE = 666
+  }
+
   @Inject lateinit var trainingManager: TrainingManager
   private val presenter: WorkoutPresenter by lazy { trainingManager.workoutPresenter ?: throw IllegalStateException("Current workout not set!") }  // call this after component.inject()
-  private lateinit var adapter: SeriePagerAdapter
+  private lateinit var adapter: SuperSetPagerAdapter
   private var workoutEventsSubscription = Subscriptions.unsubscribed()
 
   private val superSetPager: ViewPager by bindView(R.id.pager_view)
@@ -48,6 +53,13 @@ class SeriePagerActivity : BaseActivity(R.layout.activity_set_pager) {
     super.onStop()
   }
 
+  override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+    super.onActivityResult(requestCode, resultCode, data)
+    when(requestCode) {
+      REST_REQUEST_CODE -> presenter.restComplete()
+    }
+  }
+
   private fun subscribeForWorkoutEvents() {
     workoutEventsSubscription.unsubscribe()
     workoutEventsSubscription = presenter.onWorkoutEvent()
@@ -55,31 +67,40 @@ class SeriePagerActivity : BaseActivity(R.layout.activity_set_pager) {
         .subscribe { handleWorkoutEvent(it) }
   }
 
-  private fun handleWorkoutEvent(workoutEvent: WorkoutEvent) {    // TODO
+  private fun handleWorkoutEvent(workoutEvent: WorkoutEvent) {
     when(workoutEvent) {
-      REST -> startForResult<RestActivity>(666) { putExtra(EXTRA_REST_TIME_SEC, presenter.getRestTime()) }
-      else -> throw NotImplementedError("handleWorkoutEvent not implemented for $workoutEvent")
+      REST -> startForResult<RestActivity>(REST_REQUEST_CODE) { putExtra(EXTRA_REST_TIME_SEC, presenter.getRestTime()) }
+      DO_NEXT_SET -> goToNextSet()
+      SERIE_COMPLETED -> finish()
     }
+  }
+
+  private fun goToNextSet() {
+    val currentSerie = presenter.getCurrentSerie()
+    require(currentSerie is SuperSet) { "goToNextSet can only be done in the context of a SuperSet" }
+
+    val currentSet = presenter.getCurrentSet()
+    superSetPager.currentItem = (currentSerie as SuperSet).setList.indexOf(currentSet)
   }
 
   private fun showSerie(serie: Series) {
     when(serie) {
-      is Set -> { showSet(serie) }
-      is SuperSet -> { showSuperSet(serie) }
+      is Set -> { showSerieAsSet(serie) }
+      is SuperSet -> { showSerieAsSuperSet(serie) }
       else -> throw UnsupportedOperationException("Can't show Serie for unsupported type= ${serie.javaClass}")
     }
   }
 
-  private fun showSet(set: Set) {
+  private fun showSerieAsSet(set: Set) {
     superSetPager.visibility = GONE
     supportFragmentManager.beginTransaction().apply {
       add(R.id.container, SetFragment().with(SET_ID to set.id()))
     }.commit()
   }
 
-  private fun showSuperSet(superSet: SuperSet) {
+  private fun showSerieAsSuperSet(superSet: SuperSet) {
     setContainer.visibility = GONE
-    adapter = SeriePagerAdapter(supportFragmentManager, superSet.setList)
+    adapter = SuperSetPagerAdapter(supportFragmentManager, superSet.setList)
     superSetPager.adapter = adapter
   }
 }

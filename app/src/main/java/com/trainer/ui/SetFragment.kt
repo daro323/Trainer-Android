@@ -60,23 +60,41 @@ class SetFragment : BaseFragment(R.layout.fragment_set) {
     submitButton.setOnClickListener(onSubmitHandler)
   }
 
+  override fun setUserVisibleHint(isVisibleToUser: Boolean) {
+    super.setUserVisibleHint(isVisibleToUser)
+    try {
+      if (isVisibleToUser) refreshUi(presenter.getSet(setId))
+    } catch (e: UninitializedPropertyAccessException) {
+      // Ignore - this callback came too early (earlier than component was injected)
+    }
+  }
+
   private fun createUI(set: Set) {
     set.apply {
-      val iteration = if (progress.isEmpty()) 0 else progress.indexOf(progress.last())    // Counted from zero!
+      // create static content
       val weightType = exercise.weightType
       imageView.setImageResource(set.exercise.imageRes)
       nameView.text = exercise.name
-      setNumberView.text = String.format(getString(R.string.set_number_text), iteration + 1, seriesCount)
       guidelinesView.text = guidelines.reduceWithDefault("", { item -> "- $item"}, { acc, guideline -> "$acc\n- $guideline" })
       commentsView.text = exercise.comments.reduceWithDefault("", { item -> "- $item"}, { acc, guideline -> "$acc\n- $guideline" })
-      progressView.text = progress.map { "$it" }.reduceWithDefault("", { item -> item }, { acc, repetition -> "$acc\n$repetition"  })
       lastProgressView.text = lastProgress.map { "$it" }.reduce { acc, repetition -> "$acc\n$repetition"  }
-      weightInputView.setText(lastProgress[iteration].weight.toString())
-      repInputView.setText(lastProgress[iteration].repCount.toString())
       weightInputView.isEnabled = weightType != BODY_WEIGHT
       weightTypeView.text = if (weightType == BODY_WEIGHT) "N/A" else weightType.toString()
+
+      // create dynamic content
+      refreshUi(this)
     }
-    setInputActive(presenter.isCurrentSet(setId))
+  }
+
+  private fun refreshUi(forSet: Set) {
+    forSet.apply {
+      val iteration = if (progress.isEmpty()) 0 else progress.size   // Counted from zero!
+      setNumberView.text = String.format(getString(R.string.set_number_text), iteration + 1, seriesCount)
+      progressView.text = progress.map { "$it" }.reduceWithDefault("", { item -> item }, { acc, repetition -> "$acc\n$repetition" })
+      weightInputView.setText(lastProgress[iteration].weight.toString())
+      repInputView.setText(lastProgress[iteration].repCount.toString())
+      setInputActive(presenter.isCurrentSet(forSet))
+    }
   }
 
   private fun weightValue() = if (weightInputView.isEnabled) weightInputView.text.toString().toFloat() else -1f

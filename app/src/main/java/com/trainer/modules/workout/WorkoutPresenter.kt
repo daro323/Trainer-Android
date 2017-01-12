@@ -1,10 +1,12 @@
 package com.trainer.modules.workout
 
+import com.trainer.modules.training.Repetition
 import com.trainer.modules.training.Series
 import com.trainer.modules.training.Series.Set
 import com.trainer.modules.training.Series.SuperSet
 import com.trainer.modules.training.TrainingDay
 import com.trainer.modules.training.WeightType.BODY_WEIGHT
+import com.trainer.modules.workout.WorkoutEvent.REST
 import rx.subjects.PublishSubject
 import javax.inject.Inject
 import kotlin.comparisons.compareBy
@@ -45,21 +47,37 @@ class WorkoutPresenter @Inject constructor() {
     }
   }?.run { if (this is SuperSet) setList.find { it.id() == setId } else this } as Set? ?: throw IllegalArgumentException("No set found for ID= $setId")
 
+  fun getCurrentSet(): Set {
+    val currentSerie = getCurrentSerie()
+    if (currentSerie is SuperSet && currentSetIdx == -1) throw IllegalStateException("current Set idx was not set for current SuperSet!")
+
+    return when (currentSerie) {
+      is Set -> currentSerie
+      is SuperSet -> if (currentSerie.isComplete()) currentSerie.setList[0] else currentSerie.setList[currentSetIdx]  // show first set if serie completed
+      else -> throw IllegalArgumentException("Can't getCurrentSet for unsupported serie type= ${currentSerie.javaClass}")
+    }
+  }
+
   fun selectSerie(index: Int) {
     currentSerieIdx = index
-    refreshCurrentSetIdx()
+    if (getCurrentSerie().isComplete().not()) refreshCurrentSetIdx()
   }
 
   fun saveSetResult(weight: Float, rep: Int) {
-    if (weight < 0 && getCurrentSet().exercise.weightType != BODY_WEIGHT) throw IllegalArgumentException("Missing weight value! It's expected in saveSetResult for weight type= ${getCurrentSet().exercise.weightType}")
-    // TODO
-    // Add repetition to current set's progress
+    val currentSet = getCurrentSet()
+    if (weight < 0 && currentSet.exercise.weightType != BODY_WEIGHT) throw IllegalArgumentException("Missing weight value! It's expected in saveSetResult for weight type= ${getCurrentSet().exercise.weightType}")
 
-    refreshCurrentSetIdx()
-    // Fire event (rest or next Set or complete)
+    currentSet.progress.add(Repetition(weight, rep, getCurrentWeightType()))
+
+    val restTime = currentSet.restTimeSec
+    if (restTime > 0) workoutEventsSubject.onNext(REST) else determineNextStep()
   }
 
-  fun isCurrentSet(setId: String) = getCurrentSet().id() == setId
+  fun isCurrentSet(set: Set) = if (getCurrentSerie().isComplete()) false else getCurrentSet() == set  // TODO: Handle requests from other series
+
+  fun restComplete() {
+    determineNextStep()
+  }
 
   /**
    * Updates currentSetIdx in current Serie to next unfinished Set with the least progress.
@@ -80,14 +98,14 @@ class WorkoutPresenter @Inject constructor() {
     }
   }
 
-  private fun getCurrentSet(): Set {
-    val currentSerie = getCurrentSerie()
-    if (currentSerie is SuperSet && currentSetIdx == -1) throw IllegalStateException("current Set idx was not set for current SuperSet!")
-
-    return when (currentSerie) {
-      is Set -> currentSerie
-      is SuperSet -> currentSerie.setList[currentSetIdx]
-      else -> throw IllegalArgumentException("Can't getCurrentSet for unsupported serie type= ${currentSerie.javaClass}")
+  private fun determineNextStep() {
+    if (getCurrentSet().isComplete()) {
+      workoutEventsSubject.onNext(WorkoutEvent.SERIE_COMPLETED)
+    } else {
+      refreshCurrentSetIdx()
+      workoutEventsSubject.onNext(WorkoutEvent.DO_NEXT_SET)
     }
   }
+
+  private fun getCurrentWeightType() = getCurrentSet().exercise.weightType
 }

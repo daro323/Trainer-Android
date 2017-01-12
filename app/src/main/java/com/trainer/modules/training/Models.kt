@@ -37,8 +37,8 @@ data class Exercise(val name: String,
                     @DrawableRes val imageRes: Int,
                     val weightType: WeightType = KG)
 
-data class Repetition(val repCount: Int,
-                      val weight: Float,
+data class Repetition(val weight: Float,
+                      val repCount: Int,
                       val weightType: WeightType) {
 
   override fun toString() = when(weightType) {
@@ -72,7 +72,7 @@ interface Series {
                     seriesCount: Int,
                     restTimeSec: Int,
                     progress: MutableList<Repetition> = mutableListOf(),
-                    lastProgress: List<Repetition> = (1..seriesCount).map { Repetition(0, 0f, exercise.weightType) }.toList()) = Set((++instanceCounter).toString(), exercise, guidelines, seriesCount, restTimeSec, progress, lastProgress)
+                    lastProgress: List<Repetition> = (1..seriesCount).map { Repetition(0f, 0, exercise.weightType) }.toList()) = Set((++instanceCounter).toString(), exercise, guidelines, seriesCount, restTimeSec, progress, lastProgress)
     }
 
     override fun id() = _id
@@ -82,7 +82,19 @@ interface Series {
     override fun isComplete() = progress.size == seriesCount
 
     override fun skipRemaining() {
-      while (progress.size < seriesCount) progress.add(Repetition(0, 0f, exercise.weightType))
+      while (progress.size < seriesCount) progress.add(Repetition(0f, 0, exercise.weightType))
+    }
+
+    override fun equals(other: Any?) = other is Set && other.id() == this.id()
+    
+    override fun hashCode() = _id.hashCode().run {
+      var result = 31 * this + exercise.hashCode()
+      result = 31 * result + guidelines.hashCode()
+      result = 31 * result + seriesCount
+      result = 31 * result + restTimeSec
+      result = 31 * result + progress.hashCode()
+      result = 31 * result + lastProgress.hashCode()
+      result
     }
   }
 
@@ -96,6 +108,10 @@ interface Series {
     override fun isComplete() = setList.all(Series::isComplete)
 
     override fun skipRemaining() = setList.forEach(Series::skipRemaining)
+
+    override fun equals(other: Any?) = other is SuperSet && other.id() == this.id()
+    
+    override fun hashCode() = setList.hashCode()
   }
 }
 
