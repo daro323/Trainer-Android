@@ -39,7 +39,12 @@ enum class ProgressStatus {
 
 data class TrainingDay(val category: TrainingCategory,
                        val workout: Workout,
-                       val totalDone: Int = 0)
+                       private var totalDone: Int = 0) {
+
+  fun increaseDoneCount() { totalDone++ }
+
+  fun getTotalDone() = totalDone
+}
 
 data class Workout(val series: List<Series>) {
   fun getStatus() = when {
@@ -77,6 +82,7 @@ interface Series {
   fun id(): String
   fun getStatus(): ProgressStatus
   fun skipRemaining()
+  fun complete()
 
   data class Set private constructor(private val _id: String,
                                      val exercise: Exercise,
@@ -109,6 +115,12 @@ interface Series {
       while (progress.size < seriesCount) progress.add(Repetition(0f, 0, exercise.weightType))
     }
 
+    override fun complete() {
+      require(progress.size == seriesCount) { "Attempt to mark set as complete when there is still some missing progress!" }
+      lastProgress = progress
+      progress = mutableListOf()
+    }
+
     override fun equals(other: Any?) = other is Set && other.id() == this.id()
 
     override fun hashCode() = _id.hashCode().run {
@@ -135,6 +147,8 @@ interface Series {
     }
 
     override fun skipRemaining() = setList.forEach(Series::skipRemaining)
+
+    override fun complete() = setList.forEach(Series::complete)
 
     override fun equals(other: Any?) = other is SuperSet && other.id() == this.id()
 
