@@ -33,7 +33,7 @@ class SetFragment : BaseFragment(R.layout.fragment_set) {
   private val presenter: WorkoutPresenter by lazy { trainingManager.workoutPresenter ?: throw IllegalStateException("Current workout not set!") }  // can call this only after component.inject()!
   private var setId: String by arg(SET_ID)
   private val fieldsToValidate: SetFragmentFieldValidator by lazy { SetFragmentFieldValidator(weightInputView, repInputView) }
-//  private val onInputViewClickListener = { view: View -> (view as EditText).setText("") }
+  private val onInputFocusListener = { view: View, hasFocus: Boolean -> if (hasFocus) (view as EditText).setText("") }
 
   private val imageView: ImageView by bindView(R.id.exercise_image)
   private val nameView: TextView by bindView(R.id.name_text)
@@ -83,9 +83,8 @@ class SetFragment : BaseFragment(R.layout.fragment_set) {
       lastProgressView.text = lastProgress.map { "$it" }.reduce { acc, repetition -> "$acc\n$repetition" }
       weightInputView.isEnabled = weightType != BODY_WEIGHT
       weightTypeView.text = if (weightType == BODY_WEIGHT) "N/A" else weightType.toString()
-      // TODO: Fix mee
-//      weightInputView.setOnClickListener(onInputViewClickListener)
-//      repInputView.setOnClickListener(onInputViewClickListener)
+      weightInputView.setOnFocusChangeListener(onInputFocusListener)
+      repInputView.setOnFocusChangeListener(onInputFocusListener)
       // create dynamic content
       refreshUi(this)
     }
