@@ -1,5 +1,6 @@
 package com.trainer.modules.training
 
+import com.trainer.modules.training.ProgressStatus.COMPLETE
 import com.trainer.modules.training.Series.Set
 import com.trainer.modules.training.Series.SuperSet
 import com.trainer.modules.training.WeightType.BODY_WEIGHT
@@ -30,7 +31,7 @@ class WorkoutPresenter @Inject constructor() {
 
   fun getWorkoutList() = trainingDay.workout.series
 
-  fun isWorkoutComplete() = trainingDay.workout.isComplete()
+  fun getWorkoutStatus() = trainingDay.workout.getStatus()
 
   fun getWorkoutTitle() = trainingDay.category.name
 
@@ -55,14 +56,14 @@ class WorkoutPresenter @Inject constructor() {
 
     return when (currentSerie) {
       is Set -> currentSerie
-      is SuperSet -> if (currentSerie.isComplete()) currentSerie.setList[0] else currentSerie.setList[currentSetIdx]  // show first set if serie completed
+      is SuperSet -> if (currentSerie.getStatus() == COMPLETE) currentSerie.setList[0] else currentSerie.setList[currentSetIdx]  // show first set if serie completed
       else -> throw IllegalArgumentException("Can't getCurrentSet for unsupported serie type= ${currentSerie.javaClass}")
     }
   }
 
   fun selectSerie(index: Int) {
     currentSerieIdx = index
-    if (getCurrentSerie().isComplete().not()) refreshCurrentSetIdx()
+    if (getCurrentSerie().getStatus() != COMPLETE) refreshCurrentSetIdx()
   }
 
   fun saveSetResult(weight: Float, rep: Int) {
@@ -77,26 +78,15 @@ class WorkoutPresenter @Inject constructor() {
 
   fun skipSerie() {
     val currentSerie = getCurrentSerie()
-    if (currentSerie.isComplete().not()) {
-      when(currentSerie) {
-        is Set -> skipSet(currentSerie)
-        is SuperSet -> currentSerie.setList.forEach { skipSet(it) }
-        else -> throw IllegalStateException("Can't skipSerie for unsupported serie type= ${currentSerie.javaClass}")
-      }
-    }
+    if (currentSerie.getStatus() != COMPLETE) currentSerie.skipRemaining()
+
     workoutEventsSubject.onNext(SERIE_COMPLETED)
   }
 
-  fun isCurrentSet(set: Set) = if (getCurrentSerie().isComplete()) false else getCurrentSet() == set  // TODO: Handle requests from other series
+  fun isCurrentSet(set: Set) = if (getCurrentSerie().getStatus() == COMPLETE) false else getCurrentSet() == set  // TODO: Handle requests from other series
 
   fun restComplete() {
     determineNextStep()
-  }
-
-  private fun skipSet(set: Set) {
-    while (set.progress.size < set.seriesCount) {
-      set.progress.add(zeroRepetition(set))
-    }
   }
 
   /**
@@ -108,7 +98,7 @@ class WorkoutPresenter @Inject constructor() {
     currentSetIdx = when (currentSerie) {
       is Set -> -1
       is SuperSet -> currentSerie.setList
-          .filter { it.isComplete().not() }
+          .filter { it.getStatus() != COMPLETE }
           .sortedWith(compareBy { it.progress.size })
           .first()
           .run {
@@ -119,17 +109,12 @@ class WorkoutPresenter @Inject constructor() {
   }
 
   private fun determineNextStep() {
-    if (getCurrentSerie().isComplete()) {
+    if (getCurrentSerie().getStatus() == COMPLETE) {
       workoutEventsSubject.onNext(SERIE_COMPLETED)
     } else {
       refreshCurrentSetIdx()
       workoutEventsSubject.onNext(WorkoutEvent.DO_NEXT_SET)
     }
-  }
-
-  private fun zeroRepetition(forSet: Set): Repetition {
-    val weightType = forSet.exercise.weightType
-    return Repetition(if (weightType == BODY_WEIGHT) WEIGHT_NA_VALUE else 0f, 0, weightType)
   }
 
   private fun getCurrentWeightType() = getCurrentSet().exercise.weightType

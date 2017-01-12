@@ -3,6 +3,7 @@ package com.trainer.modules.training
 import android.support.annotation.DrawableRes
 import com.fasterxml.jackson.annotation.JsonSubTypes
 import com.fasterxml.jackson.annotation.JsonTypeInfo
+import com.trainer.modules.training.ProgressStatus.*
 import com.trainer.modules.training.WeightType.BODY_WEIGHT
 import com.trainer.modules.training.WeightType.KG
 
@@ -30,13 +31,23 @@ enum class WorkoutEvent {
   WORKOUT_COMPLETED
 }
 
+enum class ProgressStatus {
+  NEW,
+  STARTED,
+  COMPLETE
+}
+
 data class TrainingDay(val category: TrainingCategory,
                        val workout: Workout,
                        val totalDone: Int = 0)
 
 data class Workout(val series: List<Series>) {
-  fun isStarted() = series.any(Series::isStarted)
-  fun isComplete() = series.all(Series::isComplete)
+  fun getStatus() = when {
+    series.all { it.getStatus() == NEW } -> NEW
+    series.all { it.getStatus() == COMPLETE } -> COMPLETE
+    series.any { it.getStatus() == STARTED || it.getStatus() == COMPLETE } -> STARTED
+    else -> throw IllegalStateException("Can't determine status of Workout= $this")
+  }
 }
 
 data class Exercise(val name: String,
@@ -48,7 +59,7 @@ data class Repetition(val weight: Float,
                       val repCount: Int,
                       val weightType: WeightType) {
 
-  override fun toString() = when(weightType) {
+  override fun toString() = when (weightType) {
     BODY_WEIGHT -> "$repCount reps"
     else -> "$weight $weightType  [x]  $repCount"
   }
@@ -64,8 +75,7 @@ interface WorkoutProvider {
     JsonSubTypes.Type(value = Series.SuperSet::class, name = "SuperSet"))
 interface Series {
   fun id(): String
-  fun isStarted(): Boolean
-  fun isComplete(): Boolean
+  fun getStatus(): ProgressStatus
   fun skipRemaining()
 
   data class Set private constructor(private val _id: String,
@@ -88,16 +98,19 @@ interface Series {
 
     override fun id() = _id
 
-    override fun isStarted() = progress.size in 1 until seriesCount
-
-    override fun isComplete() = progress.size == seriesCount
+    override fun getStatus() = when {
+      progress.isEmpty() -> NEW
+      progress.size < seriesCount -> STARTED
+      progress.size == seriesCount -> COMPLETE
+      else -> throw IllegalStateException("Current progress= ${progress.size} exceeds total series count= $seriesCount")
+    }
 
     override fun skipRemaining() {
       while (progress.size < seriesCount) progress.add(Repetition(0f, 0, exercise.weightType))
     }
 
     override fun equals(other: Any?) = other is Set && other.id() == this.id()
-    
+
     override fun hashCode() = _id.hashCode().run {
       var result = 31 * this + exercise.hashCode()
       result = 31 * result + guidelines.hashCode()
@@ -114,14 +127,17 @@ interface Series {
         .map(Series::id)
         .reduce { acc, item -> "$acc$item" }
 
-    override fun isStarted() = setList.any(Series::isStarted)
-
-    override fun isComplete() = setList.all(Series::isComplete)
+    override fun getStatus() = when {
+      setList.all { it.getStatus() == NEW } -> NEW
+      setList.all { it.getStatus() == COMPLETE } -> COMPLETE
+      setList.any { it.getStatus() == STARTED || it.getStatus() == COMPLETE } -> STARTED
+      else -> throw IllegalStateException("Can't determine status of SuperSet= $this")
+    }
 
     override fun skipRemaining() = setList.forEach(Series::skipRemaining)
 
     override fun equals(other: Any?) = other is SuperSet && other.id() == this.id()
-    
+
     override fun hashCode() = setList.hashCode()
   }
 }

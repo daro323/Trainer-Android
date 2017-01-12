@@ -16,13 +16,13 @@ class TrainingManager @Inject constructor(val repo: TrainingRepository,
     private set
 
   fun startWorkout(forCategory: TrainingCategory) {
-    require(isWorkoutStarted().not()) { "Can't start new workout - there is one already started!" }
+    require(isWorkoutActive().not()) { "Can't start new workout - there is one already started!" }
     workoutPresenter = workoutPresenterProvider
         .get()
         .apply { trainingDay = repo.getTrainingDay(forCategory) }
   }
 
-  fun isWorkoutStarted() = workoutPresenter != null
+  fun isWorkoutActive() = workoutPresenter != null
 
   fun abortWorkout() {
     workoutPresenter = null

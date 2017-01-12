@@ -1,6 +1,7 @@
 package com.trainer.ui.model
 
 import android.support.annotation.DrawableRes
+import android.support.v4.content.ContextCompat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,7 +10,9 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.trainer.R
+import com.trainer.modules.training.ProgressStatus
 import com.trainer.modules.training.TrainingCategory
+import com.trainer.utils.TrainingUtils.Companion.getColorRes
 import com.trainer.utils.bindView
 import com.trainer.utils.typedviewholder.TypedViewHolder
 import com.trainer.utils.typedviewholder.TypedViewHolderFactory
@@ -48,10 +51,12 @@ class TrainingDayItemHolder(parent: ViewGroup,
 }
 
 data class SetItem(@DrawableRes val imageRes: Int,
-                   val name: String)
+                   val name: String,
+                   val status: ProgressStatus)
 
 data class SuperSetItem(@DrawableRes val imageResList: List<Int>,
-                        val namesList: List<String>)
+                        val namesList: List<String>,
+                        val status: ProgressStatus)
 
 class SuperSetItemHolder(parent: ViewGroup,
                          private val onClick: (SuperSetItem) -> Any) : TypedViewHolder<SuperSetItem>(R.layout.super_set_container_item, parent) {
@@ -77,6 +82,7 @@ class SuperSetItemHolder(parent: ViewGroup,
     dataItem.imageResList.forEachIndexed { i, imageRes ->
       container.addView(createSetView(LayoutInflater.from(context), imageRes, dataItem.namesList[i], i == dataItem.imageResList.lastIndex))
     }
+    container.setBackgroundColor(ContextCompat.getColor(context, getColorRes(dataItem.status)))
   }
 
   private fun createSetView(inflater: LayoutInflater, @DrawableRes setImageRes: Int, setName: String, isLast: Boolean): View {
@@ -113,6 +119,7 @@ class SetItemHolder(parent: ViewGroup,
     model = dataItem
     nameText.text = model.name
     imageView.setImageResource(model.imageRes)
+    container.setBackgroundColor(ContextCompat.getColor(context, getColorRes(dataItem.status)))
   }
 }
 

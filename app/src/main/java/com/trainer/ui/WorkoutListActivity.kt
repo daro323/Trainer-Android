@@ -6,10 +6,12 @@ import android.support.v7.widget.RecyclerView
 import com.trainer.R
 import com.trainer.base.BaseActivity
 import com.trainer.extensions.start
+import com.trainer.modules.training.ProgressStatus.STARTED
 import com.trainer.modules.training.Series
 import com.trainer.modules.training.Series.Set
 import com.trainer.modules.training.Series.SuperSet
 import com.trainer.modules.training.TrainingManager
+import com.trainer.modules.training.WorkoutPresenter
 import com.trainer.ui.model.SetItem
 import com.trainer.ui.model.SetItemHolder
 import com.trainer.ui.model.SuperSetItem
@@ -25,12 +27,13 @@ import javax.inject.Inject
 class WorkoutListActivity : BaseActivity(R.layout.activity_list) {
 
   @Inject lateinit var trainingManager: TrainingManager
+  private val presenter: WorkoutPresenter by lazy { trainingManager.workoutPresenter ?: throw IllegalStateException("Current workout not set!") }  // can call this only after component.inject()!
 
   private val recyclerView: RecyclerView by bindView(R.id.recycler_view)
   private val typedAdapter: TypedViewHolderAdapter<Any> by lazy {
     TypedViewHolderAdapter.Builder<Any>()
-        .addFactory(SuperSetItemHolder.factory{ openSerie(typedAdapter.data.indexOf(it)) })
-        .addFactory(SetItemHolder.factory{ openSerie(typedAdapter.data.indexOf(it)) })
+        .addFactory(SuperSetItemHolder.factory { openSerie(typedAdapter.data.indexOf(it)) })
+        .addFactory(SetItemHolder.factory { openSerie(typedAdapter.data.indexOf(it)) })
         .build()
   }
 
@@ -41,34 +44,34 @@ class WorkoutListActivity : BaseActivity(R.layout.activity_list) {
 
   override fun onStart() {
     super.onStart()
+    require(trainingManager.isWorkoutActive()) { "WorkoutListActivity was shown for non active workout!" }
     recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
     recyclerView.adapter = typedAdapter
-
-    trainingManager.workoutPresenter?.apply {
-      title = String.format(getString(R.string.workout), this.getWorkoutTitle())
-      showWorkoutList(this.getWorkoutList())
-    }
+    title = String.format(getString(R.string.workout), presenter.getWorkoutTitle())
+    showWorkoutList(presenter.getWorkoutList())
   }
 
   override fun onBackPressed() {
-    if (trainingManager.isWorkoutStarted()) {
+    if (presenter.getWorkoutStatus() == STARTED) {
       showPopupAlert(R.string.confirm_workout_abort, {
         trainingManager.abortWorkout()
         finish()
       })
-    } else super.onBackPressed()
+    } else {
+      trainingManager.abortWorkout()
+      super.onBackPressed()
+    }
   }
 
   private fun showWorkoutList(list: List<Series>) {
     val result = ArrayList<Any>(list.size)
 
     list.forEach { serie ->
-      when(serie) {
+      when (serie) {
         is SuperSet -> result.add(createSuperSetItem(serie))
-        is Set -> result.add(SetItem(serie.exercise.imageRes, serie.exercise.name))
+        is Set -> result.add(SetItem(serie.exercise.imageRes, serie.exercise.name, serie.getStatus()))
       }
     }
-
     typedAdapter.data = result
   }
 
@@ -82,13 +85,11 @@ class WorkoutListActivity : BaseActivity(R.layout.activity_list) {
           imageResList.add(exercise.imageRes)
           namesList.add(exercise.name)
         }
-    return SuperSetItem(imageResList, namesList)
+    return SuperSetItem(imageResList, namesList, superSet.getStatus())
   }
 
   private fun openSerie(index: Int) {
-    trainingManager.workoutPresenter?.apply {
-      selectSerie(index)
-      start<SerieActivity>()
-    }
+    presenter.selectSerie(index)
+    start<SerieActivity>()
   }
 }

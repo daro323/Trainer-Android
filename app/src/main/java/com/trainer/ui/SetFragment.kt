@@ -12,6 +12,7 @@ import com.trainer.base.BaseFragment
 import com.trainer.d2.common.ActivityComponent
 import com.trainer.extensions.arg
 import com.trainer.extensions.reduceWithDefault
+import com.trainer.modules.training.ProgressStatus.COMPLETE
 import com.trainer.modules.training.Series.Set
 import com.trainer.modules.training.TrainingManager
 import com.trainer.modules.training.WeightType.BODY_WEIGHT
@@ -92,7 +93,7 @@ class SetFragment : BaseFragment(R.layout.fragment_set) {
 
   private fun refreshUi(forSet: Set) {
     forSet.apply {
-      val iterationIdx = if (forSet.isComplete()) seriesCount - 1 else progress.size   // Counted from zero!
+      val iterationIdx = if (forSet.getStatus() == COMPLETE) seriesCount - 1 else progress.size   // Counted from zero!
       val iterationNumber = iterationIdx + 1
       require(iterationNumber <= seriesCount) { "Invalid state! current iteration nr= $iterationNumber exceeded the total series count= $seriesCount" }
 
