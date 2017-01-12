@@ -15,10 +15,12 @@ import com.trainer.d2.scope.ApplicationScope
 import dagger.Module
 import dagger.Provides
 
-private const val PREFS_NAME = "weff43r2f34f23ff-wef3"
-
 @Module
 class AppModule(private val app: BaseApplication) {
+
+  companion object {
+    private const val PREFS_NAME = "weff43r2f34f23ff-wef3"
+  }
 
   @Provides @ApplicationScope
   fun provideApplication(): Application {

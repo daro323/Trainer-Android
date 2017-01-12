@@ -16,6 +16,8 @@ android {
     versionCode 1
     versionName "beta 1"
     testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+    buildConfigField 'String', 'REL_PATH_TO_PLANS', '"/TrainerApp/training_plans/"'
   }
   buildTypes {
     release {

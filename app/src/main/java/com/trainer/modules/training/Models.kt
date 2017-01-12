@@ -37,6 +37,12 @@ enum class ProgressStatus {
   COMPLETE
 }
 
+data class TrainingPlan(val name: String,
+                        val trainingDays: List<TrainingDay>) {
+
+  fun getTrainingDay(forCategory: TrainingCategory) = trainingDays.find { it.category == forCategory }
+}
+
 data class TrainingDay(val category: TrainingCategory,
                        val workout: Workout,
                        private var totalDone: Int = 0) {
@@ -68,10 +74,6 @@ data class Repetition(val weight: Float,
     BODY_WEIGHT -> "$repCount reps"
     else -> "$weight $weightType  [x]  $repCount"
   }
-}
-
-interface WorkoutProvider {
-  fun provide(forTrainingCategory: TrainingCategory): Workout
 }
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY)

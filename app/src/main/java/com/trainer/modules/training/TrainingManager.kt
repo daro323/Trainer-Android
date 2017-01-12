@@ -1,7 +1,6 @@
 package com.trainer.modules.training
 
 import com.trainer.d2.scope.ApplicationScope
-import rx.Observable
 import javax.inject.Inject
 import javax.inject.Provider
 
@@ -11,7 +10,7 @@ import javax.inject.Provider
 @ApplicationScope
 class TrainingManager @Inject constructor(val repo: TrainingRepository,
                                           val workoutPresenterProvider: Provider<WorkoutPresenter>) {
-
+  private var trainingPlan: TrainingPlan? = null
   var workoutPresenter: WorkoutPresenter? = null
     private set
 
@@ -19,10 +18,10 @@ class TrainingManager @Inject constructor(val repo: TrainingRepository,
     require(isWorkoutActive().not()) { "Can't start new workout - there is one already started!" }
     workoutPresenter = workoutPresenterProvider
         .get()
-        .apply { trainingDay = repo.getTrainingDay(forCategory) }
+        .apply { trainingDay = getTrainingPlan()?.getTrainingDay(forCategory) ?: throw IllegalStateException("trainingPlan not loaded!") }
   }
 
-  fun isWorkoutActive() = workoutPresenter != null
+  fun isWorkoutActive() = workoutPresenter != null && trainingPlan != null
 
   fun abortWorkout() {
     workoutPresenter = null
@@ -37,18 +36,25 @@ class TrainingManager @Inject constructor(val repo: TrainingRepository,
 
       // Increase totalDone count
       this.trainingDay.increaseDoneCount()
-
-      // Save training day
-      repo.saveTrainingDay(this.trainingDay)
     }
 
-    // Clear workout presenter
-    workoutPresenter = null
+    trainingPlan?.apply { repo.saveTrainingPlan(this) }
+    reset()
   }
 
-  fun getTrainingDays(): Observable<List<TrainingDay>> {
-    return Observable.from(TrainingCategory.values())
-        .map { repo.getTrainingDay(it) }
-        .toList()
+  fun getTrainingDays() = getTrainingPlan()?.trainingDays ?: throw IllegalStateException("trainingPlan not loaded!")
+
+  fun getTrainingPlanName() = getTrainingPlan()?.name ?: throw IllegalStateException("trainingPlan not loaded!")
+
+  private fun getTrainingPlan(): TrainingPlan? {
+    if (trainingPlan == null) {
+      trainingPlan = repo.getTrainingPlan()
+    }
+    return trainingPlan
+  }
+
+  private fun reset() {
+    workoutPresenter = null
+    trainingPlan = null
   }
 }

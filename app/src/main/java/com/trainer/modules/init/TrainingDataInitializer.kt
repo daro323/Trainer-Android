@@ -2,10 +2,7 @@ package com.trainer.modules.init
 
 import android.util.Log
 import com.trainer.d2.scope.ApplicationScope
-import com.trainer.modules.training.TrainingCategory
-import com.trainer.modules.training.TrainingDay
 import com.trainer.modules.training.TrainingRepository
-import com.trainer.modules.training.WorkoutProvider
 import javax.inject.Inject
 
 /**
@@ -13,27 +10,26 @@ import javax.inject.Inject
  */
 @ApplicationScope
 class TrainingDataInitializer @Inject constructor(val trainingRepo: TrainingRepository,
-                                                  val workoutProvider: WorkoutProvider) {
+                                                  val initProvider: InitDataWorkoutProvider) {
   companion object {
     val TAG = "INIT"
   }
 
   init {
-    TrainingCategory.values().forEach { training ->
-      if (isTrainingInitialized(training).not()) {
-        Log.d(TAG, "init $training")
-        trainingRepo.saveTrainingDay(TrainingDay(training, workoutProvider.provide(training)))
-      }
+    if (isTrainingPlanInitialized().not()) {
+      val trainingPlan = initProvider.provideTrainingPlan()
+      Log.d(TAG, "initializing training plan= ${trainingPlan.name}")
+      trainingRepo.saveTrainingPlan(trainingPlan)
     }
   }
 
-  private fun isTrainingInitialized(trainingCategory: TrainingCategory): Boolean {
+  private fun isTrainingPlanInitialized(): Boolean {
     try {
-      trainingRepo.getTrainingDay(trainingCategory)
-      Log.d(TAG, "Training of type= $trainingCategory already initialized.")
+      val trainingPlan = trainingRepo.getTrainingPlan()
+      Log.d(TAG, "Training plan already initialized to= ${trainingPlan.name}")
       return true
     } catch (e: IllegalArgumentException) {
-      Log.d(TAG, "Training of type= $trainingCategory in not yet initialized.")
+      Log.d(TAG, "Training plan not yet initialized.")
       return false
     }
   }

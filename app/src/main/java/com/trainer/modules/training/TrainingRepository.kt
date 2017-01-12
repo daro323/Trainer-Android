@@ -7,24 +7,27 @@ import com.trainer.extensions.saveString
 import javax.inject.Inject
 
 /**
+ * Currently one plan at a time can be loaded into the app.
  * Created by dariusz on 05/01/17.
  */
 @ApplicationScope
 class TrainingRepository @Inject constructor(val sharedPrefs: SharedPreferences,
                                              val mapper: ObjectMapper) {
+  companion object {
+    private val PLAN_NAME_KEY = "PLAN_NAME_KEY"
+  }
 
-  fun getTrainingDay(forCategory: TrainingCategory): TrainingDay {
-    val trainingDayJson = sharedPrefs.getString(forCategory.toString(), null)
-    require(trainingDayJson != null) { "No Training day found for $forCategory" }
+  fun getTrainingPlan(): TrainingPlan {
+    val trainingPlanJson = sharedPrefs.getString(PLAN_NAME_KEY, null)
+    require(trainingPlanJson != null) { "No Training Plan found" }
 
-    return mapper.readValue(trainingDayJson, TrainingDay::class.java)
+    return mapper.readValue(trainingPlanJson, TrainingPlan::class.java)
   }
 
   /**
-   * Replaces currently stored Training day with the one from parameter.
-   * It expects to have the current workout cleaned out (workout data moved to lastWorkout)
+   * Replaces currently stored Training Plan with the one from parameter.
    */
-  fun saveTrainingDay(trainingDay: TrainingDay) {
-    sharedPrefs.saveString(trainingDay.category.toString(), mapper.writeValueAsString(trainingDay))
+  fun saveTrainingPlan(trainingPlan: TrainingPlan) {
+    sharedPrefs.saveString(PLAN_NAME_KEY, mapper.writeValueAsString(trainingPlan))
   }
 }

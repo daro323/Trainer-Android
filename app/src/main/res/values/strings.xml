@@ -1,6 +1,5 @@
 <resources>
   <string name="app_name">Trainer</string>
-  <string name="select_training">Select Training</string>
   <string name="workout">%s Workout</string>
   <string name="confirm_workout_abort">Workout not completed, abort?</string>
 
