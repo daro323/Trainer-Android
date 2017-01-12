@@ -18,6 +18,7 @@ android {
     testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
     buildConfigField 'String', 'REL_PATH_TO_PLANS', '"/TrainerApp/training_plans/"'
+    buildConfigField 'String', 'PLAN_FILE_NAME_TEMPLATE', '"%s.pln"'
   }
   buildTypes {
     release {

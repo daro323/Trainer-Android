@@ -19,4 +19,6 @@
   <string name="countdown_text">%s sec</string>
   <string name="empty_field">Empty field!</string>
   <string name="workout_complete">Workout complete!</string>
+  <string name="import_plan">Import Plan</string>
+  <string name="export_plan">Export Plan</string>
 </resources>

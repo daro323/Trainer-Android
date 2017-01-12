@@ -2,22 +2,23 @@ package com.trainer.modules.init
 
 import android.util.Log
 import com.trainer.d2.scope.ApplicationScope
-import com.trainer.modules.training.TrainingRepository
+import com.trainer.modules.init.data.ChestInitData
+import com.trainer.modules.training.*
 import javax.inject.Inject
 
 /**
  * Created by dariusz on 05/01/17.
  */
 @ApplicationScope
-class TrainingDataInitializer @Inject constructor(val trainingRepo: TrainingRepository,
-                                                  val initProvider: InitDataWorkoutProvider) {
+class TrainingDataInitializer @Inject constructor(val trainingRepo: TrainingRepository) {
   companion object {
     val TAG = "INIT"
+    private val INIT_WORKOUT_PLAN_NAME = "Menshilf Plan"
   }
 
   init {
     if (isTrainingPlanInitialized().not()) {
-      val trainingPlan = initProvider.provideTrainingPlan()
+      val trainingPlan = provideTrainingPlan()
       Log.d(TAG, "initializing training plan= ${trainingPlan.name}")
       trainingRepo.saveTrainingPlan(trainingPlan)
     }
@@ -31,6 +32,21 @@ class TrainingDataInitializer @Inject constructor(val trainingRepo: TrainingRepo
     } catch (e: IllegalArgumentException) {
       Log.d(TAG, "Training plan not yet initialized.")
       return false
+    }
+  }
+
+  private fun provideTrainingPlan(): TrainingPlan {
+    val initTrainingDays = TrainingCategory.values().flatMap { category -> listOf(provideTrainingDay(category)) }
+    return TrainingPlan(INIT_WORKOUT_PLAN_NAME, initTrainingDays)
+  }
+
+  private fun provideTrainingDay(forTrainingCategory: TrainingCategory): TrainingDay {
+    return when(forTrainingCategory) {
+      TrainingCategory.CHEST -> TrainingDay(forTrainingCategory, ChestInitData.CHEST_WORKOUT)
+      else -> {
+        Log.w("INIT_DATA_PROVIDER", "No init data available for category= $forTrainingCategory - returning an empty workout...")
+        TrainingDay(forTrainingCategory, Workout(emptyList()))
+      }
     }
   }
 }

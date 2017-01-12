@@ -3,9 +3,12 @@ package com.trainer.ui
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.view.Menu
+import android.view.MenuItem
 import com.trainer.R
 import com.trainer.base.BaseActivity
 import com.trainer.extensions.start
+import com.trainer.modules.export.ExportManager
 import com.trainer.modules.training.TrainingManager
 import com.trainer.ui.model.TrainingDayItem
 import com.trainer.ui.model.TrainingDayItemHolder
@@ -19,6 +22,7 @@ import javax.inject.Inject
 class TrainingDaysListActivity : BaseActivity(R.layout.activity_list) {
 
   @Inject lateinit var trainingManager: TrainingManager
+  @Inject lateinit var exportManager: ExportManager
 
   private val recyclerView: RecyclerView by bindView(R.id.recycler_view)
   private val typedAdapter: TypedViewHolderAdapter<Any> by lazy {
@@ -43,6 +47,25 @@ class TrainingDaysListActivity : BaseActivity(R.layout.activity_list) {
     recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
     recyclerView.adapter = typedAdapter
     showTrainingDays()
+  }
+
+  override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+    val inflater = menuInflater
+    inflater.inflate(R.menu.training_plan_menu, menu)
+    return true
+  }
+
+  override fun onOptionsItemSelected(item: MenuItem): Boolean {
+    when(item.itemId) {
+      R.id.import_plan -> {
+        return true
+      }
+      R.id.export_plan -> {
+        exportManager.exportCurrentTrainingPlan()
+        return true
+      }
+      else -> return super.onOptionsItemSelected(item)
+    }
   }
 
   private fun showTrainingDays() {

@@ -1,6 +1,8 @@
 package com.trainer.extensions
 
 import android.content.SharedPreferences
+import java.io.File
+
 
 /**
  * Created by dariusz on 05/01/17.
@@ -21,4 +23,10 @@ inline fun <S, T: S> Iterable<T>.reduceWithDefault(default: S, firstOperation: (
     accumulator = operation(accumulator, iterator.next())
   }
   return accumulator
+}
+
+fun File.writeString(data: String) {
+  delete()
+  createNewFile()
+  writeText(data)
 }
