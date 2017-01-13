@@ -15,3 +15,53 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
+
+# Data Model
+-keep public class com.trainer.modules.training.** {
+   *;
+}
+
+# OkHttp
+-dontwarn okhttp3.**
+
+# Picasso
+-dontwarn com.squareup.okhttp.**
+
+# Jackson
+-keepattributes *Annotation*,EnclosingMethod,Signature
+-keepnames class com.fasterxml.jackson.** { *; }
+-dontwarn com.fasterxml.jackson.databind.**
+-dontnote com.fasterxml.jackson.databind.**
+-keep class org.codehaus.** { *; }
+-dontnote org.codehaus.**
+
+-keepclassmembers public final enum org.codehaus.jackson.annotate.JsonAutoDetect$Visibility {
+    public static final org.codehaus.jackson.annotate.JsonAutoDetect$Visibility *;
+}
+
+# RxJava
+-dontwarn org.mockito.**
+-dontwarn org.junit.**
+-dontwarn org.robolectric.**
+-dontwarn sun.misc.**
+
+-keepclassmembers class rx.internal.util.unsafe.*ArrayQueue*Field* {
+   long producerIndex;
+   long consumerIndex;
+}
+
+-keepclassmembers class rx.internal.util.unsafe.BaseLinkedQueueProducerNodeRef {
+   long producerNode;
+   long consumerNode;
+}
+
+# Kotlin
+-keep class kotlin.** { *;}
+-dontnote kotlin.**
+
+# Android support libraries
+-dontwarn android.support.**
+-dontnote android.support.**
+
+# Other
+-keep @android.support.annotation.Keep class * {*;}

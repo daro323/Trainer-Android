@@ -14,16 +14,33 @@ android {
     minSdkVersion 15
     targetSdkVersion 25
     versionCode 1
-    versionName "beta 1"
+    versionName "1.0"
     testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
     buildConfigField 'String', 'REL_PATH_TO_PLANS', '"/TrainerApp/training_plans/"'
     buildConfigField 'String', 'PLAN_FILE_NAME_TEMPLATE', '"%s.pln"'
+
+    project.ext.set("appName", "Trainer")
   }
+
+  signingConfigs {
+    releasekey {
+      storeFile file("../trainer.keystore")
+      storePassword "L7!uG)8yQXWG7]=E"
+      keyPassword "x4X+*(3y6XxuswtO"
+      keyAlias "trainer_release"
+    }
+  }
+
   buildTypes {
     release {
-      minifyEnabled false
+      minifyEnabled true
       proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+      signingConfig signingConfigs.releasekey
+    }
+
+    debug {
+      versionNameSuffix "-DEBUG"
     }
   }
   sourceSets {
@@ -31,6 +48,13 @@ android {
   }
   packagingOptions {
     exclude 'META-INF/LICENSE'
+  }
+
+  // Set APK name
+  applicationVariants.all { variant ->
+    variant.outputs.each { output ->
+      output.outputFile = new File(output.outputFile.parent, "${appName}-${variant.versionName}.apk")
+    }
   }
 }
 
