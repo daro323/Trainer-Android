@@ -24,17 +24,15 @@ class ChestInitData private constructor() {
         BODY_WEIGHT)
 
     private val INCLINE_PRESS = Exercise("Wyciskanie hantli na ławce skośnej",
-        emptyList(),
-        R.drawable.ex_incline_press)
+        imageRes = R.drawable.ex_incline_press)
 
     private val DUMBELL_ROW = Exercise("Wiosłowanie hantlą",
         arrayListOf("Przyciągaj hantlę do boku klatki piersiowej", "Wykonuj z jedną hantlą na raz"),
         R.drawable.ex_dumbell_row)
 
     private val SWEED_PUSHUP = Exercise("Pompka szwedzka",
-        emptyList(),
-        R.drawable.ex_sweed_pushup,
-        BODY_WEIGHT)
+        imageRes = R.drawable.ex_sweed_pushup,
+        weightType = BODY_WEIGHT)
 
     private val DUMBELL_PUSHUP = Exercise("Pompka na hantlach",
         arrayListOf("Po obniżeniu zatrzymaj na sekundę ruch.",
@@ -56,7 +54,7 @@ class ChestInitData private constructor() {
     val CHEST_WORKOUT = Workout(arrayListOf(
         SuperSet(arrayListOf(
             createSet(BENCH_PRESS,
-                arrayListOf("Zrób 3 serie po 15, 10 i 8 repet.", "Po ostatniej od razu max z 80% obciążeniem.", "Dupa dupa dupa", "Dupa dupa dupa"),
+                arrayListOf("Zrób 3 serie po 15, 10 i 8 repet.", "Po ostatniej od razu max z 80% obciążeniem."),
                 4, 0),
             createSet(PULL_UPS,
                 arrayListOf("Zrób 3 serie na max repet"),

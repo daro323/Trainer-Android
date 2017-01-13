@@ -63,7 +63,7 @@ data class Workout(val series: List<Series>) {
 }
 
 data class Exercise(val name: String,
-                    val comments: List<String>,
+                    val comments: List<String> = emptyList(),
                     @DrawableRes val imageRes: Int = R.mipmap.ic_exercise_default,
                     val weightType: WeightType = KG)
 

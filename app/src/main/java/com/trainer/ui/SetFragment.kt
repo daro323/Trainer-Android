@@ -40,6 +40,7 @@ class SetFragment : BaseFragment(R.layout.fragment_set) {
   private val setNumberView: TextView by bindView(R.id.set_text)
   private val guidelinesView: TextView by bindView(R.id.guidelines_text)
   private val commentsView: TextView by bindView(R.id.comments_text)
+  private val commentsLabelView: TextView by bindView(R.id.comments_label)
   private val progressView: TextView by bindView(R.id.progress_text)
   private val lastProgressView: TextView by bindView(R.id.last_progress_text)
   private val weightInputView: EditText by bindView(R.id.weight_input)
@@ -79,7 +80,16 @@ class SetFragment : BaseFragment(R.layout.fragment_set) {
       imageView.setImageResource(set.exercise.imageRes)
       nameView.text = exercise.name
       guidelinesView.text = guidelines.reduceWithDefault("", { item -> "- $item" }, { acc, guideline -> "$acc\n- $guideline" })
-      commentsView.text = exercise.comments.reduceWithDefault("", { item -> "- $item" }, { acc, guideline -> "$acc\n- $guideline" })
+
+      if (exercise.comments.isEmpty()) {
+        commentsLabelView.visibility = GONE
+        commentsView.visibility = GONE
+      } else {
+        commentsLabelView.visibility = VISIBLE
+        commentsView.visibility = VISIBLE
+        commentsView.text = exercise.comments.reduceWithDefault("", { item -> "- $item" }, { acc, guideline -> "$acc\n- $guideline" })
+      }
+
       lastProgressView.text = lastProgress.map { "$it" }.reduce { acc, repetition -> "$acc\n$repetition" }
       weightInputView.isEnabled = weightType != BODY_WEIGHT
       weightTypeView.text = if (weightType == BODY_WEIGHT) "N/A" else weightType.toString()

@@ -101,7 +101,7 @@ class SerieActivity : BaseActivity(R.layout.activity_set_pager) {
 
   private fun goToNextSet() {
     val currentSerie = presenter.getCurrentSerie()
-    require(currentSerie is SuperSet) { "goToNextSet can only be done in the context of a SuperSet" }
+    if(currentSerie is Set) return   // Ignore
 
     val currentSet = presenter.getCurrentSet()
     superSetPager.currentItem = (currentSerie as SuperSet).setList.indexOf(currentSet)
