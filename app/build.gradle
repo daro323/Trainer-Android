@@ -75,6 +75,9 @@ dependencies {
   // Form validation
   compile 'eu.inmite.android.lib:android-validation-komensky:0.9.4@aar'
 
+  // File picker
+  compile 'com.github.angads25:filepicker:1.0.6'
+
   // TESTING
   testCompile "junit:junit:$junit_version"
   testCompile "org.powermock:powermock-module-junit4:$powermock_version"

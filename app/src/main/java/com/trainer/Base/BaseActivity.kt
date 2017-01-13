@@ -5,10 +5,15 @@ import android.support.annotation.LayoutRes
 import android.support.annotation.StringRes
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
+import com.github.angads25.filepicker.model.DialogConfigs.FILE_SELECT
+import com.github.angads25.filepicker.model.DialogConfigs.SINGLE_MODE
+import com.github.angads25.filepicker.model.DialogProperties
+import com.github.angads25.filepicker.view.FilePickerDialog
 import com.trainer.R
 import com.trainer.d2.common.ActivityComponent
 import rx.Subscription
 import rx.subscriptions.Subscriptions
+import java.io.File
 
 /**
  * Created by dariusz on 05/01/17.
@@ -61,6 +66,22 @@ abstract class BaseActivity(@LayoutRes private val layoutRes: Int = -1) : AppCom
           dialog.dismiss()
         })
         .create()
+    dialog.show()
+    showDialogSubscription = Subscriptions.create { dialog.dismiss() }
+  }
+
+  protected fun showFilePickerDialog(rootFile: File, action: (filePath: String) -> Unit) {
+    showDialogSubscription.unsubscribe()
+    val properties = DialogProperties().apply {
+      selection_mode = SINGLE_MODE
+      selection_type = FILE_SELECT
+      root = rootFile
+    }
+
+    val dialog = FilePickerDialog(this, properties).apply {
+      title = getString(R.string.select_plan_file)
+      setDialogSelectionListener { action(it[0]) }
+    }
     dialog.show()
     showDialogSubscription = Subscriptions.create { dialog.dismiss() }
   }

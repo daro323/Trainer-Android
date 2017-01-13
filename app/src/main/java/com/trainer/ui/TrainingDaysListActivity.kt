@@ -57,9 +57,18 @@ class TrainingDaysListActivity : BaseActivity(R.layout.activity_list) {
   }
 
   override fun onOptionsItemSelected(item: MenuItem): Boolean {
-    when(item.itemId) {
+    when (item.itemId) {
       R.id.import_plan -> {
-        // TODO Show file picker
+        exportManager.getTrainingStorageDir()?.run {
+          showFilePickerDialog(this) {
+            exportManager.importTrainingPlan(it)
+                .ioMain()
+                .subscribe(
+                    { showConfirmPopupAlert(R.string.import_successful) },
+                    { error -> showConfirmPopupAlert("${getString(R.string.import_failure)}: '${error.message}'") })
+          }
+        } ?: showConfirmPopupAlert(R.string.failure_create_external_storage)
+
         return true
       }
       R.id.export_plan -> {
@@ -67,7 +76,7 @@ class TrainingDaysListActivity : BaseActivity(R.layout.activity_list) {
             .ioMain()
             .subscribe(
                 { showConfirmPopupAlert(R.string.export_successful) },
-                { error -> showConfirmPopupAlert("${getString(R.string.export_failure)}: '${error.message}'")})
+                { error -> showConfirmPopupAlert("${getString(R.string.export_failure)}: '${error.message}'") })
         return true
       }
       else -> return super.onOptionsItemSelected(item)
