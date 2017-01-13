@@ -39,7 +39,6 @@ class ExportManager @Inject constructor(val mapper: ObjectMapper,
   fun importTrainingPlan(filePath: String) = singleOnSubscribe {
     checkExternalStorageAccess()
 
-    doExport()
     File(filePath)
         .run { mapper.readValue(readText(), TrainingPlan::class.java) }
         .run { trainingManager.setTrainingPlan(this) }
@@ -55,7 +54,7 @@ class ExportManager @Inject constructor(val mapper: ObjectMapper,
     trainingManager.getTrainingPlan()?.apply {
       getTrainingStorageDir()
           .run { File(this, getCanonicalPlanFileName(this@apply.name)) }
-          .run { writeString(mapper.writeValueAsString(this)) }
+          .run { writeString(mapper.writeValueAsString(this@apply)) }
     }
   }
 

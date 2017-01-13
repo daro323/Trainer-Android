@@ -44,10 +44,7 @@ class TrainingDaysListActivity : BaseActivity(R.layout.activity_list) {
 
   override fun onStart() {
     super.onStart()
-    title = trainingManager.getTrainingPlanName()
-    recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-    recyclerView.adapter = typedAdapter
-    showTrainingDays()
+    buildUi()
   }
 
   override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -64,7 +61,7 @@ class TrainingDaysListActivity : BaseActivity(R.layout.activity_list) {
             exportManager.importTrainingPlan(it)
                 .ioMain()
                 .subscribe(
-                    { showConfirmPopupAlert(R.string.import_successful) },
+                    { showConfirmPopupAlert(R.string.import_successful) { buildUi() } },
                     { error -> showConfirmPopupAlert("${getString(R.string.import_failure)}: '${error.message}'") })
           }
         } ?: showConfirmPopupAlert(R.string.failure_create_external_storage)
@@ -83,7 +80,11 @@ class TrainingDaysListActivity : BaseActivity(R.layout.activity_list) {
     }
   }
 
-  private fun showTrainingDays() {
+  private fun buildUi() {
+    title = trainingManager.getTrainingPlanName()
+    recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+    recyclerView.adapter = typedAdapter
+
     trainingManager.getTrainingDays()
         .flatMap { listOf(TrainingDayItem(it.category, it.getTotalDone())) }
         .run { typedAdapter.data = this }
