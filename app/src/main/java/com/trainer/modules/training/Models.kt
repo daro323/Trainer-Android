@@ -3,6 +3,7 @@ package com.trainer.modules.training
 import android.support.annotation.DrawableRes
 import com.fasterxml.jackson.annotation.JsonSubTypes
 import com.fasterxml.jackson.annotation.JsonTypeInfo
+import com.trainer.R
 import com.trainer.modules.training.ProgressStatus.*
 import com.trainer.modules.training.WeightType.BODY_WEIGHT
 import com.trainer.modules.training.WeightType.KG
@@ -63,7 +64,7 @@ data class Workout(val series: List<Series>) {
 
 data class Exercise(val name: String,
                     val comments: List<String>,
-                    @DrawableRes val imageRes: Int,
+                    @DrawableRes val imageRes: Int = R.mipmap.ic_exercise_default,
                     val weightType: WeightType = KG)
 
 data class Repetition(val weight: Float,
