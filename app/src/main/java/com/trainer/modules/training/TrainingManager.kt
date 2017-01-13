@@ -25,6 +25,7 @@ class TrainingManager @Inject constructor(val repo: TrainingRepository,
 
   fun abortWorkout() {
     workoutPresenter = null
+    trainingPlan = null
   }
 
   fun completeWorkout() {

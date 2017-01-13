@@ -4,6 +4,7 @@ import android.content.SharedPreferences
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.trainer.d2.scope.ApplicationScope
 import com.trainer.extensions.saveString
+import com.trainer.modules.training.ProgressStatus.NEW
 import javax.inject.Inject
 
 /**
@@ -26,8 +27,10 @@ class TrainingRepository @Inject constructor(val sharedPrefs: SharedPreferences,
 
   /**
    * Replaces currently stored Training Plan with the one from parameter.
+   * Requires input plan to have all the workouts for all training days finished.
    */
   fun saveTrainingPlan(trainingPlan: TrainingPlan) {
+    require(trainingPlan.trainingDays.all { it.workout.getStatus() == NEW }) { "Attempt to store a training plan with unfinished/completed workouts! (All workouts should be NEW)" }
     sharedPrefs.saveString(PLAN_NAME_KEY, mapper.writeValueAsString(trainingPlan))
   }
 }
