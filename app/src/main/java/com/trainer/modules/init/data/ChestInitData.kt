@@ -14,7 +14,8 @@ class ChestInitData private constructor() {
 
   companion object {
     private val BENCH_PRESS = Exercise("Wyciskanie sztangi na ławce",
-        arrayListOf("Opuszczaj powoli, wyciskaj dynamicznie"))
+        arrayListOf("Opuszczaj powoli, wyciskaj dynamicznie"),
+        R.drawable.ex_bench_press)
 
     private val PULL_UPS = Exercise("Podciąganie nachwytem",
         arrayListOf("Drążek musisz minąć brodą",

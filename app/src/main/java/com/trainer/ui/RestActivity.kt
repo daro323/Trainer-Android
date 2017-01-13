@@ -25,6 +25,9 @@ class RestActivity : BaseActivity(R.layout.activity_rest) {
   private val skipButton: Button by bindView(R.id.skip_rest_btn)
   private var timerSubscription: Subscription = Subscriptions.unsubscribed()
 
+  private var isTimerFinished: Boolean = false   // State
+  private var isActivityResumed: Boolean = false   // State
+
   companion object {
     val EXTRA_REST_TIME_SEC = "EXTRA_REST_TIME_SEC"
   }
@@ -37,14 +40,21 @@ class RestActivity : BaseActivity(R.layout.activity_rest) {
   override fun onStart() {
     super.onStart()
     require(restTimeSec > 0) { "RestActivity invoked for a not set restTime value" }
-    if (timerSubscription.isUnsubscribed) {
-      progressView.apply {
-        max = restTimeSec
-      }
-      updateCountDown(restTimeSec)
-      skipButton.setOnClickListener { finish() }
-      subscribeForTimer()
+
+    when(isTimerFinished) {
+      true -> finish()
+      false -> initialize()
     }
+  }
+
+  override fun onResume() {
+    super.onResume()
+    isActivityResumed = true
+  }
+
+  override fun onPause() {
+    isActivityResumed = false
+    super.onPause()
   }
 
   override fun onDestroy() {
@@ -56,6 +66,15 @@ class RestActivity : BaseActivity(R.layout.activity_rest) {
     // Block back button (just via skip can exit)
   }
 
+  private fun initialize() {
+    if (timerSubscription.isUnsubscribed) {
+      skipButton.setOnClickListener { finish() }
+      progressView.max = restTimeSec
+      updateCountDown(restTimeSec)
+      subscribeForTimer()
+    }
+  }
+
   private fun updateCountDown(countDown: Int) {
     progressView.progress = countDown
     countDownText.text = String.format(getString(R.string.countdown_text), countDown)
@@ -65,12 +84,13 @@ class RestActivity : BaseActivity(R.layout.activity_rest) {
     timerSubscription = Observable.interval(1, TimeUnit.SECONDS)
         .map { (restTimeSec - it).toInt() }
         .observeOn(AndroidSchedulers.mainThread())
+        .doOnNext { isTimerFinished = true }
         .subscribe {
           updateCountDown(it)
           if (it == 0) {
             vibrator.vibrate(1000)
             timerSubscription.unsubscribe()
-            finish()
+            if (isActivityResumed) finish()
           }
         }
   }
