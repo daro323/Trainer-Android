@@ -1,6 +1,7 @@
 package com.trainer.ui
 
 import android.os.Bundle
+import android.os.PersistableBundle
 import android.os.Vibrator
 import android.widget.Button
 import android.widget.TextView
@@ -25,23 +26,30 @@ class RestActivity : BaseActivity(R.layout.activity_rest) {
   private val skipButton: Button by bindView(R.id.skip_rest_btn)
   private var timerSubscription: Subscription = Subscriptions.unsubscribed()
 
-  private var isTimerFinished: Boolean = false   // State
-  private var isActivityResumed: Boolean = false   // State
+  private var isActivityResumed: Boolean = false
+  private var stateIsRestFinished: Boolean = false
 
   companion object {
     val EXTRA_REST_TIME_SEC = "EXTRA_REST_TIME_SEC"
+    val STATE_IS_REST_FINISHED = "STATE_IS_REST_FINISHED"
   }
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     component.inject(this)
+    savedInstanceState?.apply { stateIsRestFinished = getBoolean(STATE_IS_REST_FINISHED) }
+  }
+
+  override fun onSaveInstanceState(outState: Bundle?, outPersistentState: PersistableBundle?) {
+    super.onSaveInstanceState(outState, outPersistentState)
+    outState?.apply { putBoolean(STATE_IS_REST_FINISHED, stateIsRestFinished) }
   }
 
   override fun onStart() {
     super.onStart()
     require(restTimeSec > 0) { "RestActivity invoked for a not set restTime value" }
 
-    when(isTimerFinished) {
+    when(stateIsRestFinished) {
       true -> finish()
       false -> initialize()
     }
@@ -84,10 +92,10 @@ class RestActivity : BaseActivity(R.layout.activity_rest) {
     timerSubscription = Observable.interval(1, TimeUnit.SECONDS)
         .map { (restTimeSec - it).toInt() }
         .observeOn(AndroidSchedulers.mainThread())
-        .doOnNext { isTimerFinished = true }
         .subscribe {
           updateCountDown(it)
           if (it == 0) {
+            stateIsRestFinished = true
             vibrator.vibrate(1000)
             timerSubscription.unsubscribe()
             if (isActivityResumed) finish()
