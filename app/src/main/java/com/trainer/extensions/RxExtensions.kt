@@ -9,3 +9,14 @@ import rx.schedulers.Schedulers
  */
 
 fun <T> Observable<T>.ioMain() = subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+
+inline fun <reified T> singleOnSubscribe(crossinline body: () -> T): Observable<T> {
+  return Observable.create<T> { subscriber ->
+    try {
+      subscriber.onNext(body())
+      subscriber.onCompleted()
+    } catch(e: Exception) {
+      subscriber.onError(e)
+    }
+  }
+}

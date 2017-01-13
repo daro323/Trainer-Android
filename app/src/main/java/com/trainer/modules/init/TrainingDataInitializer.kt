@@ -10,7 +10,7 @@ import javax.inject.Inject
  * Created by dariusz on 05/01/17.
  */
 @ApplicationScope
-class TrainingDataInitializer @Inject constructor(val trainingRepo: TrainingRepository) {
+class TrainingDataInitializer @Inject constructor(val trainingManager: TrainingManager) {
   companion object {
     val TAG = "INIT"
     private val INIT_WORKOUT_PLAN_NAME = "Menshilf Plan"
@@ -20,14 +20,13 @@ class TrainingDataInitializer @Inject constructor(val trainingRepo: TrainingRepo
     if (isTrainingPlanInitialized().not()) {
       val trainingPlan = provideTrainingPlan()
       Log.d(TAG, "initializing training plan= ${trainingPlan.name}")
-      trainingRepo.saveTrainingPlan(trainingPlan)
+      trainingManager.setTrainingPlan(trainingPlan)
     }
   }
 
   private fun isTrainingPlanInitialized(): Boolean {
     try {
-      val trainingPlan = trainingRepo.getTrainingPlan()
-      Log.d(TAG, "Training plan already initialized to= ${trainingPlan.name}")
+      trainingManager.getTrainingPlan()?.apply { Log.d(TAG, "Training plan already initialized to= ${this.name}") }
       return true
     } catch (e: IllegalArgumentException) {
       Log.d(TAG, "Training plan not yet initialized.")

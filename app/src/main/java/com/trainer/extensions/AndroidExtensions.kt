@@ -4,7 +4,6 @@ import android.app.Activity
 import android.app.Fragment
 import android.content.Intent
 import android.os.Bundle
-import android.os.Environment
 import android.os.Parcelable
 import java.io.Serializable
 import kotlin.properties.ReadWriteProperty
@@ -128,11 +127,4 @@ private class OptionalLazy<T, A>(private val initializer: (T, KProperty<*>) -> A
     @Suppress("UNCHECKED_CAST")
     return value as A
   }
-}
-
-fun Environment.isExternalStorageWritable() = Environment.MEDIA_MOUNTED == Environment.getExternalStorageState()
-
-fun Environment.isExternalStorageReadable(): Boolean {
-  val storageState = Environment.getExternalStorageState()
-  return Environment.MEDIA_MOUNTED == storageState || Environment.MEDIA_MOUNTED_READ_ONLY == storageState
 }

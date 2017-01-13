@@ -46,11 +46,16 @@ class TrainingManager @Inject constructor(val repo: TrainingRepository,
 
   fun getTrainingPlanName() = getTrainingPlan()?.name ?: throw IllegalStateException("trainingPlan not loaded!")
 
-  private fun getTrainingPlan(): TrainingPlan? {
+  fun getTrainingPlan(): TrainingPlan? {
     if (trainingPlan == null) {
       trainingPlan = repo.getTrainingPlan()
     }
     return trainingPlan
+  }
+
+  fun setTrainingPlan(trainingPlan: TrainingPlan) {
+    reset()
+    repo.saveTrainingPlan(trainingPlan)
   }
 
   private fun reset() {

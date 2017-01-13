@@ -37,10 +37,24 @@ abstract class BaseActivity(@LayoutRes private val layoutRes: Int = -1) : AppCom
     showDialogSubscription = Subscriptions.create { dialog.dismiss() }
   }
 
-  protected fun showConfirmPopupAlert(@StringRes messageId: Int, action: () -> Unit) {
+  protected fun showConfirmPopupAlert(@StringRes messageId: Int, action: () -> Unit = {}) {
     showDialogSubscription.unsubscribe()
     val dialog = AlertDialog.Builder(this)
         .setMessage(messageId)
+        .setCancelable(false)
+        .setPositiveButton(R.string.ok, { dialog, which ->
+          action()
+          dialog.dismiss()
+        })
+        .create()
+    dialog.show()
+    showDialogSubscription = Subscriptions.create { dialog.dismiss() }
+  }
+
+  protected fun showConfirmPopupAlert(message: String, action: () -> Unit = {}) {
+    showDialogSubscription.unsubscribe()
+    val dialog = AlertDialog.Builder(this)
+        .setMessage(message)
         .setCancelable(false)
         .setPositiveButton(R.string.ok, { dialog, which ->
           action()

@@ -1,6 +1,7 @@
 package com.trainer.extensions
 
 import android.content.SharedPreferences
+import android.util.Log
 import java.io.File
 
 
@@ -29,4 +30,5 @@ fun File.writeString(data: String) {
   delete()
   createNewFile()
   writeText(data)
+  Log.d("writeString", "Successfully written data to= ${absolutePath}")
 }

@@ -7,6 +7,7 @@ import android.view.Menu
 import android.view.MenuItem
 import com.trainer.R
 import com.trainer.base.BaseActivity
+import com.trainer.extensions.ioMain
 import com.trainer.extensions.start
 import com.trainer.modules.export.ExportManager
 import com.trainer.modules.training.TrainingManager
@@ -58,10 +59,15 @@ class TrainingDaysListActivity : BaseActivity(R.layout.activity_list) {
   override fun onOptionsItemSelected(item: MenuItem): Boolean {
     when(item.itemId) {
       R.id.import_plan -> {
+        // TODO Show file picker
         return true
       }
       R.id.export_plan -> {
         exportManager.exportCurrentTrainingPlan()
+            .ioMain()
+            .subscribe(
+                { showConfirmPopupAlert(R.string.export_successful) },
+                { error -> showConfirmPopupAlert("${getString(R.string.export_failure)}: '${error.message}'")})
         return true
       }
       else -> return super.onOptionsItemSelected(item)
