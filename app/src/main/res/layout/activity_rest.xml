@@ -30,14 +30,7 @@
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_gravity="center"
+      android:gravity="center"
       android:textAppearance="@style/Textappearance.Trainer.Label"
-      tools:text="120 sec"/>
-
-  <Button
-      android:id="@+id/skip_rest_btn"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_gravity="bottom"
-      android:text="@string/skip"/>
-
+      tools:text="120 sec\n\nClick to skip"/>
 </FrameLayout>

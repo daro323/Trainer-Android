@@ -16,7 +16,7 @@
   <string name="reps">reps</string>
   <string name="skip">Skip</string>
   <string name="take_rest">Take a rest…</string>
-  <string name="countdown_text">%s sec</string>
+  <string name="countdown_text">%s sec\n\nClick to skip</string>
   <string name="empty_field">Empty field!</string>
   <string name="workout_complete">Workout complete!</string>
   <string name="import_plan">Import Plan</string>

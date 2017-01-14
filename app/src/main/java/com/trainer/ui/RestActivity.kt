@@ -3,7 +3,6 @@ package com.trainer.ui
 import android.os.Bundle
 import android.os.PersistableBundle
 import android.os.Vibrator
-import android.widget.Button
 import android.widget.TextView
 import com.trainer.R
 import com.trainer.base.BaseActivity
@@ -23,7 +22,6 @@ class RestActivity : BaseActivity(R.layout.activity_rest) {
   private val restTimeSec: Int by extra(EXTRA_REST_TIME_SEC)
   private val progressView: RingProgressBar by bindView(R.id.progress_view)
   private val countDownText: TextView by bindView(R.id.countdown_text)
-  private val skipButton: Button by bindView(R.id.skip_rest_btn)
   private var timerSubscription: Subscription = Subscriptions.unsubscribed()
 
   private var isActivityResumed: Boolean = false
@@ -76,7 +74,7 @@ class RestActivity : BaseActivity(R.layout.activity_rest) {
 
   private fun initialize() {
     if (timerSubscription.isUnsubscribed) {
-      skipButton.setOnClickListener { finish() }
+      countDownText.setOnClickListener { finish() }
       progressView.max = restTimeSec
       updateCountDown(restTimeSec)
       subscribeForTimer()
