@@ -15,12 +15,12 @@
 
   <io.netopen.hotbitmapgg.library.view.RingProgressBar
       android:id="@+id/progress_view"
-      android:layout_width="180dp"
-      android:layout_height="180dp"
+      android:layout_width="260dp"
+      android:layout_height="260dp"
       android:layout_gravity="center"
       app:ringColor="@color/gray"
       app:ringProgressColor="@color/colorPrimary"
-      app:ringWidth="8dp"
+      app:ringWidth="30dp"
       app:style="STROKE"
       app:textIsShow="false"
       app:textSize="16sp" />
