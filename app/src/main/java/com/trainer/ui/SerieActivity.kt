@@ -10,6 +10,7 @@ import android.widget.FrameLayout
 import com.trainer.R
 import com.trainer.base.BaseActivity
 import com.trainer.extensions.ioMain
+import com.trainer.extensions.setupFragment
 import com.trainer.extensions.startForResult
 import com.trainer.extensions.with
 import com.trainer.modules.training.Series
@@ -21,6 +22,7 @@ import com.trainer.modules.training.WorkoutEvent.*
 import com.trainer.modules.training.WorkoutPresenter
 import com.trainer.ui.RestActivity.Companion.EXTRA_REST_TIME_SEC
 import com.trainer.ui.SetFragment.Companion.SET_ID
+import com.trainer.ui.model.SuperSetPagerAdapter
 import com.trainer.utils.bindView
 import rx.subscriptions.Subscriptions
 import javax.inject.Inject
@@ -118,9 +120,7 @@ class SerieActivity : BaseActivity(R.layout.activity_set_pager) {
   private fun showSerieAsSet(set: Set) {
     title = getString(R.string.set)
     superSetPager.visibility = GONE
-    supportFragmentManager.beginTransaction().apply {
-      add(R.id.container, SetFragment().with(SET_ID to set.id()))
-    }.commit()
+    setupFragment(R.id.container) { SetFragment().with(SET_ID to set.id()) }
   }
 
   private fun showSerieAsSuperSet(superSet: SuperSet) {

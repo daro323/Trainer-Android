@@ -86,6 +86,7 @@ interface Series {
   fun getStatus(): ProgressStatus
   fun skipRemaining()
   fun complete()
+  fun abort()
 
   data class Set private constructor(private val _id: String,
                                      val exercise: Exercise,
@@ -102,7 +103,9 @@ interface Series {
                     seriesCount: Int,
                     restTimeSec: Int,
                     progress: MutableList<Repetition> = mutableListOf(),
-                    lastProgress: List<Repetition> = (1..seriesCount).map { Repetition(0f, 0, exercise.weightType) }.toList()) = Set((++instanceCounter).toString(), exercise, guidelines, seriesCount, restTimeSec, progress, lastProgress)
+                    lastProgress: List<Repetition> = (1..seriesCount).map { emptyRepetition(exercise) }.toList()) = Set((++instanceCounter).toString(), exercise, guidelines, seriesCount, restTimeSec, progress, lastProgress)
+
+      private fun emptyRepetition(forExercise: Exercise) = Repetition(0f, 0, forExercise.weightType)
     }
 
     override fun id() = _id
@@ -121,6 +124,10 @@ interface Series {
     override fun complete() {
       require(progress.size == seriesCount) { "Attempt to mark set as complete when there is still some missing progress!" }
       lastProgress = progress
+      progress = mutableListOf()
+    }
+
+    override fun abort() {
       progress = mutableListOf()
     }
 
@@ -152,6 +159,8 @@ interface Series {
     override fun skipRemaining() = setList.forEach(Series::skipRemaining)
 
     override fun complete() = setList.forEach(Series::complete)
+
+    override fun abort() = setList.forEach(Series::abort)
 
     override fun equals(other: Any?) = other is SuperSet && other.id() == this.id()
 

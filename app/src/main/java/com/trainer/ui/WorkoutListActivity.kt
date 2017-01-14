@@ -48,7 +48,6 @@ class WorkoutListActivity : BaseActivity(R.layout.activity_list) {
 
   override fun onStart() {
     super.onStart()
-    require(trainingManager.isWorkoutActive()) { "WorkoutListActivity was shown for non active workout!" }
     recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
     recyclerView.adapter = typedAdapter
     title = String.format(getString(R.string.workout), presenter.getWorkoutTitle())

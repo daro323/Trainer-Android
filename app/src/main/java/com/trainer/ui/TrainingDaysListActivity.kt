@@ -44,7 +44,11 @@ class TrainingDaysListActivity : BaseActivity(R.layout.activity_list) {
 
   override fun onStart() {
     super.onStart()
-    buildUi()
+    if (trainingManager.continueTraining()) {
+      start<WorkoutListActivity>()
+    } else {
+      buildUi()
+    }
   }
 
   override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -81,11 +85,11 @@ class TrainingDaysListActivity : BaseActivity(R.layout.activity_list) {
   }
 
   private fun buildUi() {
-    title = trainingManager.getTrainingPlanName()
+    title = trainingManager.getTrainingPlan().name
     recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
     recyclerView.adapter = typedAdapter
 
-    trainingManager.getTrainingDays()
+    trainingManager.getTrainingPlan().trainingDays
         .flatMap { listOf(TrainingDayItem(it.category, it.getTotalDone())) }
         .run { typedAdapter.data = this }
   }

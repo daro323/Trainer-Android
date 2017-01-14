@@ -29,7 +29,7 @@ class TrainingDataInitializer @Inject constructor(val trainingManager: TrainingM
 
   private fun isTrainingPlanInitialized(): Boolean {
     try {
-      trainingManager.getTrainingPlan()?.apply { Log.d(TAG, "Training plan already initialized to= ${this.name}") }
+      trainingManager.getTrainingPlan().apply { Log.d(TAG, "Training plan already initialized to= ${this.name}") }
       return true
     } catch (e: IllegalArgumentException) {
       Log.d(TAG, "Training plan not yet initialized.")

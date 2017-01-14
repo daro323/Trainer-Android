@@ -1,9 +1,10 @@
-package com.trainer.ui
+package com.trainer.ui.model
 
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentStatePagerAdapter
 import com.trainer.extensions.with
 import com.trainer.modules.training.Series.Set
+import com.trainer.ui.SetFragment
 import com.trainer.ui.SetFragment.Companion.SET_ID
 
 /**

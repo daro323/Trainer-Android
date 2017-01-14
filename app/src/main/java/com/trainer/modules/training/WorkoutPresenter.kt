@@ -13,7 +13,7 @@ import javax.inject.Inject
  * Operates on a training day.
  * Created by dariusz on 06/01/17.
  */
-class WorkoutPresenter @Inject constructor() {
+class WorkoutPresenter @Inject constructor(val repo: TrainingRepository) {
 
   companion object {
     val WEIGHT_NA_VALUE = -1f   // value for weight which is considered not applicable
@@ -72,6 +72,7 @@ class WorkoutPresenter @Inject constructor() {
     if (weight < 0 && currentSet.exercise.weightType != BODY_WEIGHT) throw IllegalArgumentException("Missing weight value! It's expected in saveSetResult for weight type= ${getCurrentSet().exercise.weightType}")
 
     currentSet.progress.add(Repetition(weight, rep, getCurrentWeightType()))
+    repo.saveTrainingPlan()
 
     val restTime = currentSet.restTimeSec
     if (restTime > 0) workoutEventsSubject.onNext(REST) else determineNextStep()
@@ -80,6 +81,7 @@ class WorkoutPresenter @Inject constructor() {
   fun skipSerie() {
     val currentSerie = getCurrentSerie()
     if (currentSerie.getStatus() != COMPLETE) currentSerie.skipRemaining()
+    repo.saveTrainingPlan()
 
     workoutEventsSubject.onNext(SERIE_COMPLETED)
   }
