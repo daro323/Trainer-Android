@@ -178,7 +178,7 @@
         android:inputType="numberDecimal"
         android:layout_toLeftOf="@id/sep2"
         android:gravity="center"
-
+        android:imeOptions="actionNext"
         tools:text="10"/>
 
     <TextView
@@ -212,6 +212,7 @@
         android:inputType="numberDecimal"
         android:layout_toRightOf="@id/sep2"
         android:gravity="center"
+        android:imeOptions="actionDone"
         tools:text="15"/>
 
     <TextView

@@ -1,8 +1,11 @@
 package com.trainer.ui
 
+import android.content.Context
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
+import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
@@ -95,6 +98,15 @@ class SetFragment : BaseFragment(R.layout.fragment_set) {
       weightTypeView.text = if (weightType == BODY_WEIGHT) "N/A" else weightType.toString()
       weightInputView.setOnFocusChangeListener(onInputFocusListener)
       repInputView.setOnFocusChangeListener(onInputFocusListener)
+      repInputView.setOnEditorActionListener { textView, actionId, keyEvent ->
+        if (actionId == EditorInfo.IME_ACTION_DONE) {
+          onSubmitHandler(submitButton)
+          (textView.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager).run { hideSoftInputFromWindow(textView.windowToken, 0) }
+          true
+        } else {
+          false
+        }
+      }
       // create dynamic content
       refreshUi(this)
     }
