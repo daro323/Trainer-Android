@@ -1,5 +1,6 @@
 package com.trainer.modules.init.data
 
+import com.trainer.R
 import com.trainer.modules.training.Exercise
 import com.trainer.modules.training.Series.Set.Companion.createSet
 import com.trainer.modules.training.Series.SuperSet
@@ -11,21 +12,28 @@ import com.trainer.modules.training.Workout
 class LegsInitData private constructor() {
 
   companion object {
-    private val FRONT_SQUAT = Exercise("Przysiad ze sztangą z przodu")
+    private val FRONT_SQUAT = Exercise("Przysiad ze sztangą z przodu",
+        imageRes = R.drawable.ex_front_squat)
 
-    private val MACHINE_PRESS = Exercise("Wyciskanie na maszynie w górę")
+    private val MACHINE_LEG_PRESS = Exercise("Wyciskanie na maszynie w górę",
+        imageRes = R.drawable.ex_machine_leg_press)
 
-    private val LEG_EXTENSIONS = Exercise("Wyprosty nóg na maszynie")
+    private val LEG_EXTENSIONS = Exercise("Wyprosty nóg na maszynie",
+        arrayListOf("Zatrzymaj ruch na sekundę w końcowej fazie wyprostu."),
+        imageRes = R.drawable.ex_leg_extensions)
 
-    private val LEG_CURLS = Exercise("Uginanie nóg na maszynie")
+    private val LEG_CURLS = Exercise("Uginanie nóg na maszynie",
+        imageRes = R.drawable.ex_leg_curls)
 
-    private val CALF_RAISE = Exercise("Spinanie łydek siedząc")
+    private val CALF_RAISE = Exercise("Spinanie łydek siedząc",
+        arrayListOf("Wykonuj powoli.", "Zatrzymuj ruch na dole, w połowie oraz na górze."),
+        imageRes = R.drawable.ex_calf_raise)
 
     val LEGS_WORKOUT = Workout(arrayListOf(
         createSet(FRONT_SQUAT,
-            arrayListOf("Zrób 3 serie po 12, 10, 6 repet.", "Po ostatniej od razu max z 80% obciążeniem."),
-            4, 100),
-        createSet(MACHINE_PRESS,
+            arrayListOf("Zrób 4 serie po 12, 10, 8, 6 repet."),
+            4, 90),
+        createSet(MACHINE_LEG_PRESS,
             arrayListOf("Zrób 3 serie po 10, 10, 8 repet."),
             3, 80),
         createSet(LEG_EXTENSIONS,
