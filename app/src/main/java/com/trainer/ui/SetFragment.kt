@@ -6,10 +6,7 @@ import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ImageView
-import android.widget.TextView
+import android.widget.*
 import com.trainer.R
 import com.trainer.base.BaseFragment
 import com.trainer.d2.common.ActivityComponent
@@ -36,7 +33,12 @@ class SetFragment : BaseFragment(R.layout.fragment_set) {
   private val presenter: WorkoutPresenter by lazy { trainingManager.workoutPresenter ?: throw IllegalStateException("Current workout not set!") }  // can call this only after component.inject()!
   private var setId: String by arg(SET_ID)
   private val fieldsToValidate: SetFragmentFieldValidator by lazy { SetFragmentFieldValidator(weightInputView, repInputView) }
-  private val onInputFocusListener = { view: View, hasFocus: Boolean -> if (hasFocus) (view as EditText).setText("") }
+  private val onInputFocusListener = { view: View, hasFocus: Boolean ->
+    if (hasFocus) {
+      (view as EditText).setText("")
+      scrollView.postDelayed({ scrollView.fullScroll(View.FOCUS_DOWN) }, 100)
+    }
+  }
 
   private val imageView: ImageView by bindView(R.id.exercise_image)
   private val nameView: TextView by bindView(R.id.name_text)
@@ -52,6 +54,7 @@ class SetFragment : BaseFragment(R.layout.fragment_set) {
   private val weightTypeView: TextView by bindView(R.id.weight_type_text)
   private val inputSeparatorLabelView: TextView by bindView(R.id.input_separator_label)
   private val repInputLabelView: TextView by bindView(R.id.rep_label)
+  private val scrollView: ScrollView by bindView(R.id.scroll_container)
 
   companion object {
     const val SET_ID = "SET_ID"
