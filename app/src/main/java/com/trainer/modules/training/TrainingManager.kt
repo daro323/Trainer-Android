@@ -2,7 +2,6 @@ package com.trainer.modules.training
 
 import com.trainer.d2.scope.ApplicationScope
 import com.trainer.modules.training.ProgressStatus.NEW
-import com.trainer.modules.training.ProgressStatus.STARTED
 import javax.inject.Inject
 import javax.inject.Provider
 
@@ -27,7 +26,7 @@ class TrainingManager @Inject constructor(val repo: TrainingRepository,
    */
   fun continueTraining(): Boolean {
     return getTrainingPlan().run {
-      val alreadyStartedDay = trainingDays.find { it.workout.getStatus() == STARTED }
+      val alreadyStartedDay = trainingDays.find { it.workout.getStatus() != NEW }
       if (alreadyStartedDay != null) {
         startWorkout(alreadyStartedDay.category)
         return true

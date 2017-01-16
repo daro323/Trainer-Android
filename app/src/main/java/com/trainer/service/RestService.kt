@@ -1,4 +1,4 @@
-package com.trainer.modules.rest
+package com.trainer.service
 
 import android.app.IntentService
 import android.content.Intent

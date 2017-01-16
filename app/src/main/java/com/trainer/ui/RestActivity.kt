@@ -9,10 +9,10 @@ import android.widget.TextView
 import com.trainer.R
 import com.trainer.base.BaseActivity
 import com.trainer.extensions.startServiceWith
-import com.trainer.modules.rest.RestService
-import com.trainer.modules.rest.RestService.Companion.RESULT_CODE_REST_FINISHED
-import com.trainer.modules.rest.RestService.Companion.RESULT_CODE_REST_STARTED
-import com.trainer.modules.rest.RestService.Companion.RESULT_CODE_TIME_COUNT_PROGRESS
+import com.trainer.service.RestService
+import com.trainer.service.RestService.Companion.RESULT_CODE_REST_FINISHED
+import com.trainer.service.RestService.Companion.RESULT_CODE_REST_STARTED
+import com.trainer.service.RestService.Companion.RESULT_CODE_TIME_COUNT_PROGRESS
 import com.trainer.utils.bindView
 import io.netopen.hotbitmapgg.library.view.RingProgressBar
 
@@ -28,7 +28,7 @@ class RestActivity : BaseActivity(R.layout.activity_rest) {
   private var stateIsRestFinished: Boolean = false
 
   companion object {
-    val STATE_IS_REST_FINISHED = "STATE_IS_REST_FINISHED"
+    private val STATE_IS_REST_FINISHED = "STATE_IS_REST_FINISHED"
   }
 
   override fun onCreate(savedInstanceState: Bundle?) {
