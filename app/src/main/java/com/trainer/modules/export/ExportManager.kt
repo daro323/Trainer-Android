@@ -51,7 +51,7 @@ class ExportManager @Inject constructor(val mapper: ObjectMapper,
   private fun doExport() {
     checkExternalStorageAccess()
 
-    trainingManager.getTrainingPlan()?.apply {
+    trainingManager.getTrainingPlan().apply {
       getTrainingStorageDir()
           .run { File(this, getCanonicalPlanFileName(this@apply.name)) }
           .run { writeString(mapper.writeValueAsString(this@apply)) }

@@ -7,6 +7,7 @@ import com.trainer.R
 import com.trainer.base.BaseActivity
 import com.trainer.extensions.ioMain
 import com.trainer.extensions.start
+import com.trainer.modules.export.ExportManager
 import com.trainer.modules.training.ProgressStatus.STARTED
 import com.trainer.modules.training.Series
 import com.trainer.modules.training.Series.Set
@@ -30,6 +31,7 @@ import javax.inject.Inject
 class WorkoutListActivity : BaseActivity(R.layout.activity_list) {
 
   @Inject lateinit var trainingManager: TrainingManager
+  @Inject lateinit var exportManager: ExportManager
   private val presenter: WorkoutPresenter by lazy { trainingManager.workoutPresenter ?: throw IllegalStateException("Current workout not set!") }  // can call this only after component.inject()!
   private var workoutEventsSubscription = Subscriptions.unsubscribed()
 
@@ -79,6 +81,7 @@ class WorkoutListActivity : BaseActivity(R.layout.activity_list) {
         .ioMain()
         .subscribe {
           trainingManager.completeWorkout()
+          exportManager.exportCurrentTrainingPlan().ioMain().subscribe()
           showConfirmPopupAlert(R.string.workout_complete, { finish() })
         }
   }

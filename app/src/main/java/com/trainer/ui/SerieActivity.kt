@@ -96,7 +96,7 @@ class SerieActivity : BaseActivity(R.layout.activity_set_pager) {
         presenter.serieCompleteHandled()
         finish()
       }
-      else -> {}  // Ignore
+      WORKOUT_COMPLETED -> finish()
     }
   }
 
