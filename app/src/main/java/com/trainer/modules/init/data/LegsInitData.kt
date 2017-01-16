@@ -29,6 +29,9 @@ class LegsInitData private constructor() {
         arrayListOf("Wykonuj powoli.", "Zatrzymuj ruch na dole, w połowie oraz na górze."),
         imageRes = R.drawable.ex_calf_raise)
 
+
+
+
     val LEGS_WORKOUT = Workout(arrayListOf(
         createSet(FRONT_SQUAT,
             arrayListOf("Zrób 4 serie po 12, 10, 8, 6 repet."),

@@ -2,11 +2,11 @@ package com.trainer.modules.init
 
 import android.util.Log
 import com.trainer.d2.scope.ApplicationScope
+import com.trainer.modules.init.data.BackInitData.Companion.BACK_WORKOUT
 import com.trainer.modules.init.data.ChestInitData.Companion.CHEST_WORKOUT
 import com.trainer.modules.init.data.LegsInitData.Companion.LEGS_WORKOUT
 import com.trainer.modules.training.*
-import com.trainer.modules.training.TrainingCategory.CHEST
-import com.trainer.modules.training.TrainingCategory.LEGS
+import com.trainer.modules.training.TrainingCategory.*
 import javax.inject.Inject
 
 /**
@@ -42,13 +42,14 @@ class TrainingDataInitializer @Inject constructor(val trainingManager: TrainingM
     return TrainingPlan(INIT_WORKOUT_PLAN_NAME, initTrainingDays)
   }
 
-  private fun provideTrainingDay(forTrainingCategory: TrainingCategory): TrainingDay {
-    return when(forTrainingCategory) {
-      CHEST -> TrainingDay(forTrainingCategory, CHEST_WORKOUT)
-      LEGS -> TrainingDay(forTrainingCategory, LEGS_WORKOUT)
+  private fun provideTrainingDay(category: TrainingCategory): TrainingDay {
+    return when(category) {
+      CHEST -> TrainingDay(category, CHEST_WORKOUT)
+      LEGS -> TrainingDay(category, LEGS_WORKOUT)
+      BACK -> TrainingDay(category, BACK_WORKOUT)
       else -> {
-        Log.w("INIT_DATA_PROVIDER", "No init data available for category= $forTrainingCategory - returning an empty workout...")
-        TrainingDay(forTrainingCategory, Workout(emptyList()))
+        Log.w("INIT_DATA_PROVIDER", "No init data available for category= $category - returning an empty workout...")
+        TrainingDay(category, Workout(emptyList()))
       }
     }
   }
