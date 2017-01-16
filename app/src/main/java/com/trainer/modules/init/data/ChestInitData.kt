@@ -34,8 +34,9 @@ class ChestInitData private constructor() {
         R.drawable.ex_single_dumbell_row)
 
     private val SWEED_PUSHUP = Exercise("Pompka szwedzka",
-        imageRes = R.drawable.ex_sweed_pushup,
-        weightType = BODY_WEIGHT)
+        arrayListOf("Wracaj do góry dynamicznym ruchem"),
+        R.drawable.ex_sweed_pushup,
+        BODY_WEIGHT)
 
     private val DUMBELL_PUSHUP = Exercise("Pompka na hantlach",
         arrayListOf("Po obniżeniu zatrzymaj na sekundę ruch.",

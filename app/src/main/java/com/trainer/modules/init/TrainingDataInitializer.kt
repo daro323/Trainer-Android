@@ -2,12 +2,16 @@ package com.trainer.modules.init
 
 import android.util.Log
 import com.trainer.d2.scope.ApplicationScope
+import com.trainer.modules.init.data.ArmsInitData.Companion.ARMS_WORKOUT
 import com.trainer.modules.init.data.BackInitData.Companion.BACK_WORKOUT
 import com.trainer.modules.init.data.ChestInitData.Companion.CHEST_WORKOUT
 import com.trainer.modules.init.data.LegsInitData.Companion.LEGS_WORKOUT
 import com.trainer.modules.init.data.ShouldersInitData.Companion.SHOULDERS_WORKOUT
-import com.trainer.modules.training.*
+import com.trainer.modules.training.TrainingCategory
 import com.trainer.modules.training.TrainingCategory.*
+import com.trainer.modules.training.TrainingDay
+import com.trainer.modules.training.TrainingManager
+import com.trainer.modules.training.TrainingPlan
 import javax.inject.Inject
 
 /**
@@ -49,10 +53,7 @@ class TrainingDataInitializer @Inject constructor(val trainingManager: TrainingM
       LEGS -> TrainingDay(category, LEGS_WORKOUT)
       BACK -> TrainingDay(category, BACK_WORKOUT)
       SHOULDERS -> TrainingDay(category, SHOULDERS_WORKOUT)
-      else -> {
-        Log.w("INIT_DATA_PROVIDER", "No init data available for category= $category - returning an empty workout...")
-        TrainingDay(category, Workout(emptyList()))
-      }
+      ARMS -> TrainingDay(category, ARMS_WORKOUT)
     }
   }
 }
