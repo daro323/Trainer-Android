@@ -20,7 +20,6 @@ import com.trainer.modules.training.TrainingManager
 import com.trainer.modules.training.WorkoutEvent
 import com.trainer.modules.training.WorkoutEvent.*
 import com.trainer.modules.training.WorkoutPresenter
-import com.trainer.ui.RestActivity.Companion.EXTRA_REST_TIME_SEC
 import com.trainer.ui.SetFragment.Companion.SET_ID
 import com.trainer.ui.model.SuperSetPagerAdapter
 import com.trainer.utils.bindView
@@ -91,7 +90,7 @@ class SerieActivity : BaseActivity(R.layout.activity_set_pager) {
 
   private fun handleWorkoutEvent(workoutEvent: WorkoutEvent) {
     when(workoutEvent) {
-      REST -> startForResult<RestActivity>(REST_REQUEST_CODE) { putExtra(EXTRA_REST_TIME_SEC, presenter.getRestTime()) }
+      REST -> startForResult<RestActivity>(REST_REQUEST_CODE)
       DO_NEXT_SET -> goToNextSet()
       SERIE_COMPLETED -> {
         presenter.serieCompleteHandled()

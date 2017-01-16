@@ -29,6 +29,8 @@
               android:screenOrientation="portrait"
               android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"/>
 
+    <service android:name=".modules.rest.RestService"/>
+
   </application>
 
 </manifest>
