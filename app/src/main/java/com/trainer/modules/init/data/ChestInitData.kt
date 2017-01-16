@@ -14,21 +14,21 @@ class ChestInitData private constructor() {
 
   companion object {
     private val BENCH_PRESS = Exercise("Wyciskanie sztangi na ławce",
-        arrayListOf("Opuszczaj powoli, wyciskaj dynamicznie"),
+        arrayListOf("Opuszczaj powoli, wyciskaj dynamicznie."),
         R.drawable.ex_bench_press)
 
     private val PULL_UPS = Exercise("Podciąganie nachwytem",
-        arrayListOf("Drążek musisz minąć brodą",
-            "Ruch zatrzymuj na sekundę na górze",
+        arrayListOf("Drążek musisz minąć brodą.",
+            "Ruch zatrzymuj na sekundę na górze.",
             "Nogi skrzyżuj w kostkach i ugnij w kolanach"),
         R.drawable.ex_pullups,
         BODY_WEIGHT)
 
-    private val INCLINE_PRESS = Exercise("Wyciskanie hantli na ławce skośnej",
+    private val INCLINE_DUMBELL_PRESS = Exercise("Wyciskanie hantli na ławce skośnej",
         imageRes = R.drawable.ex_incline_press)
 
     private val DUMBELL_ROW = Exercise("Wiosłowanie hantlą",
-        arrayListOf("Przyciągaj hantlę do boku klatki piersiowej", "Wykonuj z jedną hantlą na raz"),
+        arrayListOf("Przyciągaj hantlę do boku klatki piersiowej.", "Wykonuj z jedną hantlą na raz."),
         R.drawable.ex_dumbell_row)
 
     private val SWEED_PUSHUP = Exercise("Pompka szwedzka",
@@ -37,19 +37,23 @@ class ChestInitData private constructor() {
 
     private val DUMBELL_PUSHUP = Exercise("Pompka na hantlach",
         arrayListOf("Po obniżeniu zatrzymaj na sekundę ruch.",
-            "Nie pozwól korpusowi na żadną rotację",
-            "Hantlę przyciągnij do boku brzucha",
-            "Jedno powtórzenie to przyciągniecie hantli do lewej i prawej"),
+            "Nie pozwól korpusowi na żadną rotację.",
+            "Hantlę przyciągnij do boku brzucha.",
+            "Jedno powtórzenie to przyciągniecie hantli do lewej i prawej."),
         R.drawable.ex_dumbell_pushup)
 
-    private val TRICEPS_EXTENSIONS = Exercise("Prostowanie przedramion 2w1",
-        arrayListOf("Prostuj dynamicznym ruchem", "Rozszerzaj w końcowej fazie ruchu"),
+    private val TRICEPS_EXTENSIONS = Exercise("Prostowanie przedramion",
+        arrayListOf("Prostuj dynamicznym ruchem."),
         R.drawable.ex_triceps_extensions)
 
+    private val TRICEPS_PULLDOWN = Exercise("Ściąganie linek w dół",
+        arrayListOf("Rozszerzaj linki w końcowej fazie ruchu."),
+        R.drawable.ex_triceps_pulldown)
+
     private val DUMBELL_CURL = Exercise("Zginanie przedramion z hantlami",
-        arrayListOf("Stój prosto ruszając tylko przedramionami",
-            "Uginaj do maksymalnego napięcia bicepsa",
-            "Wracaj powoli"),
+        arrayListOf("Stój prosto ruszając tylko przedramionami.",
+            "Uginaj do maksymalnego napięcia bicepsa.",
+            "Wracaj powoli."),
         R.drawable.ex_dumbell_curl)
 
     val CHEST_WORKOUT = Workout(arrayListOf(
@@ -58,20 +62,20 @@ class ChestInitData private constructor() {
                 arrayListOf("Zrób 3 serie po 15, 10 i 8 repet.", "Po ostatniej od razu max z 80% obciążeniem."),
                 4, 0),
             createSet(PULL_UPS,
-                arrayListOf("Zrób 3 serie na max repet"),
-                3, 60))
+                arrayListOf("Zrób 3 serie na max repet."),
+                3, 100))
         ),
         SuperSet(arrayListOf(
-            createSet(INCLINE_PRESS,
+            createSet(INCLINE_DUMBELL_PRESS,
                 arrayListOf("Zrób 3 serie po 15, 10 i 8 repet.", "Po ostatniej od razu max z 80% obciążeniem."),
                 4, 0),
             createSet(DUMBELL_ROW,
                 arrayListOf("Zrób 3 serie po 15, 12 i 10 repet.", "Po ostatniej od razu max z 80% obciążeniem."),
-                4, 60)
+                4, 80)
         )),
         SuperSet(arrayListOf(
             createSet(SWEED_PUSHUP,
-                arrayListOf("Zrób 2 na max repet"),
+                arrayListOf("Zrób 2 serie na max repet."),
                 2, 0),
             createSet(DUMBELL_PUSHUP,
                 arrayListOf("Zrób 2 serie po 10 repet"),
@@ -79,10 +83,13 @@ class ChestInitData private constructor() {
         ),
         SuperSet(arrayListOf(
             createSet(TRICEPS_EXTENSIONS,
-                arrayListOf("Zrób 15 repet a następnie 10 repet sciągając w dół.", "Zrób 3 takie serie."),
+                arrayListOf("Zrób 3 serie po 15 repet."),
+                3, 0),
+            createSet(TRICEPS_PULLDOWN,
+                arrayListOf("Zrób 3 serie po 10 repet."),
                 3, 0),
             createSet(DUMBELL_CURL,
-                arrayListOf("Zrób 3 serie po 10"),
+                arrayListOf("Zrób 3 serie po 10 repet."),
                 3, 60))
         )
     ))

@@ -32,6 +32,7 @@ class SetFragment : BaseFragment(R.layout.fragment_set) {
   @Inject lateinit var trainingManager: TrainingManager
   private val presenter: WorkoutPresenter by lazy { trainingManager.workoutPresenter ?: throw IllegalStateException("Current workout not set!") }  // can call this only after component.inject()!
   private var setId: String by arg(SET_ID)
+  private lateinit var set: Set
   private val fieldsToValidate: SetFragmentFieldValidator by lazy { SetFragmentFieldValidator(weightInputView, repInputView) }
   private val onInputFocusListener = { view: View, hasFocus: Boolean ->
     if (hasFocus) {
@@ -79,11 +80,11 @@ class SetFragment : BaseFragment(R.layout.fragment_set) {
     }
   }
 
-  private fun createUI(set: Set) {
-    set.apply {
+  private fun createUI(forSet: Set) {
+    set = forSet.apply {
       // create static content
       val weightType = exercise.weightType
-      imageView.setImageResource(set.exercise.imageRes)
+      imageView.setImageResource(this.exercise.imageRes)
       nameView.text = exercise.name
       guidelinesView.text = guidelines.reduceWithDefault("", { item -> "- $item" }, { acc, guideline -> "$acc\n- $guideline" })
 
@@ -135,6 +136,7 @@ class SetFragment : BaseFragment(R.layout.fragment_set) {
   private val onSubmitHandler = { v: View ->
     if (FormValidator.validate(activity, fieldsToValidate, SimpleErrorPopupCallback(activity))) {
       presenter.saveSetResult(weightValue(), repValue())
+      refreshUi(set)
     }
   }
 
