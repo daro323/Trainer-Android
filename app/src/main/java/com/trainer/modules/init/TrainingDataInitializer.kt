@@ -5,6 +5,7 @@ import com.trainer.d2.scope.ApplicationScope
 import com.trainer.modules.init.data.BackInitData.Companion.BACK_WORKOUT
 import com.trainer.modules.init.data.ChestInitData.Companion.CHEST_WORKOUT
 import com.trainer.modules.init.data.LegsInitData.Companion.LEGS_WORKOUT
+import com.trainer.modules.init.data.ShouldersInitData.Companion.SHOULDERS_WORKOUT
 import com.trainer.modules.training.*
 import com.trainer.modules.training.TrainingCategory.*
 import javax.inject.Inject
@@ -47,6 +48,7 @@ class TrainingDataInitializer @Inject constructor(val trainingManager: TrainingM
       CHEST -> TrainingDay(category, CHEST_WORKOUT)
       LEGS -> TrainingDay(category, LEGS_WORKOUT)
       BACK -> TrainingDay(category, BACK_WORKOUT)
+      SHOULDERS -> TrainingDay(category, SHOULDERS_WORKOUT)
       else -> {
         Log.w("INIT_DATA_PROVIDER", "No init data available for category= $category - returning an empty workout...")
         TrainingDay(category, Workout(emptyList()))
