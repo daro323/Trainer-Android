@@ -1,5 +1,7 @@
 package com.trainer.modules.training
 
+import com.trainer.modules.rest.RestEvent
+import com.trainer.modules.rest.RestEventType.IDLE
 import com.trainer.modules.training.ProgressStatus.COMPLETE
 import com.trainer.modules.training.ProgressStatus.STARTED
 import com.trainer.modules.training.Series.Set
@@ -16,14 +18,15 @@ import javax.inject.Inject
 class WorkoutPresenter @Inject constructor(val repo: TrainingRepository) {
 
   companion object {
-    val WEIGHT_NA_VALUE = -1f   // value for weight which is considered not applicable
-    val NOT_SET_VALUE = -1
-    val DEFAULT_SET_INDEX = 0
+    const val WEIGHT_NA_VALUE = -1f   // value for weight which is considered not applicable
+    const val NOT_SET_VALUE = -1
+    const val DEFAULT_SET_INDEX = 0
   }
 
   lateinit var trainingDay: TrainingDay
 
   val workoutEventsSubject = BehaviorSubject.create<WorkoutEvent>()
+  val restEventsSubject = BehaviorSubject.create<RestEvent>(RestEvent(0, IDLE))
 
   private var currentSerieIdx: Int = NOT_SET_VALUE
   private var currentSetIdx: Int = NOT_SET_VALUE
@@ -35,8 +38,6 @@ class WorkoutPresenter @Inject constructor(val repo: TrainingRepository) {
   fun getWorkoutStatus() = trainingDay.workout.getStatus()
 
   fun getWorkoutTitle() = trainingDay.category.name
-
-  fun getRestTime() = getCurrentSet().restTimeSec
 
   fun getCurrentSerie(): Series {
     require(currentSerieIdx != NOT_SET_VALUE) { "Current serie idx is not set!" }
@@ -91,6 +92,14 @@ class WorkoutPresenter @Inject constructor(val repo: TrainingRepository) {
   fun restComplete() {
     determineNextStep()
   }
+
+  fun updateRest(restEvent: RestEvent) {
+    restEventsSubject.onNext(restEvent)
+  }
+
+  fun getRestTime() = getCurrentSet().restTimeSec
+
+  fun onRestTimeUpdateEvent() = restEventsSubject.asObservable()
 
   fun serieCompleteHandled() {
     if (getWorkoutStatus() == COMPLETE) {

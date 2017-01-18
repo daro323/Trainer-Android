@@ -1,7 +1,7 @@
 package com.trainer.d2.common
 
 import com.trainer.base.BaseApplication
-import com.trainer.service.RestService
+import com.trainer.modules.rest.RestService
 
 interface AppComponent {
 

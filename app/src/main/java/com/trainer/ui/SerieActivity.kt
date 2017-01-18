@@ -31,7 +31,7 @@ import javax.inject.Inject
 class SerieActivity : BaseActivity(R.layout.activity_set_pager) {
 
   companion object {
-    private val REST_REQUEST_CODE = 666
+    const private val REST_REQUEST_CODE = 666
   }
 
   @Inject lateinit var trainingManager: TrainingManager

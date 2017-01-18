@@ -20,8 +20,8 @@ import javax.inject.Inject
 @ApplicationScope
 class TrainingDataInitializer @Inject constructor(val trainingManager: TrainingManager) {
   companion object {
-    val TAG = "INIT"
-    private val INIT_WORKOUT_PLAN_NAME = "Menshilf Plan"
+    const val TAG = "INIT"
+    const private val INIT_WORKOUT_PLAN_NAME = "Menshilf Plan"
   }
 
   init {

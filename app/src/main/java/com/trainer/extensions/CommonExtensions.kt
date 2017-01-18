@@ -15,6 +15,12 @@ fun SharedPreferences.saveString(key: String, value: String?) {
       .apply()
 }
 
+fun SharedPreferences.saveInt(key: String, value: Int) {
+  edit()
+      .putInt(key, value)
+      .apply()
+}
+
 inline fun <S, T: S> Iterable<T>.reduceWithDefault(default: S, firstOperation: (S) -> S, operation: (S, T) -> S): S {
   val iterator = this.iterator()
   if (!iterator.hasNext()) return default

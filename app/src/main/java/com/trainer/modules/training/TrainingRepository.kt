@@ -3,6 +3,7 @@ package com.trainer.modules.training
 import android.content.SharedPreferences
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.trainer.d2.scope.ApplicationScope
+import com.trainer.extensions.saveInt
 import com.trainer.extensions.saveString
 import javax.inject.Inject
 
@@ -14,7 +15,8 @@ import javax.inject.Inject
 class TrainingRepository @Inject constructor(val sharedPrefs: SharedPreferences,
                                              val mapper: ObjectMapper) {
   companion object {
-    private val PLAN_NAME_KEY = "PLAN_NAME_KEY"
+    const private val PLAN_KEY = "PLAN_KEY"
+    const private val REST_TIME_KEY = "REST_TIME_KEY"
     private val PLAN_NOT_INITIALIZED = TrainingPlan("Not initialized", emptyList())
   }
 
@@ -22,7 +24,7 @@ class TrainingRepository @Inject constructor(val sharedPrefs: SharedPreferences,
 
   fun getTrainingPlan(): TrainingPlan {
     if (trainingPlan == PLAN_NOT_INITIALIZED) {
-      val trainingPlanJson = sharedPrefs.getString(PLAN_NAME_KEY, null)
+      val trainingPlanJson = sharedPrefs.getString(PLAN_KEY, null)
       require(trainingPlanJson != null) { "No Training Plan found" }
       trainingPlan = mapper.readValue(trainingPlanJson, TrainingPlan::class.java)
     }
@@ -34,7 +36,7 @@ class TrainingRepository @Inject constructor(val sharedPrefs: SharedPreferences,
    * Requires input plan to have all the workouts for all training days finished.
    */
   fun setNewTrainingPlan(newPlan: TrainingPlan) {
-    sharedPrefs.saveString(PLAN_NAME_KEY, mapper.writeValueAsString(newPlan))
+    sharedPrefs.saveString(PLAN_KEY, mapper.writeValueAsString(newPlan))
     trainingPlan = newPlan
   }
 
@@ -43,6 +45,12 @@ class TrainingRepository @Inject constructor(val sharedPrefs: SharedPreferences,
    */
   fun saveTrainingPlan() {
     require(trainingPlan != PLAN_NOT_INITIALIZED) { "Attempt to save uninitialized plan's progress!" }
-    sharedPrefs.saveString(PLAN_NAME_KEY, mapper.writeValueAsString(trainingPlan))
+    sharedPrefs.saveString(PLAN_KEY, mapper.writeValueAsString(trainingPlan))
   }
+
+  fun saveRestTime(time: Int) {
+    sharedPrefs.saveInt(REST_TIME_KEY, time)
+  }
+
+  fun getRestTime() = sharedPrefs.getInt(REST_TIME_KEY, 0)
 }
