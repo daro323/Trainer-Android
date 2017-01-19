@@ -1,6 +1,8 @@
 package com.trainer.ui
 
 import android.os.Bundle
+import android.view.View.VISIBLE
+import android.widget.FrameLayout
 import android.widget.TextView
 import com.trainer.R
 import com.trainer.base.BaseActivity
@@ -23,6 +25,7 @@ class RestActivity : BaseActivity(R.layout.activity_rest) {
   private val presenter: WorkoutPresenter by lazy { trainingManager.workoutPresenter ?: throw IllegalStateException("Current workout not set!") }  // call this after component.inject()
   private val progressView: RingProgressBar by bindView(R.id.progress_view)
   private val countDownText: TextView by bindView(R.id.countdown_text)
+  private val container: FrameLayout by bindView(R.id.rest_container)
   private var restSubscription: Subscription = Subscriptions.unsubscribed()
 
   override fun onCreate(savedInstanceState: Bundle?) {
@@ -51,17 +54,16 @@ class RestActivity : BaseActivity(R.layout.activity_rest) {
 
   private fun onRestEvent(event: RestEvent) {
     when(event.type) {
-      IDLE -> RestService.startRest(this)
-
-      STARTED -> event.countDown.run {
-        progressView.max = this
-        updateCountDown(this)
+      STARTED -> event.run {
+        progressView.max = startValue
+        updateCountDown(countDown)
+        container.visibility = VISIBLE
       }
 
       COUNTDOWN -> updateCountDown(event.countDown)
 
-      FINISHED -> {
-        updateCountDown(0)
+      FINISHED, ABORTED -> {
+        updateCountDown(event.countDown)
         finish()
       }
     }
@@ -72,8 +74,10 @@ class RestActivity : BaseActivity(R.layout.activity_rest) {
     countDownText.text = String.format(getString(R.string.countdown_text), countDown)
   }
 
+  // TODO: Fix when to start the service and when to contiune!
   private fun subscribeForRest() {
     restSubscription.unsubscribe()
+    RestService.startRest(this)
     restSubscription = presenter.onRestTimeUpdateEvent()
         .ioMain()
         .subscribe { onRestEvent(it) }

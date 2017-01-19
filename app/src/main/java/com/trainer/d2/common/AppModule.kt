@@ -1,6 +1,7 @@
 package com.trainer.d2.common
 
 import android.app.Application
+import android.app.NotificationManager
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Vibrator
@@ -40,6 +41,11 @@ class AppModule(private val app: BaseApplication) {
   @Provides @ApplicationScope
   fun provideVibrator(application: Application): Vibrator {
     return application.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+  }
+
+  @Provides @ApplicationScope
+  fun provideNotificationManager(application: Application): NotificationManager {
+    return application.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
   }
 
   @Provides

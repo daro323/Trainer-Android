@@ -30,4 +30,5 @@
   <string name="select_plan_file">Select Plan</string>
   <string name="set">Set</string>
   <string name="super_set">Super Set</string>
+  <string name="rest_notification_title">Resting...</string>
 </resources>

@@ -5,11 +5,12 @@ package com.trainer.modules.rest
  */
 
 enum class RestEventType {
-  IDLE,
   STARTED,
   COUNTDOWN,
-  FINISHED
+  FINISHED,
+  ABORTED
 }
 
-data class RestEvent (val countDown: Int,
+data class RestEvent (val startValue: Int,
+                      val countDown: Int,
                       val type: RestEventType)

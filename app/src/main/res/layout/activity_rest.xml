@@ -1,9 +1,11 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
              xmlns:tools="http://schemas.android.com/tools"
              xmlns:app="http://schemas.android.com/apk/res-auto"
+             android:id="@+id/rest_container"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
              android:layout_margin="@dimen/activity_margin"
+             android:visibility="invisible"
              tools:context="com.trainer.ui.RestActivity">
 
   <TextView

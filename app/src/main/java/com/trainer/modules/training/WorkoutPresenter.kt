@@ -1,7 +1,6 @@
 package com.trainer.modules.training
 
 import com.trainer.modules.rest.RestEvent
-import com.trainer.modules.rest.RestEventType.IDLE
 import com.trainer.modules.training.ProgressStatus.COMPLETE
 import com.trainer.modules.training.ProgressStatus.STARTED
 import com.trainer.modules.training.Series.Set
@@ -9,6 +8,7 @@ import com.trainer.modules.training.Series.SuperSet
 import com.trainer.modules.training.WeightType.BODY_WEIGHT
 import com.trainer.modules.training.WorkoutEvent.*
 import rx.subjects.BehaviorSubject
+import rx.subjects.PublishSubject
 import javax.inject.Inject
 
 /**
@@ -26,7 +26,7 @@ class WorkoutPresenter @Inject constructor(val repo: TrainingRepository) {
   lateinit var trainingDay: TrainingDay
 
   val workoutEventsSubject = BehaviorSubject.create<WorkoutEvent>()
-  val restEventsSubject = BehaviorSubject.create<RestEvent>(RestEvent(0, IDLE))
+  val restEventsSubject = PublishSubject.create<RestEvent>()
 
   private var currentSerieIdx: Int = NOT_SET_VALUE
   private var currentSetIdx: Int = NOT_SET_VALUE
