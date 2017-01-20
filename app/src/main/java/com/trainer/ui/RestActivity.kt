@@ -8,8 +8,8 @@ import com.trainer.R
 import com.trainer.base.BaseActivity
 import com.trainer.extensions.ioMain
 import com.trainer.modules.rest.RestEvent
-import com.trainer.modules.rest.RestEventType.*
 import com.trainer.modules.rest.RestService
+import com.trainer.modules.rest.RestState.*
 import com.trainer.modules.training.TrainingManager
 import com.trainer.modules.training.WorkoutPresenter
 import com.trainer.utils.bindView
@@ -53,17 +53,19 @@ class RestActivity : BaseActivity(R.layout.activity_rest) {
   }
 
   private fun onRestEvent(event: RestEvent) {
-    when(event.type) {
-      STARTED -> event.run {
-        progressView.max = startValue
-        updateCountDown(countDown)
+    when(event.state) {
+
+      IDLE -> RestService.startRest(this)
+
+      COUNTDOWN -> {
+        updateCountDown(event.countDown)
         container.visibility = VISIBLE
       }
 
-      COUNTDOWN -> updateCountDown(event.countDown)
-
-      FINISHED, ABORTED -> {
+      FINISHED -> {
+        restSubscription.unsubscribe()
         updateCountDown(event.countDown)
+        RestService.stopRest(this)
         finish()
       }
     }
@@ -74,12 +76,11 @@ class RestActivity : BaseActivity(R.layout.activity_rest) {
     countDownText.text = String.format(getString(R.string.countdown_text), countDown)
   }
 
-  // TODO: Fix when to start the service and when to contiune!
   private fun subscribeForRest() {
     restSubscription.unsubscribe()
-    RestService.startRest(this)
-    restSubscription = presenter.onRestTimeUpdateEvent()
+    restSubscription = presenter.getRestEvents()
         .ioMain()
+        .doOnSubscribe { progressView.max = presenter.getRestTime() }
         .subscribe { onRestEvent(it) }
   }
 }

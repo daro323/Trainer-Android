@@ -17,6 +17,7 @@
   <string name="skip">Skip</string>
   <string name="take_rest">Take a rest…</string>
   <string name="countdown_text">%s sec\n\nClick to skip</string>
+  <string name="notification_countdown_text">%s sec</string>
   <string name="empty_field">Empty field!</string>
   <string name="workout_complete">Workout complete!</string>
   <string name="import_plan">Import Plan</string>
@@ -30,5 +31,6 @@
   <string name="select_plan_file">Select Plan</string>
   <string name="set">Set</string>
   <string name="super_set">Super Set</string>
-  <string name="rest_notification_title">Resting...</string>
+  <string name="rest_ongoing_notification_title">Resting in progress</string>
+  <string name="rest_finished_notification_title">Rest finished</string>
 </resources>

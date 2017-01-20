@@ -1,6 +1,6 @@
 package com.trainer.modules.training
 
-import com.trainer.modules.rest.RestEvent
+import com.trainer.modules.rest.RestManager
 import com.trainer.modules.training.ProgressStatus.COMPLETE
 import com.trainer.modules.training.ProgressStatus.STARTED
 import com.trainer.modules.training.Series.Set
@@ -8,14 +8,14 @@ import com.trainer.modules.training.Series.SuperSet
 import com.trainer.modules.training.WeightType.BODY_WEIGHT
 import com.trainer.modules.training.WorkoutEvent.*
 import rx.subjects.BehaviorSubject
-import rx.subjects.PublishSubject
 import javax.inject.Inject
 
 /**
  * Operates on a training day.
  * Created by dariusz on 06/01/17.
  */
-class WorkoutPresenter @Inject constructor(val repo: TrainingRepository) {
+class WorkoutPresenter @Inject constructor(val repo: TrainingRepository,
+                                           val restManager: RestManager) {
 
   companion object {
     const val WEIGHT_NA_VALUE = -1f   // value for weight which is considered not applicable
@@ -26,7 +26,6 @@ class WorkoutPresenter @Inject constructor(val repo: TrainingRepository) {
   lateinit var trainingDay: TrainingDay
 
   val workoutEventsSubject = BehaviorSubject.create<WorkoutEvent>()
-  val restEventsSubject = PublishSubject.create<RestEvent>()
 
   private var currentSerieIdx: Int = NOT_SET_VALUE
   private var currentSetIdx: Int = NOT_SET_VALUE
@@ -89,18 +88,6 @@ class WorkoutPresenter @Inject constructor(val repo: TrainingRepository) {
 
   fun isCurrentSet(set: Set) = if (getCurrentSerie().getStatus() == COMPLETE || hasOtherSerieStarted()) false else getCurrentSet() == set
 
-  fun restComplete() {
-    determineNextStep()
-  }
-
-  fun updateRest(restEvent: RestEvent) {
-    restEventsSubject.onNext(restEvent)
-  }
-
-  fun getRestTime() = getCurrentSet().restTimeSec
-
-  fun onRestTimeUpdateEvent() = restEventsSubject.asObservable()
-
   fun serieCompleteHandled() {
     if (getWorkoutStatus() == COMPLETE) {
       workoutEventsSubject.onNext(WORKOUT_COMPLETED)
@@ -108,6 +95,22 @@ class WorkoutPresenter @Inject constructor(val repo: TrainingRepository) {
       workoutEventsSubject.onNext(WorkoutEvent.DO_NEXT_SET)
     }
   }
+
+  fun onStartRest() {
+    restManager.startRest(getRestTime())
+  }
+
+  fun onStopRest() {
+    restManager.stopRest()
+  }
+
+  fun restComplete() {
+    determineNextStep()
+  }
+
+  fun getRestEvents() = restManager.getRestEvents()
+
+  fun getRestTime() = 8 //getCurrentSet().restTimeSec
 
   private fun hasOtherSerieStarted() = getWorkoutList()
       .filter { it != getCurrentSerie() }
