@@ -3,7 +3,6 @@ package com.trainer.modules.training
 import android.content.SharedPreferences
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.trainer.d2.scope.ApplicationScope
-import com.trainer.extensions.saveInt
 import com.trainer.extensions.saveString
 import javax.inject.Inject
 
@@ -16,7 +15,6 @@ class TrainingRepository @Inject constructor(val sharedPrefs: SharedPreferences,
                                              val mapper: ObjectMapper) {
   companion object {
     const private val PLAN_KEY = "PLAN_KEY"
-    const private val REST_TIME_KEY = "REST_TIME_KEY"
     private val PLAN_NOT_INITIALIZED = TrainingPlan("Not initialized", emptyList())
   }
 
@@ -47,10 +45,4 @@ class TrainingRepository @Inject constructor(val sharedPrefs: SharedPreferences,
     require(trainingPlan != PLAN_NOT_INITIALIZED) { "Attempt to save uninitialized plan's progress!" }
     sharedPrefs.saveString(PLAN_KEY, mapper.writeValueAsString(trainingPlan))
   }
-
-  fun saveRestTime(time: Int) {
-    sharedPrefs.saveInt(REST_TIME_KEY, time)
-  }
-
-  fun getRestTime() = sharedPrefs.getInt(REST_TIME_KEY, 0)
 }
