@@ -75,11 +75,11 @@ class RestService : Service() {
         .ioMain()
         .doOnSubscribe { notificationManager.showNotification(this) }
         .doOnUnsubscribe { notificationManager.hideNotification() }
-        .doOnNext { notificationManager.updateNotification(it.countDown) }
+        .doOnNext { notificationManager.updateNotification(it.countDown, this) }
         .filter { it.state == FINISHED }
         .subscribe {
-          vibrator.vibrate(100)
-          notificationManager.showForRestFinished()
+          vibrator.vibrate(1200)
+          notificationManager.showForRestFinished(this)
         }
 
     presenter.onStartRest()

@@ -1,6 +1,7 @@
 package com.trainer.ui
 
 import android.os.Bundle
+import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
 import android.widget.FrameLayout
 import android.widget.TextView
@@ -44,11 +45,12 @@ class RestActivity : BaseActivity(R.layout.activity_rest) {
 
   override fun onStop() {
     restSubscription.unsubscribe()
+    container.visibility = INVISIBLE
     super.onStop()
   }
 
   private fun initialize() {
-    countDownText.setOnClickListener { RestService.stopRest(this) }
+    countDownText.setOnClickListener { close() }
     subscribeForRest()
   }
 
@@ -63,12 +65,16 @@ class RestActivity : BaseActivity(R.layout.activity_rest) {
       }
 
       FINISHED -> {
-        restSubscription.unsubscribe()
         updateCountDown(event.countDown)
-        RestService.stopRest(this)
-        finish()
+        close()
       }
     }
+  }
+
+  private fun close() {
+    restSubscription.unsubscribe()
+    RestService.stopRest(this)
+    finish()
   }
 
   private fun updateCountDown(countDown: Int) {

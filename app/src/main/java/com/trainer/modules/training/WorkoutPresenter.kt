@@ -110,7 +110,7 @@ class WorkoutPresenter @Inject constructor(val repo: TrainingRepository,
 
   fun getRestEvents() = restManager.getRestEvents()
 
-  fun getRestTime() = 8 //getCurrentSet().restTimeSec
+  fun getRestTime() = getCurrentSet().restTimeSec
 
   private fun hasOtherSerieStarted() = getWorkoutList()
       .filter { it != getCurrentSerie() }

@@ -27,8 +27,8 @@
               android:screenOrientation="portrait"/>
     <activity android:name=".ui.RestActivity"
               android:screenOrientation="portrait"
-              android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"/>
-
+              android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"
+              android:launchMode="singleTop"/>
     <service android:name=".modules.rest.RestService"/>
 
   </application>

@@ -35,15 +35,15 @@ class RestServiceNotificationManager @Inject constructor(val notificationManager
     })
   }
 
-  fun updateNotification(restTime: Int) {
-    notificationManager.notify(NOTIFICATION_ID, notificationBuilder.run {
+  fun updateNotification(restTime: Int, forService: Service) {
+    forService.startForeground(NOTIFICATION_ID, notificationBuilder.run {
       setContentText(String.format(context.getString(R.string.notification_countdown_text), restTime))
       build()
     })
   }
 
-  fun showForRestFinished() {
-    notificationManager.notify(NOTIFICATION_ID, notificationBuilder.run {
+  fun showForRestFinished(forService: Service) {
+    forService.startForeground(NOTIFICATION_ID, notificationBuilder.run {
       setContentTitle(context.getString(R.string.rest_finished_notification_title))
       setContentText("")
       build()
