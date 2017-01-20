@@ -18,9 +18,8 @@ class LegsInitData private constructor() {
     private val MACHINE_LEG_PRESS = Exercise("Wyciskanie na maszynie w górę",
         imageRes = R.drawable.ex_machine_leg_press)
 
-    private val LEG_EXTENSIONS = Exercise("Wyprosty nóg na maszynie",
-        arrayListOf("Zatrzymaj ruch na sekundę w końcowej fazie wyprostu."),
-        imageRes = R.drawable.ex_leg_extensions)
+    private val DUMBELL_WALKING_LUNGES = Exercise("Wykroki z hantlami",
+        imageRes = R.drawable.ex_dumbell_walking_lunges)
 
     private val LEG_CURLS = Exercise("Uginanie nóg na maszynie",
         imageRes = R.drawable.ex_leg_curls)
@@ -39,9 +38,9 @@ class LegsInitData private constructor() {
         createSet(MACHINE_LEG_PRESS,
             arrayListOf("Zrób 3 serie po 10, 10, 8 repet."),
             3, 80),
-        createSet(LEG_EXTENSIONS,
+        createSet(DUMBELL_WALKING_LUNGES,
             arrayListOf("Zrób 3 serie po 10 repet."),
-            3, 60),
+            3, 80),
         SuperSet(arrayListOf(
             createSet(LEG_CURLS,
                 arrayListOf("Zrób 3 serie po 10 repet."),
