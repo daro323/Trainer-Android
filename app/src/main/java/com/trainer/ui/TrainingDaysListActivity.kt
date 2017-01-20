@@ -73,11 +73,13 @@ class TrainingDaysListActivity : BaseActivity(R.layout.activity_list) {
         return true
       }
       R.id.export_plan -> {
-        exportManager.exportCurrentTrainingPlan()
-            .ioMain()
-            .subscribe(
-                { showConfirmPopupAlert(R.string.export_successful) },
-                { error -> showConfirmPopupAlert("${getString(R.string.export_failure)}: '${error.message}'") })
+        showCancelablePopupAlert(R.string.export_plan_warning) {
+          exportManager.exportCurrentTrainingPlan()
+              .ioMain()
+              .subscribe(
+                  { showConfirmPopupAlert(R.string.export_successful) },
+                  { error -> showConfirmPopupAlert("${getString(R.string.export_failure)}: '${error.message}'") })
+        }
         return true
       }
       else -> return super.onOptionsItemSelected(item)

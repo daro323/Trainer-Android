@@ -4,6 +4,7 @@ import android.app.Application
 import android.app.NotificationManager
 import android.content.Context
 import android.content.SharedPreferences
+import android.os.PowerManager
 import android.os.Vibrator
 import com.fasterxml.jackson.annotation.JsonAutoDetect
 import com.fasterxml.jackson.annotation.PropertyAccessor
@@ -41,6 +42,11 @@ class AppModule(private val app: BaseApplication) {
   @Provides @ApplicationScope
   fun provideVibrator(application: Application): Vibrator {
     return application.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+  }
+
+  @Provides @ApplicationScope
+  fun providePowerManager(application: Application): PowerManager {
+    return application.getSystemService(Context.POWER_SERVICE) as PowerManager
   }
 
   @Provides @ApplicationScope

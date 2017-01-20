@@ -3,6 +3,7 @@ package com.trainer.modules.rest
 import android.app.Service
 import android.content.Context
 import android.content.Intent
+import android.os.PowerManager
 import android.os.Vibrator
 import android.util.Log
 import com.trainer.base.BaseApplication
@@ -21,16 +22,21 @@ class RestService : Service() {
 
   @Inject lateinit var trainingManager: TrainingManager
   @Inject lateinit var vibrator: Vibrator
+  @Inject lateinit var powerManager: PowerManager
   @Inject lateinit var notificationManager: RestServiceNotificationManager
 
   private val presenter: WorkoutPresenter by lazy { trainingManager.workoutPresenter ?: throw IllegalStateException("Current workout not set!") }  // call this after component.inject()
   private var restSubscription: Subscription = Subscriptions.unsubscribed()
+  private var wakeLock: PowerManager.WakeLock? = null
 
   companion object {
 
     const private val TAG = "RestService"
+    const private val WAKELOCK_TAG = "RestService_WakeLock"
     const private val START_REST_ACTION = "START_REST_ACTION"
     const private val STOP_REST_ACTION = "STOP_REST_ACTION"
+
+    const private val VIBRATE_DURATION_MS = 1200L
 
     fun startRest(context: Context) { doStartService(context, START_REST_ACTION) }
 
@@ -71,6 +77,7 @@ class RestService : Service() {
   private fun doStartRest() {
     require(restSubscription.isUnsubscribed) { "Subsequent call to start rest service!" }
 
+    setWakeLockActive(true)
     restSubscription = presenter.getRestEvents()
         .ioMain()
         .doOnSubscribe { notificationManager.showNotification(this) }
@@ -78,7 +85,7 @@ class RestService : Service() {
         .doOnNext { notificationManager.updateNotification(it.countDown, this) }
         .filter { it.state == FINISHED }
         .subscribe {
-          vibrator.vibrate(1200)
+          vibrator.vibrate(VIBRATE_DURATION_MS)
           notificationManager.showForRestFinished(this)
         }
 
@@ -89,8 +96,22 @@ class RestService : Service() {
    * Performed when rest is aborted by user
    */
   private fun doStopRest() {
+    setWakeLockActive(false)
     restSubscription.unsubscribe()
     presenter.onStopRest()
     stopSelf()
+  }
+
+  private fun setWakeLockActive(isActive: Boolean) {
+    if (isActive) {
+      require(wakeLock == null) { "Request to acquire wake lock but it's already acquired!" }
+      wakeLock = powerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, WAKELOCK_TAG).apply { acquire() }
+    } else {
+      require(wakeLock != null) { "Request to free wake lock but there is non acquired!" }
+      wakeLock = wakeLock!!.run {
+        release()
+        null
+      }
+    }
   }
 }
