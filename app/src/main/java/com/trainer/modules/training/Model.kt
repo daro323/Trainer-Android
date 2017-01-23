@@ -54,10 +54,10 @@ data class TrainingDay(val category: TrainingCategory,
 }
 
 data class Workout(val series: List<Series>) {
-  fun getStatus() = when {
-    series.all { it.getStatus() == NEW } -> NEW
-    series.all { it.getStatus() == COMPLETE } -> COMPLETE
-    series.any { it.getStatus() == STARTED || it.getStatus() == COMPLETE } -> STARTED
+  fun status() = when {
+    series.all { it.status() == NEW } -> NEW
+    series.all { it.status() == COMPLETE } -> COMPLETE
+    series.any { it.status() == STARTED || it.status() == COMPLETE } -> STARTED
     else -> throw IllegalStateException("Can't determine status of Workout= $this")
   }
 }
@@ -67,7 +67,7 @@ data class Exercise(val name: String,
                     val imageInfo: ExerciseImageMap = ExerciseImageMap.DEFAULT_IMAGE,
                     val weightType: WeightType = KG) {
 
-  fun getImageResource() = imageInfo.resource
+  fun imageResource() = imageInfo.resource
 }
 
 data class Repetition(val weight: Float,
@@ -86,7 +86,7 @@ data class Repetition(val weight: Float,
     JsonSubTypes.Type(value = Series.SuperSet::class, name = "SuperSet"))
 interface Series {
   fun id(): String
-  fun getStatus(): ProgressStatus
+  fun status(): ProgressStatus
   fun skipRemaining()
   fun complete()
   fun abort()
@@ -113,7 +113,7 @@ interface Series {
 
     override fun id() = _id
 
-    override fun getStatus() = when {
+    override fun status() = when {
       progress.isEmpty() -> NEW
       progress.size < seriesCount -> STARTED
       progress.size == seriesCount -> COMPLETE
@@ -152,10 +152,10 @@ interface Series {
         .map(Series::id)
         .reduce { acc, item -> "$acc$item" }
 
-    override fun getStatus() = when {
-      setList.all { it.getStatus() == NEW } -> NEW
-      setList.all { it.getStatus() == COMPLETE } -> COMPLETE
-      setList.any { it.getStatus() == STARTED || it.getStatus() == COMPLETE } -> STARTED
+    override fun status() = when {
+      setList.all { it.status() == NEW } -> NEW
+      setList.all { it.status() == COMPLETE } -> COMPLETE
+      setList.any { it.status() == STARTED || it.status() == COMPLETE } -> STARTED
       else -> throw IllegalStateException("Can't determine status of SuperSet= $this")
     }
 

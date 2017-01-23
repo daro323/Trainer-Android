@@ -84,7 +84,7 @@ class SetFragment : BaseFragment(R.layout.fragment_set) {
     set = forSet.apply {
       // create static content
       val weightType = exercise.weightType
-      imageView.setImageResource(this.exercise.getImageResource())
+      imageView.setImageResource(this.exercise.imageResource())
       nameView.text = exercise.name
       guidelinesView.text = guidelines.reduceWithDefault("", { item -> "- $item" }, { acc, guideline -> "$acc\n- $guideline" })
 
@@ -118,7 +118,7 @@ class SetFragment : BaseFragment(R.layout.fragment_set) {
 
   private fun refreshUi(forSet: Set) {
     forSet.apply {
-      val iterationIdx = if (forSet.getStatus() == COMPLETE) seriesCount - 1 else progress.size   // Counted from zero!
+      val iterationIdx = if (forSet.status() == COMPLETE) seriesCount - 1 else progress.size   // Counted from zero!
       val iterationNumber = iterationIdx + 1
       require(iterationNumber <= seriesCount) { "Invalid state! current iteration nr= $iterationNumber exceeded the total series count= $seriesCount" }
 

@@ -26,7 +26,7 @@ class TrainingManager @Inject constructor(val repo: TrainingRepository,
    */
   fun continueTraining(): Boolean {
     return getTrainingPlan().run {
-      val alreadyStartedDay = trainingDays.find { it.workout.getStatus() != NEW }
+      val alreadyStartedDay = trainingDays.find { it.workout.status() != NEW }
       if (alreadyStartedDay != null) {
         startWorkout(alreadyStartedDay.category)
         return true
@@ -39,7 +39,7 @@ class TrainingManager @Inject constructor(val repo: TrainingRepository,
   fun abortWorkout() {
     workoutPresenter?.apply {
       trainingDay.workout.series
-          .filter { it.getStatus() != NEW }
+          .filter { it.status() != NEW }
           .forEach(Series::abort)
 
       repo.saveTrainingPlan()

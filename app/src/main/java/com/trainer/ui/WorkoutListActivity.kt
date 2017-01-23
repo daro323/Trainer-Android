@@ -92,7 +92,7 @@ class WorkoutListActivity : BaseActivity(R.layout.activity_list) {
     list.forEach { serie ->
       when (serie) {
         is SuperSet -> result.add(createSuperSetItem(serie))
-        is Set -> result.add(SetItem(serie.exercise.getImageResource(), serie.exercise.name, serie.getStatus()))
+        is Set -> result.add(SetItem(serie.exercise.imageResource(), serie.exercise.name, serie.status()))
       }
     }
     typedAdapter.data = result
@@ -105,10 +105,10 @@ class WorkoutListActivity : BaseActivity(R.layout.activity_list) {
     superSet.setList
         .flatMap { series -> listOf((series).exercise) }
         .forEach { exercise ->
-          imageResList.add(exercise.getImageResource())
+          imageResList.add(exercise.imageResource())
           namesList.add(exercise.name)
         }
-    return SuperSetItem(imageResList, namesList, superSet.getStatus())
+    return SuperSetItem(imageResList, namesList, superSet.status())
   }
 
   private fun openSerie(index: Int) {

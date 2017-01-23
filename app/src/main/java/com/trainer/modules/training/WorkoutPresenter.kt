@@ -34,7 +34,7 @@ class WorkoutPresenter @Inject constructor(val repo: TrainingRepository,
 
   fun getWorkoutList() = trainingDay.workout.series
 
-  fun getWorkoutStatus() = trainingDay.workout.getStatus()
+  fun getWorkoutStatus() = trainingDay.workout.status()
 
   fun getWorkoutTitle() = trainingDay.category.name
 
@@ -64,7 +64,7 @@ class WorkoutPresenter @Inject constructor(val repo: TrainingRepository,
 
   fun selectSerie(index: Int) {
     currentSerieIdx = index
-    if (getCurrentSerie().getStatus() != COMPLETE) refreshCurrentSetIdx() else currentSetIdx = DEFAULT_SET_INDEX
+    if (getCurrentSerie().status() != COMPLETE) refreshCurrentSetIdx() else currentSetIdx = DEFAULT_SET_INDEX
   }
 
   fun saveSetResult(weight: Float, rep: Int) {
@@ -80,13 +80,13 @@ class WorkoutPresenter @Inject constructor(val repo: TrainingRepository,
 
   fun skipSerie() {
     val currentSerie = getCurrentSerie()
-    if (currentSerie.getStatus() != COMPLETE) currentSerie.skipRemaining()
+    if (currentSerie.status() != COMPLETE) currentSerie.skipRemaining()
     repo.saveTrainingPlan()
 
     workoutEventsSubject.onNext(SERIE_COMPLETED)
   }
 
-  fun isCurrentSet(set: Set) = if (getCurrentSerie().getStatus() == COMPLETE || hasOtherSerieStarted()) false else getCurrentSet() == set
+  fun isCurrentSet(set: Set) = if (getCurrentSerie().status() == COMPLETE || hasOtherSerieStarted()) false else getCurrentSet() == set
 
   fun serieCompleteHandled() {
     if (getWorkoutStatus() == COMPLETE) {
@@ -114,7 +114,7 @@ class WorkoutPresenter @Inject constructor(val repo: TrainingRepository,
 
   private fun hasOtherSerieStarted() = getWorkoutList()
       .filter { it != getCurrentSerie() }
-      .any { it.getStatus() == STARTED }
+      .any { it.status() == STARTED }
 
   /**
    * Updates currentSetIdx in current Serie to next unfinished Set with the least progress.
@@ -125,7 +125,7 @@ class WorkoutPresenter @Inject constructor(val repo: TrainingRepository,
     currentSetIdx = when (currentSerie) {
       is Set -> NOT_SET_VALUE
       is SuperSet -> currentSerie.setList
-          .filter { it.getStatus() != COMPLETE }
+          .filter { it.status() != COMPLETE }
           .sortedBy { it.progress.size }
           .first()
           .run {
@@ -138,7 +138,7 @@ class WorkoutPresenter @Inject constructor(val repo: TrainingRepository,
   private fun determineNextStep() {
     if (getWorkoutStatus() == COMPLETE) {
       workoutEventsSubject.onNext(WORKOUT_COMPLETED)
-    } else if (getCurrentSerie().getStatus() == COMPLETE) {
+    } else if (getCurrentSerie().status() == COMPLETE) {
       currentSetIdx = DEFAULT_SET_INDEX
       workoutEventsSubject.onNext(SERIE_COMPLETED)
     } else {
