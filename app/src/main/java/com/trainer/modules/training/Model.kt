@@ -64,8 +64,11 @@ data class Workout(val series: List<Series>) {
 
 data class Exercise(val name: String,
                     val comments: List<String> = emptyList(),
-                    @DrawableRes val imageRes: Int = R.mipmap.ic_exercise_default,
-                    val weightType: WeightType = KG)
+                    val imageInfo: ExerciseImageMap = ExerciseImageMap.DEFAULT_IMAGE,
+                    val weightType: WeightType = KG) {
+
+  fun getImageResource() = imageInfo.resource
+}
 
 data class Repetition(val weight: Float,
                       val repCount: Int,
@@ -166,4 +169,46 @@ interface Series {
 
     override fun hashCode() = setList.hashCode()
   }
+}
+
+enum class ExerciseImageMap(@DrawableRes val resource: Int) {
+  // CHEST
+  DEFAULT_IMAGE(R.mipmap.ic_exercise_default),
+  BENCH_PRESS_IMAGE(R.drawable.ex_bench_press),
+  PULL_UPS_IMAGE(R.drawable.ex_pullups),
+  INCLINE_DUMBELL_PRESS_IMAGE(R.drawable.ex_incline_press),
+  SINGLE_DUMBELL_ROW_IMAGE(R.drawable.ex_single_dumbell_row),
+  SWEED_PUSHUP_IMAGE(R.drawable.ex_sweed_pushup),
+  DUMBELL_PUSHUP_IMAGE(R.drawable.ex_dumbell_pushup),
+  TRICEPS_EXTENSIONS_IMAGE(R.drawable.ex_triceps_extensions),
+  TRICEPS_PULLDOWN_IMAGE(R.drawable.ex_triceps_pulldown),
+  DUMBELL_CURL_IMAGE(R.drawable.ex_dumbell_curl),
+
+  // ARMS
+  NARROW_GRIP_PULLUP_IMAGE(R.drawable.ex_narrow_grip_pullup),
+  BARBELL_SHOULDER_PRESS_IMAGE(R.drawable.ex_barbell_shoulder_press),
+  BARBELL_ROW_IMAGE(R.drawable.ex_barbell_row),
+  BARBELL_BICEPS_CURL_IMAGE(R.drawable.ex_barbell_biceps_curl),
+  LYING_DUMBELL_TRICEPS_EXTENSIONS_IMAGE(R.drawable.ex_lying_dumbell_triceps_extensions),
+
+  // BACK
+  KNEELIN_BACK_ROTATIONS_IMAGE(R.drawable.ex_kneeling_back_rotations),
+  DEADLIFT_IMAGE(R.drawable.ex_deadlift),
+  DUMBELLS_ROW_IMAGE(R.drawable.ex_dumbells_row),
+  PAUSED_PULL_UPS_IMAGE(R.drawable.ex_pullups),
+  CABLE_ARM_RAISE_IMAGE(R.drawable.ex_cable_arm_raise),
+
+  // LEGS
+  FRONT_SQUAT_IMAGE(R.drawable.ex_front_squat),
+  MACHINE_LEG_PRESS_IMAGE(R.drawable.ex_machine_leg_press),
+  DUMBELL_WALKING_LUNGES_IMAGE(R.drawable.ex_dumbell_walking_lunges),
+  LEG_CURLS_IMAGE(R.drawable.ex_leg_curls),
+  CALF_RAISE_IMAGE(R.drawable.ex_calf_raise),
+
+  // SHOULDERS
+  SEATED_DUMBELL_SHOULDER_PRESS_IMAGE(R.drawable.ex_dumbell_shoulder_press),
+  BARBELL_TO_CHEST_PULL_IMAGE(R.drawable.ex_barbell_to_chest_pull),
+  DUMBELL_SHOULDER_RAISE_IMAGE(R.drawable.ex_dumbell_shoulder_raise),
+  CABLE_TO_HEAD_PULL_IMAGE(R.drawable.ex_cable_to_head_pull),
+  LYING_DUMBELL_ROTATIONS_IMAGE(R.drawable.ex_lying_dumbell_rotations);
 }

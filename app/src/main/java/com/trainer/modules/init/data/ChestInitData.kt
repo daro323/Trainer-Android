@@ -1,6 +1,6 @@
 package com.trainer.modules.init.data
 
-import com.trainer.R
+import com.trainer.modules.training.ExerciseImageMap.*
 import com.trainer.modules.training.Exercise
 import com.trainer.modules.training.Series.Set.Companion.createSet
 import com.trainer.modules.training.Series.SuperSet
@@ -15,7 +15,7 @@ class ChestInitData private constructor() {
   companion object {
     private val BENCH_PRESS = Exercise("Wyciskanie sztangi na ławce",
         arrayListOf("Opuszczaj powoli, wyciskaj dynamicznie."),
-        R.drawable.ex_bench_press)
+        BENCH_PRESS_IMAGE)
 
     private val PULL_UPS = Exercise("Podciąganie nachwytem",
         arrayListOf("Drążek musisz minąć brodą.",
@@ -23,19 +23,19 @@ class ChestInitData private constructor() {
             "Nogi skrzyżuj w kostkach i ugnij w kolanach",
             "Ściągaj łopatki.",
             "Opuszczaj się powoli."),
-        R.drawable.ex_pullups,
+        PULL_UPS_IMAGE,
         BODY_WEIGHT)
 
     private val INCLINE_DUMBELL_PRESS = Exercise("Wyciskanie hantli na ławce skośnej",
-        imageRes = R.drawable.ex_incline_press)
+        imageInfo = INCLINE_DUMBELL_PRESS_IMAGE)
 
     private val SINGLE_DUMBELL_ROW = Exercise("Wiosłowanie hantlą",
         arrayListOf("Przyciągaj hantlę do boku klatki piersiowej.", "Wykonuj z jedną hantlą na raz."),
-        R.drawable.ex_single_dumbell_row)
+        SINGLE_DUMBELL_ROW_IMAGE)
 
     private val SWEED_PUSHUP = Exercise("Pompka szwedzka",
         arrayListOf("Wracaj do góry dynamicznym ruchem"),
-        R.drawable.ex_sweed_pushup,
+        SWEED_PUSHUP_IMAGE,
         BODY_WEIGHT)
 
     private val DUMBELL_PUSHUP = Exercise("Pompka na hantlach",
@@ -43,21 +43,21 @@ class ChestInitData private constructor() {
             "Nie pozwól korpusowi na żadną rotację.",
             "Hantlę przyciągnij do boku brzucha.",
             "Jedno powtórzenie to przyciągniecie hantli do lewej i prawej."),
-        R.drawable.ex_dumbell_pushup)
+        DUMBELL_PUSHUP_IMAGE)
 
     private val TRICEPS_EXTENSIONS = Exercise("Prostowanie przedramion",
         arrayListOf("Prostuj dynamicznym ruchem."),
-        R.drawable.ex_triceps_extensions)
+        TRICEPS_EXTENSIONS_IMAGE)
 
     private val TRICEPS_PULLDOWN = Exercise("Ściąganie linek w dół",
         arrayListOf("Rozszerzaj linki w końcowej fazie ruchu."),
-        R.drawable.ex_triceps_pulldown)
+        TRICEPS_PULLDOWN_IMAGE)
 
     private val DUMBELL_CURL = Exercise("Zginanie przedramion z hantlami",
         arrayListOf("Stój prosto ruszając tylko przedramionami.",
             "Uginaj do maksymalnego napięcia bicepsa.",
             "Wracaj powoli."),
-        R.drawable.ex_dumbell_curl)
+        DUMBELL_CURL_IMAGE)
 
 
 

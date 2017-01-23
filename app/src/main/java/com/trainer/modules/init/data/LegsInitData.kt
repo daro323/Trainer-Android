@@ -1,6 +1,6 @@
 package com.trainer.modules.init.data
 
-import com.trainer.R
+import com.trainer.modules.training.ExerciseImageMap.*
 import com.trainer.modules.training.Exercise
 import com.trainer.modules.training.Series.Set.Companion.createSet
 import com.trainer.modules.training.Series.SuperSet
@@ -13,20 +13,20 @@ class LegsInitData private constructor() {
 
   companion object {
     private val FRONT_SQUAT = Exercise("Przysiad ze sztangą z przodu",
-        imageRes = R.drawable.ex_front_squat)
+        imageInfo = FRONT_SQUAT_IMAGE)
 
     private val MACHINE_LEG_PRESS = Exercise("Wyciskanie na maszynie w górę",
-        imageRes = R.drawable.ex_machine_leg_press)
+        imageInfo = MACHINE_LEG_PRESS_IMAGE)
 
     private val DUMBELL_WALKING_LUNGES = Exercise("Wykroki z hantlami",
-        imageRes = R.drawable.ex_dumbell_walking_lunges)
+        imageInfo = DUMBELL_WALKING_LUNGES_IMAGE)
 
     private val LEG_CURLS = Exercise("Uginanie nóg na maszynie",
-        imageRes = R.drawable.ex_leg_curls)
+        imageInfo = LEG_CURLS_IMAGE)
 
     private val CALF_RAISE = Exercise("Spinanie łydek siedząc",
         arrayListOf("Wykonuj powoli.", "Zatrzymuj ruch na dole, w połowie oraz na górze."),
-        imageRes = R.drawable.ex_calf_raise)
+        imageInfo = CALF_RAISE_IMAGE)
 
 
 

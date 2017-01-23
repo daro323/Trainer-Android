@@ -1,10 +1,10 @@
 package com.trainer.modules.init.data
 
-import com.trainer.R
 import com.trainer.modules.training.Exercise
+import com.trainer.modules.training.ExerciseImageMap.*
 import com.trainer.modules.training.Series.Set.Companion.createSet
 import com.trainer.modules.training.Series.SuperSet
-import com.trainer.modules.training.WeightType
+import com.trainer.modules.training.WeightType.BODY_WEIGHT
 import com.trainer.modules.training.Workout
 
 /**
@@ -15,30 +15,31 @@ class ArmsInitData private constructor() {
   companion object {
     private val NARROW_GRIP_PULLUP = Exercise("Podciąganie wąskim podchwytem",
         arrayListOf("Podciągaj się aż miniesz drążek głową."),
-        R.drawable.ex_narrow_grip_pullup)
+        NARROW_GRIP_PULLUP_IMAGE,
+        BODY_WEIGHT)
 
     private val SWEED_PUSHUP = Exercise("Pompka szwedzka",
         arrayListOf("Wracaj do góry dynamicznym ruchem."),
-        R.drawable.ex_sweed_pushup,
-        WeightType.BODY_WEIGHT)
+        SWEED_PUSHUP_IMAGE,
+        BODY_WEIGHT)
 
     private val BARBELL_SHOULDER_PRESS = Exercise("Wyciskanie sztangi siedząc",
-        imageRes = R.drawable.ex_barbell_shoulder_press)
+        imageInfo = BARBELL_SHOULDER_PRESS_IMAGE)
 
     private val BARBELL_ROW = Exercise("Wiosłowanie sztangą w opadzie",
         arrayListOf("Sztandze pozwól opadać w prostych rękach.",
             "Przyciągaj do górnej części brzucha.",
             "Opuszczaj dwa razy wolniejszym ruchem."),
-        R.drawable.ex_barbell_row)
+        BARBELL_ROW_IMAGE)
 
     private val BARBELL_BICEPS_CURL = Exercise("Uginanie przedramion z przestojem",
         arrayListOf("Wykonuj 3 odcinki na serię (do połowy, od połowy i cały zakres)."),
-        R.drawable.ex_barbell_biceps_curl)
+        BARBELL_BICEPS_CURL_IMAGE)
 
     private val LYING_DUMBELL_TRICEPS_EXTENSIONS = Exercise("Prostowanie przedramion na ławce",
         arrayListOf("Hantle trzymaj chwytem młotkowym.",
             "Przenieś w dół do uszu."),
-        R.drawable.ex_lying_dumbell_triceps_extensions)
+        LYING_DUMBELL_TRICEPS_EXTENSIONS_IMAGE)
 
 
     val ARMS_WORKOUT = Workout(arrayListOf(

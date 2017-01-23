@@ -1,6 +1,6 @@
 package com.trainer.modules.init.data
 
-import com.trainer.R
+import com.trainer.modules.training.ExerciseImageMap.*
 import com.trainer.modules.training.Exercise
 import com.trainer.modules.training.Series.Set.Companion.createSet
 import com.trainer.modules.training.WeightType.BODY_WEIGHT
@@ -17,18 +17,18 @@ class BackInitData private constructor() {
             "Ściągnij łopatki.",
             "Łokieć kieruj w stronę sufitu.",
             "Wykonuj najpier na jedną stronę, potem na drugą."),
-        R.drawable.ex_kneeling_back_rotations,
+        KNEELIN_BACK_ROTATIONS_IMAGE,
         BODY_WEIGHT)
 
     private val DEADLIFT = Exercise("Martwy ciąg",
-        imageRes = R.drawable.ex_deadlift)
+        imageInfo = DEADLIFT_IMAGE)
 
     private val DUMBELLS_ROW = Exercise("Wiosłowanie hantlami",
         arrayListOf("Korpus niemal równoległy z podłogą.",
             "Inicjuj ruch ściąganiem łopatek.",
             "Łokcie prowadź szeroko.",
             "Ramiona równoległe do podłoża w końcowej fazie ruchu."),
-        R.drawable.ex_dumbells_row)
+        DUMBELLS_ROW_IMAGE)
 
     private val PAUSED_PULL_UPS = Exercise("Podciąganie z przerwą",
         arrayListOf("Drążek musisz minąć brodą.",
@@ -36,13 +36,13 @@ class BackInitData private constructor() {
             "Nogi skrzyżuj w kostkach i ugnij w kolanach",
             "Ściągaj łopatki.",
             "Opuszczaj się powoli."),
-        R.drawable.ex_pullups,
+        PAUSED_PULL_UPS_IMAGE,
         BODY_WEIGHT)
 
     private val CABLE_ARM_RAISE = Exercise("Unoszenie ramienia po przekątnej",
         arrayListOf("Rękę delikatnie ugnij w łokciu.",
             "Dłoń musi się znaleźć nad głową."),
-        R.drawable.ex_cable_arm_raise)
+        CABLE_ARM_RAISE_IMAGE)
 
 
     val BACK_WORKOUT = Workout(arrayListOf(

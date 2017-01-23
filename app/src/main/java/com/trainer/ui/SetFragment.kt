@@ -84,7 +84,7 @@ class SetFragment : BaseFragment(R.layout.fragment_set) {
     set = forSet.apply {
       // create static content
       val weightType = exercise.weightType
-      imageView.setImageResource(this.exercise.imageRes)
+      imageView.setImageResource(this.exercise.getImageResource())
       nameView.text = exercise.name
       guidelinesView.text = guidelines.reduceWithDefault("", { item -> "- $item" }, { acc, guideline -> "$acc\n- $guideline" })
 
