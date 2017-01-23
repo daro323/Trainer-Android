@@ -32,14 +32,22 @@ class ChestInitData private constructor() {
         BODY_WEIGHT)
 
     private val INCLINE_DUMBELL_PRESS = Exercise("Wyciskanie hantli na ławce skośnej",
-        imageInfo = INCLINE_DUMBELL_PRESS_IMAGE)
+        arrayListOf("Ławka nachylona max 30 stopni.",
+            "Klata wypchnięta do przodu.",
+            "Hantle sprowadzasz do dolnej części klatki.",
+            "Łokcie nie schodzą poniżej 90 stopni."),
+        INCLINE_DUMBELL_PRESS_IMAGE)
 
     private val SINGLE_DUMBELL_ROW = Exercise("Wiosłowanie hantlą",
-        arrayListOf("Przyciągaj hantlę do boku klatki piersiowej.", "Wykonuj z jedną hantlą na raz."),
+        arrayListOf("Plecy równoległe do sufitu.",
+            "Przyciągaj hantlę do boku klatki piersiowej (do pachy).",
+            "Ściągaj łopatki podczas podnoszenia.",
+            "Opuszczając nie rosprostuj ręki do końca."),
         SINGLE_DUMBELL_ROW_IMAGE)
 
-    private val SWEED_PUSHUP = Exercise("Pompka szwedzka",
-        arrayListOf("Wracaj do góry dynamicznym ruchem"),
+    private val CHEST_DIPS = Exercise("Pompki na poręczach",
+        arrayListOf("Pochyl głowę i ciało do przodu.",
+            "Ściągaj łopatki podczas ruchu."),
         SWEED_PUSHUP_IMAGE,
         BODY_WEIGHT)
 
@@ -50,12 +58,15 @@ class ChestInitData private constructor() {
             "Jedno powtórzenie to przyciągniecie hantli do lewej i prawej."),
         DUMBELL_PUSHUP_IMAGE)
 
-    private val TRICEPS_EXTENSIONS = Exercise("Prostowanie przedramion",
-        arrayListOf("Prostuj dynamicznym ruchem."),
+    private val OVERHEAD_TRICEPS_CABLE_EXTENSIONS = Exercise("Prostowanie przedramion",
+        arrayListOf("Wyciąg obniż poniżej linii barków.",
+            "Prostuj dynamicznym ruchem."),
         TRICEPS_EXTENSIONS_IMAGE)
 
-    private val TRICEPS_PULLDOWN = Exercise("Ściąganie linek w dół",
-        arrayListOf("Rozszerzaj linki w końcowej fazie ruchu."),
+    private val TRICEPS_CABLE_PUSHDOWN = Exercise("Ściąganie linek w dół",
+        arrayListOf("Łokcie lekko przed biodrami.",
+            "Ściągając w dół rób lekki krok do tyłu.",
+            "Rozszerzaj linki w końcowej fazie ruchu."),
         TRICEPS_PULLDOWN_IMAGE)
 
     private val DUMBELL_CURL = Exercise("Zginanie przedramion z hantlami",
@@ -85,7 +96,7 @@ class ChestInitData private constructor() {
                 4, 80)
         )),
         SuperSet(arrayListOf(
-            createSet(SWEED_PUSHUP,
+            createSet(CHEST_DIPS,
                 arrayListOf("Zrób 2 serie na max repet."),
                 2, 0),
             createSet(DUMBELL_PUSHUP,
@@ -93,10 +104,10 @@ class ChestInitData private constructor() {
                 2, 60))
         ),
         SuperSet(arrayListOf(
-            createSet(TRICEPS_EXTENSIONS,
+            createSet(OVERHEAD_TRICEPS_CABLE_EXTENSIONS,
                 arrayListOf("Zrób 3 serie po 15 repet."),
                 3, 0),
-            createSet(TRICEPS_PULLDOWN,
+            createSet(TRICEPS_CABLE_PUSHDOWN,
                 arrayListOf("Zrób 3 serie po 10 repet."),
                 3, 0),
             createSet(DUMBELL_CURL,

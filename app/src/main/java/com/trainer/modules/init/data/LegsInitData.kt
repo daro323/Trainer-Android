@@ -1,7 +1,7 @@
 package com.trainer.modules.init.data
 
-import com.trainer.modules.training.ExerciseImageMap.*
 import com.trainer.modules.training.Exercise
+import com.trainer.modules.training.ExerciseImageMap.*
 import com.trainer.modules.training.Series.Set.Companion.createSet
 import com.trainer.modules.training.Series.SuperSet
 import com.trainer.modules.training.Workout
@@ -13,20 +13,33 @@ class LegsInitData private constructor() {
 
   companion object {
     private val FRONT_SQUAT = Exercise("Przysiad ze sztangą z przodu",
-        imageInfo = FRONT_SQUAT_IMAGE)
+        arrayListOf("Nie zbiegaj kolan środka podczas przysiadu (powinny isć na zewnątrz).",
+            "Klata do przodu.",
+            "Łokcie do siebie na wprost i do góry."),
+        FRONT_SQUAT_IMAGE)
 
     private val MACHINE_LEG_PRESS = Exercise("Wyciskanie na maszynie w górę",
-        imageInfo = MACHINE_LEG_PRESS_IMAGE)
+        arrayListOf("W początkowej pozycji nogi ugięte pod kątem 90 stopni.",
+            "Wypychaj ciężar poprzez pięty.",
+            "Nie prostuj nóg do końca (niech będą lekko ugięte)."),
+        MACHINE_LEG_PRESS_IMAGE)
 
     private val DUMBELL_WALKING_LUNGES = Exercise("Wykroki z hantlami",
-        imageInfo = DUMBELL_WALKING_LUNGES_IMAGE)
+        arrayListOf("Wykrok musi być na tyle duży żeby uzyskać 90 stopni.",
+            "Kolano nie może wyprzedzać palców stopy.",
+            "Ręce prosto, wzdłuż ciała.",
+            "Wykroki rób na zmianę."),
+        DUMBELL_WALKING_LUNGES_IMAGE)
 
     private val LEG_CURLS = Exercise("Uginanie nóg na maszynie",
-        imageInfo = LEG_CURLS_IMAGE)
+        arrayListOf("Oparcie ustaw tak, żeby kolano było na wysokości osi obrotu ramienia.",
+            "Stopy prosto palce wycelowane w górę."),
+        LEG_CURLS_IMAGE)
 
     private val CALF_RAISE = Exercise("Spinanie łydek siedząc",
-        arrayListOf("Wykonuj powoli.", "Zatrzymuj ruch na dole, w połowie oraz na górze."),
-        imageInfo = CALF_RAISE_IMAGE)
+        arrayListOf("Wykonuj dokładnie skupiając się na pracy łydek.",
+            "Pełny zakres ruchu."),
+        CALF_RAISE_IMAGE)
 
 
 

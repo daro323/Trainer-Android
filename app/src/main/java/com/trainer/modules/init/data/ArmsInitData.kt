@@ -18,10 +18,9 @@ class ArmsInitData private constructor() {
         NARROW_GRIP_PULLUP_IMAGE,
         BODY_WEIGHT)
 
-    private val TRICEPS_SWEED_PUSHUP = Exercise("Pompka szwedzka na triceps",
+    private val TRICEPS_DIPS = Exercise("Pompki na poręczach na triceps",
         arrayListOf("Łokcie blisko tułowia.",
-            "Tułów prosto.",
-            "Wracaj do góry dynamicznym ruchem."),
+            "Tułów i głowa prosto."),
         SWEED_PUSHUP_IMAGE,
         BODY_WEIGHT)
 
@@ -49,7 +48,7 @@ class ArmsInitData private constructor() {
             createSet(NARROW_GRIP_PULLUP,
                 arrayListOf("Zrób 4 serie po kolejno 8, 6, 4 i max repet."),
                 4, 0),
-            createSet(TRICEPS_SWEED_PUSHUP,
+            createSet(TRICEPS_DIPS,
                 arrayListOf("Zrób 4 serie po kolejno 8, 6, 4 i max repet."),
                 4, 80)
         )),
