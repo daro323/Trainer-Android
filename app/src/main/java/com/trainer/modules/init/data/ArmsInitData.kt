@@ -18,8 +18,10 @@ class ArmsInitData private constructor() {
         NARROW_GRIP_PULLUP_IMAGE,
         BODY_WEIGHT)
 
-    private val SWEED_PUSHUP = Exercise("Pompka szwedzka",
-        arrayListOf("Wracaj do góry dynamicznym ruchem."),
+    private val TRICEPS_SWEED_PUSHUP = Exercise("Pompka szwedzka na triceps",
+        arrayListOf("Łokcie blisko tułowia.",
+            "Tułów prosto.",
+            "Wracaj do góry dynamicznym ruchem."),
         SWEED_PUSHUP_IMAGE,
         BODY_WEIGHT)
 
@@ -32,24 +34,24 @@ class ArmsInitData private constructor() {
             "Opuszczaj dwa razy wolniejszym ruchem."),
         BARBELL_ROW_IMAGE)
 
-    private val BARBELL_BICEPS_CURL = Exercise("Uginanie przedramion z przestojem",
-        arrayListOf("Wykonuj 3 odcinki na serię (do połowy, od połowy i cały zakres)."),
+    private val BARBELL_BICEPS_CURL = Exercise("Uginanie przedramion",
+        arrayListOf("Podnoś do maksymalnego spięcia bicepsa.",
+            "Opuszczaj bardzo bardzo powoli.",
+            "Opuszczaj do pełnego wyprostu."),
         BARBELL_BICEPS_CURL_IMAGE)
 
-    private val LYING_DUMBELL_TRICEPS_EXTENSIONS = Exercise("Prostowanie przedramion na ławce",
-        arrayListOf("Hantle trzymaj chwytem młotkowym.",
-            "Przenieś w dół do uszu."),
-        LYING_DUMBELL_TRICEPS_EXTENSIONS_IMAGE)
+    private val LEANING_TRICEPS_CABLE_EXTENSIONS = Exercise("Prostowanie przedramion w pochyleniu na wyciągu",
+        arrayListOf("Wracaj bardzo bardzo powoli."))
 
 
     val ARMS_WORKOUT = Workout(arrayListOf(
         SuperSet(arrayListOf(
             createSet(NARROW_GRIP_PULLUP,
                 arrayListOf("Zrób 4 serie po kolejno 8, 6, 4 i max repet."),
-                4, 45),
-            createSet(SWEED_PUSHUP,
+                4, 0),
+            createSet(TRICEPS_SWEED_PUSHUP,
                 arrayListOf("Zrób 4 serie po kolejno 8, 6, 4 i max repet."),
-                4, 70)
+                4, 80)
         )),
         SuperSet(arrayListOf(
             createSet(BARBELL_SHOULDER_PRESS,
@@ -61,9 +63,9 @@ class ArmsInitData private constructor() {
         )),
         SuperSet(arrayListOf(
             createSet(BARBELL_BICEPS_CURL,
-                arrayListOf("Zrób 3 serie po 3 repety na odcinek."),
+                arrayListOf("Zrób 3 serie po 8 repet na odcinek."),
                 3, 0),
-            createSet(LYING_DUMBELL_TRICEPS_EXTENSIONS,
+            createSet(LEANING_TRICEPS_CABLE_EXTENSIONS,
                 arrayListOf("Zrób 3 serie po 8 repet."),
                 3, 80)
         ))

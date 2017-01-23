@@ -1,7 +1,7 @@
 package com.trainer.modules.init.data
 
-import com.trainer.modules.training.ExerciseImageMap.*
 import com.trainer.modules.training.Exercise
+import com.trainer.modules.training.ExerciseImageMap.*
 import com.trainer.modules.training.Series.Set.Companion.createSet
 import com.trainer.modules.training.Series.SuperSet
 import com.trainer.modules.training.WeightType.BODY_WEIGHT
@@ -14,7 +14,12 @@ class ChestInitData private constructor() {
 
   companion object {
     private val BENCH_PRESS = Exercise("Wyciskanie sztangi na ławce",
-        arrayListOf("Opuszczaj powoli, wyciskaj dynamicznie."),
+        arrayListOf("Sztanga na wysokości wzroku.",
+            "Łopatki ściągnięte do tyłu i w dół.",
+            "Stopy za kolanami.",
+            "Nadgarstki trzymaj prosto.",
+            "Opuszczaj do kąta prostego, nie niżej.",
+            "Opuszczaj powoli, wyciskaj dynamicznie."),
         BENCH_PRESS_IMAGE)
 
     private val PULL_UPS = Exercise("Podciąganie nachwytem",
