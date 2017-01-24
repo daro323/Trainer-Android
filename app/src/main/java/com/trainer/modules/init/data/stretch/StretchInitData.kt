@@ -1,7 +1,9 @@
 package com.trainer.modules.init.data.stretch
 
-import com.trainer.modules.init.data.stretch.StretchExercises.Companion.SAMPLE_NO_COMMENT_STRETCH_EXERCISE
-import com.trainer.modules.init.data.stretch.StretchExercises.Companion.SAMPLE_STRETCH_EXERCISE
+import com.trainer.modules.init.data.stretch.StretchExercises.Companion.BEND_OVER_CURLED_LEG
+import com.trainer.modules.init.data.stretch.StretchExercises.Companion.QUADS_STRETCH
+import com.trainer.modules.init.data.stretch.StretchExercises.Companion.TOUCH_YOUR_TOES_DOWN
+import com.trainer.modules.init.data.stretch.StretchExercises.Companion.TOUCH_YOUR_TOES_UP
 import com.trainer.modules.training.StretchRoutine
 import com.trainer.modules.training.TrainingCategory.*
 
@@ -12,7 +14,6 @@ class StretchInitData {
 
   companion object {
     val CHEST_STRETCH_ROUTINE = StretchRoutine(CHEST, arrayListOf(
-        SAMPLE_STRETCH_EXERCISE, SAMPLE_NO_COMMENT_STRETCH_EXERCISE
         // TODO
     ))
 
@@ -29,7 +30,10 @@ class StretchInitData {
     ))
 
     val LEGS_STRETCH_ROUTINE = StretchRoutine(LEGS, arrayListOf(
-        // TODO
+        QUADS_STRETCH,
+        TOUCH_YOUR_TOES_DOWN,
+        TOUCH_YOUR_TOES_UP,
+        BEND_OVER_CURLED_LEG
     ))
   }
 }
