@@ -28,15 +28,25 @@ abstract class BaseActivity(@LayoutRes private val layoutRes: Int = -1) : AppCom
   }
 
   protected fun showCancelablePopupAlert(@StringRes messageId: Int, action: () -> Unit) {
+    showConfigurablePopupAlert(R.string.ok, R.string.cancel, messageId, action, {})
+  }
+
+  protected fun showConfigurablePopupAlert(@StringRes yesLabel: Int,
+                                           @StringRes noLabel: Int,
+                                           @StringRes messageId: Int,
+                                           yesAction: () -> Unit,
+                                           noAction: () -> Unit) {
     showDialogSubscription.unsubscribe()
     val dialog = AlertDialog.Builder(this)
         .setMessage(messageId)
         .setCancelable(true)
-        .setPositiveButton(R.string.ok, { dialog, which ->
-          action()
+        .setPositiveButton(yesLabel, { dialog, which ->
+          yesAction()
           dialog.dismiss()
         })
-        .setNegativeButton(R.string.cancel, { dialog, which -> dialog.dismiss() })
+        .setNegativeButton(noLabel, { dialog, which ->
+          noAction()
+          dialog.dismiss() })
         .create()
     dialog.show()
     showDialogSubscription = Subscriptions.create { dialog.dismiss() }

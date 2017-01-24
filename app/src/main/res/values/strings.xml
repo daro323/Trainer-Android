@@ -1,6 +1,7 @@
 <resources>
   <string name="app_name">Trainer</string>
   <string name="workout">%s Workout</string>
+  <string name="stretch_title">%s Stretch</string>
   <string name="confirm_workout_abort">Workout not completed, abort?</string>
 
   <string name="ok">OK</string>
@@ -11,10 +12,12 @@
   <string name="comments">Comments</string>
   <string name="current">Current</string>
   <string name="last">Last</string>
+  <string name="close">Close</string>
   <string name="submit">Submit</string>
   <string name="per_x">x</string>
   <string name="reps">reps</string>
   <string name="skip">Skip</string>
+  <string name="stretch">Stretch</string>
   <string name="take_rest">Take a rest…</string>
   <string name="countdown_text">%s sec\n\nClick to skip</string>
   <string name="notification_countdown_text">%s sec</string>

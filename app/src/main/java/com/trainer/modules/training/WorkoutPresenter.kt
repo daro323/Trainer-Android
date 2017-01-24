@@ -67,6 +67,8 @@ class WorkoutPresenter @Inject constructor(val repo: TrainingRepository,
     if (getCurrentSerie().status() != COMPLETE) refreshCurrentSetIdx() else currentSetIdx = DEFAULT_SET_INDEX
   }
 
+  fun getCurrentStretchRoutine() = repo.getStretchPlan().stretchRoutines.find { it.category == trainingDay.category }
+
   fun saveSetResult(weight: Float, rep: Int) {
     val currentSet = getCurrentSet()
     if (weight < 0 && currentSet.exercise.weightType != BODY_WEIGHT) throw IllegalArgumentException("Missing weight value! It's expected in saveSetResult for weight type= ${getCurrentSet().exercise.weightType}")

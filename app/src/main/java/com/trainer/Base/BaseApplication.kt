@@ -5,7 +5,7 @@ import android.content.Context
 import com.trainer.d2.common.ActivityComponent
 import com.trainer.d2.common.ActivityModule
 import com.trainer.d2.common.AppComponent
-import com.trainer.modules.init.TrainingDataInitializer
+import com.trainer.modules.init.DataInitializer
 import javax.inject.Inject
 
 /**
@@ -13,7 +13,7 @@ import javax.inject.Inject
  */
 abstract class BaseApplication : Application() {
 
-  @Inject lateinit var dataInitializer: TrainingDataInitializer
+  @Inject lateinit var dataInitializer: DataInitializer
   lateinit var appComponent: AppComponent
 
   companion object {

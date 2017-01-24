@@ -26,6 +26,8 @@
               android:screenOrientation="portrait"/>
     <activity android:name=".ui.SerieActivity"
               android:screenOrientation="portrait"/>
+    <activity android:name=".ui.StretchActivity"
+              android:screenOrientation="portrait"/>
     <activity android:name=".ui.RestActivity"
               android:screenOrientation="portrait"
               android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"

@@ -1,4 +1,4 @@
-package com.trainer.modules.init.data
+package com.trainer.modules.init.data.exercise
 
 import com.trainer.modules.training.Exercise
 import com.trainer.modules.training.ExerciseImageMap.*
@@ -10,7 +10,7 @@ import com.trainer.modules.training.Workout
 /**
  * Created by dariusz on 16/01/17.
  */
-class ArmsInitData private constructor() {
+class ArmsExerciseInitData private constructor() {
 
   companion object {
     private val NARROW_GRIP_PULLUP = Exercise("Podciąganie wąskim podchwytem",

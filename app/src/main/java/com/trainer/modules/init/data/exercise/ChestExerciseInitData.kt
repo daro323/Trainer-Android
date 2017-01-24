@@ -1,4 +1,4 @@
-package com.trainer.modules.init.data
+package com.trainer.modules.init.data.exercise
 
 import com.trainer.modules.training.Exercise
 import com.trainer.modules.training.ExerciseImageMap.*
@@ -10,7 +10,7 @@ import com.trainer.modules.training.Workout
 /**
  * Created by dariusz on 05/01/17.
  */
-class ChestInitData private constructor() {
+class ChestExerciseInitData private constructor() {
 
   companion object {
     private val BENCH_PRESS = Exercise("Wyciskanie sztangi na ławce",

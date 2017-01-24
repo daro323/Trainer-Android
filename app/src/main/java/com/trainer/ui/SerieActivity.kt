@@ -20,7 +20,7 @@ import com.trainer.modules.training.TrainingManager
 import com.trainer.modules.training.WorkoutEvent
 import com.trainer.modules.training.WorkoutEvent.*
 import com.trainer.modules.training.WorkoutPresenter
-import com.trainer.ui.SetFragment.Companion.SET_ID
+import com.trainer.ui.SetFragment.Companion.ARG_SET_ID
 import com.trainer.ui.model.SuperSetPagerAdapter
 import com.trainer.utils.bindView
 import rx.subscriptions.Subscriptions
@@ -119,7 +119,7 @@ class SerieActivity : BaseActivity(R.layout.activity_set_pager) {
   private fun showSerieAsSet(set: Set) {
     title = getString(R.string.set)
     superSetPager.visibility = GONE
-    setupFragment(R.id.container) { SetFragment().with(SET_ID to set.id()) }
+    setupFragment(R.id.container) { SetFragment().with(ARG_SET_ID to set.id()) }
   }
 
   private fun showSerieAsSuperSet(superSet: SuperSet) {

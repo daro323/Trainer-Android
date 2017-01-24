@@ -3,6 +3,8 @@ package com.trainer.ui
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.view.Menu
+import android.view.MenuItem
 import com.trainer.R
 import com.trainer.base.BaseActivity
 import com.trainer.extensions.ioMain
@@ -74,16 +76,43 @@ class WorkoutListActivity : BaseActivity(R.layout.activity_list) {
     }
   }
 
+  override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+    val inflater = menuInflater
+    inflater.inflate(R.menu.workout_menu, menu)
+    return true
+  }
+
+  override fun onOptionsItemSelected(item: MenuItem): Boolean {
+    when(item.itemId) {
+      R.id.show_stretching -> {
+        start<StretchActivity>()
+        return true
+      }
+      else -> return super.onOptionsItemSelected(item)
+    }
+  }
+
   private fun subscribeForWorkoutEvents() {
     workoutEventsSubscription.unsubscribe()
     workoutEventsSubscription = presenter.onWorkoutEvent()
         .filter { it == WORKOUT_COMPLETED }
         .ioMain()
         .subscribe {
-          trainingManager.completeWorkout()
-          exportManager.exportCurrentTrainingPlan().ioMain().subscribe()
-          showConfirmPopupAlert(R.string.workout_complete, { finish() })
+          showConfigurablePopupAlert(R.string.close, R.string.stretch, R.string.workout_complete,
+              {
+                completeAndFinish()
+              },
+              {
+                start<StretchActivity>()
+                completeAndFinish()
+              })
         }
+  }
+
+  private fun completeAndFinish() {
+    trainingManager.completeWorkout()
+    exportManager.exportCurrentTrainingPlan().ioMain().subscribe()
+    finish()
   }
 
   private fun showWorkoutList(list: List<Series>) {

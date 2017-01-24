@@ -1,4 +1,4 @@
-package com.trainer.modules.init.data
+package com.trainer.modules.init.data.exercise
 
 import com.trainer.modules.training.Exercise
 import com.trainer.modules.training.ExerciseImageMap.*
@@ -9,7 +9,7 @@ import com.trainer.modules.training.Workout
 /**
  * Created by dariusz on 05/01/17.
  */
-class LegsInitData private constructor() {
+class LegsExerciseInitData private constructor() {
 
   companion object {
     private val FRONT_SQUAT = Exercise("Przysiad ze sztangą z przodu",

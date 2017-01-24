@@ -31,7 +31,7 @@ class SetFragment : BaseFragment(R.layout.fragment_set) {
 
   @Inject lateinit var trainingManager: TrainingManager
   private val presenter: WorkoutPresenter by lazy { trainingManager.workoutPresenter ?: throw IllegalStateException("Current workout not set!") }  // can call this only after component.inject()!
-  private var setId: String by arg(SET_ID)
+  private var setId: String by arg(ARG_SET_ID)
   private lateinit var set: Set
   private val fieldsToValidate: SetFragmentFieldValidator by lazy { SetFragmentFieldValidator(weightInputView, repInputView) }
   private val onInputFocusListener = { view: View, hasFocus: Boolean ->
@@ -58,7 +58,7 @@ class SetFragment : BaseFragment(R.layout.fragment_set) {
   private val scrollView: ScrollView by bindView(R.id.scroll_container)
 
   companion object {
-    const val SET_ID = "SET_ID"
+    const val ARG_SET_ID = "ARG_SET_ID"
   }
 
   override fun inject(component: ActivityComponent) {

@@ -14,15 +14,18 @@ import javax.inject.Inject
 class TrainingRepository @Inject constructor(val sharedPrefs: SharedPreferences,
                                              val mapper: ObjectMapper) {
   companion object {
-    const private val PLAN_KEY = "PLAN_KEY"
-    private val PLAN_NOT_INITIALIZED = TrainingPlan("Not initialized", emptyList())
+    const private val TRAINING_PLAN_KEY = "TRAINING_PLAN_KEY"
+    const private val STRETCH_PLAN_KEY = "STRETCH_PLAN_KEY"
+    private val TRAINING_PLAN_NOT_INITIALIZED = TrainingPlan("Not initialized", emptyList())
+    private val STRETCH_PLAN_NOT_INITIALIZED = StretchPlan(emptyList())
   }
 
-  private var trainingPlan: TrainingPlan = PLAN_NOT_INITIALIZED
+  private var trainingPlan: TrainingPlan = TRAINING_PLAN_NOT_INITIALIZED
+  private var stretchPlan: StretchPlan = STRETCH_PLAN_NOT_INITIALIZED
 
   fun getTrainingPlan(): TrainingPlan {
-    if (trainingPlan == PLAN_NOT_INITIALIZED) {
-      val trainingPlanJson = sharedPrefs.getString(PLAN_KEY, null)
+    if (trainingPlan == TRAINING_PLAN_NOT_INITIALIZED) {
+      val trainingPlanJson = sharedPrefs.getString(TRAINING_PLAN_KEY, null)
       require(trainingPlanJson != null) { "No Training Plan found" }
       trainingPlan = mapper.readValue(trainingPlanJson, TrainingPlan::class.java)
     }
@@ -34,7 +37,7 @@ class TrainingRepository @Inject constructor(val sharedPrefs: SharedPreferences,
    * Requires input plan to have all the workouts for all training days finished.
    */
   fun setNewTrainingPlan(newPlan: TrainingPlan) {
-    sharedPrefs.saveString(PLAN_KEY, mapper.writeValueAsString(newPlan))
+    sharedPrefs.saveString(TRAINING_PLAN_KEY, mapper.writeValueAsString(newPlan))
     trainingPlan = newPlan
   }
 
@@ -42,7 +45,20 @@ class TrainingRepository @Inject constructor(val sharedPrefs: SharedPreferences,
    * Writes in memory Training Plan to persistence.
    */
   fun saveTrainingPlan() {
-    require(trainingPlan != PLAN_NOT_INITIALIZED) { "Attempt to save uninitialized plan's progress!" }
-    sharedPrefs.saveString(PLAN_KEY, mapper.writeValueAsString(trainingPlan))
+    require(trainingPlan != TRAINING_PLAN_NOT_INITIALIZED) { "Attempt to save uninitialized plan's progress!" }
+    sharedPrefs.saveString(TRAINING_PLAN_KEY, mapper.writeValueAsString(trainingPlan))
+  }
+
+  fun saveStretchPlan(stretchPlan: StretchPlan) {
+    sharedPrefs.saveString(STRETCH_PLAN_KEY, mapper.writeValueAsString(stretchPlan))
+  }
+
+  fun getStretchPlan(): StretchPlan {
+    if (stretchPlan == STRETCH_PLAN_NOT_INITIALIZED) {
+      val stretchPlanJson = sharedPrefs.getString(STRETCH_PLAN_KEY, null)
+      require(stretchPlanJson != null) { "No Stretching Plan found" }
+      stretchPlan = mapper.readValue(stretchPlanJson, StretchPlan::class.java)
+    }
+    return stretchPlan
   }
 }

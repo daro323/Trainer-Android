@@ -1,4 +1,4 @@
-package com.trainer.modules.init.data
+package com.trainer.modules.init.data.exercise
 
 import com.trainer.modules.training.Exercise
 import com.trainer.modules.training.ExerciseImageMap.*
@@ -9,7 +9,7 @@ import com.trainer.modules.training.Workout
 /**
  * Created by dariusz on 16/01/17.
  */
-class BackInitData private constructor() {
+class BackExerciseInitData private constructor() {
 
   companion object {
     private val KNEELIN_BACK_ROTATIONS = Exercise("Rotacja w klęku podpartym",

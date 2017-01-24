@@ -171,6 +171,30 @@ interface Series {
   }
 }
 
+data class StretchExercise private constructor(val id: String,
+                                               val name: String,
+                                               @DrawableRes val imageRes: Int,
+                                               val guidelines: List<String>,
+                                               val comments: List<String>) {
+  companion object {
+    var instanceCounter: Int = 0
+    /* Automatically adds IDs as instance count */
+    fun createStretch(name: String,
+                      @DrawableRes imageRes: Int,
+                      guidelines: List<String>,
+                      comments: List<String>) = StretchExercise((++instanceCounter).toString(), name, imageRes, guidelines, comments)
+  }
+}
+
+data class StretchRoutine(val category: TrainingCategory,
+                          val stretchExercises: List<StretchExercise>) {
+
+  fun getStretchExercise(id: String) = stretchExercises.find { it.id == id }
+}
+
+data class StretchPlan(val stretchRoutines: List<StretchRoutine>)
+
+
 enum class ExerciseImageMap(@DrawableRes val resource: Int) {
   // CHEST
   DEFAULT_IMAGE(R.mipmap.ic_exercise_default),

@@ -60,6 +60,7 @@ class TrainingManager @Inject constructor(val repo: TrainingRepository,
       repo.saveTrainingPlan()
       reset()
     }
+    workoutPresenter = null
   }
 
   fun getTrainingPlan() = repo.getTrainingPlan()
@@ -67,6 +68,12 @@ class TrainingManager @Inject constructor(val repo: TrainingRepository,
   fun setTrainingPlan(trainingPlan: TrainingPlan) {
     reset()
     repo.setNewTrainingPlan(trainingPlan)
+  }
+
+  fun getStretchPlan() = repo.getStretchPlan()
+
+  fun setStretchPlan(stretchPlan: StretchPlan) {
+    repo.saveStretchPlan(stretchPlan)
   }
 
   private fun isInitialized() = workoutPresenter != null

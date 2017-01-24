@@ -1,4 +1,4 @@
-package com.trainer.modules.init.data
+package com.trainer.modules.init.data.exercise
 
 import com.trainer.modules.training.Exercise
 import com.trainer.modules.training.ExerciseImageMap.*
@@ -9,7 +9,7 @@ import com.trainer.modules.training.Workout
 /**
  * Created by dariusz on 16/01/17.
  */
-class ShouldersInitData private constructor() {
+class ShouldersExerciseInitData private constructor() {
 
   companion object {
     private val SEATED_DUMBELL_SHOULDER_PRESS = Exercise("Wyciskanie na barki siedząc",
