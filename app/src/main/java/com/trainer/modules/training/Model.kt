@@ -178,7 +178,7 @@ enum class ExerciseImageMap(@DrawableRes val resource: Int) {
   PULL_UPS_IMAGE(R.drawable.ex_pullups),
   INCLINE_DUMBELL_PRESS_IMAGE(R.drawable.ex_incline_press),
   SINGLE_DUMBELL_ROW_IMAGE(R.drawable.ex_single_dumbell_row),
-  SWEED_PUSHUP_IMAGE(R.drawable.ex_sweed_pushup),
+  CHEST_DIPS_IMAGE(R.drawable.ex_chest_dips),
   DUMBELL_PUSHUP_IMAGE(R.drawable.ex_dumbell_pushup),
   TRICEPS_EXTENSIONS_IMAGE(R.drawable.ex_triceps_extensions),
   TRICEPS_PULLDOWN_IMAGE(R.drawable.ex_triceps_pulldown),

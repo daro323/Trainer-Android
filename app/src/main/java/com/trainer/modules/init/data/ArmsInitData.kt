@@ -22,7 +22,7 @@ class ArmsInitData private constructor() {
     private val TRICEPS_DIPS = Exercise("Pompki na poręczach na triceps",
         arrayListOf("Łokcie blisko tułowia.",
             "Tułów i głowa prosto."),
-        SWEED_PUSHUP_IMAGE,
+        CHEST_DIPS_IMAGE,
         BODY_WEIGHT)
 
     private val SEATED_BARBELL_SHOULDER_PRESS = Exercise("Wyciskanie sztangi siedząc",
@@ -69,7 +69,7 @@ class ArmsInitData private constructor() {
         )),
         SuperSet(arrayListOf(
             createSet(BARBELL_BICEPS_CURL,
-                arrayListOf("Zrób 3 serie po 8 repet na odcinek."),
+                arrayListOf("Zrób 3 serie po 8 repet."),
                 3, 0),
             createSet(LEANING_TRICEPS_CABLE_EXTENSIONS,
                 arrayListOf("Zrób 3 serie po 8 repet."),

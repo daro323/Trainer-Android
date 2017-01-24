@@ -48,7 +48,7 @@ class ChestInitData private constructor() {
     private val CHEST_DIPS = Exercise("Pompki na poręczach",
         arrayListOf("Pochyl głowę i ciało do przodu.",
             "Ściągaj łopatki podczas ruchu."),
-        SWEED_PUSHUP_IMAGE,
+        CHEST_DIPS_IMAGE,
         BODY_WEIGHT)
 
     private val DUMBELL_PUSHUP = Exercise("Pompka na hantlach",
@@ -84,7 +84,7 @@ class ChestInitData private constructor() {
     val CHEST_WORKOUT = Workout(arrayListOf(
         SuperSet(arrayListOf(
             createSet(BENCH_PRESS,
-                arrayListOf("Zrób 3 serie po 15, 10 i 8 repet.", "Po ostatniej od razu max z 80% obciążeniem."),
+                arrayListOf("Zrób 4 serie po 12, 10, 8 i 7 repet."),
                 4, 0),
             createSet(PULL_UPS,
                 arrayListOf("Zrób 3 serie na max repet."),
@@ -92,10 +92,10 @@ class ChestInitData private constructor() {
         ),
         SuperSet(arrayListOf(
             createSet(INCLINE_DUMBELL_PRESS,
-                arrayListOf("Zrób 3 serie po 15, 10 i 8 repet.", "Po ostatniej od razu max z 80% obciążeniem."),
+                arrayListOf("Zrób 4 serie po 12, 10, 8 i 8 repet."),
                 4, 0),
             createSet(SINGLE_DUMBELL_ROW,
-                arrayListOf("Zrób 3 serie po 15, 12 i 10 repet.", "Po ostatniej od razu max z 80% obciążeniem."),
+                arrayListOf("Zrób 4 serie po 12, 10, 8 i 8 repet."),
                 4, 80)
         )),
         SuperSet(arrayListOf(
@@ -104,18 +104,18 @@ class ChestInitData private constructor() {
                 2, 0),
             createSet(DUMBELL_PUSHUP,
                 arrayListOf("Zrób 2 serie po 10 repet"),
-                2, 60))
+                2, 70))
         ),
         SuperSet(arrayListOf(
             createSet(OVERHEAD_TRICEPS_CABLE_EXTENSIONS,
-                arrayListOf("Zrób 3 serie po 15 repet."),
+                arrayListOf("Zrób 3 serie po 10 repet."),
                 3, 0),
             createSet(TRICEPS_CABLE_PUSHDOWN,
                 arrayListOf("Zrób 3 serie po 10 repet."),
                 3, 0),
             createSet(SUPINATED_BICEPS_CURL,
                 arrayListOf("Zrób 3 serie po 10 repet."),
-                3, 60))
+                3, 70))
         )
     ))
   }

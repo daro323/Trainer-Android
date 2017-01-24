@@ -76,7 +76,7 @@ class ShouldersInitData private constructor() {
         )),
         SuperSet(arrayListOf(
             createSet(CABLE_TO_HEAD_PULL,
-                arrayListOf("Zrób 3 serie po 12 repet."),
+                arrayListOf("Zrób 3 serie po 12-15 repet."),
                 3, 0),
             createSet(LYING_DUMBELL_ROTATIONS,
                 arrayListOf("Zrób 3 serie po 15 repet na obie strony."),
