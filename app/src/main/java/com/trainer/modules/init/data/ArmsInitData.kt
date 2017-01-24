@@ -14,7 +14,8 @@ class ArmsInitData private constructor() {
 
   companion object {
     private val NARROW_GRIP_PULLUP = Exercise("Podciąganie wąskim podchwytem",
-        arrayListOf("Podciągaj się aż miniesz drążek głową."),
+        arrayListOf("Podciągaj się aż miniesz drążek głową.",
+            "Przytrzymaj podciągnięcie na 3 sekundy."),
         NARROW_GRIP_PULLUP_IMAGE,
         BODY_WEIGHT)
 
@@ -24,17 +25,23 @@ class ArmsInitData private constructor() {
         SWEED_PUSHUP_IMAGE,
         BODY_WEIGHT)
 
-    private val BARBELL_SHOULDER_PRESS = Exercise("Wyciskanie sztangi siedząc",
-        imageInfo = BARBELL_SHOULDER_PRESS_IMAGE)
+    private val SEATED_BARBELL_SHOULDER_PRESS = Exercise("Wyciskanie sztangi siedząc",
+        arrayListOf("Mocno chwytaj sztangę.",
+            "Nadgarstki powinny być w linii z łokciami.",
+            "Dozwolone jest jedynie lekkie wygięcie pleców."),
+        SEATED_BARBELL_SHOULDER_PRESS_IMAGE)
 
-    private val BARBELL_ROW = Exercise("Wiosłowanie sztangą w opadzie",
-        arrayListOf("Sztandze pozwól opadać w prostych rękach.",
+    private val BARBELL_BENT_OVER_ROW = Exercise("Wiosłowanie sztangą w opadzie",
+        arrayListOf("Pochyl się od 45 do 60 stopni.",
+            "Tułów stabilny bez ruchów.",
+            "Sztandze pozwól opadać w prostych rękach.",
             "Przyciągaj do górnej części brzucha.",
             "Opuszczaj dwa razy wolniejszym ruchem."),
         BARBELL_ROW_IMAGE)
 
     private val BARBELL_BICEPS_CURL = Exercise("Uginanie przedramion",
         arrayListOf("Podnoś do maksymalnego spięcia bicepsa.",
+            "W końcowej fazie unieś łokcie.",
             "Opuszczaj bardzo bardzo powoli.",
             "Opuszczaj do pełnego wyprostu."),
         BARBELL_BICEPS_CURL_IMAGE)
@@ -46,17 +53,17 @@ class ArmsInitData private constructor() {
     val ARMS_WORKOUT = Workout(arrayListOf(
         SuperSet(arrayListOf(
             createSet(NARROW_GRIP_PULLUP,
-                arrayListOf("Zrób 4 serie po kolejno 8, 6, 4 i max repet."),
+                arrayListOf("Zrób 4 serie po kolejno 8, 6, 5 i max repet."),
                 4, 0),
             createSet(TRICEPS_DIPS,
-                arrayListOf("Zrób 4 serie po kolejno 8, 6, 4 i max repet."),
+                arrayListOf("Zrób 4 serie po kolejno 8, 6, 5 i max repet."),
                 4, 80)
         )),
         SuperSet(arrayListOf(
-            createSet(BARBELL_SHOULDER_PRESS,
+            createSet(SEATED_BARBELL_SHOULDER_PRESS,
                 arrayListOf("Zrób 3 serie po 8 repet."),
                 3, 0),
-            createSet(BARBELL_ROW,
+            createSet(BARBELL_BENT_OVER_ROW,
                 arrayListOf("Zrób 3 serie po 8 repet."),
                 3, 90)
         )),

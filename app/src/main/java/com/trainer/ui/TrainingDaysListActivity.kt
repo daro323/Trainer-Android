@@ -77,7 +77,7 @@ class TrainingDaysListActivity : BaseActivity(R.layout.activity_list) {
           exportManager.exportCurrentTrainingPlan()
               .ioMain()
               .subscribe(
-                  { showConfirmPopupAlert(R.string.export_successful) },
+                  { showConfirmPopupAlert(getString(R.string.export_successful) + " ${exportManager.getTrainingStorageDir()}") },
                   { error -> showConfirmPopupAlert("${getString(R.string.export_failure)}: '${error.message}'") })
         }
         return true

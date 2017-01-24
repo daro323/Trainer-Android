@@ -1,7 +1,7 @@
 package com.trainer.modules.init.data
 
-import com.trainer.modules.training.ExerciseImageMap.*
 import com.trainer.modules.training.Exercise
+import com.trainer.modules.training.ExerciseImageMap.*
 import com.trainer.modules.training.Series.Set.Companion.createSet
 import com.trainer.modules.training.Series.SuperSet
 import com.trainer.modules.training.Workout
@@ -13,7 +13,10 @@ class ShouldersInitData private constructor() {
 
   companion object {
     private val SEATED_DUMBELL_SHOULDER_PRESS = Exercise("Wyciskanie na barki siedząc",
-        imageInfo = SEATED_DUMBELL_SHOULDER_PRESS_IMAGE)
+        arrayListOf("Nie zapieraj się głową podczas wyciskania.",
+            "Łokcie i ramiona lekko przed sobą (nie cofaj za plecy).",
+            "Opuszczaj do 90 stopni w ugięciu ramion."),
+        SEATED_DUMBELL_SHOULDER_PRESS_IMAGE)
 
     private val BARBELL_ROW = Exercise("Wiosłowanie sztangą w opadzie",
         arrayListOf("Sztandze pozwól opadać w prostych rękach.",
@@ -22,7 +25,7 @@ class ShouldersInitData private constructor() {
         BARBELL_ROW_IMAGE)
 
     private val BARBELL_TO_CHEST_PULL = Exercise("Ściąganie drążka do klatki podchwytem",
-        arrayListOf("Złap podchwytem na szerokość barków.",
+        arrayListOf("Złap podchwytem troszke szerzej niż barki.",
             "Delikatnie odchyl się do tyłu.",
             "Przyciągaj do góry klatki piersiowej.",
             "Zatrzymaj na sekundę ruch w końcowej fazie.",
@@ -39,9 +42,10 @@ class ShouldersInitData private constructor() {
         DUMBELL_SHOULDER_RAISE_IMAGE)
 
     private val CABLE_TO_HEAD_PULL = Exercise("Przyciąganie liny",
-        arrayListOf("Wyciąg liny ustawiony na wysokości oczu.",
+        arrayListOf("Wyciąg liny ustawiony na wysokości krtani.",
+            "Kciuki skierowane do ciebie.",
             "Ruch inicjuj ściągając łopatki.",
-            "Końce liny przeciągnij za uszy.",
+            "Końce liny przeciągnij nad uszy.",
             "Szerokim łukiem prowadź łokcie na boki.",
             "Wracaj powoli."),
         CABLE_TO_HEAD_PULL_IMAGE)

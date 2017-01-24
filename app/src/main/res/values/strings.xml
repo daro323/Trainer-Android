@@ -22,7 +22,7 @@
   <string name="workout_complete">Workout complete!</string>
   <string name="import_plan">Import Plan</string>
   <string name="export_plan">Export Plan</string>
-  <string name="export_successful">Export Successful</string>
+  <string name="export_successful">Export Successful to:</string>
   <string name="import_successful">Import Successful</string>
   <string name="export_failure">Export Failure due to</string>
   <string name="import_failure">Import Failure due to</string>

@@ -182,11 +182,11 @@ enum class ExerciseImageMap(@DrawableRes val resource: Int) {
   DUMBELL_PUSHUP_IMAGE(R.drawable.ex_dumbell_pushup),
   TRICEPS_EXTENSIONS_IMAGE(R.drawable.ex_triceps_extensions),
   TRICEPS_PULLDOWN_IMAGE(R.drawable.ex_triceps_pulldown),
-  DUMBELL_CURL_IMAGE(R.drawable.ex_dumbell_curl),
+  SUPINATED_BICEPS_CURL_IMAGE(R.drawable.ex_supinated_biceps_curl),
 
   // ARMS
   NARROW_GRIP_PULLUP_IMAGE(R.drawable.ex_narrow_grip_pullup),
-  BARBELL_SHOULDER_PRESS_IMAGE(R.drawable.ex_barbell_shoulder_press),
+  SEATED_BARBELL_SHOULDER_PRESS_IMAGE(R.drawable.ex_barbell_shoulder_press),
   BARBELL_ROW_IMAGE(R.drawable.ex_barbell_row),
   BARBELL_BICEPS_CURL_IMAGE(R.drawable.ex_barbell_biceps_curl),
 

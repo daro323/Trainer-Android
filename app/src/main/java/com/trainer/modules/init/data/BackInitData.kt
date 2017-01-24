@@ -1,7 +1,7 @@
 package com.trainer.modules.init.data
 
-import com.trainer.modules.training.ExerciseImageMap.*
 import com.trainer.modules.training.Exercise
+import com.trainer.modules.training.ExerciseImageMap.*
 import com.trainer.modules.training.Series.Set.Companion.createSet
 import com.trainer.modules.training.WeightType.BODY_WEIGHT
 import com.trainer.modules.training.Workout
@@ -21,27 +21,38 @@ class BackInitData private constructor() {
         BODY_WEIGHT)
 
     private val DEADLIFT = Exercise("Martwy ciąg",
-        imageInfo = DEADLIFT_IMAGE)
+        arrayListOf("Opuszczaj do momentu gdy dojdziesz do połowy golenia.",
+            "Nie zaczynaj z przysiadu (biodra wyżej).",
+            "Sztanga leży nad centralną częścią stopy.",
+            "Klata do przodu i wysoko.",
+            "Łopatki ściągnięte w dół i do tyłu (nie unoś ramion).",
+            "Minąwszy kolana zacznij przeciągać biodra do przodu.",
+            "Kolana nie mogą iść do wewnątrz.",
+            "Wypychaj do góry poprzez pięty."),
+        DEADLIFT_IMAGE)
 
     private val DUMBELLS_ROW = Exercise("Wiosłowanie hantlami",
-        arrayListOf("Korpus niemal równoległy z podłogą.",
+        arrayListOf("Korpus pochylony od 45 do 60 stopni.",
             "Inicjuj ruch ściąganiem łopatek.",
             "Łokcie prowadź szeroko.",
-            "Ramiona równoległe do podłoża w końcowej fazie ruchu."),
+            "Ramiona równoległe do podłoża w końcowej fazie ruchu.",
+            "Przyciągaj do dolnej części brzucha."),
         DUMBELLS_ROW_IMAGE)
 
     private val PAUSED_PULL_UPS = Exercise("Podciąganie z przerwą",
         arrayListOf("Drążek musisz minąć brodą.",
             "Ruch zatrzymuj na 10 sekund na górze (z czasem go wydłużaj do 20).",
-            "Nogi skrzyżuj w kostkach i ugnij w kolanach",
+            "Nogi skrzyżuj w kostkach i ugnij w kolanach.",
             "Ściągaj łopatki.",
+            "Chwyt szerszy niż barki.",
             "Opuszczaj się powoli."),
         PAUSED_PULL_UPS_IMAGE,
         BODY_WEIGHT)
 
     private val CABLE_ARM_RAISE = Exercise("Unoszenie ramienia po przekątnej",
         arrayListOf("Rękę delikatnie ugnij w łokciu.",
-            "Dłoń musi się znaleźć nad głową."),
+            "Dłoń musi się znaleźć nad głową.",
+            "Opuszczaj powoli."),
         CABLE_ARM_RAISE_IMAGE)
 
 

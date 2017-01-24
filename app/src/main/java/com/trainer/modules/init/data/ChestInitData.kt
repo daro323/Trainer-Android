@@ -25,14 +25,14 @@ class ChestInitData private constructor() {
     private val PULL_UPS = Exercise("Podciąganie nachwytem",
         arrayListOf("Drążek musisz minąć brodą.",
             "Ruch zatrzymuj na sekundę na górze.",
-            "Nogi skrzyżuj w kostkach i ugnij w kolanach",
+            "Nogi skrzyżuj w kostkach i ugnij w kolanach.",
             "Ściągaj łopatki.",
             "Opuszczaj się powoli."),
         PULL_UPS_IMAGE,
         BODY_WEIGHT)
 
     private val INCLINE_DUMBELL_PRESS = Exercise("Wyciskanie hantli na ławce skośnej",
-        arrayListOf("Ławka nachylona max 30 stopni.",
+        arrayListOf("Ławka nachylona do max 30 stopni.",
             "Klata wypchnięta do przodu.",
             "Hantle sprowadzasz do dolnej części klatki.",
             "Łokcie nie schodzą poniżej 90 stopni."),
@@ -69,11 +69,14 @@ class ChestInitData private constructor() {
             "Rozszerzaj linki w końcowej fazie ruchu."),
         TRICEPS_PULLDOWN_IMAGE)
 
-    private val DUMBELL_CURL = Exercise("Zginanie przedramion z hantlami",
-        arrayListOf("Stój prosto ruszając tylko przedramionami.",
+    private val SUPINATED_BICEPS_CURL = Exercise("Naprzemienne zginanie przedramion z supinacją",
+        arrayListOf("Chwyć hantle na skraju zewnętrznej strony (trudniejsza supinacja).",
+            "Skręcanie nadgarsteka i uginanie ramion jako jeden ruch.",
             "Uginaj do maksymalnego napięcia bicepsa.",
-            "Wracaj powoli."),
-        DUMBELL_CURL_IMAGE)
+            "Na końcu unieś ramię tak żeby hantla była na wysokości oczu.",
+            "Uginaj jedną rękę na raz.",
+            "Wracaj bardzo powoli."),
+        SUPINATED_BICEPS_CURL_IMAGE)
 
 
 
@@ -110,7 +113,7 @@ class ChestInitData private constructor() {
             createSet(TRICEPS_CABLE_PUSHDOWN,
                 arrayListOf("Zrób 3 serie po 10 repet."),
                 3, 0),
-            createSet(DUMBELL_CURL,
+            createSet(SUPINATED_BICEPS_CURL,
                 arrayListOf("Zrób 3 serie po 10 repet."),
                 3, 60))
         )
