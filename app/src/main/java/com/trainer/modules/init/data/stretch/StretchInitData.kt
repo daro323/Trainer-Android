@@ -1,5 +1,6 @@
 package com.trainer.modules.init.data.stretch
 
+import com.trainer.modules.init.data.stretch.StretchExercises.Companion.SAMPLE_NO_COMMENT_STRETCH_EXERCISE
 import com.trainer.modules.init.data.stretch.StretchExercises.Companion.SAMPLE_STRETCH_EXERCISE
 import com.trainer.modules.training.StretchRoutine
 import com.trainer.modules.training.TrainingCategory.*
@@ -11,7 +12,7 @@ class StretchInitData {
 
   companion object {
     val CHEST_STRETCH_ROUTINE = StretchRoutine(CHEST, arrayListOf(
-        SAMPLE_STRETCH_EXERCISE, SAMPLE_STRETCH_EXERCISE
+        SAMPLE_STRETCH_EXERCISE, SAMPLE_NO_COMMENT_STRETCH_EXERCISE
         // TODO
     ))
 

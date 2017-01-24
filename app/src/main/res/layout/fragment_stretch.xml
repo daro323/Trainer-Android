@@ -1,14 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/scroll_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-  <TextView
-      android:id="@+id/dummy_label"
+  <RelativeLayout
+      android:id="@+id/activity_set"
       android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      android:gravity="center"
-      android:text="Stretch Fragment"
-      />
+      android:layout_height="wrap_content"
+      android:focusableInTouchMode="true"
+      tools:context="com.trainer.ui.SerieActivity">
 
-</RelativeLayout>
+    <ImageView
+        android:id="@+id/stretch_exercise_image"
+        android:layout_width="@dimen/stretch_avatar_image_size"
+        android:layout_height="@dimen/stretch_avatar_image_size"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/default_padding"
+        tools:src="@drawable/ex_bench_press"/>
+
+    <TextView
+        android:id="@+id/name_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/stretch_exercise_image"
+        android:gravity="center"
+        android:textAppearance="@style/Textappearance.Trainer.Headline"
+        tools:text="Wyciskanie sztangi"/>
+
+    <include
+        android:id="@+id/parenarea_divider"
+        layout="@layout/divider_horizontal"
+        android:layout_marginTop="@dimen/default_padding"
+        android:layout_marginBottom="@dimen/default_padding"
+        android:layout_below="@id/name_text"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
+
+    <TextView
+        android:id="@+id/guidelines_label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/parenarea_divider"
+        android:textAppearance="@style/Textappearance.Trainer.Label"
+        android:text="@string/guidelines"/>
+
+    <TextView
+        android:id="@+id/guidelines_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/guidelines_label"
+        android:paddingBottom="@dimen/small_padding"
+        android:textAppearance="@style/Textappearance.Trainer.ContinuousText"
+        tools:text="- Brace your butt to prevent from farting\n- Don't cheat by not lifting at all"/>
+
+    <TextView
+        android:id="@+id/comments_label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/guidelines_text"
+        android:textAppearance="@style/Textappearance.Trainer.Label"
+        android:text="@string/comments"/>
+
+    <TextView
+        android:id="@+id/comments_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/comments_label"
+        android:textAppearance="@style/Textappearance.Trainer.ContinuousText"
+        tools:text="- This exercise sucks if you do it backwards\n- Sucks even more when done properly"/>
+
+  </RelativeLayout>
+</ScrollView>

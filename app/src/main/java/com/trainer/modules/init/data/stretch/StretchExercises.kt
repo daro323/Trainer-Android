@@ -1,6 +1,5 @@
 package com.trainer.modules.init.data.stretch
 
-import com.trainer.R
 import com.trainer.modules.training.StretchExercise.Companion.createStretch
 
 /**
@@ -10,12 +9,14 @@ class StretchExercises {
 
   companion object {
 
-    val SAMPLE_STRETCH_EXERCISE = createStretch("Sample stretch", R.mipmap.ic_exercise_default,
+    val SAMPLE_STRETCH_EXERCISE = createStretch("Sample stretch",
         arrayListOf(
             "Guideline 1", "Guideline 2"
-        ),
+        ))
+
+    val SAMPLE_NO_COMMENT_STRETCH_EXERCISE = createStretch("Sample no comment stretch",
         arrayListOf(
-            "Comment 1", "Comment 2"
+            "Guideline 1", "Guideline 2"
         ))
   }
 }

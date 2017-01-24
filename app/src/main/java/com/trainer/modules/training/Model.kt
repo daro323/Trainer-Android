@@ -173,16 +173,16 @@ interface Series {
 
 data class StretchExercise private constructor(val id: String,
                                                val name: String,
-                                               @DrawableRes val imageRes: Int,
                                                val guidelines: List<String>,
-                                               val comments: List<String>) {
+                                               val comments: List<String>,
+                                               @DrawableRes val imageRes: Int) {
   companion object {
     var instanceCounter: Int = 0
     /* Automatically adds IDs as instance count */
     fun createStretch(name: String,
-                      @DrawableRes imageRes: Int,
                       guidelines: List<String>,
-                      comments: List<String>) = StretchExercise((++instanceCounter).toString(), name, imageRes, guidelines, comments)
+                      comments: List<String> = emptyList(),
+                      @DrawableRes imageRes: Int = R.mipmap.ic_exercise_default) = StretchExercise((++instanceCounter).toString(), name, guidelines, comments, imageRes)
   }
 }
 
