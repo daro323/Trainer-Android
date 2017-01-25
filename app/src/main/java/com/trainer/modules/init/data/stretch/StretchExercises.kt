@@ -11,25 +11,40 @@ class StretchExercises {
   companion object {
 
     // LEGS ----------------------------------------------------------------------------------------------------
-    val QUADS_STRETCH = createStretch("Roźciąganie uda w oparciu",
-        arrayListOf("Roźciągaj 30-60 sekund na noge."
-        ),
-        arrayListOf("Stań tyłem do rolki i oprzyj na niej goleń.",
-            "W tej pozycji oprzyj się o swoją piętę."
-        ), R.drawable.str_quad)
+    val LEG_STRETCH_1 = createStretch("Ćwiczenie 1/9",
+        arrayListOf("Roźciągaj 30 sekund."
+        ), R.drawable.str_leg_1)
 
-    val TOUCH_YOUR_TOES_DOWN = createStretch("Dotknij swoich palców u nóg",
-        arrayListOf("Roźciągaj 15 sekund."
-        ),
-        arrayListOf("Na wyprostowanych nogach pochyl się do przodu i spróbuj chwycić swoje palce u nóg.",
-            "Dla utrudnienia możesz skrzyżować nogi."
-        ), R.drawable.str_touch_toes_down)
+    val LEG_STRETCH_2 = createStretch("Ćwiczenie 2/9",
+        arrayListOf("Roźciągaj 30 sekund."
+        ), R.drawable.str_leg_2)
 
-    val TOUCH_YOUR_TOES_UP = createStretch("Oprzyj nogę i dotknij palców",
-        arrayListOf("Roźciągaj 30-60 sekund na nogę."
-        ),
-        arrayListOf("Oprzyj nogę na wysokości klatki.",
-            "W tej pozycji spróbuj dotknąć palców u nogi."
-        ), R.drawable.str_touch_toes_up)
+    val LEG_STRETCH_3 = createStretch("Ćwiczenie 3/9",
+        arrayListOf("Roźciągaj 30 sekund."
+        ), R.drawable.str_leg_3)
+
+    val LEG_STRETCH_4 = createStretch("Ćwiczenie 4/9",
+        arrayListOf("Roźciągaj 30 sekund."
+        ), R.drawable.str_leg_4)
+
+    val LEG_STRETCH_5 = createStretch("Ćwiczenie 5/9",
+        arrayListOf("Roźciągaj 30 sekund."
+        ), R.drawable.str_leg_5)
+
+    val LEG_STRETCH_6 = createStretch("Ćwiczenie 6/9",
+        arrayListOf("Roźciągaj 30 sekund."
+        ), R.drawable.str_leg_6)
+
+    val LEG_STRETCH_7 = createStretch("Ćwiczenie 7/9",
+        arrayListOf("Roźciągaj 30 sekund."
+        ), R.drawable.str_leg_7)
+
+    val LEG_STRETCH_8 = createStretch("Ćwiczenie 8/9",
+        arrayListOf("Roźciągaj 30 sekund."
+        ), R.drawable.str_leg_8)
+
+    val LEG_STRETCH_9 = createStretch("Ćwiczenie 9/9",
+        arrayListOf("Roźciągaj 30 sekund."
+        ), R.drawable.str_leg_9)
   }
 }

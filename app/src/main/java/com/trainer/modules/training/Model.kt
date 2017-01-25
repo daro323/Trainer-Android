@@ -191,8 +191,8 @@ data class StretchExercise private constructor(val id: String,
     /* Automatically adds IDs as instance count */
     fun createStretch(name: String,
                       guidelines: List<String>,
-                      comments: List<String> = emptyList(),
-                      @DrawableRes imageRes: Int = R.mipmap.ic_exercise_default) = StretchExercise((++instanceCounter).toString(), name, guidelines, comments, imageRes)
+                      @DrawableRes imageRes: Int = R.mipmap.ic_exercise_default,
+                      comments: List<String> = emptyList()) = StretchExercise((++instanceCounter).toString(), name, guidelines, comments, imageRes)
   }
 }
 
