@@ -55,7 +55,7 @@ class TrainingManager @Inject constructor(val repo: TrainingRepository,
       getWorkoutList().forEach(Series::complete)
 
       // Increase totalDone count
-      trainingDay.increaseDoneCount()
+      trainingDay.updateAsDone()
 
       repo.saveTrainingPlan()
       reset()

@@ -22,7 +22,8 @@ import eu.inmite.android.lib.validations.form.annotations.NotEmpty
  * Created by dariusz on 06/01/17.
  */
 data class TrainingDayItem(val trainingCategory: TrainingCategory,
-                           val count: Int)
+                           val count: Int,
+                           val daysAgo: Int)
 
 class TrainingDayItemHolder(parent: ViewGroup,
                             private val onClick: (TrainingDayItem) -> Any) : TypedViewHolder<TrainingDayItem>(R.layout.training_day_item, parent) {
@@ -38,6 +39,7 @@ class TrainingDayItemHolder(parent: ViewGroup,
   private val container: ViewGroup by bindView(R.id.content_container)
   private val nameText: TextView by bindView(R.id.name)
   private val countText: TextView by bindView(R.id.count)
+  private val daysAgoText: TextView by bindView(R.id.days_ago)
 
   init {
     container.setOnClickListener { onClick(model) }
@@ -47,6 +49,7 @@ class TrainingDayItemHolder(parent: ViewGroup,
     model = dataItem
     nameText.text = model.trainingCategory.name
     countText.text = model.count.toString()
+    if (model.daysAgo > 0) daysAgoText.text = model.daysAgo.run { String.format(context.resources.getQuantityString(R.plurals.days_ago_plurals, this), this) }
   }
 }
 

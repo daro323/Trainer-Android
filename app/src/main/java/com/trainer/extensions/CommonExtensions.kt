@@ -2,6 +2,9 @@ package com.trainer.extensions
 
 import android.content.SharedPreferences
 import android.util.Log
+import org.threeten.bp.LocalDateTime
+import org.threeten.bp.ZoneOffset.UTC
+import org.threeten.bp.temporal.ChronoUnit
 import java.io.File
 
 
@@ -38,3 +41,9 @@ fun File.writeString(data: String) {
   writeText(data)
   Log.d("writeString", "Successfully written data to= ${absolutePath}")
 }
+
+fun LocalDateTime.daysSince(fromDate: LocalDateTime) = ChronoUnit.DAYS.between(fromDate, this)
+
+fun LocalDateTime.toTimestamp() = toInstant(UTC).epochSecond
+
+fun Long.toLocalDateTimeObject() = LocalDateTime.ofEpochSecond(this, 0, UTC)

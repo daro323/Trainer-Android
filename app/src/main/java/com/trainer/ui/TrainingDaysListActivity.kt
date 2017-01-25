@@ -92,7 +92,7 @@ class TrainingDaysListActivity : BaseActivity(R.layout.activity_list) {
     recyclerView.adapter = typedAdapter
 
     trainingManager.getTrainingPlan().trainingDays
-        .flatMap { listOf(TrainingDayItem(it.category, it.getTotalDone())) }
+        .flatMap { listOf(TrainingDayItem(it.category, it.getTotalDone(), it.trainedDaysAgo())) }
         .run { typedAdapter.data = this }
   }
 }

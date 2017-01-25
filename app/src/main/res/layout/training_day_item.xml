@@ -6,30 +6,39 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-  <LinearLayout
+  <RelativeLayout
       android:id="@+id/content_container"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:padding="@dimen/list_item_padding"
-      android:orientation="horizontal">
+      android:padding="@dimen/list_item_padding">
 
     <TextView
         android:id="@+id/name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="start"
         android:textAppearance="@style/TextAppearance.Trainer.ListHeadline"
         tools:text="List Item number 1" />
 
     <TextView
         android:id="@+id/count"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="end"
+        android:layout_alignParentRight="true"
         android:textAppearance="@style/TextAppearance.Trainer.ListSubHeadline"
         tools:text="21" />
 
-  </LinearLayout>
+    <TextView
+        android:id="@+id/days_ago"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@id/count"
+        android:layout_toRightOf="@id/name"
+        android:paddingRight="@dimen/default_padding"
+        android:gravity="end"
+        android:textAppearance="@style/TextAppearance.Trainer.ListSubHeadline"
+        tools:text="(4 days ago)" />
+
+  </RelativeLayout>
 
   <include
       android:id="@+id/parenarea_divider"

@@ -4,9 +4,13 @@ import android.support.annotation.DrawableRes
 import com.fasterxml.jackson.annotation.JsonSubTypes
 import com.fasterxml.jackson.annotation.JsonTypeInfo
 import com.trainer.R
+import com.trainer.extensions.daysSince
+import com.trainer.extensions.toLocalDateTimeObject
+import com.trainer.extensions.toTimestamp
 import com.trainer.modules.training.ProgressStatus.*
 import com.trainer.modules.training.WeightType.BODY_WEIGHT
 import com.trainer.modules.training.WeightType.KG
+import org.threeten.bp.LocalDateTime
 
 /**
  * Created by dariusz on 05/01/17.
@@ -46,11 +50,17 @@ data class TrainingPlan(val name: String,
 
 data class TrainingDay(val category: TrainingCategory,
                        val workout: Workout,
-                       private var totalDone: Int = 0) {
+                       private var totalDone: Int = 0,
+                       private var lastTrainedTimestamp: Long? = null) {
 
-  fun increaseDoneCount() { totalDone++ }
+  fun updateAsDone() {
+    totalDone++
+    lastTrainedTimestamp = LocalDateTime.now().toTimestamp()
+  }
 
   fun getTotalDone() = totalDone
+
+  fun trainedDaysAgo() = LocalDateTime.now().daysSince(lastTrainedTimestamp?.toLocalDateTimeObject() ?: LocalDateTime.now()).toInt()
 }
 
 data class Workout(val series: List<Series>) {
