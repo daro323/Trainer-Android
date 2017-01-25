@@ -1,6 +1,5 @@
 package com.trainer.modules.init.data.stretch
 
-import com.trainer.modules.init.data.stretch.StretchExercises.Companion.BEND_OVER_CURLED_LEG
 import com.trainer.modules.init.data.stretch.StretchExercises.Companion.QUADS_STRETCH
 import com.trainer.modules.init.data.stretch.StretchExercises.Companion.TOUCH_YOUR_TOES_DOWN
 import com.trainer.modules.init.data.stretch.StretchExercises.Companion.TOUCH_YOUR_TOES_UP
@@ -32,8 +31,8 @@ class StretchInitData {
     val LEGS_STRETCH_ROUTINE = StretchRoutine(LEGS, arrayListOf(
         QUADS_STRETCH,
         TOUCH_YOUR_TOES_DOWN,
-        TOUCH_YOUR_TOES_UP,
-        BEND_OVER_CURLED_LEG
+        TOUCH_YOUR_TOES_UP
+        // TODO
     ))
   }
 }

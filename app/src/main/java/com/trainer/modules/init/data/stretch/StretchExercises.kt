@@ -31,12 +31,5 @@ class StretchExercises {
         arrayListOf("Oprzyj nogę na wysokości klatki.",
             "W tej pozycji spróbuj dotknąć palców u nogi."
         ), R.drawable.str_touch_toes_up)
-
-    val BEND_OVER_CURLED_LEG = createStretch("Pochylanie się nad ugiętą nogą.",
-        arrayListOf("Roźciągaj 30-60 sekund na nogę."
-        ),
-        arrayListOf("Siad płaski, jedną nogę podwiń tak żeby dotknąć podeszwą wewnętrzną część uda.",
-            "Skręć tułów w kierunku podwiniętej nogi i pochyl sie nad nią do boku."
-        ), R.drawable.str_bend_over_curled_leg)
   }
 }
