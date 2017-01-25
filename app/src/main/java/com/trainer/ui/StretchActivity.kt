@@ -1,11 +1,13 @@
 package com.trainer.ui
 
+import android.app.Activity
 import android.os.Bundle
 import android.support.v4.view.ViewPager
 import com.trainer.R
 import com.trainer.base.BaseActivity
+import com.trainer.extensions.startWith
+import com.trainer.modules.training.TrainingCategory
 import com.trainer.modules.training.TrainingManager
-import com.trainer.modules.training.WorkoutPresenter
 import com.trainer.ui.model.StretchPagerAdapter
 import com.trainer.utils.bindView
 import javax.inject.Inject
@@ -16,9 +18,21 @@ import javax.inject.Inject
 class StretchActivity : BaseActivity(R.layout.activity_stretch_pager) {
 
   @Inject lateinit var trainingManager: TrainingManager
-  private val presenter: WorkoutPresenter by lazy { trainingManager.workoutPresenter ?: throw IllegalStateException("Current workout not set!") }  // call this after component.inject()
   private lateinit var adapter: StretchPagerAdapter
+  private val category by lazy { intent.getIntExtra(ARG_TRAINING_CATEGORY_ORDINAL, -1)
+      .apply { if (this == -1) throw IllegalArgumentException("StretchActivity shown without ARG_TRAINING_CATEGORY_ORDINAL!") }
+      .run { TrainingCategory.values()[this] }
+  }
+  private val stretchRoutine by lazy { trainingManager.getStretchPlan().getStretchRoutine(category) }
   private val pager: ViewPager by bindView(R.id.pager_view)
+
+  companion object {
+    const val ARG_TRAINING_CATEGORY_ORDINAL = "ARG_TRAINING_CATEGORY_ORDINAL"
+
+    fun start(trainingCategory: TrainingCategory, context: Activity) {
+      context.startWith<StretchActivity> { putExtra(ARG_TRAINING_CATEGORY_ORDINAL, trainingCategory.ordinal) }
+    }
+  }
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -31,10 +45,12 @@ class StretchActivity : BaseActivity(R.layout.activity_stretch_pager) {
   }
 
   private fun showStretchRoutine() {
-    presenter.getCurrentStretchRoutine()?.run {
-      title = String.format(getString(R.string.stretch_title), category)
-      adapter = StretchPagerAdapter(supportFragmentManager, this.stretchExercises)
-      pager.adapter = adapter
-    } ?: throw IllegalStateException("Attempt to show stretch routine when there are nothing set!")
+    if (pager.adapter == null) {
+      stretchRoutine?.run {
+        title = String.format(getString(R.string.stretch_title), category)
+        adapter = StretchPagerAdapter(supportFragmentManager, this.stretchExercises, category.ordinal)
+        pager.adapter = adapter
+      } ?: throw IllegalStateException("Attempt to show stretch routine when there are nothing set!")
+    }
   }
 }

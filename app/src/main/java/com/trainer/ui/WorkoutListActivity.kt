@@ -85,7 +85,7 @@ class WorkoutListActivity : BaseActivity(R.layout.activity_list) {
   override fun onOptionsItemSelected(item: MenuItem): Boolean {
     when(item.itemId) {
       R.id.show_stretching -> {
-        start<StretchActivity>()
+        StretchActivity.start(presenter.getWorkoutCategory(), this)
         return true
       }
       else -> return super.onOptionsItemSelected(item)
@@ -103,7 +103,7 @@ class WorkoutListActivity : BaseActivity(R.layout.activity_list) {
                 completeAndFinish()
               },
               {
-                start<StretchActivity>()
+                StretchActivity.start(presenter.getWorkoutCategory(), this)
                 completeAndFinish()
               })
         }

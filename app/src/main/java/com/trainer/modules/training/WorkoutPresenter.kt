@@ -38,6 +38,8 @@ class WorkoutPresenter @Inject constructor(val repo: TrainingRepository,
 
   fun getWorkoutTitle() = trainingDay.category.name
 
+  fun getWorkoutCategory() = trainingDay.category
+
   fun getCurrentSerie(): Series {
     require(currentSerieIdx != NOT_SET_VALUE) { "Current serie idx is not set!" }
     return trainingDay.workout.series[currentSerieIdx]
@@ -66,8 +68,6 @@ class WorkoutPresenter @Inject constructor(val repo: TrainingRepository,
     currentSerieIdx = index
     if (getCurrentSerie().status() != COMPLETE) refreshCurrentSetIdx() else currentSetIdx = DEFAULT_SET_INDEX
   }
-
-  fun getCurrentStretchRoutine() = repo.getStretchPlan().stretchRoutines.find { it.category == trainingDay.category }
 
   fun saveSetResult(weight: Float, rep: Int) {
     val currentSet = getCurrentSet()

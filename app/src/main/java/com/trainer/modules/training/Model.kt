@@ -188,11 +188,12 @@ data class StretchExercise private constructor(val id: String,
 
 data class StretchRoutine(val category: TrainingCategory,
                           val stretchExercises: List<StretchExercise>) {
-
-  fun getStretchExercise(id: String) = stretchExercises.find { it.id == id }
 }
 
-data class StretchPlan(val stretchRoutines: List<StretchRoutine>)
+data class StretchPlan(val stretchRoutines: List<StretchRoutine>) {
+
+  fun getStretchRoutine(forCategory: TrainingCategory) = stretchRoutines.find { it.category == forCategory }
+}
 
 
 enum class ExerciseImageMap(@DrawableRes val resource: Int) {

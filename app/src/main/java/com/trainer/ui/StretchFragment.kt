@@ -8,8 +8,8 @@ import com.trainer.base.BaseFragment
 import com.trainer.d2.common.ActivityComponent
 import com.trainer.extensions.arg
 import com.trainer.extensions.reduceWithDefault
+import com.trainer.modules.training.TrainingCategory
 import com.trainer.modules.training.TrainingManager
-import com.trainer.modules.training.WorkoutPresenter
 import com.trainer.utils.bindView
 import javax.inject.Inject
 
@@ -19,8 +19,8 @@ import javax.inject.Inject
 class StretchFragment : BaseFragment(R.layout.fragment_stretch) {
 
   @Inject lateinit var trainingManager: TrainingManager
-  private val presenter: WorkoutPresenter by lazy { trainingManager.workoutPresenter ?: throw IllegalStateException("Current workout not set!") }  // call this after component.inject()
-  private var stretchExerciseId: String by arg(ARG_STRETCH_ID)
+  private var stretchExerciseIdx: Int by arg(ARG_STRETCH_EXERCISE_IDX, VALUE_NOT_SET)
+  private val categoryOrdinal: Int by arg(ARG_TRAINING_CATEGORY_ORDINAL, VALUE_NOT_SET)
 
   private val nameView: TextView by bindView(R.id.name_text)
   private val imageView: ImageView by bindView(R.id.stretch_exercise_image)
@@ -29,7 +29,9 @@ class StretchFragment : BaseFragment(R.layout.fragment_stretch) {
   private val commentsLabelView: TextView by bindView(R.id.comments_label)
 
   companion object {
-    const val ARG_STRETCH_ID = "ARG_STRETCH_ID"
+    const val ARG_STRETCH_EXERCISE_IDX = "ARG_STRETCH_EXERCISE_IDX"
+    const val ARG_TRAINING_CATEGORY_ORDINAL = "ARG_TRAINING_CATEGORY_ORDINAL"
+    const val VALUE_NOT_SET = -1
   }
 
   override fun inject(component: ActivityComponent) {
@@ -42,20 +44,26 @@ class StretchFragment : BaseFragment(R.layout.fragment_stretch) {
   }
 
   private fun showStretch() {
-    presenter.getCurrentStretchRoutine()?.getStretchExercise(stretchExerciseId)?.apply {
-      nameView.text = name
-      imageView.setImageResource(imageRes)
-      guidelinesView.text = guidelines.reduceWithDefault("", { item -> "- $item" }, { acc, guideline -> "$acc\n- $guideline" })
+    require(categoryOrdinal != VALUE_NOT_SET) { "StretchFragment without ARG_TRAINING_CATEGORY_ORDINAL set!" }
+    require(stretchExerciseIdx != VALUE_NOT_SET) { "StretchFragment without ARG_STRETCH_EXERCISE_IDX set!" }
 
-      if (this.comments.isEmpty()) {
-        commentsLabelView.visibility = View.GONE
-        commentsView.visibility = View.GONE
-      } else {
-        commentsLabelView.visibility = View.VISIBLE
-        commentsView.visibility = View.VISIBLE
-        commentsView.text = comments.reduceWithDefault("", { item -> "- $item" }, { acc, guideline -> "$acc\n- $guideline" })
-      }
+    categoryOrdinal
+        .run { TrainingCategory.values()[this] }
+        .run { trainingManager.getStretchPlan().getStretchRoutine(this) }
+        ?.run { stretchExercises[stretchExerciseIdx] }
+        ?.apply {
+          nameView.text = name
+          imageView.setImageResource(imageRes)
+          guidelinesView.text = guidelines.reduceWithDefault("", { item -> "- $item" }, { acc, guideline -> "$acc\n- $guideline" })
 
-    } ?: throw IllegalArgumentException("Attempt to show a stretch but no StretchExercise was found for id= $stretchExerciseId")
+          if (this.comments.isEmpty()) {
+            commentsLabelView.visibility = View.GONE
+            commentsView.visibility = View.GONE
+          } else {
+            commentsLabelView.visibility = View.VISIBLE
+            commentsView.visibility = View.VISIBLE
+            commentsView.text = comments.reduceWithDefault("", { item -> "- $item" }, { acc, guideline -> "$acc\n- $guideline" })
+          }
+        } ?: throw IllegalStateException("Can't show Stretch Exercise - exercise not found for index= $stretchExerciseIdx for category= ${TrainingCategory.values()[categoryOrdinal]}")
   }
 }
