@@ -235,7 +235,7 @@ enum class ExerciseImageMap(@DrawableRes val resource: Int) {
   // LEGS
   FRONT_SQUAT_IMAGE(R.drawable.ex_front_squat),
   MACHINE_LEG_PRESS_IMAGE(R.drawable.ex_machine_leg_press),
-  DUMBELL_WALKING_LUNGES_IMAGE(R.drawable.ex_dumbell_walking_lunges),
+  BULGARIAN_SPLIT_SQUAT_IMAGE(R.drawable.ex_bulgarian_split_squat),
   LEG_CURLS_IMAGE(R.drawable.ex_leg_curls),
   CALF_RAISE_IMAGE(R.drawable.ex_calf_raise),
 

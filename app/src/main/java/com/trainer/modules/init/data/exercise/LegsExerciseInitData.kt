@@ -24,12 +24,13 @@ class LegsExerciseInitData private constructor() {
             "Nie prostuj nóg do końca (niech będą lekko ugięte)."),
         MACHINE_LEG_PRESS_IMAGE)
 
-    private val DUMBELL_WALKING_LUNGES = Exercise("Wykroki z hantlami",
-        arrayListOf("Wykrok musi być na tyle duży żeby uzyskać 90 stopni.",
-            "Kolano nie może wyprzedzać palców stopy.",
-            "Ręce prosto, wzdłuż ciała.",
-            "Wykroki rób na zmianę."),
-        DUMBELL_WALKING_LUNGES_IMAGE)
+    private val BULGARIAN_SPLIT_SQUAT = Exercise("Wykroki z oparciem",
+        arrayListOf("Wykonuj z hantlami.",
+            "Kolano nie może wyprzedzać palców u stopy.",
+            "Podczas ruchu kolano musi pozostać w tej samej pozycji.",
+            "Tułów prosto, nie pochylaj się do przodu.",
+            "Wracając nie cofaj tułowia."),
+        BULGARIAN_SPLIT_SQUAT_IMAGE)
 
     private val LEG_CURLS = Exercise("Uginanie nóg na maszynie",
         arrayListOf("Oparcie ustaw tak, żeby kolano było na wysokości osi obrotu ramienia.",
@@ -51,7 +52,7 @@ class LegsExerciseInitData private constructor() {
         createSet(MACHINE_LEG_PRESS,
             arrayListOf("Zrób 4 serie po 10, 10, 8, 8 repet."),
             4, 80),
-        createSet(DUMBELL_WALKING_LUNGES,
+        createSet(BULGARIAN_SPLIT_SQUAT,
             arrayListOf("Zrób 3 serie po 10 repet."),
             3, 80),
         SuperSet(arrayListOf(

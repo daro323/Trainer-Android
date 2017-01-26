@@ -1,6 +1,7 @@
 package com.trainer.modules.init.data.stretch
 
 import com.trainer.modules.init.data.stretch.StretchExercises.Companion.LEG_STRETCH_1
+import com.trainer.modules.init.data.stretch.StretchExercises.Companion.LEG_STRETCH_10
 import com.trainer.modules.init.data.stretch.StretchExercises.Companion.LEG_STRETCH_2
 import com.trainer.modules.init.data.stretch.StretchExercises.Companion.LEG_STRETCH_3
 import com.trainer.modules.init.data.stretch.StretchExercises.Companion.LEG_STRETCH_4
@@ -37,7 +38,7 @@ class StretchInitData {
     val LEGS_STRETCH_ROUTINE = StretchRoutine(LEGS, arrayListOf(
         LEG_STRETCH_1, LEG_STRETCH_2, LEG_STRETCH_3,
         LEG_STRETCH_4, LEG_STRETCH_5, LEG_STRETCH_6,
-        LEG_STRETCH_7, LEG_STRETCH_8, LEG_STRETCH_9
+        LEG_STRETCH_7, LEG_STRETCH_8, LEG_STRETCH_9, LEG_STRETCH_10
     ))
   }
 }
