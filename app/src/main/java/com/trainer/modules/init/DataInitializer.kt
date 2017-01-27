@@ -7,11 +7,11 @@ import com.trainer.modules.init.data.exercise.BackExerciseInitData.Companion.BAC
 import com.trainer.modules.init.data.exercise.ChestExerciseInitData.Companion.CHEST_WORKOUT
 import com.trainer.modules.init.data.exercise.LegsExerciseInitData.Companion.LEGS_WORKOUT
 import com.trainer.modules.init.data.exercise.ShouldersExerciseInitData.Companion.SHOULDERS_WORKOUT
-import com.trainer.modules.init.data.stretch.StretchInitData.Companion.ARMS_STRETCH_ROUTINE
-import com.trainer.modules.init.data.stretch.StretchInitData.Companion.BACK_STRETCH_ROUTINE
-import com.trainer.modules.init.data.stretch.StretchInitData.Companion.CHEST_STRETCH_ROUTINE
-import com.trainer.modules.init.data.stretch.StretchInitData.Companion.LEGS_STRETCH_ROUTINE
-import com.trainer.modules.init.data.stretch.StretchInitData.Companion.SHOULDERS_STRETCH_ROUTINE
+import com.trainer.modules.init.data.stretch.StretchInitData.Companion.ARMS_DAY_STRETCH_ROUTINE
+import com.trainer.modules.init.data.stretch.StretchInitData.Companion.BACK_DAY_STRETCH_ROUTINE
+import com.trainer.modules.init.data.stretch.StretchInitData.Companion.CHEST_DAY_STRETCH_ROUTINE
+import com.trainer.modules.init.data.stretch.StretchInitData.Companion.LEGS_DAY_STRETCH_ROUTINE
+import com.trainer.modules.init.data.stretch.StretchInitData.Companion.SHOULDERS_DAY_STRETCH_ROUTINE
 import com.trainer.modules.training.*
 import com.trainer.modules.training.TrainingCategory.*
 import javax.inject.Inject
@@ -78,11 +78,11 @@ class DataInitializer @Inject constructor(val trainingManager: TrainingManager) 
 
   private fun provideStretchRoutine(category: TrainingCategory): StretchRoutine {
     return when(category) {
-      CHEST -> CHEST_STRETCH_ROUTINE
-      LEGS -> LEGS_STRETCH_ROUTINE
-      BACK -> BACK_STRETCH_ROUTINE
-      SHOULDERS -> SHOULDERS_STRETCH_ROUTINE
-      ARMS -> ARMS_STRETCH_ROUTINE
+      CHEST -> CHEST_DAY_STRETCH_ROUTINE
+      LEGS -> LEGS_DAY_STRETCH_ROUTINE
+      BACK -> BACK_DAY_STRETCH_ROUTINE
+      SHOULDERS -> SHOULDERS_DAY_STRETCH_ROUTINE
+      ARMS -> ARMS_DAY_STRETCH_ROUTINE
     }
   }
 }

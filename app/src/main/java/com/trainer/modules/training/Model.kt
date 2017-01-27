@@ -189,16 +189,15 @@ data class StretchExercise private constructor(val id: String,
   companion object {
     var instanceCounter: Int = 0
     /* Automatically adds IDs as instance count */
-    fun createStretch(name: String,
-                      guidelines: List<String>,
-                      @DrawableRes imageRes: Int = R.mipmap.ic_exercise_default,
+    fun createStretch(@DrawableRes imageRes: Int = R.mipmap.ic_exercise_default,
+                      guidelines: List<String> = arrayListOf("Roźciągaj 30 sekund."),
+                      name: String = "Ćwiczenie",
                       comments: List<String> = emptyList()) = StretchExercise((++instanceCounter).toString(), name, guidelines, comments, imageRes)
   }
 }
 
 data class StretchRoutine(val category: TrainingCategory,
-                          val stretchExercises: List<StretchExercise>) {
-}
+                          val stretchExercises: List<StretchExercise>)
 
 data class StretchPlan(val stretchRoutines: List<StretchRoutine>) {
 

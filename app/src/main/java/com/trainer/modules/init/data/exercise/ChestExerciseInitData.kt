@@ -73,8 +73,6 @@ class ChestExerciseInitData private constructor() {
         arrayListOf("Chwyć hantle na skraju zewnętrznej strony (trudniejsza supinacja).",
             "Skręcanie nadgarsteka i uginanie ramion jako jeden ruch.",
             "Uginaj do maksymalnego napięcia bicepsa.",
-            "Na końcu unieś ramię tak żeby hantla była na wysokości oczu.",
-            "Uginaj jedną rękę na raz.",
             "Wracaj bardzo powoli."),
         SUPINATED_BICEPS_CURL_IMAGE)
 
@@ -92,19 +90,19 @@ class ChestExerciseInitData private constructor() {
         ),
         SuperSet(arrayListOf(
             createSet(INCLINE_DUMBELL_PRESS,
-                arrayListOf("Zrób 4 serie po 12, 10, 8 i 8 repet."),
-                4, 0),
+                arrayListOf("Zrób 3 serie po 10, 9 i 8 repet."),
+                3, 0),
             createSet(SINGLE_DUMBELL_ROW,
-                arrayListOf("Zrób 4 serie po 12, 10, 8 i 8 repet."),
-                4, 80)
+                arrayListOf("Zrób 3 serie po 10 repet."),
+                3, 80)
         )),
         SuperSet(arrayListOf(
             createSet(CHEST_DIPS,
-                arrayListOf("Zrób 2 serie na max repet."),
-                2, 0),
+                arrayListOf("Zrób 1 serie na max repet."),
+                1, 0),
             createSet(DUMBELL_PUSHUP,
-                arrayListOf("Zrób 2 serie po 10 repet"),
-                2, 70))
+                arrayListOf("Zrób 1 serie po max repet"),
+                1, 70))
         ),
         SuperSet(arrayListOf(
             createSet(OVERHEAD_TRICEPS_CABLE_EXTENSIONS,

@@ -33,11 +33,11 @@ class ShouldersExerciseInitData private constructor() {
             "Pozostań w odchyleniu nie ruszając tułowiem."),
         BARBELL_TO_CHEST_PULL_IMAGE)
 
-    private val DUMBELL_SHOULDER_RAISE = Exercise("Unoszenie hantli",
-        arrayListOf("Ściągnij łopatki i wypchnij klatę do przodu.",
+    private val DUMBELL_SHOULDER_RAISE = Exercise("Unoszenie hantli na skos",
+        arrayListOf("Wykonuj jedną hantlą na raz.",
+            "Ściągnij łopatki i wypchnij klatę do przodu.",
             "Nie bujaj tułowiem.",
-            "Hantle unieś do przodu i delikatnie na boki.",
-            "W końcowej fazie ręce równoległe do podłoża.",
+            "Hantle unieś do przodu i delikatnie na skos ciała.",
             "Opuszczaj powoli."),
         DUMBELL_SHOULDER_RAISE_IMAGE)
 
