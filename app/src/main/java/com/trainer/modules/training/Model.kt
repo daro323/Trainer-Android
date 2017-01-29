@@ -5,12 +5,11 @@ import com.fasterxml.jackson.annotation.JsonSubTypes
 import com.fasterxml.jackson.annotation.JsonTypeInfo
 import com.trainer.R
 import com.trainer.extensions.daysSince
-import com.trainer.extensions.toLocalDateTimeObject
-import com.trainer.extensions.toTimestamp
 import com.trainer.modules.training.ProgressStatus.*
 import com.trainer.modules.training.WeightType.BODY_WEIGHT
 import com.trainer.modules.training.WeightType.KG
-import org.threeten.bp.LocalDateTime
+import org.threeten.bp.LocalDate
+import org.threeten.bp.format.DateTimeFormatter
 
 /**
  * Created by dariusz on 05/01/17.
@@ -51,16 +50,20 @@ data class TrainingPlan(val name: String,
 data class TrainingDay(val category: TrainingCategory,
                        val workout: Workout,
                        private var totalDone: Int = 0,
-                       private var lastTrainedTimestamp: Long? = null) {
+                       private var lastTrainedDate: String? = null) {
+
+  companion object {
+    private val DATE_FORMATTER = DateTimeFormatter.ISO_LOCAL_DATE
+  }
 
   fun updateAsDone() {
     totalDone++
-    lastTrainedTimestamp = LocalDateTime.now().toTimestamp()
+    lastTrainedDate = LocalDate.now().format(DATE_FORMATTER)
   }
 
   fun getTotalDone() = totalDone
 
-  fun trainedDaysAgo() = LocalDateTime.now().daysSince(lastTrainedTimestamp?.toLocalDateTimeObject() ?: LocalDateTime.now()).toInt()
+  fun trainedDaysAgo() = LocalDate.now().daysSince(lastTrainedDate?.run { LocalDate.parse(this, DATE_FORMATTER) } ?: LocalDate.now()).toInt()
 }
 
 data class Workout(val series: List<Series>) {
@@ -240,7 +243,7 @@ enum class ExerciseImageMap(@DrawableRes val resource: Int) {
 
   // SHOULDERS
   SEATED_DUMBELL_SHOULDER_PRESS_IMAGE(R.drawable.ex_dumbell_shoulder_press),
-  BARBELL_TO_CHEST_PULL_IMAGE(R.drawable.ex_barbell_to_chest_pull),
+  DUMBELL_SHOULDER_SIDE_RAISE_IMAGE(R.drawable.ex_dumbell_shoulder_side_raise),
   DUMBELL_SHOULDER_RAISE_IMAGE(R.drawable.ex_dumbell_shoulder_raise),
   CABLE_TO_HEAD_PULL_IMAGE(R.drawable.ex_cable_to_head_pull),
   LYING_DUMBELL_ROTATIONS_IMAGE(R.drawable.ex_lying_dumbell_rotations);

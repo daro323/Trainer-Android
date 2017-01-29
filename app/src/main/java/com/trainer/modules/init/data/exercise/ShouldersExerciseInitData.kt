@@ -24,14 +24,13 @@ class ShouldersExerciseInitData private constructor() {
             "Opuszczaj dwa razy wolniejszym ruchem."),
         BARBELL_ROW_IMAGE)
 
-    private val BARBELL_TO_CHEST_PULL = Exercise("Ściąganie drążka do klatki podchwytem",
-        arrayListOf("Złap podchwytem troszke szerzej niż barki.",
-            "Delikatnie odchyl się do tyłu.",
-            "Przyciągaj do góry klatki piersiowej.",
-            "Zatrzymaj na sekundę ruch w końcowej fazie.",
+    private val DUMBELL_SHOULDER_SIDE_RAISE = Exercise("Unoszenie hantli do boku",
+        arrayListOf("Uważaj, żeby nie angażować mięśni karku.",
+            "Ściągnij łopatki.",
+            "Unoś hantlę na wysokość brody.",
             "Opuszczaj powoli.",
-            "Pozostań w odchyleniu nie ruszając tułowiem."),
-        BARBELL_TO_CHEST_PULL_IMAGE)
+            "Wykonuj jedną hantlą na raz."),
+        DUMBELL_SHOULDER_SIDE_RAISE_IMAGE)
 
     private val DUMBELL_SHOULDER_RAISE = Exercise("Unoszenie hantli na skos",
         arrayListOf("Wykonuj jedną hantlą na raz.",
@@ -67,11 +66,11 @@ class ShouldersExerciseInitData private constructor() {
                 4, 80)
         )),
         SuperSet(arrayListOf(
-            createSet(BARBELL_TO_CHEST_PULL,
-                arrayListOf("Zrób 3 serie po 10 repet."),
+            createSet(DUMBELL_SHOULDER_SIDE_RAISE,
+                arrayListOf("Zrób 3 serie po 8 repet."),
                 3, 0),
             createSet(DUMBELL_SHOULDER_RAISE,
-                arrayListOf("Zrób 3 serie po 10 repet."),
+                arrayListOf("Zrób 3 serie po 8 repet."),
                 3, 80)
         )),
         SuperSet(arrayListOf(
@@ -79,7 +78,7 @@ class ShouldersExerciseInitData private constructor() {
                 arrayListOf("Zrób 3 serie po 12-15 repet."),
                 3, 0),
             createSet(LYING_DUMBELL_ROTATIONS,
-                arrayListOf("Zrób 3 serie po 15 repet na obie strony."),
+                arrayListOf("Zrób 3 serie po 12 repet na obie strony."),
                 3, 70)
         ))
     ))
