@@ -59,7 +59,7 @@ class BackExerciseInitData private constructor() {
     val BACK_WORKOUT = Workout(arrayListOf(
         createSet(KNEELIN_BACK_ROTATIONS,
             arrayListOf("Zrób 2 serie po 20 repet na stronę."),
-            2, 40),
+            2, 30),
         createSet(DEADLIFT,
             arrayListOf("Zrób 4 serie po 8 repet."),
             4, 100),
@@ -71,7 +71,7 @@ class BackExerciseInitData private constructor() {
             3, 100),
         createSet(CABLE_ARM_RAISE,
             arrayListOf("Zrób 2 serie po 12 repet."),
-            2, 60)
+            2, 70)
     ))
   }
 }

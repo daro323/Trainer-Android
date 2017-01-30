@@ -69,7 +69,7 @@ class ChestExerciseInitData private constructor() {
             "Rozszerzaj linki w końcowej fazie ruchu."),
         TRICEPS_PULLDOWN_IMAGE)
 
-    private val SUPINATED_BICEPS_CURL = Exercise("Naprzemienne zginanie przedramion z supinacją",
+    private val SUPINATED_BICEPS_CURL = Exercise("Naprzemienne uginanie przedramion z supinacją",
         arrayListOf("Chwyć hantle na skraju zewnętrznej strony (trudniejsza supinacja).",
             "Skręcanie nadgarsteka i uginanie ramion jako jeden ruch.",
             "Uginaj do maksymalnego napięcia bicepsa.",
