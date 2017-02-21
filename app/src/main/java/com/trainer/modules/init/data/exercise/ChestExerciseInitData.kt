@@ -82,7 +82,7 @@ class ChestExerciseInitData private constructor() {
     val CHEST_WORKOUT = Workout(arrayListOf(
         SuperSet(arrayListOf(
             createSet(BENCH_PRESS,
-                arrayListOf("Zrób 4 serie po 12, 10, 8 i 7 repet."),
+                arrayListOf("Zrób 4 serie po 10, 8, 7, 6 repet."),
                 4, 0),
             createSet(PULL_UPS,
                 arrayListOf("Zrób 3 serie na max repet."),
@@ -93,7 +93,7 @@ class ChestExerciseInitData private constructor() {
                 arrayListOf("Zrób 3 serie po 10, 9 i 8 repet."),
                 3, 0),
             createSet(SINGLE_DUMBELL_ROW,
-                arrayListOf("Zrób 3 serie po 10 repet."),
+                arrayListOf("Zrób 3 serie po 10, 8, 7 repet."),
                 3, 80)
         )),
         SuperSet(arrayListOf(
@@ -106,14 +106,14 @@ class ChestExerciseInitData private constructor() {
         ),
         SuperSet(arrayListOf(
             createSet(OVERHEAD_TRICEPS_CABLE_EXTENSIONS,
-                arrayListOf("Zrób 3 serie po 10 repet."),
-                3, 0),
+                arrayListOf("Zrób 2 serie po 10 repet."),
+                2, 0),
             createSet(TRICEPS_CABLE_PUSHDOWN,
-                arrayListOf("Zrób 3 serie po 10 repet."),
-                3, 0),
+                arrayListOf("Zrób 2 serie po 8 repet."),
+                2, 0),
             createSet(SUPINATED_BICEPS_CURL,
-                arrayListOf("Zrób 3 serie po 10 repet."),
-                3, 70))
+                arrayListOf("Zrób 2 serie po 10, 8 repet."),
+                2, 70))
         )
     ))
   }

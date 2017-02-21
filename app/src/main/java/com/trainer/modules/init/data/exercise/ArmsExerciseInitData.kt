@@ -53,26 +53,26 @@ class ArmsExerciseInitData private constructor() {
     val ARMS_WORKOUT = Workout(arrayListOf(
         SuperSet(arrayListOf(
             createSet(NARROW_GRIP_PULLUP,
-                arrayListOf("Zrób 4 serie po kolejno 8, 6, 5 i max repet."),
-                4, 0),
+                arrayListOf("Zrób 3 serie po max repet."),
+                3, 0),
             createSet(TRICEPS_DIPS,
-                arrayListOf("Zrób 4 serie po kolejno 8, 6, 5 i max repet."),
-                4, 80)
+                arrayListOf("Zrób 3 serie po max repet."),
+                3, 80)
         )),
         SuperSet(arrayListOf(
             createSet(SEATED_BARBELL_SHOULDER_PRESS,
-                arrayListOf("Zrób 3 serie po 8 repet."),
+                arrayListOf("Zrób 3 serie po 10, 8, 6 repet."),
                 3, 0),
             createSet(BARBELL_BENT_OVER_ROW,
-                arrayListOf("Zrób 3 serie po 8 repet."),
+                arrayListOf("Zrób 3 serie po 8, 7, 6 repet."),
                 3, 90)
         )),
         SuperSet(arrayListOf(
             createSet(BARBELL_BICEPS_CURL,
-                arrayListOf("Zrób 3 serie po 8 repet."),
+                arrayListOf("Zrób 3 serie po 8, 7, 6 repet."),
                 3, 0),
             createSet(LEANING_TRICEPS_CABLE_EXTENSIONS,
-                arrayListOf("Zrób 3 serie po 8 repet."),
+                arrayListOf("Zrób 3 serie po 8, 7, 6 repet."),
                 3, 80)
         ))
     ))

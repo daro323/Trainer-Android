@@ -59,26 +59,26 @@ class ShouldersExerciseInitData private constructor() {
     val SHOULDERS_WORKOUT = Workout(arrayListOf(
         SuperSet(arrayListOf(
             createSet(SEATED_DUMBELL_SHOULDER_PRESS,
-                arrayListOf("Zrób 4 serie po 8 repet."),
+                arrayListOf("Zrób 4 serie po 8, 8, 7, 6 repet."),
                 4, 0),
             createSet(BARBELL_ROW,
-                arrayListOf("Zrób 4 serie po 8 repet."),
+                arrayListOf("Zrób 4 serie po 8, 8, 7, 6 repet."),
                 4, 80)
         )),
         SuperSet(arrayListOf(
             createSet(DUMBELL_SHOULDER_SIDE_RAISE,
-                arrayListOf("Zrób 3 serie po 8 repet."),
+                arrayListOf("Zrób 3 serie po 8, 7, 6 repet."),
                 3, 0),
             createSet(DUMBELL_SHOULDER_RAISE,
-                arrayListOf("Zrób 3 serie po 8 repet."),
+                arrayListOf("Zrób 3 serie po 8, 7, 6 repet."),
                 3, 80)
         )),
         SuperSet(arrayListOf(
             createSet(CABLE_TO_HEAD_PULL,
-                arrayListOf("Zrób 3 serie po 12-15 repet."),
+                arrayListOf("Zrób 3 serie po 10 repet."),
                 3, 0),
             createSet(LYING_DUMBELL_ROTATIONS,
-                arrayListOf("Zrób 3 serie po 12 repet na obie strony."),
+                arrayListOf("Zrób 3 serie po 10 repet na obie strony."),
                 3, 70)
         ))
     ))

@@ -47,14 +47,14 @@ class LegsExerciseInitData private constructor() {
 
     val LEGS_WORKOUT = Workout(arrayListOf(
         createSet(FRONT_SQUAT,
-            arrayListOf("Zrób 4 serie po 12, 10, 8, 6 repet."),
+            arrayListOf("Zrób 4 serie po 10, 8, 7, 6 repet."),
             4, 90),
         createSet(MACHINE_LEG_PRESS,
-            arrayListOf("Zrób 4 serie po 10, 10, 8, 8 repet."),
+            arrayListOf("Zrób 4 serie po 10, 8, 7, 7 repet."),
             4, 80),
         createSet(BULGARIAN_SPLIT_SQUAT,
-            arrayListOf("Zrób 3 serie po 10 repet."),
-            3, 80),
+            arrayListOf("Zrób 2 serie po 10 repet."),
+            2, 80),
         SuperSet(arrayListOf(
             createSet(LEG_CURLS,
                 arrayListOf("Zrób 3 serie po 10 repet."),

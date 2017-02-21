@@ -12,14 +12,6 @@ import com.trainer.modules.training.Workout
 class BackExerciseInitData private constructor() {
 
   companion object {
-    private val KNEELIN_BACK_ROTATIONS = Exercise("Rotacja w klęku podpartym",
-        arrayListOf("Dłonie dokładnie pod barkami.",
-            "Ściągnij łopatki.",
-            "Łokieć kieruj w stronę sufitu.",
-            "Wykonuj najpier na jedną stronę, potem na drugą."),
-        KNEELIN_BACK_ROTATIONS_IMAGE,
-        BODY_WEIGHT)
-
     private val DEADLIFT = Exercise("Martwy ciąg",
         arrayListOf("Opuszczaj do momentu gdy dojdziesz do połowy golenia.",
             "Nie zaczynaj z przysiadu (biodra wyżej).",
@@ -57,20 +49,17 @@ class BackExerciseInitData private constructor() {
 
 
     val BACK_WORKOUT = Workout(arrayListOf(
-        createSet(KNEELIN_BACK_ROTATIONS,
-            arrayListOf("Zrób 2 serie po 20 repet na stronę."),
-            2, 30),
         createSet(DEADLIFT,
-            arrayListOf("Zrób 4 serie po 8 repet."),
+            arrayListOf("Zrób 4 serie po 8, 8, 7, 6 repet."),
             4, 100),
         createSet(DUMBELLS_ROW,
-            arrayListOf("Zrób 3 serie po 10 repet."),
+            arrayListOf("Zrób 3 serie po 10, 8, 6 repet."),
             3, 80),
         createSet(PAUSED_PULL_UPS,
-            arrayListOf("Zrób 3 serie po 5 repet."),
+            arrayListOf("Zrób 3 serie po max repet."),
             3, 100),
         createSet(CABLE_ARM_RAISE,
-            arrayListOf("Zrób 2 serie po 12 repet."),
+            arrayListOf("Zrób 2 serie po 10 repet."),
             2, 70)
     ))
   }
