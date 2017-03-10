@@ -32,7 +32,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_toLeftOf="@id/countText"
-        android:layout_toRightOf="@id/name"
+        android:layout_toRightOf="@id/nameText"
         android:paddingRight="@dimen/default_padding"
         android:gravity="end"
         android:textAppearance="@style/TextAppearance.Trainer.ListSubHeadline"

@@ -114,7 +114,7 @@ class SerieActivity : BaseActivity(R.layout.activity_set_pager) {
   private fun showSerieAsSet(set: Set) {
     title = getString(R.string.set)
     superSetPager.visibility = GONE
-    setupFragment(R.id.container) { SetFragment().with(ARG_SET_ID to set.id()) }
+    setupFragment(R.id.setContainer) { SetFragment().with(ARG_SET_ID to set.id()) }
   }
 
   private fun showSerieAsSuperSet(superSet: SuperSet) {

@@ -18,8 +18,8 @@ import com.trainer.modules.training.TrainingManager
 import com.trainer.modules.training.WeightType.BODY_WEIGHT
 import com.trainer.modules.training.WorkoutPresenter
 import com.trainer.modules.training.WorkoutPresenter.Companion.WEIGHT_NA_VALUE
-import com.trainer.ui.training.model.SetFragmentFieldValidator
 import eu.inmite.android.lib.validations.form.FormValidator
+import eu.inmite.android.lib.validations.form.annotations.NotEmpty
 import eu.inmite.android.lib.validations.form.callback.SimpleErrorPopupCallback
 import kotlinx.android.synthetic.main.fragment_set.*
 import javax.inject.Inject
@@ -135,3 +135,10 @@ class SetFragment : BaseFragment(R.layout.fragment_set) {
     }
   }
 }
+
+class SetFragmentFieldValidator constructor(
+    @NotEmpty(messageId = R.string.empty_field)
+    val weightInput: EditText,
+    @NotEmpty(messageId = R.string.empty_field)
+    val repInput: EditText
+)

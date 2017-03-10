@@ -1,11 +1,17 @@
 package com.trainer.ui.training
 
 import android.os.Bundle
+import android.support.annotation.DrawableRes
+import android.support.v4.content.ContextCompat
 import android.support.v7.widget.LinearLayoutManager
-import android.view.Menu
-import android.view.MenuItem
+import android.view.*
+import android.widget.ImageView
+import android.widget.TextView
 import com.trainer.R
 import com.trainer.base.BaseActivity
+import com.trainer.commons.StyleUtils
+import com.trainer.commons.typedviewholder.TypedViewHolderAdapter
+import com.trainer.commons.typedviewholder.registerHolder
 import com.trainer.extensions.ioMain
 import com.trainer.extensions.start
 import com.trainer.modules.export.ExportManager
@@ -17,11 +23,10 @@ import com.trainer.modules.training.TrainingManager
 import com.trainer.modules.training.WorkoutEvent.WORKOUT_COMPLETED
 import com.trainer.modules.training.WorkoutPresenter
 import com.trainer.ui.training.model.SetItem
-import com.trainer.ui.training.model.SetItemHolder
 import com.trainer.ui.training.model.SuperSetItem
-import com.trainer.ui.training.model.SuperSetItemHolder
-import com.trainer.commons.typedviewholder.TypedViewHolderAdapter
 import kotlinx.android.synthetic.main.activity_list.*
+import kotlinx.android.synthetic.main.set_item.view.*
+import kotlinx.android.synthetic.main.super_set_container_item.view.*
 import rx.subscriptions.Subscriptions
 import java.util.*
 import javax.inject.Inject
@@ -36,12 +41,28 @@ class WorkoutListActivity : BaseActivity(R.layout.activity_list) {
   private val presenter: WorkoutPresenter by lazy { trainingManager.workoutPresenter ?: throw IllegalStateException("Current workout not set!") }  // can call this only after component.inject()!
   private var workoutEventsSubscription = Subscriptions.unsubscribed()
 
-  private val typedAdapter: TypedViewHolderAdapter<Any> by lazy {
-    TypedViewHolderAdapter.Builder<Any>()
-        .addFactory(SuperSetItemHolder.factory { openSerie(typedAdapter.data.indexOf(it)) })
-        .addFactory(SetItemHolder.factory { openSerie(typedAdapter.data.indexOf(it)) })
-        .build()
-  }
+  private val typedAdapter = TypedViewHolderAdapter.Builder<Any>().apply {
+    registerHolder(R.layout.super_set_container_item) { model: SuperSetItem ->
+      itemView.apply {
+        superSetItemContainer.setOnClickListener { openSerie(model) }
+        require(model.imageResList.size == model.namesList.size) { "Super set adapter item invalid - list of images is not the same size as list of names!" }
+        model.imageResList.forEachIndexed { i, imageRes ->
+          superSetItemContainer.addView(createSetView(LayoutInflater.from(context), imageRes, model.namesList[i], i == model.imageResList.lastIndex, superSetItemContainer))
+        }
+        superSetItemContainer.setBackgroundColor(ContextCompat.getColor(context, StyleUtils.getColorRes(model.status)))
+      }
+    }
+
+    registerHolder(R.layout.set_item) { model: SetItem ->
+      itemView.apply {
+        setItemContentContainer.setOnClickListener { openSerie(model) }
+
+        setItemName.text = model.name
+        setItemImage.setImageResource(model.imageRes)
+        setItemContentContainer.setBackgroundColor(ContextCompat.getColor(context, StyleUtils.getColorRes(model.status)))
+      }
+    }
+  }.build()
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -138,8 +159,22 @@ class WorkoutListActivity : BaseActivity(R.layout.activity_list) {
     return SuperSetItem(imageResList, namesList, superSet.status())
   }
 
-  private fun openSerie(index: Int) {
-    presenter.selectSerie(index)
+  private fun openSerie(model: Any) {
+    presenter.selectSerie(typedAdapter.data.indexOf(model))
     start<SerieActivity>()
+  }
+
+  private fun createSetView(inflater: LayoutInflater, @DrawableRes setImageRes: Int, setName: String, isLast: Boolean, container: ViewGroup): View {
+    if (isLast) {
+      val view = inflater.inflate( R.layout.set_item, container, false)
+      (view.findViewById(R.id.setItemImage) as ImageView).setImageResource(setImageRes)
+      (view.findViewById(R.id.setItemName) as TextView).text = setName
+      return view
+    } else {
+      val view = inflater.inflate(R.layout.super_set_item, container, false)
+      (view.findViewById(R.id.superSetItemImage) as ImageView).setImageResource(setImageRes)
+      (view.findViewById(R.id.superSetItemName) as TextView).text = setName
+      return view
+    }
   }
 }
