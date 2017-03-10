@@ -2,14 +2,13 @@ package com.trainer.ui
 
 import android.app.Activity
 import android.os.Bundle
-import android.support.v4.view.ViewPager
 import com.trainer.R
 import com.trainer.base.BaseActivity
 import com.trainer.extensions.startWith
 import com.trainer.modules.training.TrainingCategory
 import com.trainer.modules.training.TrainingManager
 import com.trainer.ui.model.StretchPagerAdapter
-import com.trainer.utils.bindView
+import kotlinx.android.synthetic.main.activity_stretch_pager.*
 import javax.inject.Inject
 
 /**
@@ -24,7 +23,6 @@ class StretchActivity : BaseActivity(R.layout.activity_stretch_pager) {
       .run { TrainingCategory.values()[this] }
   }
   private val stretchRoutine by lazy { trainingManager.getStretchPlan().getStretchRoutine(category) }
-  private val pager: ViewPager by bindView(R.id.pager_view)
 
   companion object {
     const val ARG_TRAINING_CATEGORY_ORDINAL = "ARG_TRAINING_CATEGORY_ORDINAL"

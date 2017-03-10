@@ -2,7 +2,6 @@ package com.trainer.ui
 
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.view.Menu
 import android.view.MenuItem
 import com.trainer.R
@@ -13,8 +12,8 @@ import com.trainer.modules.export.ExportManager
 import com.trainer.modules.training.TrainingManager
 import com.trainer.ui.model.TrainingDayItem
 import com.trainer.ui.model.TrainingDayItemHolder
-import com.trainer.utils.bindView
 import com.trainer.utils.typedviewholder.TypedViewHolderAdapter
+import kotlinx.android.synthetic.main.activity_list.*
 import javax.inject.Inject
 
 /**
@@ -25,7 +24,6 @@ class TrainingDaysListActivity : BaseActivity(R.layout.activity_list) {
   @Inject lateinit var trainingManager: TrainingManager
   @Inject lateinit var exportManager: ExportManager
 
-  private val recyclerView: RecyclerView by bindView(R.id.recycler_view)
   private val typedAdapter: TypedViewHolderAdapter<Any> by lazy {
     TypedViewHolderAdapter.Builder<Any>()
         .addFactory(TrainingDayItemHolder.factory(onTrainingDayClicked))

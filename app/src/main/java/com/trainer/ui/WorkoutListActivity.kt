@@ -2,7 +2,6 @@ package com.trainer.ui
 
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.view.Menu
 import android.view.MenuItem
 import com.trainer.R
@@ -21,8 +20,8 @@ import com.trainer.ui.model.SetItem
 import com.trainer.ui.model.SetItemHolder
 import com.trainer.ui.model.SuperSetItem
 import com.trainer.ui.model.SuperSetItemHolder
-import com.trainer.utils.bindView
 import com.trainer.utils.typedviewholder.TypedViewHolderAdapter
+import kotlinx.android.synthetic.main.activity_list.*
 import rx.subscriptions.Subscriptions
 import java.util.*
 import javax.inject.Inject
@@ -37,7 +36,6 @@ class WorkoutListActivity : BaseActivity(R.layout.activity_list) {
   private val presenter: WorkoutPresenter by lazy { trainingManager.workoutPresenter ?: throw IllegalStateException("Current workout not set!") }  // can call this only after component.inject()!
   private var workoutEventsSubscription = Subscriptions.unsubscribed()
 
-  private val recyclerView: RecyclerView by bindView(R.id.recycler_view)
   private val typedAdapter: TypedViewHolderAdapter<Any> by lazy {
     TypedViewHolderAdapter.Builder<Any>()
         .addFactory(SuperSetItemHolder.factory { openSerie(typedAdapter.data.indexOf(it)) })

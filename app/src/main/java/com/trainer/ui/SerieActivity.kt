@@ -2,11 +2,9 @@ package com.trainer.ui
 
 import android.content.Intent
 import android.os.Bundle
-import android.support.v4.view.ViewPager
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View.GONE
-import android.widget.FrameLayout
 import com.trainer.R
 import com.trainer.base.BaseActivity
 import com.trainer.extensions.ioMain
@@ -22,7 +20,7 @@ import com.trainer.modules.training.WorkoutEvent.*
 import com.trainer.modules.training.WorkoutPresenter
 import com.trainer.ui.SetFragment.Companion.ARG_SET_ID
 import com.trainer.ui.model.SuperSetPagerAdapter
-import com.trainer.utils.bindView
+import kotlinx.android.synthetic.main.activity_set_pager.*
 import rx.subscriptions.Subscriptions
 import javax.inject.Inject
 
@@ -38,9 +36,6 @@ class SerieActivity : BaseActivity(R.layout.activity_set_pager) {
   private val presenter: WorkoutPresenter by lazy { trainingManager.workoutPresenter ?: throw IllegalStateException("Current workout not set!") }  // call this after component.inject()
   private lateinit var adapter: SuperSetPagerAdapter
   private var workoutEventsSubscription = Subscriptions.unsubscribed()
-
-  private val superSetPager: ViewPager by bindView(R.id.pager_view)
-  private val setContainer: FrameLayout by bindView(R.id.container)
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)

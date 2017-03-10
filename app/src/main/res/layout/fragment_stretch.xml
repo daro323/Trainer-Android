@@ -13,7 +13,7 @@
       tools:context="com.trainer.ui.SerieActivity">
 
     <ImageView
-        android:id="@+id/stretch_exercise_image"
+        android:id="@+id/imageView"
         android:layout_width="@dimen/stretch_avatar_image_size"
         android:layout_height="@dimen/stretch_avatar_image_size"
         android:layout_centerHorizontal="true"
@@ -21,10 +21,10 @@
         tools:src="@drawable/ex_bench_press"/>
 
     <TextView
-        android:id="@+id/name_text"
+        android:id="@+id/nameView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/stretch_exercise_image"
+        android:layout_below="@id/imageView"
         android:gravity="center"
         android:textAppearance="@style/Textappearance.Trainer.Headline"
         tools:text="Wyciskanie sztangi"/>
@@ -34,7 +34,7 @@
         layout="@layout/divider_horizontal"
         android:layout_marginTop="@dimen/default_padding"
         android:layout_marginBottom="@dimen/default_padding"
-        android:layout_below="@id/name_text"
+        android:layout_below="@id/nameView"
         android:layout_width="match_parent"
         android:layout_height="1dp"/>
 
@@ -47,7 +47,7 @@
         android:text="@string/guidelines"/>
 
     <TextView
-        android:id="@+id/guidelines_text"
+        android:id="@+id/guidelinesView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/guidelines_label"
@@ -56,18 +56,18 @@
         tools:text="- Brace your butt to prevent from farting\n- Don't cheat by not lifting at all"/>
 
     <TextView
-        android:id="@+id/comments_label"
+        android:id="@+id/commentsLabelView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/guidelines_text"
+        android:layout_below="@id/guidelinesView"
         android:textAppearance="@style/Textappearance.Trainer.Label"
         android:text="@string/comments"/>
 
     <TextView
-        android:id="@+id/comments_text"
+        android:id="@+id/commentsView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/comments_label"
+        android:layout_below="@id/commentsLabelView"
         android:textAppearance="@style/Textappearance.Trainer.ContinuousText"
         tools:text="- This exercise sucks if you do it backwards\n- Sucks even more when done properly"/>
 

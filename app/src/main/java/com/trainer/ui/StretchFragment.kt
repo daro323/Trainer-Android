@@ -1,8 +1,6 @@
 package com.trainer.ui
 
 import android.view.View
-import android.widget.ImageView
-import android.widget.TextView
 import com.trainer.R
 import com.trainer.base.BaseFragment
 import com.trainer.d2.common.ActivityComponent
@@ -10,7 +8,7 @@ import com.trainer.extensions.arg
 import com.trainer.extensions.reduceWithDefault
 import com.trainer.modules.training.TrainingCategory
 import com.trainer.modules.training.TrainingManager
-import com.trainer.utils.bindView
+import kotlinx.android.synthetic.main.fragment_stretch.*
 import javax.inject.Inject
 
 /**
@@ -22,11 +20,6 @@ class StretchFragment : BaseFragment(R.layout.fragment_stretch) {
   private var stretchExerciseIdx: Int by arg(ARG_STRETCH_EXERCISE_IDX, VALUE_NOT_SET)
   private val categoryOrdinal: Int by arg(ARG_TRAINING_CATEGORY_ORDINAL, VALUE_NOT_SET)
 
-  private val nameView: TextView by bindView(R.id.name_text)
-  private val imageView: ImageView by bindView(R.id.stretch_exercise_image)
-  private val guidelinesView: TextView by bindView(R.id.guidelines_text)
-  private val commentsView: TextView by bindView(R.id.comments_text)
-  private val commentsLabelView: TextView by bindView(R.id.comments_label)
 
   companion object {
     const val ARG_STRETCH_EXERCISE_IDX = "ARG_STRETCH_EXERCISE_IDX"

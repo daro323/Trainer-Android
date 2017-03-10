@@ -21,6 +21,7 @@ import eu.inmite.android.lib.validations.form.annotations.NotEmpty
 /**
  * Created by dariusz on 06/01/17.
  */
+// TODO: Remove this pattern
 data class TrainingDayItem(val trainingCategory: TrainingCategory,
                            val count: Int,
                            val daysAgo: Int)
@@ -100,7 +101,7 @@ class SuperSetItemHolder(parent: ViewGroup,
 }
 
 class SetItemHolder(parent: ViewGroup,
-                            private val onClick: (SetItem) -> Any) : TypedViewHolder<SetItem>(R.layout.set_item, parent) {
+                    private val onClick: (SetItem) -> Any) : TypedViewHolder<SetItem>(R.layout.set_item, parent) {
   companion object {
     fun factory(listener: (SetItem) -> Any) = object : TypedViewHolderFactory<SetItem>(SetItem::class.java) {
       override fun build(parent: ViewGroup): TypedViewHolder<SetItem> {
