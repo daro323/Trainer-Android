@@ -1,4 +1,4 @@
-package com.trainer.ui
+package com.trainer.ui.training
 
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
@@ -16,11 +16,11 @@ import com.trainer.modules.training.Series.SuperSet
 import com.trainer.modules.training.TrainingManager
 import com.trainer.modules.training.WorkoutEvent.WORKOUT_COMPLETED
 import com.trainer.modules.training.WorkoutPresenter
-import com.trainer.ui.model.SetItem
-import com.trainer.ui.model.SetItemHolder
-import com.trainer.ui.model.SuperSetItem
-import com.trainer.ui.model.SuperSetItemHolder
-import com.trainer.utils.typedviewholder.TypedViewHolderAdapter
+import com.trainer.ui.training.model.SetItem
+import com.trainer.ui.training.model.SetItemHolder
+import com.trainer.ui.training.model.SuperSetItem
+import com.trainer.ui.training.model.SuperSetItemHolder
+import com.trainer.commons.typedviewholder.TypedViewHolderAdapter
 import kotlinx.android.synthetic.main.activity_list.*
 import rx.subscriptions.Subscriptions
 import java.util.*

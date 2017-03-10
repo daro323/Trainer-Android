@@ -10,7 +10,7 @@
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:focusableInTouchMode="true"
-      tools:context="com.trainer.ui.SerieActivity">
+      tools:context="com.trainer.ui.training.SerieActivity">
 
     <ImageView
         android:id="@+id/imageView"

@@ -1,4 +1,4 @@
-package com.trainer.ui
+package com.trainer.ui.training
 
 import android.content.Intent
 import android.os.Bundle
@@ -18,8 +18,8 @@ import com.trainer.modules.training.TrainingManager
 import com.trainer.modules.training.WorkoutEvent
 import com.trainer.modules.training.WorkoutEvent.*
 import com.trainer.modules.training.WorkoutPresenter
-import com.trainer.ui.SetFragment.Companion.ARG_SET_ID
-import com.trainer.ui.model.SuperSetPagerAdapter
+import com.trainer.ui.training.SetFragment.Companion.ARG_SET_ID
+import com.trainer.ui.training.model.SuperSetPagerAdapter
 import kotlinx.android.synthetic.main.activity_set_pager.*
 import rx.subscriptions.Subscriptions
 import javax.inject.Inject

@@ -1,4 +1,4 @@
-package com.trainer.ui
+package com.trainer.ui.training
 
 import android.os.Bundle
 import android.view.View.INVISIBLE

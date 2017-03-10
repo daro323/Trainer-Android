@@ -1,4 +1,4 @@
-package com.trainer.utils.typedviewholder
+package com.trainer.commons.typedviewholder
 
 import android.content.Context
 import android.support.annotation.LayoutRes

@@ -1,4 +1,4 @@
-package com.trainer.ui
+package com.trainer.ui.training
 
 import android.content.Context
 import android.view.View
@@ -18,7 +18,7 @@ import com.trainer.modules.training.TrainingManager
 import com.trainer.modules.training.WeightType.BODY_WEIGHT
 import com.trainer.modules.training.WorkoutPresenter
 import com.trainer.modules.training.WorkoutPresenter.Companion.WEIGHT_NA_VALUE
-import com.trainer.ui.model.SetFragmentFieldValidator
+import com.trainer.ui.training.model.SetFragmentFieldValidator
 import eu.inmite.android.lib.validations.form.FormValidator
 import eu.inmite.android.lib.validations.form.callback.SimpleErrorPopupCallback
 import kotlinx.android.synthetic.main.fragment_set.*

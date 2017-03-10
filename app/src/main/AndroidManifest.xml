@@ -14,7 +14,7 @@
       android:supportsRtl="true"
       android:theme="@style/AppTheme">
     <activity
-        android:name=".ui.TrainingDaysListActivity"
+        android:name=".ui.training.TrainingDaysListActivity"
         android:screenOrientation="portrait">
       <intent-filter>
         <action android:name="android.intent.action.MAIN"/>
@@ -22,13 +22,13 @@
         <category android:name="android.intent.category.LAUNCHER"/>
       </intent-filter>
     </activity>
-    <activity android:name=".ui.WorkoutListActivity"
+    <activity android:name=".ui.training.WorkoutListActivity"
               android:screenOrientation="portrait"/>
-    <activity android:name=".ui.SerieActivity"
+    <activity android:name=".ui.training.SerieActivity"
               android:screenOrientation="portrait"/>
-    <activity android:name=".ui.StretchActivity"
+    <activity android:name=".ui.training.StretchActivity"
               android:screenOrientation="portrait"/>
-    <activity android:name=".ui.RestActivity"
+    <activity android:name=".ui.training.RestActivity"
               android:screenOrientation="portrait"
               android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"
               android:launchMode="singleTop"/>

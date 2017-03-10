@@ -1,4 +1,4 @@
-package com.trainer.utils
+package com.trainer.commons
 
 import com.trainer.R
 import com.trainer.modules.training.ProgressStatus
@@ -6,7 +6,7 @@ import com.trainer.modules.training.ProgressStatus
 /**
  * Created by dariusz on 12/01/17.
  */
-class TrainingUtils private constructor() {
+class StyleUtils private constructor() {
   companion object {
 
     fun getColorRes(forProgressStatus: ProgressStatus) =

@@ -1,4 +1,4 @@
-package com.trainer.ui
+package com.trainer.ui.training
 
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
@@ -6,14 +6,15 @@ import android.view.Menu
 import android.view.MenuItem
 import com.trainer.R
 import com.trainer.base.BaseActivity
+import com.trainer.commons.typedviewholder.TypedViewHolderAdapter
+import com.trainer.commons.typedviewholder.registerHolder
 import com.trainer.extensions.ioMain
 import com.trainer.extensions.start
 import com.trainer.modules.export.ExportManager
 import com.trainer.modules.training.TrainingManager
-import com.trainer.ui.model.TrainingDayItem
-import com.trainer.ui.model.TrainingDayItemHolder
-import com.trainer.utils.typedviewholder.TypedViewHolderAdapter
+import com.trainer.ui.training.model.TrainingDayItem
 import kotlinx.android.synthetic.main.activity_list.*
+import kotlinx.android.synthetic.main.training_day_item.view.*
 import javax.inject.Inject
 
 /**
@@ -24,16 +25,19 @@ class TrainingDaysListActivity : BaseActivity(R.layout.activity_list) {
   @Inject lateinit var trainingManager: TrainingManager
   @Inject lateinit var exportManager: ExportManager
 
-  private val typedAdapter: TypedViewHolderAdapter<Any> by lazy {
-    TypedViewHolderAdapter.Builder<Any>()
-        .addFactory(TrainingDayItemHolder.factory(onTrainingDayClicked))
-        .build()
-  }
-
-  private val onTrainingDayClicked = { item: TrainingDayItem ->
-    trainingManager.startWorkout(item.trainingCategory)
-    start<WorkoutListActivity>()
-  }
+  private val adapter = TypedViewHolderAdapter.Builder<Any>().apply {
+    registerHolder(R.layout.training_day_item) { model: TrainingDayItem ->
+      itemView.apply {
+        training_day_item_container.setOnClickListener {
+          trainingManager.startWorkout(model.trainingCategory)
+          start<WorkoutListActivity>()
+        }
+        nameText.text = model.trainingCategory.name
+        countText.text = model.count.toString()
+        if (model.daysAgo > 0) daysAgoText.text = model.daysAgo.run { String.format(context.resources.getQuantityString(R.plurals.days_ago_plurals, this), this) }
+      }
+    }
+  }.build()
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -87,10 +91,10 @@ class TrainingDaysListActivity : BaseActivity(R.layout.activity_list) {
   private fun buildUi() {
     title = trainingManager.getTrainingPlan().name
     recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-    recyclerView.adapter = typedAdapter
+    recyclerView.adapter = adapter
 
     trainingManager.getTrainingPlan().trainingDays
         .flatMap { listOf(TrainingDayItem(it.category, it.getTotalDone(), it.trainedDaysAgo())) }
-        .run { typedAdapter.data = this }
+        .run { adapter.data = this }
   }
 }

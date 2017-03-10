@@ -7,20 +7,20 @@
     android:orientation="vertical">
 
   <RelativeLayout
-      android:id="@+id/content_container"
+      android:id="@+id/training_day_item_container"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:padding="@dimen/list_item_padding">
 
     <TextView
-        android:id="@+id/name"
+        android:id="@+id/nameText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="@style/TextAppearance.Trainer.ListHeadline"
         tools:text="List Item number 1" />
 
     <TextView
-        android:id="@+id/count"
+        android:id="@+id/countText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
@@ -28,10 +28,10 @@
         tools:text="21" />
 
     <TextView
-        android:id="@+id/days_ago"
+        android:id="@+id/daysAgoText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toLeftOf="@id/count"
+        android:layout_toLeftOf="@id/countText"
         android:layout_toRightOf="@id/name"
         android:paddingRight="@dimen/default_padding"
         android:gravity="end"

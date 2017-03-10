@@ -1,4 +1,4 @@
-package com.trainer.utils
+package com.trainer.commons
 
 import android.app.Activity
 import android.app.Dialog

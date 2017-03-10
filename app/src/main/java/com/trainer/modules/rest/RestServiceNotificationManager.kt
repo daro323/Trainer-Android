@@ -10,7 +10,7 @@ import android.support.v4.app.NotificationCompat
 import com.trainer.R
 import com.trainer.d2.qualifier.ForApplication
 import com.trainer.d2.scope.ApplicationScope
-import com.trainer.ui.RestActivity
+import com.trainer.ui.training.RestActivity
 import javax.inject.Inject
 
 /**

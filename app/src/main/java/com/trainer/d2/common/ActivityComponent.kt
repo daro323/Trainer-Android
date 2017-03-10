@@ -3,6 +3,7 @@ package com.trainer.d2.common
 import com.trainer.base.BaseActivity
 import com.trainer.d2.scope.ActivityScope
 import com.trainer.ui.*
+import com.trainer.ui.training.*
 import dagger.Subcomponent
 
 @Subcomponent(modules = arrayOf(ActivityModule::class))

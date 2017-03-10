@@ -1,4 +1,4 @@
-package com.trainer.ui.model
+package com.trainer.ui.training.model
 
 import android.support.annotation.DrawableRes
 import android.support.v4.content.ContextCompat
@@ -10,12 +10,12 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.trainer.R
+import com.trainer.commons.StyleUtils.Companion.getColorRes
+import com.trainer.commons.bindView
+import com.trainer.commons.typedviewholder.TypedViewHolder
+import com.trainer.commons.typedviewholder.TypedViewHolderFactory
 import com.trainer.modules.training.ProgressStatus
 import com.trainer.modules.training.TrainingCategory
-import com.trainer.utils.TrainingUtils.Companion.getColorRes
-import com.trainer.utils.bindView
-import com.trainer.utils.typedviewholder.TypedViewHolder
-import com.trainer.utils.typedviewholder.TypedViewHolderFactory
 import eu.inmite.android.lib.validations.form.annotations.NotEmpty
 
 /**
@@ -25,34 +25,6 @@ import eu.inmite.android.lib.validations.form.annotations.NotEmpty
 data class TrainingDayItem(val trainingCategory: TrainingCategory,
                            val count: Int,
                            val daysAgo: Int)
-
-class TrainingDayItemHolder(parent: ViewGroup,
-                            private val onClick: (TrainingDayItem) -> Any) : TypedViewHolder<TrainingDayItem>(R.layout.training_day_item, parent) {
-  companion object {
-    fun factory(listener: (TrainingDayItem) -> Any) = object : TypedViewHolderFactory<TrainingDayItem>(TrainingDayItem::class.java) {
-      override fun build(parent: ViewGroup): TypedViewHolder<TrainingDayItem> {
-        return TrainingDayItemHolder(parent, listener)
-      }
-    }
-  }
-
-  lateinit var model: TrainingDayItem
-  private val container: ViewGroup by bindView(R.id.content_container)
-  private val nameText: TextView by bindView(R.id.name)
-  private val countText: TextView by bindView(R.id.count)
-  private val daysAgoText: TextView by bindView(R.id.days_ago)
-
-  init {
-    container.setOnClickListener { onClick(model) }
-  }
-
-  override fun bind(dataItem: TrainingDayItem) {
-    model = dataItem
-    nameText.text = model.trainingCategory.name
-    countText.text = model.count.toString()
-    if (model.daysAgo > 0) daysAgoText.text = model.daysAgo.run { String.format(context.resources.getQuantityString(R.plurals.days_ago_plurals, this), this) }
-  }
-}
 
 data class SetItem(@DrawableRes val imageRes: Int,
                    val name: String,
