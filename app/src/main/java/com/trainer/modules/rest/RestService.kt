@@ -11,8 +11,7 @@ import com.trainer.extensions.ioMain
 import com.trainer.modules.rest.RestState.FINISHED
 import com.trainer.modules.training.TrainingManager
 import com.trainer.modules.training.WorkoutPresenter
-import rx.Subscription
-import rx.subscriptions.Subscriptions
+import io.reactivex.disposables.Disposables
 import javax.inject.Inject
 
 /**
@@ -26,7 +25,7 @@ class RestService : Service() {
   @Inject lateinit var notificationManager: RestServiceNotificationManager
 
   private val presenter: WorkoutPresenter by lazy { trainingManager.workoutPresenter ?: throw IllegalStateException("Current workout not set!") }  // call this after component.inject()
-  private var restSubscription: Subscription = Subscriptions.unsubscribed()
+  private var restSubscription = Disposables.disposed()
   private var wakeLock: PowerManager.WakeLock? = null
 
   companion object {
@@ -34,13 +33,13 @@ class RestService : Service() {
     const private val TAG = "RestService"
     const private val WAKELOCK_TAG = "RestService_WakeLock"
     const private val START_REST_ACTION = "START_REST_ACTION"
-    const private val STOP_REST_ACTION = "STOP_REST_ACTION"
+    const private val ABORT_REST_ACTION = "ABORT_REST_ACTION"
 
     const private val VIBRATE_DURATION_MS = 1200L
 
     fun startRest(context: Context) { doStartService(context, START_REST_ACTION) }
 
-    fun stopRest(context: Context) { doStartService(context, STOP_REST_ACTION) }
+    fun abortRest(context: Context) { doStartService(context, ABORT_REST_ACTION) }
 
     private fun doStartService(context: Context, startAction: String) {
       Intent(context, RestService::class.java)
@@ -62,7 +61,7 @@ class RestService : Service() {
 
     when(action) {
       START_REST_ACTION -> doStartRest()
-      STOP_REST_ACTION -> doStopRest()
+      ABORT_REST_ACTION -> doAbortRest()
       else -> throw IllegalArgumentException("Unsupported RestService action= $action!")
     }
 
@@ -70,18 +69,18 @@ class RestService : Service() {
   }
 
   override fun onDestroy() {
-    restSubscription.unsubscribe()
+    restSubscription.dispose()
     super.onDestroy()
   }
 
   private fun doStartRest() {
-    require(restSubscription.isUnsubscribed) { "Subsequent call to start rest service!" }
+    require(restSubscription.isDisposed) { "Subsequent call to start rest service!" }
 
     setWakeLockActive(true)
     restSubscription = presenter.getRestEvents()
         .ioMain()
         .doOnSubscribe { notificationManager.showNotification(this) }
-        .doOnUnsubscribe { notificationManager.hideNotification() }
+        .doOnDispose { notificationManager.hideNotification() }
         .doOnNext { notificationManager.updateNotification(it.countDown, this) }
         .filter { it.state == FINISHED }
         .subscribe {
@@ -95,10 +94,10 @@ class RestService : Service() {
   /**
    * Performed when rest is aborted by user
    */
-  private fun doStopRest() {
+  private fun doAbortRest() {
     setWakeLockActive(false)
-    restSubscription.unsubscribe()
-    presenter.onStopRest()
+    restSubscription.dispose()
+    presenter.onAbortRest()
     stopSelf()
   }
 

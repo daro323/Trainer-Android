@@ -20,8 +20,8 @@ import com.trainer.modules.training.WorkoutEvent.*
 import com.trainer.modules.training.WorkoutPresenter
 import com.trainer.ui.training.SetFragment.Companion.ARG_SET_ID
 import com.trainer.ui.training.model.SuperSetPagerAdapter
+import io.reactivex.disposables.Disposables
 import kotlinx.android.synthetic.main.activity_set_pager.*
-import rx.subscriptions.Subscriptions
 import javax.inject.Inject
 
 
@@ -35,7 +35,7 @@ class SerieActivity : BaseActivity(R.layout.activity_set_pager) {
   @Inject lateinit var trainingManager: TrainingManager
   private val presenter: WorkoutPresenter by lazy { trainingManager.workoutPresenter ?: throw IllegalStateException("Current workout not set!") }  // call this after component.inject()
   private lateinit var adapter: SuperSetPagerAdapter
-  private var workoutEventsSubscription = Subscriptions.unsubscribed()
+  private var workoutEventsSubscription = Disposables.disposed()
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -49,7 +49,7 @@ class SerieActivity : BaseActivity(R.layout.activity_set_pager) {
   }
 
   override fun onStop() {
-    workoutEventsSubscription.unsubscribe()
+    workoutEventsSubscription.dispose()
     super.onStop()
   }
 
@@ -77,7 +77,7 @@ class SerieActivity : BaseActivity(R.layout.activity_set_pager) {
   }
 
   private fun subscribeForWorkoutEvents() {
-    workoutEventsSubscription.unsubscribe()
+    workoutEventsSubscription.dispose()
     workoutEventsSubscription = presenter.onWorkoutEvent()
         .ioMain()
         .subscribe { handleWorkoutEvent(it) }

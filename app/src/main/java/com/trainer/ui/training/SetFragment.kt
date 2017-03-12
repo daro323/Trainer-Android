@@ -37,7 +37,8 @@ class SetFragment : BaseFragment(R.layout.fragment_set) {
   private val onInputFocusListener = { view: View, hasFocus: Boolean ->
     if (hasFocus) {
       (view as EditText).setText("")
-      scrollView.postDelayed({ scrollView.scrollBy(0, scrollView.getChildAt(0).height) }, 200)
+      scrollView.postDelayed({
+        if (activity != null && scrollView != null) scrollView.scrollBy(0, scrollView.getChildAt(0).height) }, 200)
     }
   }
 

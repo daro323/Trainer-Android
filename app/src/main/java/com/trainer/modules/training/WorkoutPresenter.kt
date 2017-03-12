@@ -7,7 +7,7 @@ import com.trainer.modules.training.Series.Set
 import com.trainer.modules.training.Series.SuperSet
 import com.trainer.modules.training.WeightType.BODY_WEIGHT
 import com.trainer.modules.training.WorkoutEvent.*
-import rx.subjects.BehaviorSubject
+import io.reactivex.processors.BehaviorProcessor
 import javax.inject.Inject
 
 /**
@@ -25,12 +25,12 @@ class WorkoutPresenter @Inject constructor(val repo: TrainingRepository,
 
   lateinit var trainingDay: TrainingDay
 
-  val workoutEventsSubject = BehaviorSubject.create<WorkoutEvent>()
+  val workoutEventsProcessor = BehaviorProcessor.create<WorkoutEvent>()
 
   private var currentSerieIdx: Int = NOT_SET_VALUE
   private var currentSetIdx: Int = NOT_SET_VALUE
 
-  fun onWorkoutEvent() = workoutEventsSubject.asObservable()
+  fun onWorkoutEvent() = workoutEventsProcessor
 
   fun getWorkoutList() = trainingDay.workout.series
 
@@ -77,7 +77,7 @@ class WorkoutPresenter @Inject constructor(val repo: TrainingRepository,
     repo.saveTrainingPlan()
 
     val restTime = currentSet.restTimeSec
-    if (restTime > 0) workoutEventsSubject.onNext(REST) else determineNextStep()
+    if (restTime > 0) workoutEventsProcessor.onNext(REST) else determineNextStep()
   }
 
   fun skipSerie() {
@@ -85,16 +85,16 @@ class WorkoutPresenter @Inject constructor(val repo: TrainingRepository,
     if (currentSerie.status() != COMPLETE) currentSerie.skipRemaining()
     repo.saveTrainingPlan()
 
-    workoutEventsSubject.onNext(SERIE_COMPLETED)
+    workoutEventsProcessor.onNext(SERIE_COMPLETED)
   }
 
   fun isCurrentSet(set: Set) = if (getCurrentSerie().status() == COMPLETE || hasOtherSerieStarted()) false else getCurrentSet() == set
 
   fun serieCompleteHandled() {
     if (getWorkoutStatus() == COMPLETE) {
-      workoutEventsSubject.onNext(WORKOUT_COMPLETED)
+      workoutEventsProcessor.onNext(WORKOUT_COMPLETED)
     } else {
-      workoutEventsSubject.onNext(WorkoutEvent.DO_NEXT_SET)
+      workoutEventsProcessor.onNext(WorkoutEvent.DO_NEXT_SET)
     }
   }
 
@@ -102,8 +102,8 @@ class WorkoutPresenter @Inject constructor(val repo: TrainingRepository,
     restManager.startRest(getRestTime())
   }
 
-  fun onStopRest() {
-    restManager.stopRest()
+  fun onAbortRest() {
+    restManager.abortRest()
   }
 
   fun restComplete() {
@@ -139,13 +139,13 @@ class WorkoutPresenter @Inject constructor(val repo: TrainingRepository,
 
   private fun determineNextStep() {
     if (getWorkoutStatus() == COMPLETE) {
-      workoutEventsSubject.onNext(WORKOUT_COMPLETED)
+      workoutEventsProcessor.onNext(WORKOUT_COMPLETED)
     } else if (getCurrentSerie().status() == COMPLETE) {
       currentSetIdx = DEFAULT_SET_INDEX
-      workoutEventsSubject.onNext(SERIE_COMPLETED)
+      workoutEventsProcessor.onNext(SERIE_COMPLETED)
     } else {
       refreshCurrentSetIdx()
-      workoutEventsSubject.onNext(WorkoutEvent.DO_NEXT_SET)
+      workoutEventsProcessor.onNext(WorkoutEvent.DO_NEXT_SET)
     }
   }
 

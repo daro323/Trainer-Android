@@ -7,10 +7,10 @@ import com.trainer.BuildConfig
 import com.trainer.R
 import com.trainer.d2.qualifier.ForApplication
 import com.trainer.d2.scope.ApplicationScope
-import com.trainer.extensions.singleOnSubscribe
 import com.trainer.extensions.writeString
 import com.trainer.modules.training.TrainingManager
 import com.trainer.modules.training.TrainingPlan
+import io.reactivex.Completable
 import java.io.File
 import javax.inject.Inject
 
@@ -34,9 +34,9 @@ class ExportManager @Inject constructor(val mapper: ObjectMapper,
     private fun isExternalStorageWritable() = Environment.MEDIA_MOUNTED == Environment.getExternalStorageState()
   }
 
-  fun exportCurrentTrainingPlan() = singleOnSubscribe { doExport() }
+  fun exportCurrentTrainingPlan() = Completable.create { doExport() }
 
-  fun importTrainingPlan(filePath: String) = singleOnSubscribe {
+  fun importTrainingPlan(filePath: String) = Completable.create {
     checkExternalStorageAccess()
 
     File(filePath)

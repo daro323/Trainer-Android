@@ -11,9 +11,8 @@ import com.trainer.modules.rest.RestService
 import com.trainer.modules.rest.RestState.*
 import com.trainer.modules.training.TrainingManager
 import com.trainer.modules.training.WorkoutPresenter
+import io.reactivex.disposables.Disposables
 import kotlinx.android.synthetic.main.activity_rest.*
-import rx.Subscription
-import rx.subscriptions.Subscriptions
 import javax.inject.Inject
 
 class RestActivity : BaseActivity(R.layout.activity_rest) {
@@ -21,7 +20,7 @@ class RestActivity : BaseActivity(R.layout.activity_rest) {
   @Inject lateinit var trainingManager: TrainingManager
 
   private val presenter: WorkoutPresenter by lazy { trainingManager.workoutPresenter ?: throw IllegalStateException("Current workout not set!") }  // call this after component.inject()
-  private var restSubscription: Subscription = Subscriptions.unsubscribed()
+  private var restSubscription = Disposables.disposed()
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -38,7 +37,7 @@ class RestActivity : BaseActivity(R.layout.activity_rest) {
   }
 
   override fun onStop() {
-    restSubscription.unsubscribe()
+    restSubscription.dispose()
     container.visibility = INVISIBLE
     super.onStop()
   }
@@ -49,7 +48,7 @@ class RestActivity : BaseActivity(R.layout.activity_rest) {
   }
 
   private fun onRestEvent(event: RestEvent) {
-    when(event.state) {
+    when (event.state) {
 
       IDLE -> RestService.startRest(this)
 
@@ -66,8 +65,8 @@ class RestActivity : BaseActivity(R.layout.activity_rest) {
   }
 
   private fun close() {
-    restSubscription.unsubscribe()
-    RestService.stopRest(this)
+    restSubscription.dispose()
+    RestService.abortRest(this)
     finish()
   }
 
@@ -77,7 +76,7 @@ class RestActivity : BaseActivity(R.layout.activity_rest) {
   }
 
   private fun subscribeForRest() {
-    restSubscription.unsubscribe()
+    restSubscription.dispose()
     restSubscription = presenter.getRestEvents()
         .ioMain()
         .doOnSubscribe { progressView.max = presenter.getRestTime() }

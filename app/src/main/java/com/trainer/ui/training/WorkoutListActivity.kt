@@ -24,10 +24,10 @@ import com.trainer.modules.training.WorkoutEvent.WORKOUT_COMPLETED
 import com.trainer.modules.training.WorkoutPresenter
 import com.trainer.ui.training.model.SetItem
 import com.trainer.ui.training.model.SuperSetItem
+import io.reactivex.disposables.Disposables
 import kotlinx.android.synthetic.main.activity_list.*
 import kotlinx.android.synthetic.main.set_item.view.*
 import kotlinx.android.synthetic.main.super_set_container_item.view.*
-import rx.subscriptions.Subscriptions
 import java.util.*
 import javax.inject.Inject
 
@@ -39,7 +39,7 @@ class WorkoutListActivity : BaseActivity(R.layout.activity_list) {
   @Inject lateinit var trainingManager: TrainingManager
   @Inject lateinit var exportManager: ExportManager
   private val presenter: WorkoutPresenter by lazy { trainingManager.workoutPresenter ?: throw IllegalStateException("Current workout not set!") }  // can call this only after component.inject()!
-  private var workoutEventsSubscription = Subscriptions.unsubscribed()
+  private var workoutEventsSubscription = Disposables.disposed()
 
   private val typedAdapter = TypedViewHolderAdapter.Builder<Any>().apply {
     registerHolder(R.layout.super_set_container_item) { model: SuperSetItem ->
@@ -79,7 +79,7 @@ class WorkoutListActivity : BaseActivity(R.layout.activity_list) {
   }
 
   override fun onStop() {
-    workoutEventsSubscription.unsubscribe()
+    workoutEventsSubscription.dispose()
     super.onStop()
   }
 
@@ -112,7 +112,7 @@ class WorkoutListActivity : BaseActivity(R.layout.activity_list) {
   }
 
   private fun subscribeForWorkoutEvents() {
-    workoutEventsSubscription.unsubscribe()
+    workoutEventsSubscription.dispose()
     workoutEventsSubscription = presenter.onWorkoutEvent()
         .filter { it == WORKOUT_COMPLETED }
         .ioMain()

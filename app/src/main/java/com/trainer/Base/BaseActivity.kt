@@ -11,8 +11,7 @@ import com.github.angads25.filepicker.model.DialogProperties
 import com.github.angads25.filepicker.view.FilePickerDialog
 import com.trainer.R
 import com.trainer.d2.common.ActivityComponent
-import rx.Subscription
-import rx.subscriptions.Subscriptions
+import io.reactivex.disposables.Disposables
 import java.io.File
 
 /**
@@ -20,7 +19,7 @@ import java.io.File
  */
 abstract class BaseActivity(@LayoutRes private val layoutRes: Int = -1) : AppCompatActivity() {
   val component: ActivityComponent by lazy { (applicationContext as BaseApplication).activityComponent(this) }
-  protected var showDialogSubscription: Subscription = Subscriptions.unsubscribed()
+  protected var showDialogSubscription = Disposables.disposed()
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -36,7 +35,7 @@ abstract class BaseActivity(@LayoutRes private val layoutRes: Int = -1) : AppCom
                                            @StringRes messageId: Int,
                                            yesAction: () -> Unit,
                                            noAction: () -> Unit) {
-    showDialogSubscription.unsubscribe()
+    showDialogSubscription.dispose()
     val dialog = AlertDialog.Builder(this)
         .setMessage(messageId)
         .setCancelable(true)
@@ -49,11 +48,11 @@ abstract class BaseActivity(@LayoutRes private val layoutRes: Int = -1) : AppCom
           dialog.dismiss() })
         .create()
     dialog.show()
-    showDialogSubscription = Subscriptions.create { dialog.dismiss() }
+    showDialogSubscription = Disposables.fromAction { dialog.dismiss() }
   }
 
   protected fun showConfirmPopupAlert(@StringRes messageId: Int, action: () -> Unit = {}) {
-    showDialogSubscription.unsubscribe()
+    showDialogSubscription.dispose()
     val dialog = AlertDialog.Builder(this)
         .setMessage(messageId)
         .setCancelable(false)
@@ -63,11 +62,11 @@ abstract class BaseActivity(@LayoutRes private val layoutRes: Int = -1) : AppCom
         })
         .create()
     dialog.show()
-    showDialogSubscription = Subscriptions.create { dialog.dismiss() }
+    showDialogSubscription = Disposables.fromAction { dialog.dismiss() }
   }
 
   protected fun showConfirmPopupAlert(message: String, action: () -> Unit = {}) {
-    showDialogSubscription.unsubscribe()
+    showDialogSubscription.dispose()
     val dialog = AlertDialog.Builder(this)
         .setMessage(message)
         .setCancelable(false)
@@ -77,11 +76,11 @@ abstract class BaseActivity(@LayoutRes private val layoutRes: Int = -1) : AppCom
         })
         .create()
     dialog.show()
-    showDialogSubscription = Subscriptions.create { dialog.dismiss() }
+    showDialogSubscription = Disposables.fromAction { dialog.dismiss() }
   }
 
   protected fun showFilePickerDialog(rootFile: File, action: (filePath: String) -> Unit) {
-    showDialogSubscription.unsubscribe()
+    showDialogSubscription.dispose()
     val properties = DialogProperties().apply {
       selection_mode = SINGLE_MODE
       selection_type = FILE_SELECT
@@ -93,6 +92,6 @@ abstract class BaseActivity(@LayoutRes private val layoutRes: Int = -1) : AppCom
       setDialogSelectionListener { action(it[0]) }
     }
     dialog.show()
-    showDialogSubscription = Subscriptions.create { dialog.dismiss() }
+    showDialogSubscription = Disposables.fromAction { dialog.dismiss() }
   }
 }
