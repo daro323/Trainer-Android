@@ -34,9 +34,9 @@ class ExportManager @Inject constructor(val mapper: ObjectMapper,
     private fun isExternalStorageWritable() = Environment.MEDIA_MOUNTED == Environment.getExternalStorageState()
   }
 
-  fun exportCurrentTrainingPlan() = Completable.create { doExport() }
+  fun exportCurrentTrainingPlan() = Completable.fromAction { doExport() }
 
-  fun importTrainingPlan(filePath: String) = Completable.create {
+  fun importTrainingPlan(filePath: String) = Completable.fromAction {
     checkExternalStorageAccess()
 
     File(filePath)
