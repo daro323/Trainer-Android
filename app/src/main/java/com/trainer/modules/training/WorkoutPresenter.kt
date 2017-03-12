@@ -77,7 +77,7 @@ class WorkoutPresenter @Inject constructor(val repo: TrainingRepository,
     repo.saveTrainingPlan()
 
     val restTime = currentSet.restTimeSec
-    if (restTime > 0) workoutEventsProcessor.onNext(REST) else determineNextStep()
+    if (getWorkoutStatus() != COMPLETE && restTime > 0) workoutEventsProcessor.onNext(REST) else determineNextStep()
   }
 
   fun skipSerie() {

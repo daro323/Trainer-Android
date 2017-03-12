@@ -22,13 +22,12 @@ class RestManager @Inject constructor() {
   var restCountSubscription = Disposables.disposed()
 
   fun startRest(initialStartValue: Int) {
-    val value = 6
     require(initialStartValue > 0) { "Start Rest invoked without rest time being set!" }
     require(restCountSubscription.isDisposed) { "Attempt to start resting when resting is already ongoing!" }
 
     restCountSubscription = Observable.interval(1, TimeUnit.SECONDS)
         .startWith(0)
-        .map { (value - it).toInt() }
+        .map { (initialStartValue - it).toInt() }
         .map {
           if (it > 0) RestEvent(it, COUNTDOWN)
           else if (it == 0) RestEvent(it, FINISHED)
