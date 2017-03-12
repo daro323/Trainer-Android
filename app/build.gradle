@@ -102,6 +102,10 @@ dependencies {
   // File picker
   compile 'com.github.angads25:filepicker:1.0.6'
 
+  androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+    exclude group: 'com.android.support', module: 'support-annotations'
+  })
+
   // TESTING
   testCompile 'junit:junit:4.12'
   testCompile 'org.mockito:mockito-core:2.7.0'
