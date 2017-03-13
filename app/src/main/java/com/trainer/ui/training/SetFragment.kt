@@ -36,7 +36,10 @@ class SetFragment : BaseFragment(R.layout.fragment_set) {
   private val fieldsToValidate: SetFragmentFieldValidator by lazy { SetFragmentFieldValidator(weightInput, repInput) }
   private val onInputFocusListener = { view: View, hasFocus: Boolean ->
     if (hasFocus) {
-      (view as EditText).setText("")
+      (view as EditText).apply {
+        if (activity != null && this != null) this.postDelayed({ setText("") }, 100)
+      }
+
       scrollView.postDelayed({
         if (activity != null && scrollView != null) scrollView.scrollBy(0, scrollView.getChildAt(0).height) }, 200)
     }
