@@ -13,6 +13,7 @@ import com.trainer.d2.common.ActivityComponent
 import com.trainer.extensions.arg
 import com.trainer.extensions.reduceWithDefault
 import com.trainer.modules.training.ProgressStatus.COMPLETE
+import com.trainer.modules.training.Repetition
 import com.trainer.modules.training.Series.Set
 import com.trainer.modules.training.TrainingManager
 import com.trainer.modules.training.WeightType.BODY_WEIGHT
@@ -86,8 +87,7 @@ class SetFragment : BaseFragment(R.layout.fragment_set) {
       }
 
       lastProgressTextView.text = lastProgress.map { "$it" }.reduce { acc, repetition -> "$acc\n$repetition" }
-      weightInput.isEnabled = weightType != BODY_WEIGHT
-      weightTypeTextView.text = if (weightType == BODY_WEIGHT) "N/A" else weightType.toString()
+      weightTypeTextView.text = if (weightType != BODY_WEIGHT) weightType.toString() else ""
       weightInput.setOnFocusChangeListener(onInputFocusListener)
       repInput.setOnFocusChangeListener(onInputFocusListener)
       repInput.setOnEditorActionListener { textView, actionId, keyEvent ->
@@ -103,40 +103,44 @@ class SetFragment : BaseFragment(R.layout.fragment_set) {
     }
   }
 
-  private fun refreshUi(forSet: Set) {
+  private fun refreshUi(forSet: Set, onSubmit: Boolean = false) {
     forSet.apply {
       val iterationIdx = if (forSet.status() == COMPLETE) seriesCount - 1 else progress.size   // Counted from zero!
-      val iterationNumber = iterationIdx + 1
+      val iterationNumber = if (presenter.isCurrentSet(forSet)) progress.size + 1 else progress.size  // Counted from one!
       require(iterationNumber <= seriesCount) { "Invalid state! current iteration nr= $iterationNumber exceeded the total series count= $seriesCount" }
 
+      val rep = if (onSubmit) progress[iterationIdx - 1] else lastProgress[iterationIdx]  // On submit show current result (don't swap result of next rep)
+
+      weightInput.setText(rep.weight.toString())
+      repInput.setText(rep.repCount.toString())
       setNumberTextView.text = String.format(getString(R.string.set_number_text), iterationNumber, seriesCount)
       progressTextView.text = progress.map { "$it" }.reduceWithDefault("", { item -> item }, { acc, repetition -> "$acc\n$repetition" })
-      weightInput.setText(lastProgress[iterationIdx].weight.toString())
-      repInput.setText(lastProgress[iterationIdx].repCount.toString())
-      setInputActive(presenter.isCurrentSet(forSet))
+      setInputActive(presenter.isCurrentSet(forSet), rep)
       (activity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager).run { hideSoftInputFromWindow(set_container.windowToken, 0) }
     }
   }
 
-  private fun weightValue() = if (weightInput.isEnabled) weightInput.text.toString().toFloat() else WEIGHT_NA_VALUE
+  private fun weightValue() = if (weightInput.visibility == VISIBLE) weightInput.text.toString().toFloat() else WEIGHT_NA_VALUE
   private fun repValue() = repInput.text.toString().toInt()
 
   private val onSubmitHandler = { v: View ->
     if (FormValidator.validate(activity, fieldsToValidate, SimpleErrorPopupCallback(activity))) {
       presenter.saveSetResult(weightValue(), repValue())
-      refreshUi(set)
+      refreshUi(set, true)
     }
   }
 
-  private fun setInputActive(isActive: Boolean) {
-    (if (isActive) VISIBLE else GONE).apply {
-      weightInput.visibility = this
-      weightTypeTextView.visibility = this
-      repInput.visibility = this
-      repLabel.visibility = this
-      inputSeparatorLabelView.visibility = this
-      submitButton.visibility = this
-    }
+  private fun setInputActive(isActive: Boolean, forRep: Repetition) {
+    val isActiveVisibility = if (isActive) VISIBLE else GONE
+    val alsoForBodyType = if (isActive && forRep.weightType != BODY_WEIGHT) VISIBLE else GONE
+
+    repInput.visibility = isActiveVisibility
+    repLabel.visibility = isActiveVisibility
+    submitButton.visibility = isActiveVisibility
+
+    weightInput.visibility = alsoForBodyType
+    weightTypeTextView.visibility = alsoForBodyType
+    inputSeparatorLabelView.visibility = alsoForBodyType
   }
 }
 

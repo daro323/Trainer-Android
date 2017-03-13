@@ -232,7 +232,7 @@
         android:id="@+id/submitButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/weightInput"
+        android:layout_below="@id/repLabel"
         android:layout_marginTop="32dp"
         android:text="@string/submit"/>
 
