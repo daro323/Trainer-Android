@@ -132,6 +132,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/parentarea_divider2"
+        android:descendantFocusability="beforeDescendants"
+        android:focusableInTouchMode="true"
         android:layout_toRightOf="@id/sep"
         android:orientation="vertical">
 
