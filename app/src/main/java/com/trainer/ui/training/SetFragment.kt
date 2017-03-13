@@ -90,7 +90,6 @@ class SetFragment : BaseFragment(R.layout.fragment_set) {
       repInput.setOnEditorActionListener { textView, actionId, keyEvent ->
         if (actionId == EditorInfo.IME_ACTION_DONE) {
           onSubmitHandler(submitButton)
-          (textView.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager).run { hideSoftInputFromWindow(textView.windowToken, 0) }
           true
         } else {
           false
@@ -112,6 +111,7 @@ class SetFragment : BaseFragment(R.layout.fragment_set) {
       weightInput.setText(lastProgress[iterationIdx].weight.toString())
       repInput.setText(lastProgress[iterationIdx].repCount.toString())
       setInputActive(presenter.isCurrentSet(forSet))
+      (activity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager).run { hideSoftInputFromWindow(set_container.windowToken, 0) }
     }
   }
 
