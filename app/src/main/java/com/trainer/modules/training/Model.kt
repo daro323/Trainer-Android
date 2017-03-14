@@ -218,7 +218,17 @@ interface Series {
 
   class SuperSet(val setList: List<Set>) : CompositeSeries<Set>(setList)
 
-  class Cycle(val cycleList: List<CyclicSet>) : CompositeSeries<CyclicSet>(cycleList)
+  class Cycle(cycleList: List<CyclicSet>,
+              val cyclesCount: Int,
+              var cyclesPerformed: Int,
+              val lastCyclesPerformed: Int,
+              val restTime: Int) : CompositeSeries<CyclicSet>(cycleList) {
+
+    override fun abort() {
+      super.abort()
+      cyclesPerformed = 0
+    }
+  }
 }
 
 data class StretchExercise private constructor(val id: String,
