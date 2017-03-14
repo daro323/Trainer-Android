@@ -104,25 +104,31 @@ interface Series {
   fun complete()
   fun abort()
 
-  data class Set private constructor(private val _id: String,
-                                     val exercise: Exercise,
-                                     val guidelines: List<String>,
-                                     val seriesCount: Int,
-                                     val restTimeSec: Int,
-                                     var progress: MutableList<Repetition>,
-                                     var lastProgress: List<Repetition>) : Series {
-    companion object {
-      var instanceCounter: Int = 0
-      /* Automatically adds IDs as instance count */
-      fun createSet(exercise: Exercise,
-                    guidelines: List<String>,
-                    seriesCount: Int,
-                    restTimeSec: Int,
-                    progress: MutableList<Repetition> = mutableListOf(),
-                    lastProgress: List<Repetition> = (1..seriesCount).map { emptyRepetition(exercise) }.toList()) = Set((++instanceCounter).toString(), exercise, guidelines, seriesCount, restTimeSec, progress, lastProgress)
+  companion object {
+    var instanceCounter: Int = 0
+    /* Automatically adds IDs as instance count */
+    fun createSet(exercise: Exercise,
+                  guidelines: List<String>,
+                  seriesCount: Int,
+                  restTimeSec: Int,
+                  progress: MutableList<Repetition> = mutableListOf(),
+                  lastProgress: List<Repetition> = (1..seriesCount).map { emptyRepetition(exercise) }.toList()) = Set((++instanceCounter).toString(), exercise, guidelines, seriesCount, restTimeSec, progress, lastProgress)
 
-      private fun emptyRepetition(forExercise: Exercise) = Repetition(0f, 0, forExercise.weightType)
-    }
+    /* Automatically adds IDs as instance count */
+    fun createCyclicSet(exercise: Exercise,
+                        restTimeSec: Int,
+                        durationTimeSec: Int) = CyclicSet((++instanceCounter).toString(), exercise, restTimeSec, durationTimeSec)
+
+    private fun emptyRepetition(forExercise: Exercise) = Repetition(0f, 0, forExercise.weightType)
+  }
+
+  data class Set constructor(val _id: String,
+                             val exercise: Exercise,
+                             val guidelines: List<String>,
+                             val seriesCount: Int,
+                             val restTimeSec: Int,
+                             var progress: MutableList<Repetition>,
+                             var lastProgress: List<Repetition>) : Series {
 
     override fun id() = _id
 
@@ -160,28 +166,59 @@ interface Series {
     }
   }
 
-  data class SuperSet(val setList: List<Set>) : Series {
-    override fun id() = setList
+  data class CyclicSet constructor(val _id: String,
+                                   val exercise: Exercise,
+                                   val restTimeSec: Int,
+                                   val durationTimeSec: Int,
+                                   var countDownTime: Int = durationTimeSec) : Series {
+    override fun id() = _id
+
+    override fun status() = when {
+      countDownTime == durationTimeSec -> NEW
+      countDownTime < durationTimeSec -> STARTED
+      countDownTime == 0 -> COMPLETE
+      else -> throw IllegalStateException("Unsupported countDownTime value= $countDownTime")
+    }
+
+    override fun skipRemaining() {
+      countDownTime = 0
+    }
+
+    override fun complete() {
+      countDownTime = 0
+    }
+
+    override fun abort() {
+      countDownTime = 0
+    }
+  }
+
+  abstract class CompositeSeries<out T : Series> constructor(val seriesList: List<T>) : Series {
+    override fun id() = seriesList
         .map(Series::id)
         .reduce { acc, item -> "$acc$item" }
 
     override fun status() = when {
-      setList.all { it.status() == NEW } -> NEW
-      setList.all { it.status() == COMPLETE } -> COMPLETE
-      setList.any { it.status() == STARTED || it.status() == COMPLETE } -> STARTED
+      seriesList.all { it.status() == NEW } -> NEW
+      seriesList.all { it.status() == COMPLETE } -> COMPLETE
+      seriesList.any { it.status() == STARTED || it.status() == COMPLETE } -> STARTED
       else -> throw IllegalStateException("Can't determine status of SuperSet= $this")
     }
 
-    override fun skipRemaining() = setList.forEach(Series::skipRemaining)
+    override fun skipRemaining() = seriesList.forEach(Series::skipRemaining)
 
-    override fun complete() = setList.forEach(Series::complete)
+    override fun complete() = seriesList.forEach(Series::complete)
 
-    override fun abort() = setList.forEach(Series::abort)
+    override fun abort() = seriesList.forEach(Series::abort)
 
     override fun equals(other: Any?) = other is SuperSet && other.id() == this.id()
 
-    override fun hashCode() = setList.hashCode()
+    override fun hashCode() = seriesList.hashCode()
   }
+
+  class SuperSet(val setList: List<Set>) : CompositeSeries<Set>(setList)
+
+  class Cycle(val cycleList: List<CyclicSet>) : CompositeSeries<CyclicSet>(cycleList)
 }
 
 data class StretchExercise private constructor(val id: String,

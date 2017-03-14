@@ -2,7 +2,7 @@ package com.trainer.modules.init.data.exercise
 
 import com.trainer.modules.training.Exercise
 import com.trainer.modules.training.ExerciseImageMap.*
-import com.trainer.modules.training.Series.Set.Companion.createSet
+import com.trainer.modules.training.Series.Companion.createSet
 import com.trainer.modules.training.Series.SuperSet
 import com.trainer.modules.training.WeightType.BODY_WEIGHT
 import com.trainer.modules.training.Workout
