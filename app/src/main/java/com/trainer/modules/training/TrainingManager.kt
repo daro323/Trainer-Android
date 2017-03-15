@@ -1,7 +1,11 @@
 package com.trainer.modules.training
 
 import com.trainer.d2.scope.ApplicationScope
-import com.trainer.modules.training.ProgressStatus.NEW
+import com.trainer.modules.training.coredata.ProgressStatus.NEW
+import com.trainer.modules.training.coredata.Series
+import com.trainer.modules.training.coredata.TrainingCategory
+import com.trainer.modules.training.coredata.TrainingPlan
+import com.trainer.modules.training.standard.StretchPlan
 import javax.inject.Inject
 import javax.inject.Provider
 

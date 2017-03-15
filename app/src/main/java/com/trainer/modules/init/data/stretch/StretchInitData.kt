@@ -21,8 +21,8 @@ import com.trainer.modules.init.data.stretch.LegsStretchExercises.Companion.LEG_
 import com.trainer.modules.init.data.stretch.ShouldersStretchExercises.Companion.SHOULDERS_STRETCH_1
 import com.trainer.modules.init.data.stretch.ShouldersStretchExercises.Companion.SHOULDERS_STRETCH_2
 import com.trainer.modules.init.data.stretch.ShouldersStretchExercises.Companion.SHOULDERS_STRETCH_3
-import com.trainer.modules.training.StretchRoutine
-import com.trainer.modules.training.TrainingCategory.*
+import com.trainer.modules.training.coredata.TrainingCategory.*
+import com.trainer.modules.training.standard.StretchRoutine
 
 /**
  * Created by dariusz on 24/01/17.

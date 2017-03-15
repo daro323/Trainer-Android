@@ -1,7 +1,7 @@
 package com.trainer.commons
 
 import com.trainer.R
-import com.trainer.modules.training.ProgressStatus
+import com.trainer.modules.training.coredata.ProgressStatus
 
 /**
  * Created by dariusz on 12/01/17.

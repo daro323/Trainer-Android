@@ -4,6 +4,8 @@ import android.content.SharedPreferences
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.trainer.d2.scope.ApplicationScope
 import com.trainer.extensions.saveString
+import com.trainer.modules.training.coredata.TrainingPlan
+import com.trainer.modules.training.standard.StretchPlan
 import javax.inject.Inject
 
 /**

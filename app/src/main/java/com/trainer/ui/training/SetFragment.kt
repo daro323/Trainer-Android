@@ -12,13 +12,13 @@ import com.trainer.base.BaseFragment
 import com.trainer.d2.common.ActivityComponent
 import com.trainer.extensions.arg
 import com.trainer.extensions.reduceWithDefault
-import com.trainer.modules.training.ProgressStatus.COMPLETE
-import com.trainer.modules.training.Repetition
-import com.trainer.modules.training.Series.Set
 import com.trainer.modules.training.TrainingManager
-import com.trainer.modules.training.WeightType.BODY_WEIGHT
 import com.trainer.modules.training.WorkoutPresenter
 import com.trainer.modules.training.WorkoutPresenter.Companion.WEIGHT_NA_VALUE
+import com.trainer.modules.training.coredata.ProgressStatus.COMPLETE
+import com.trainer.modules.training.coredata.Repetition
+import com.trainer.modules.training.coredata.WeightType.BODY_WEIGHT
+import com.trainer.modules.training.standard.Set
 import eu.inmite.android.lib.validations.form.FormValidator
 import eu.inmite.android.lib.validations.form.annotations.NotEmpty
 import eu.inmite.android.lib.validations.form.callback.SimpleErrorPopupCallback

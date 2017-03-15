@@ -12,8 +12,13 @@ import com.trainer.modules.init.data.stretch.StretchInitData.Companion.BACK_DAY_
 import com.trainer.modules.init.data.stretch.StretchInitData.Companion.CHEST_DAY_STRETCH_ROUTINE
 import com.trainer.modules.init.data.stretch.StretchInitData.Companion.LEGS_DAY_STRETCH_ROUTINE
 import com.trainer.modules.init.data.stretch.StretchInitData.Companion.SHOULDERS_DAY_STRETCH_ROUTINE
-import com.trainer.modules.training.*
-import com.trainer.modules.training.TrainingCategory.*
+import com.trainer.modules.training.TrainingManager
+import com.trainer.modules.training.coredata.TrainingCategory
+import com.trainer.modules.training.coredata.TrainingCategory.*
+import com.trainer.modules.training.coredata.TrainingDay
+import com.trainer.modules.training.coredata.TrainingPlan
+import com.trainer.modules.training.standard.StretchPlan
+import com.trainer.modules.training.standard.StretchRoutine
 import javax.inject.Inject
 
 /**

@@ -1,10 +1,10 @@
 package com.trainer.modules.init.data.exercise
 
-import com.trainer.modules.training.Exercise
-import com.trainer.modules.training.ExerciseImageMap.*
-import com.trainer.modules.training.Series.Companion.createSet
-import com.trainer.modules.training.Series.SuperSet
-import com.trainer.modules.training.Workout
+import com.trainer.modules.training.coredata.Exercise
+import com.trainer.modules.training.coredata.Series.Companion.createSet
+import com.trainer.modules.training.coredata.Workout
+import com.trainer.modules.training.standard.ExerciseImageMap.*
+import com.trainer.modules.training.standard.SuperSet
 
 /**
  * Created by dariusz on 16/01/17.

@@ -11,19 +11,18 @@ import com.trainer.extensions.ioMain
 import com.trainer.extensions.setupFragment
 import com.trainer.extensions.startForResult
 import com.trainer.extensions.with
-import com.trainer.modules.training.Series
-import com.trainer.modules.training.Series.Set
-import com.trainer.modules.training.Series.SuperSet
 import com.trainer.modules.training.TrainingManager
-import com.trainer.modules.training.WorkoutEvent
-import com.trainer.modules.training.WorkoutEvent.*
 import com.trainer.modules.training.WorkoutPresenter
+import com.trainer.modules.training.coredata.Series
+import com.trainer.modules.training.coredata.WorkoutEvent
+import com.trainer.modules.training.coredata.WorkoutEvent.*
+import com.trainer.modules.training.standard.SuperSet
+import com.trainer.modules.training.standard.Set
 import com.trainer.ui.training.SetFragment.Companion.ARG_SET_ID
 import com.trainer.ui.training.model.SuperSetPagerAdapter
 import io.reactivex.disposables.Disposables
 import kotlinx.android.synthetic.main.activity_set_pager.*
 import javax.inject.Inject
-
 
 
 class SerieActivity : BaseActivity(R.layout.activity_set_pager) {

@@ -1,11 +1,12 @@
 package com.trainer.modules.init.data.exercise
 
-import com.trainer.modules.training.Exercise
-import com.trainer.modules.training.ExerciseImageMap.*
-import com.trainer.modules.training.Series.Companion.createSet
-import com.trainer.modules.training.Series.SuperSet
-import com.trainer.modules.training.WeightType.BODY_WEIGHT
-import com.trainer.modules.training.Workout
+import com.trainer.modules.training.coredata.Exercise
+import com.trainer.modules.training.coredata.Series.Companion.createSet
+import com.trainer.modules.training.coredata.WeightType.BODY_WEIGHT
+import com.trainer.modules.training.coredata.Workout
+import com.trainer.modules.training.standard.ExerciseImageMap
+import com.trainer.modules.training.standard.ExerciseImageMap.*
+import com.trainer.modules.training.standard.SuperSet
 
 /**
  * Created by dariusz on 16/01/17.
@@ -22,7 +23,7 @@ class ArmsExerciseInitData private constructor() {
     private val TRICEPS_DIPS = Exercise("Pompki na poręczach na triceps",
         arrayListOf("Łokcie blisko tułowia.",
             "Tułów i głowa prosto."),
-        CHEST_DIPS_IMAGE,
+        ExerciseImageMap.CHEST_DIPS_IMAGE,
         BODY_WEIGHT)
 
     private val SEATED_BARBELL_SHOULDER_PRESS = Exercise("Wyciskanie sztangi siedząc",

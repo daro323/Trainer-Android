@@ -16,11 +16,6 @@
 #   public *;
 #}
 
-# Data Model
--keep public class com.trainer.modules.training.** {
-   *;
-}
-
 # OkHttp
 -dontwarn okhttp3.**
 

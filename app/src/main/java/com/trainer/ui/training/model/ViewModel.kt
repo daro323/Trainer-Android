@@ -1,8 +1,8 @@
 package com.trainer.ui.training.model
 
 import android.support.annotation.DrawableRes
-import com.trainer.modules.training.ProgressStatus
-import com.trainer.modules.training.TrainingCategory
+import com.trainer.modules.training.coredata.ProgressStatus
+import com.trainer.modules.training.coredata.TrainingCategory
 
 /**
  * Created by dariusz on 06/01/17.

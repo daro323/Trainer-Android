@@ -1,12 +1,12 @@
 package com.trainer.modules.training
 
 import com.trainer.modules.rest.RestManager
-import com.trainer.modules.training.ProgressStatus.COMPLETE
-import com.trainer.modules.training.ProgressStatus.STARTED
-import com.trainer.modules.training.Series.Set
-import com.trainer.modules.training.Series.SuperSet
-import com.trainer.modules.training.WeightType.BODY_WEIGHT
-import com.trainer.modules.training.WorkoutEvent.*
+import com.trainer.modules.training.coredata.*
+import com.trainer.modules.training.coredata.ProgressStatus.COMPLETE
+import com.trainer.modules.training.coredata.ProgressStatus.STARTED
+import com.trainer.modules.training.coredata.WorkoutEvent.*
+import com.trainer.modules.training.standard.Set
+import com.trainer.modules.training.standard.SuperSet
 import io.reactivex.processors.BehaviorProcessor
 import javax.inject.Inject
 
@@ -71,7 +71,7 @@ class WorkoutPresenter @Inject constructor(val repo: TrainingRepository,
 
   fun saveSetResult(weight: Float, rep: Int) {
     val currentSet = getCurrentSet()
-    if (weight < 0 && currentSet.exercise.weightType != BODY_WEIGHT) throw IllegalArgumentException("Missing weight value! It's expected in saveSetResult for weight type= ${getCurrentSet().exercise.weightType}")
+    if (weight < 0 && currentSet.exercise.weightType != WeightType.BODY_WEIGHT) throw IllegalArgumentException("Missing weight value! It's expected in saveSetResult for weight type= ${getCurrentSet().exercise.weightType}")
 
     currentSet.progress.add(Repetition(weight, rep, getCurrentWeightType()))
     repo.saveTrainingPlan()

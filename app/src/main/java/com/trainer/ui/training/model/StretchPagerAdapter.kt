@@ -3,7 +3,7 @@ package com.trainer.ui.training.model
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentStatePagerAdapter
 import com.trainer.extensions.with
-import com.trainer.modules.training.StretchExercise
+import com.trainer.modules.training.standard.StretchExercise
 import com.trainer.ui.training.StretchFragment
 import com.trainer.ui.training.StretchFragment.Companion.ARG_STRETCH_EXERCISE_IDX
 import com.trainer.ui.training.StretchFragment.Companion.ARG_TRAINING_CATEGORY_ORDINAL
