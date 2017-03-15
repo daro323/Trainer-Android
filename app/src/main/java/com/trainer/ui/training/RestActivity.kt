@@ -77,7 +77,7 @@ class RestActivity : BaseActivity(R.layout.activity_rest) {
 
   private fun subscribeForRest() {
     restSubscription.dispose()
-    restSubscription = presenter.getRestEvents()
+    restSubscription = presenter.onRestEvent()
         .ioMain()
         .doOnSubscribe { progressView.max = presenter.getRestTime() }
         .subscribe { onRestEvent(it) }

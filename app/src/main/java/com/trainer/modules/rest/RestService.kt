@@ -77,7 +77,7 @@ class RestService : Service() {
     require(restSubscription.isDisposed) { "Subsequent call to start rest service!" }
 
     setWakeLockActive(true)
-    restSubscription = presenter.getRestEvents()
+    restSubscription = presenter.onRestEvent()
         .ioMain()
         .doOnSubscribe { notificationManager.showNotification(this) }
         .doOnDispose { notificationManager.hideNotification() }

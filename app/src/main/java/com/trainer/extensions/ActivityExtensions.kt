@@ -34,6 +34,24 @@ inline fun FragmentActivity.setupFragment(@IdRes containerId: Int, addToBackstac
   return fragment
 }
 
+inline fun FragmentActivity.setupReplaceFragment(@IdRes containerId: Int, addToBackstack: Boolean = false, fragmentCreate: () -> Fragment): Fragment {
+  val existingFragment = supportFragmentManager.findFragmentById(containerId)
+  val newFragment = fragmentCreate()
+  if (existingFragment == null) {
+    supportFragmentManager.beginTransaction().apply {
+      add(containerId, newFragment, if (addToBackstack) newFragment.javaClass.simpleName else null)
+      if (addToBackstack) addToBackStack(newFragment.javaClass.simpleName)
+    }
+  } else {
+    supportFragmentManager.beginTransaction().apply {
+      replace(containerId, newFragment, if (addToBackstack) newFragment.javaClass.simpleName else null)
+      if (addToBackstack) addToBackStack(newFragment.javaClass.simpleName)
+    }
+  }.commit()
+
+  return newFragment
+}
+
 inline fun <reified T : Service> Activity.startServiceWith(intentSetup: Intent.() -> Unit): Intent {
   val intent = Intent(this, T::class.java)
   startService(intent.apply { intentSetup() })

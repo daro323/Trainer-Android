@@ -16,7 +16,7 @@ data class Set constructor(val _id: String,
                            val seriesCount: Int,
                            val restTimeSec: Int,
                            var progress: MutableList<Repetition>,
-                           var lastProgress: List<Repetition>) : Series {
+                           var lastProgress: List<Repetition>) : Serie {
 
   override fun id() = _id
 
@@ -55,7 +55,7 @@ data class Set constructor(val _id: String,
 }
 
 @Keep
-class SuperSet(val setList: List<Set>) : CompositeSeries<Set>(setList)
+class SuperSet(val setList: List<Set>) : CompositeSerie<Set>(setList)
 
 @Keep
 data class StretchExercise private constructor(val id: String,

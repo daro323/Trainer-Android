@@ -4,24 +4,25 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View.GONE
 import com.trainer.R
 import com.trainer.base.BaseActivity
 import com.trainer.extensions.ioMain
-import com.trainer.extensions.setupFragment
+import com.trainer.extensions.setupReplaceFragment
 import com.trainer.extensions.startForResult
 import com.trainer.extensions.with
 import com.trainer.modules.training.TrainingManager
 import com.trainer.modules.training.WorkoutPresenter
-import com.trainer.modules.training.coredata.Series
+import com.trainer.modules.training.coredata.Serie
 import com.trainer.modules.training.coredata.WorkoutEvent
 import com.trainer.modules.training.coredata.WorkoutEvent.*
-import com.trainer.modules.training.standard.SuperSet
+import com.trainer.modules.training.cyclic.Cycle
 import com.trainer.modules.training.standard.Set
-import com.trainer.ui.training.SetFragment.Companion.ARG_SET_ID
-import com.trainer.ui.training.model.SuperSetPagerAdapter
+import com.trainer.modules.training.standard.SuperSet
+import com.trainer.ui.training.cyclic.CycleFragment
+import com.trainer.ui.training.standard.SetFragment
+import com.trainer.ui.training.standard.SetFragment.Companion.ARG_SET_ID
+import com.trainer.ui.training.standard.SuperSetFragment
 import io.reactivex.disposables.Disposables
-import kotlinx.android.synthetic.main.activity_set_pager.*
 import javax.inject.Inject
 
 
@@ -33,7 +34,6 @@ class SerieActivity : BaseActivity(R.layout.activity_set_pager) {
 
   @Inject lateinit var trainingManager: TrainingManager
   private val presenter: WorkoutPresenter by lazy { trainingManager.workoutPresenter ?: throw IllegalStateException("Current workout not set!") }  // call this after component.inject()
-  private lateinit var adapter: SuperSetPagerAdapter
   private var workoutEventsSubscription = Disposables.disposed()
 
   override fun onCreate(savedInstanceState: Bundle?) {
@@ -85,7 +85,6 @@ class SerieActivity : BaseActivity(R.layout.activity_set_pager) {
   private fun handleWorkoutEvent(workoutEvent: WorkoutEvent) {
     when(workoutEvent) {
       REST -> startForResult<RestActivity>(REST_REQUEST_CODE)
-      DO_NEXT_SERIE -> goToNextSerie()
       SERIE_COMPLETED -> {
         presenter.serieCompleteHandled()
         finish()
@@ -94,33 +93,27 @@ class SerieActivity : BaseActivity(R.layout.activity_set_pager) {
     }
   }
 
-  private fun goToNextSerie() {
-    val currentSerie = presenter.getCurrentSerie()
-    if(currentSerie is Set) return   // Ignore
-
-    val currentSet = presenter.getCurrentSet()
-    superSetPager.currentItem = (currentSerie as SuperSet).setList.indexOf(currentSet)
-  }
-
-  private fun showSerie(serie: Series) {
+  private fun showSerie(serie: Serie) {
     when(serie) {
       is Set -> { showSerieAsSet(serie) }
       is SuperSet -> { showSerieAsSuperSet(serie) }
+      is Cycle -> { showSerieAsCycle(serie) }
       else -> throw UnsupportedOperationException("Can't show Serie for unsupported type= ${serie.javaClass}")
     }
   }
 
   private fun showSerieAsSet(set: Set) {
     title = getString(R.string.set)
-    superSetPager.visibility = GONE
-    setupFragment(R.id.setContainer) { SetFragment().with(ARG_SET_ID to set.id()) }
+    setupReplaceFragment(R.id.serieContainer) { SetFragment().with(ARG_SET_ID to set.id()) }
   }
 
   private fun showSerieAsSuperSet(superSet: SuperSet) {
     title = getString(R.string.super_set)
-    setContainer.visibility = GONE
-    adapter = SuperSetPagerAdapter(supportFragmentManager, superSet.setList)
-    superSetPager.adapter = adapter
-    goToNextSerie()
+    setupReplaceFragment(R.id.serieContainer) { SuperSetFragment() }
+  }
+
+  private fun showSerieAsCycle(cycle: Cycle) {
+    title = getString(R.string.cycle)
+    setupReplaceFragment(R.id.serieContainer) { CycleFragment() }
   }
 }

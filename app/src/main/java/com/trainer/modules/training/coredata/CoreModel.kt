@@ -36,7 +36,7 @@ enum class TrainingCategory {
 @Keep
 enum class WorkoutEvent {
   REST,
-  DO_NEXT_SERIE,
+  DO_NEXT,          // do whatever is next either it's next serie or something within current serie (like Set in SuperSet)
   SERIE_COMPLETED,
   WORKOUT_COMPLETED
 }
@@ -46,6 +46,13 @@ enum class ProgressStatus {
   NEW,
   STARTED,
   COMPLETE
+}
+
+class CoreConstants private constructor() {
+  companion object {
+    const val WEIGHT_VALUE_NOT_APPLICABLE = -1f   // value for weight which is considered not applicable
+    const val VALUE_NOT_SET = -1
+  }
 }
 
 @Keep
@@ -76,7 +83,7 @@ data class TrainingDay(val category: TrainingCategory,
 }
 
 @Keep
-data class Workout(val series: List<Series>) {
+data class Workout(val series: List<Serie>) {
   fun status() = when {
     series.all { it.status() == NEW } -> NEW
     series.all { it.status() == COMPLETE } -> COMPLETE
@@ -111,7 +118,7 @@ data class Repetition(val weight: Float,
     JsonSubTypes.Type(value = Set::class, name = "Set"),
     JsonSubTypes.Type(value = SuperSet::class, name = "SuperSet"),
     JsonSubTypes.Type(value = Cycle::class, name = "Cycle"))
-interface Series {
+interface Serie {
   fun id(): String
   fun status(): ProgressStatus
   fun skipRemaining()
@@ -140,9 +147,9 @@ interface Series {
 }
 
 @Keep
-abstract class CompositeSeries<out T : Series> constructor(val seriesList: List<T>) : Series {
+abstract class CompositeSerie<out T : Serie> constructor(val seriesList: List<T>) : Serie {
   override fun id() = seriesList
-      .map(Series::id)
+      .map(Serie::id)
       .reduce { acc, item -> "$acc$item" }
 
   override fun status() = when {
@@ -152,9 +159,9 @@ abstract class CompositeSeries<out T : Series> constructor(val seriesList: List<
     else -> throw IllegalStateException("Can't determine status of SuperSet= $this")
   }
 
-  override fun skipRemaining() = seriesList.forEach(Series::skipRemaining)
+  override fun skipRemaining() = seriesList.forEach(Serie::skipRemaining)
 
-  override fun complete() = seriesList.forEach(Series::complete)
+  override fun complete() = seriesList.forEach(Serie::complete)
 
-  override fun abort() = seriesList.forEach(Series::abort)
+  override fun abort() = seriesList.forEach(Serie::abort)
 }

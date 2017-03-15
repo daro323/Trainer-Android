@@ -1,4 +1,4 @@
-package com.trainer.ui.training
+package com.trainer.ui.training.standard
 
 import android.content.Context
 import android.view.View
@@ -38,7 +38,7 @@ class SetFragment : BaseFragment(R.layout.fragment_set) {
   private val onInputFocusListener = { view: View, hasFocus: Boolean ->
     if (hasFocus) {
       (view as EditText).apply {
-        if (activity != null && this != null) this.postDelayed({ setText("") }, 100)
+        if (activity != null) this.postDelayed({ setText("") }, 100)
       }
 
       scrollView.postDelayed({

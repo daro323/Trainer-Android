@@ -4,8 +4,8 @@ import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentStatePagerAdapter
 import com.trainer.extensions.with
 import com.trainer.modules.training.standard.Set
-import com.trainer.ui.training.SetFragment
-import com.trainer.ui.training.SetFragment.Companion.ARG_SET_ID
+import com.trainer.ui.training.standard.SetFragment
+import com.trainer.ui.training.standard.SetFragment.Companion.ARG_SET_ID
 
 /**
  * Created by dariusz on 09/01/17.

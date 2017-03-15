@@ -3,7 +3,7 @@ package com.trainer.modules.training.cyclic
 import android.support.annotation.Keep
 import com.trainer.modules.training.coredata.Exercise
 import com.trainer.modules.training.coredata.ProgressStatus.*
-import com.trainer.modules.training.coredata.Series
+import com.trainer.modules.training.coredata.Serie
 
 /**
  * Created by dariusz on 15/03/17.
@@ -14,7 +14,7 @@ data class Cycle(val _id: String,
             val totalCycles: Int,
             var cyclesCount: Int,
             val lastCyclesCount: Int,
-            val restTime: Int) : Series {
+            val restTime: Int) : Serie {
 
   override fun id() = _id
 

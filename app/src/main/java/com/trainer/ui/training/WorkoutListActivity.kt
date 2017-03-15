@@ -18,7 +18,7 @@ import com.trainer.modules.export.ExportManager
 import com.trainer.modules.training.TrainingManager
 import com.trainer.modules.training.WorkoutPresenter
 import com.trainer.modules.training.coredata.ProgressStatus.STARTED
-import com.trainer.modules.training.coredata.Series
+import com.trainer.modules.training.coredata.Serie
 import com.trainer.modules.training.coredata.WorkoutEvent.WORKOUT_COMPLETED
 import com.trainer.modules.training.standard.Set
 import com.trainer.modules.training.standard.SuperSet
@@ -134,7 +134,7 @@ class WorkoutListActivity : BaseActivity(R.layout.activity_list) {
     finish()
   }
 
-  private fun showWorkoutList(list: List<Series>) {
+  private fun showWorkoutList(list: List<Serie>) {
     val result = ArrayList<Any>(list.size)
 
     list.forEach { serie ->

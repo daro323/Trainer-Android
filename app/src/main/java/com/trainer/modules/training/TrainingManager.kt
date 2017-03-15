@@ -2,7 +2,7 @@ package com.trainer.modules.training
 
 import com.trainer.d2.scope.ApplicationScope
 import com.trainer.modules.training.coredata.ProgressStatus.NEW
-import com.trainer.modules.training.coredata.Series
+import com.trainer.modules.training.coredata.Serie
 import com.trainer.modules.training.coredata.TrainingCategory
 import com.trainer.modules.training.coredata.TrainingPlan
 import com.trainer.modules.training.standard.StretchPlan
@@ -44,7 +44,7 @@ class TrainingManager @Inject constructor(val repo: TrainingRepository,
     workoutPresenter?.apply {
       trainingDay.workout.series
           .filter { it.status() != NEW }
-          .forEach(Series::abort)
+          .forEach(Serie::abort)
 
       repo.saveTrainingPlan()
     }
@@ -56,7 +56,7 @@ class TrainingManager @Inject constructor(val repo: TrainingRepository,
 
     workoutPresenter?.apply {
       // Clean up the TrainingDay
-      getWorkoutList().forEach(Series::complete)
+      getWorkoutList().forEach(Serie::complete)
 
       // Increase totalDone count
       trainingDay.updateAsDone()
