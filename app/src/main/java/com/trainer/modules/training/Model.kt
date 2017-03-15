@@ -30,7 +30,7 @@ enum class TrainingCategory {
 
 enum class WorkoutEvent {
   REST,
-  DO_NEXT_SET,
+  DO_NEXT_SERIE,
   SERIE_COMPLETED,
   WORKOUT_COMPLETED
 }
@@ -115,9 +115,11 @@ interface Series {
                   lastProgress: List<Repetition> = (1..seriesCount).map { emptyRepetition(exercise) }.toList()) = Set((++instanceCounter).toString(), exercise, guidelines, seriesCount, restTimeSec, progress, lastProgress)
 
     /* Automatically adds IDs as instance count */
-    fun createCyclicSet(exercise: Exercise,
-                        restTimeSec: Int,
-                        durationTimeSec: Int) = CyclicSet((++instanceCounter).toString(), exercise, restTimeSec, durationTimeSec)
+    fun createCycle(cycleList: List<CyclicRoutine>,
+                    totalCycles: Int,
+                    restTime: Int,
+                    cyclesCount: Int = -1,
+                    lastCyclesCount: Int = 0) = Cycle((++instanceCounter).toString(), cycleList, totalCycles, cyclesCount, lastCyclesCount, restTime)
 
     private fun emptyRepetition(forExercise: Exercise) = Repetition(0f, 0, forExercise.weightType)
   }
@@ -166,33 +168,6 @@ interface Series {
     }
   }
 
-  data class CyclicSet constructor(val _id: String,
-                                   val exercise: Exercise,
-                                   val restTimeSec: Int,
-                                   val durationTimeSec: Int,
-                                   var countDownTime: Int = durationTimeSec) : Series {
-    override fun id() = _id
-
-    override fun status() = when {
-      countDownTime == durationTimeSec -> NEW
-      countDownTime < durationTimeSec -> STARTED
-      countDownTime == 0 -> COMPLETE
-      else -> throw IllegalStateException("Unsupported countDownTime value= $countDownTime")
-    }
-
-    override fun skipRemaining() {
-      countDownTime = 0
-    }
-
-    override fun complete() {
-      countDownTime = 0
-    }
-
-    override fun abort() {
-      countDownTime = 0
-    }
-  }
-
   abstract class CompositeSeries<out T : Series> constructor(val seriesList: List<T>) : Series {
     override fun id() = seriesList
         .map(Series::id)
@@ -218,15 +193,41 @@ interface Series {
 
   class SuperSet(val setList: List<Set>) : CompositeSeries<Set>(setList)
 
-  class Cycle(cycleList: List<CyclicSet>,
-              val cyclesCount: Int,
-              var cyclesPerformed: Int,
-              val lastCyclesPerformed: Int,
-              val restTime: Int) : CompositeSeries<CyclicSet>(cycleList) {
+  class Cycle(val _id: String,
+              val cycleList: List<CyclicRoutine>,
+              val totalCycles: Int,
+              var cyclesCount: Int,
+              val lastCyclesCount: Int,
+              val restTime: Int) : Series {
+
+    override fun id() = _id
+
+    override fun status() = when {
+      cyclesCount == -1 -> NEW
+      cyclesCount < totalCycles -> STARTED
+      cyclesCount == totalCycles -> COMPLETE
+      else -> throw IllegalStateException("Invalid cycles count= $cyclesCount (totalCycles set to $totalCycles)")
+    }
+
+    override fun skipRemaining() { /* Do nothing and keep the current cyclesCount */
+    }
+
+    override fun complete() {
+      require(cyclesCount == totalCycles) { "Attempt to mark Cycle as complete when there is still some missing progress!" }
+    }
 
     override fun abort() {
-      super.abort()
-      cyclesPerformed = 0
+      cyclesCount = -1
+    }
+
+    override fun equals(other: Any?) = other is Cycle && other.id() == this.id()
+    override fun hashCode() = _id.hashCode().run {
+      var result = this + cycleList.hashCode()
+      result = 31 * result + totalCycles
+      result = 31 * result + cyclesCount
+      result = 31 * result + lastCyclesCount
+      result = 31 * result + restTime
+      result
     }
   }
 }
@@ -254,6 +255,10 @@ data class StretchPlan(val stretchRoutines: List<StretchRoutine>) {
   fun getStretchRoutine(forCategory: TrainingCategory) = stretchRoutines.find { it.category == forCategory }
 }
 
+data class CyclicRoutine constructor(val exercise: Exercise,
+                                     val restTimeSec: Int,
+                                     val durationTimeSec: Int,
+                                     var countDownTime: Int = durationTimeSec)
 
 enum class ExerciseImageMap(@DrawableRes val resource: Int) {
   // CHEST

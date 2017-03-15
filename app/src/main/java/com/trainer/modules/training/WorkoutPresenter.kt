@@ -94,7 +94,7 @@ class WorkoutPresenter @Inject constructor(val repo: TrainingRepository,
     if (getWorkoutStatus() == COMPLETE) {
       workoutEventsProcessor.onNext(WORKOUT_COMPLETED)
     } else {
-      workoutEventsProcessor.onNext(WorkoutEvent.DO_NEXT_SET)
+      workoutEventsProcessor.onNext(WorkoutEvent.DO_NEXT_SERIE)
     }
   }
 
@@ -145,7 +145,7 @@ class WorkoutPresenter @Inject constructor(val repo: TrainingRepository,
       workoutEventsProcessor.onNext(SERIE_COMPLETED)
     } else {
       refreshCurrentSetIdx()
-      workoutEventsProcessor.onNext(WorkoutEvent.DO_NEXT_SET)
+      workoutEventsProcessor.onNext(WorkoutEvent.DO_NEXT_SERIE)
     }
   }
 

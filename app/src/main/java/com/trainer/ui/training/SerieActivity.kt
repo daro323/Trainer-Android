@@ -86,7 +86,7 @@ class SerieActivity : BaseActivity(R.layout.activity_set_pager) {
   private fun handleWorkoutEvent(workoutEvent: WorkoutEvent) {
     when(workoutEvent) {
       REST -> startForResult<RestActivity>(REST_REQUEST_CODE)
-      DO_NEXT_SET -> goToNextSet()
+      DO_NEXT_SERIE -> goToNextSerie()
       SERIE_COMPLETED -> {
         presenter.serieCompleteHandled()
         finish()
@@ -95,7 +95,7 @@ class SerieActivity : BaseActivity(R.layout.activity_set_pager) {
     }
   }
 
-  private fun goToNextSet() {
+  private fun goToNextSerie() {
     val currentSerie = presenter.getCurrentSerie()
     if(currentSerie is Set) return   // Ignore
 
@@ -122,6 +122,6 @@ class SerieActivity : BaseActivity(R.layout.activity_set_pager) {
     setContainer.visibility = GONE
     adapter = SuperSetPagerAdapter(supportFragmentManager, superSet.setList)
     superSetPager.adapter = adapter
-    goToNextSet()
+    goToNextSerie()
   }
 }
