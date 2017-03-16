@@ -1,22 +1,27 @@
 package com.trainer.modules.training.cyclic
 
 import android.support.annotation.Keep
-import com.trainer.modules.training.coredata.Exercise
-import com.trainer.modules.training.coredata.ProgressStatus.*
-import com.trainer.modules.training.coredata.Serie
+import com.trainer.core.training.model.Exercise
+import com.trainer.core.training.model.ProgressStatus.*
+import com.trainer.core.training.model.Serie
+import com.trainer.core.training.model.SerieType
+import com.trainer.core.training.model.SerieType.CYCLE
 
 /**
  * Created by dariusz on 15/03/17.
  */
 @Keep
-data class Cycle(val _id: String,
-            val cycleList: List<CyclicRoutine>,
-            val totalCycles: Int,
-            var cyclesCount: Int,
-            val lastCyclesCount: Int,
-            val restTime: Int) : Serie {
+data class Cycle(private val _id: String,
+                 val cycleList: List<CyclicRoutine>,
+                 val totalCycles: Int,
+                 var cyclesCount: Int,
+                 val lastCyclesCount: Int,
+                 val restTime: Int,
+                 private val type: SerieType = CYCLE) : Serie {
 
   override fun id() = _id
+
+  override fun type() = type
 
   override fun status() = when {
     cyclesCount == -1 -> NEW

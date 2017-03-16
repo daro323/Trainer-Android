@@ -9,8 +9,8 @@ import android.util.Log
 import com.trainer.base.BaseApplication
 import com.trainer.extensions.ioMain
 import com.trainer.modules.rest.RestState.FINISHED
-import com.trainer.modules.training.TrainingManager
-import com.trainer.modules.training.WorkoutPresenter
+import com.trainer.core.training.business.TrainingManager
+import com.trainer.core.training.business.WorkoutPresenter
 import io.reactivex.disposables.Disposables
 import javax.inject.Inject
 

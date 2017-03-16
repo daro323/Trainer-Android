@@ -1,10 +1,11 @@
-package com.trainer.modules.training
+package com.trainer.core.training.business
 
 import android.content.SharedPreferences
 import com.fasterxml.jackson.databind.ObjectMapper
+import com.trainer.core.training.model.TrainingDay
+import com.trainer.core.training.model.TrainingPlan
 import com.trainer.d2.scope.ApplicationScope
 import com.trainer.extensions.saveString
-import com.trainer.modules.training.coredata.TrainingPlan
 import com.trainer.modules.training.standard.StretchPlan
 import javax.inject.Inject
 
@@ -18,7 +19,7 @@ class TrainingRepository @Inject constructor(val sharedPrefs: SharedPreferences,
   companion object {
     const private val TRAINING_PLAN_KEY = "TRAINING_PLAN_KEY"
     const private val STRETCH_PLAN_KEY = "STRETCH_PLAN_KEY"
-    private val TRAINING_PLAN_NOT_INITIALIZED = TrainingPlan("Not initialized", emptyList())
+    private val TRAINING_PLAN_NOT_INITIALIZED = TrainingPlan("Not initialized", mutableListOf())
     private val STRETCH_PLAN_NOT_INITIALIZED = StretchPlan(emptyList())
   }
 
@@ -41,6 +42,15 @@ class TrainingRepository @Inject constructor(val sharedPrefs: SharedPreferences,
   fun setNewTrainingPlan(newPlan: TrainingPlan) {
     sharedPrefs.saveString(TRAINING_PLAN_KEY, mapper.writeValueAsString(newPlan))
     trainingPlan = newPlan
+  }
+
+  fun saveTrainingDay(day: TrainingDay) {
+    require(trainingPlan != TRAINING_PLAN_NOT_INITIALIZED) { "Attempt to save uninitialized plan's progress!" }
+
+    trainingPlan.trainingDays.indexOf(day).apply {
+      trainingPlan.trainingDays[this] = day
+    }
+    saveTrainingPlan()
   }
 
   /**

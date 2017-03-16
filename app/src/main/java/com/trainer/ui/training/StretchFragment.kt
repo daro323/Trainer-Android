@@ -6,8 +6,8 @@ import com.trainer.base.BaseFragment
 import com.trainer.d2.common.ActivityComponent
 import com.trainer.extensions.arg
 import com.trainer.extensions.reduceWithDefault
-import com.trainer.modules.training.TrainingManager
-import com.trainer.modules.training.coredata.TrainingCategory
+import com.trainer.core.training.business.TrainingManager
+import com.trainer.core.training.model.TrainingCategory
 import kotlinx.android.synthetic.main.fragment_stretch.*
 import javax.inject.Inject
 

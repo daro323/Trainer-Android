@@ -9,8 +9,8 @@ import com.trainer.extensions.ioMain
 import com.trainer.modules.rest.RestEvent
 import com.trainer.modules.rest.RestService
 import com.trainer.modules.rest.RestState.*
-import com.trainer.modules.training.TrainingManager
-import com.trainer.modules.training.WorkoutPresenter
+import com.trainer.core.training.business.TrainingManager
+import com.trainer.core.training.business.WorkoutPresenter
 import io.reactivex.disposables.Disposables
 import kotlinx.android.synthetic.main.activity_rest.*
 import javax.inject.Inject

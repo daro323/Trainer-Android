@@ -10,11 +10,11 @@ import com.trainer.extensions.ioMain
 import com.trainer.extensions.setupReplaceFragment
 import com.trainer.extensions.startForResult
 import com.trainer.extensions.with
-import com.trainer.modules.training.TrainingManager
-import com.trainer.modules.training.WorkoutPresenter
-import com.trainer.modules.training.coredata.Serie
-import com.trainer.modules.training.coredata.WorkoutEvent
-import com.trainer.modules.training.coredata.WorkoutEvent.*
+import com.trainer.core.training.business.TrainingManager
+import com.trainer.core.training.business.WorkoutPresenter
+import com.trainer.core.training.model.Serie
+import com.trainer.core.training.model.WorkoutEvent
+import com.trainer.core.training.model.WorkoutEvent.*
 import com.trainer.modules.training.cyclic.Cycle
 import com.trainer.modules.training.standard.Set
 import com.trainer.modules.training.standard.SuperSet
@@ -26,7 +26,7 @@ import io.reactivex.disposables.Disposables
 import javax.inject.Inject
 
 
-class SerieActivity : BaseActivity(R.layout.activity_set_pager) {
+class SerieActivity : BaseActivity(R.layout.activity_serie) {
 
   companion object {
     const private val REST_REQUEST_CODE = 666

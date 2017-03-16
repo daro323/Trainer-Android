@@ -3,6 +3,8 @@ package com.trainer.base
 import android.app.Application
 import android.content.Context
 import com.jakewharton.threetenabp.AndroidThreeTen
+import com.trainer.BuildConfig
+import com.trainer.commons.Lg
 import com.trainer.d2.common.ActivityComponent
 import com.trainer.d2.common.ActivityModule
 import com.trainer.d2.common.AppComponent
@@ -25,6 +27,7 @@ abstract class BaseApplication : Application() {
 
   override fun onCreate() {
     super.onCreate()
+    Lg.configure(BuildConfig.DEBUG, BuildConfig.DEBUG, 0)
     initDagger2()
     AndroidThreeTen.init(this)
   }

@@ -1,15 +1,17 @@
-package com.trainer.modules.training.coredata
+package com.trainer.core.training.model
 
 import android.support.annotation.Keep
+import android.support.annotation.Nullable
 import com.fasterxml.jackson.annotation.JsonSubTypes
 import com.fasterxml.jackson.annotation.JsonTypeInfo
+import com.trainer.core.training.model.ProgressStatus.*
+import com.trainer.core.training.model.WeightType.BODY_WEIGHT
+import com.trainer.core.training.model.WeightType.KG
 import com.trainer.extensions.daysSince
-import com.trainer.modules.training.coredata.ProgressStatus.*
-import com.trainer.modules.training.coredata.WeightType.BODY_WEIGHT
-import com.trainer.modules.training.coredata.WeightType.KG
+import com.trainer.modules.init.ExerciseImageMap
+import com.trainer.modules.init.ExerciseImageMap.DEFAULT_IMAGE
 import com.trainer.modules.training.cyclic.Cycle
 import com.trainer.modules.training.cyclic.CyclicRoutine
-import com.trainer.modules.training.standard.ExerciseImageMap
 import com.trainer.modules.training.standard.Set
 import com.trainer.modules.training.standard.SuperSet
 import org.threeten.bp.LocalDate
@@ -19,13 +21,20 @@ import org.threeten.bp.format.DateTimeFormatter
  * Created by dariusz on 15/03/17.
  */
 @Keep
+enum class SerieType {    // Add new serie types here
+  SET,
+  SUPER_SET,
+  CYCLE
+}
+
+@Keep
 enum class WeightType {
   KG,
   BODY_WEIGHT   // For this the weight value is not applicable
 }
 
 @Keep
-enum class TrainingCategory {
+enum class TrainingCategory {   // TODO: Move this to a specific training plan
   CHEST,
   BACK,
   SHOULDERS,
@@ -57,13 +66,13 @@ class CoreConstants private constructor() {
 
 @Keep
 data class TrainingPlan(val name: String,
-                        val trainingDays: List<TrainingDay>) {
+                        val trainingDays: MutableList<TrainingDay>) {
 
   fun getTrainingDay(forCategory: TrainingCategory) = trainingDays.find { it.category == forCategory }
 }
 
 @Keep
-data class TrainingDay(val category: TrainingCategory,
+data class TrainingDay(val category: TrainingCategory,      // category should be unique within a training plan
                        val workout: Workout,
                        private var totalDone: Int = 0,
                        private var lastTrainedDate: String? = null) {
@@ -80,22 +89,34 @@ data class TrainingDay(val category: TrainingCategory,
   fun getTotalDone() = totalDone
 
   fun trainedDaysAgo() = LocalDate.now().daysSince(lastTrainedDate?.run { LocalDate.parse(this, DATE_FORMATTER) } ?: LocalDate.now()).toInt()
+
+  override fun equals(other: Any?) = other is TrainingDay && other.category == category
+
+  override fun hashCode() = category.hashCode().run {
+    var result = 31 * this + workout.hashCode()
+    result = 31 * result + totalDone
+    result = 31 * result + (lastTrainedDate?.hashCode() ?: 0)
+    result
+  }
 }
 
 @Keep
-data class Workout(val series: List<Serie>) {
+data class Workout(val series: MutableList<Serie>) {
   fun status() = when {
     series.all { it.status() == NEW } -> NEW
     series.all { it.status() == COMPLETE } -> COMPLETE
     series.any { it.status() == STARTED || it.status() == COMPLETE } -> STARTED
     else -> throw IllegalStateException("Can't determine status of Workout= $this")
   }
+
+  @Nullable
+  fun getSerie(id: String) = series.find { it.id() == id }
 }
 
 @Keep
 data class Exercise(val name: String,
                     val comments: List<String> = emptyList(),
-                    val imageInfo: ExerciseImageMap = ExerciseImageMap.DEFAULT_IMAGE,
+                    val imageInfo: ExerciseImageMap = DEFAULT_IMAGE,
                     val weightType: WeightType = KG) {
 
   fun imageResource() = imageInfo.resource
@@ -124,6 +145,7 @@ interface Serie {
   fun skipRemaining()
   fun complete()
   fun abort()
+  fun type(): SerieType
 
   companion object {
     var instanceCounter: Int = 0

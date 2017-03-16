@@ -15,11 +15,11 @@ import com.trainer.commons.typedviewholder.registerHolder
 import com.trainer.extensions.ioMain
 import com.trainer.extensions.start
 import com.trainer.modules.export.ExportManager
-import com.trainer.modules.training.TrainingManager
-import com.trainer.modules.training.WorkoutPresenter
-import com.trainer.modules.training.coredata.ProgressStatus.STARTED
-import com.trainer.modules.training.coredata.Serie
-import com.trainer.modules.training.coredata.WorkoutEvent.WORKOUT_COMPLETED
+import com.trainer.core.training.business.TrainingManager
+import com.trainer.core.training.business.WorkoutPresenter
+import com.trainer.core.training.model.ProgressStatus.STARTED
+import com.trainer.core.training.model.Serie
+import com.trainer.core.training.model.WorkoutEvent.WORKOUT_COMPLETED
 import com.trainer.modules.training.standard.Set
 import com.trainer.modules.training.standard.SuperSet
 import com.trainer.ui.training.model.SetItem
@@ -44,7 +44,7 @@ class WorkoutListActivity : BaseActivity(R.layout.activity_list) {
   private val typedAdapter = TypedViewHolderAdapter.Builder<Any>().apply {
     registerHolder(R.layout.super_set_container_item) { model: SuperSetItem ->
       itemView.apply {
-        superSetItemContainer.setOnClickListener { openSerie(model) }
+        superSetItemContainer.setOnClickListener { openSerie(model.id) }
         require(model.imageResList.size == model.namesList.size) { "Super set adapter item invalid - list of images is not the same size as list of names!" }
         model.imageResList.forEachIndexed { i, imageRes ->
           superSetItemContainer.addView(createSetView(LayoutInflater.from(context), imageRes, model.namesList[i], i == model.imageResList.lastIndex, superSetItemContainer))
@@ -55,7 +55,7 @@ class WorkoutListActivity : BaseActivity(R.layout.activity_list) {
 
     registerHolder(R.layout.set_item) { model: SetItem ->
       itemView.apply {
-        setItemContentContainer.setOnClickListener { openSerie(model) }
+        setItemContentContainer.setOnClickListener { openSerie(model.id) }
 
         setItemName.text = model.name
         setItemImage.setImageResource(model.imageRes)
@@ -140,7 +140,7 @@ class WorkoutListActivity : BaseActivity(R.layout.activity_list) {
     list.forEach { serie ->
       when (serie) {
         is SuperSet -> result.add(createSuperSetItem(serie))
-        is Set -> result.add(SetItem(serie.exercise.imageResource(), serie.exercise.name, serie.status()))
+        is Set -> result.add(SetItem(serie.id(), serie.exercise.imageResource(), serie.exercise.name, serie.status()))
       }
     }
     typedAdapter.data = result
@@ -156,11 +156,11 @@ class WorkoutListActivity : BaseActivity(R.layout.activity_list) {
           imageResList.add(exercise.imageResource())
           namesList.add(exercise.name)
         }
-    return SuperSetItem(imageResList, namesList, superSet.status())
+    return SuperSetItem(superSet.id(), imageResList, namesList, superSet.status())
   }
 
-  private fun openSerie(model: Any) {
-    presenter.selectSerie(typedAdapter.data.indexOf(model))
+  private fun openSerie(serieId: String) {
+    presenter.selectSerie(serieId)
     start<SerieActivity>()
   }
 
