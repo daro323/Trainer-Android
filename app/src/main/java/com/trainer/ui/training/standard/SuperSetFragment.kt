@@ -1,5 +1,7 @@
 package com.trainer.ui.training.standard
 
+import android.os.Bundle
+import android.view.View
 import com.trainer.R
 import com.trainer.base.BaseFragment
 import com.trainer.core.training.business.TrainingManager
@@ -30,10 +32,19 @@ class SuperSetFragment : BaseFragment(R.layout.fragment_pager) {
     component.inject(this)
   }
 
+  override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    super.onViewCreated(view, savedInstanceState)
+    initialize()
+  }
+
   override fun onStart() {
     super.onStart()
-    initialize()
     subscribeForWorkoutEvents()
+  }
+
+  override fun onStop() {
+    workoutEventsSubscription.dispose()
+    super.onStop()
   }
 
   private fun initialize() {

@@ -30,6 +30,7 @@ class StandardPresenterHelper @Inject constructor() : WorkoutPresenterHelper {
     require(serie is Set || serie is SuperSet) { "Unsupported Serie type= ${serie.javaClass.name}" }
     this.serie = serie
     this.callback = callback
+    if (serie.status() != COMPLETE) refreshCurrentSetIdx() else currentSetIdx = DEFAULT_SET_INDEX
   }
 
   override fun getRestTime() = getCurrentSet().restTimeSec
