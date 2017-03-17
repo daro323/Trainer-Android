@@ -54,7 +54,7 @@ class WorkoutPresenter @Inject constructor(val repo: TrainingRepository,
       currentSerieIdx = trainingDay.workout.series.indexOf(this)
     } ?: throw IllegalArgumentException("Couldn't select serie of id= $id (doesn't exist in current workout)")
 
-    helper = helperFactory.getHelperFor(serie)
+    helper = helperFactory.getHelperFor(serie, this)
   }
 
   fun skipSerie() {

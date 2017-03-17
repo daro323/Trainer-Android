@@ -22,15 +22,7 @@ class CyclicPresenterHelper @Inject constructor() : WorkoutPresenterHelper {
     TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
   }
 
-  override fun getCurrentSerie(): Serie {
-    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-  }
-
   override fun onSerieSelected(serieId: String) {
-    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-  }
-
-  override fun determineNextStep() {
     TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
   }
 }

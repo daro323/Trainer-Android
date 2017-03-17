@@ -58,7 +58,7 @@ class DataInitializer @Inject constructor(val trainingManager: TrainingManager) 
 
   private fun provideTrainingPlan(): TrainingPlan {
     val initTrainingDays = TrainingCategory.values().flatMap { category -> listOf(provideTrainingDay(category)) }
-    return TrainingPlan(INIT_WORKOUT_PLAN_NAME, initTrainingDays)
+    return TrainingPlan(INIT_WORKOUT_PLAN_NAME, initTrainingDays.toMutableList())
   }
 
   private fun provideTrainingDay(category: TrainingCategory): TrainingDay {

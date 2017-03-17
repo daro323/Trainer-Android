@@ -50,7 +50,11 @@ class StandardPresenterHelper @Inject constructor() : WorkoutPresenterHelper {
         DO_NEXT
       }
 
-  fun getSet(id: String): Set = (serie as SuperSet).setList.find { it.id() == id } as Set
+  fun getSet(id: String): Set = when (serie) {
+    is Set -> (serie as Set).apply { if (id() != id) throw IllegalArgumentException("Couldn't find set for ID= $id") }
+    is SuperSet -> (serie as SuperSet).run { setList.find { it.id() == id } ?: throw IllegalArgumentException("Couldn't find set for ID= $id") }
+    else -> throw IllegalStateException("Helper initialized with unsupported serie type= ${serie.type()}!")
+  }
 
   fun isCurrentSet(set: Set) = when (serie) {
     is Set -> serie == set
