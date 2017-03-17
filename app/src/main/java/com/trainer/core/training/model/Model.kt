@@ -45,7 +45,7 @@ enum class TrainingCategory {   // TODO: Move this to a specific training plan
 @Keep
 enum class WorkoutEvent {
   REST,
-  DO_NEXT,          // do whatever is next either it's next serie or something within current serie (like Set in SuperSet)
+  DO_NEXT,          // do whatever is next to complete current serie (either it's next serie or something within current serie, like Set in SuperSet)
   SERIE_COMPLETED,
   WORKOUT_COMPLETED
 }

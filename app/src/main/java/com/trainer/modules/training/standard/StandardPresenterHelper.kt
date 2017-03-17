@@ -17,6 +17,7 @@ import javax.inject.Inject
  * Created by dariusz on 15/03/17.
  */
 class StandardPresenterHelper @Inject constructor() : WorkoutPresenterHelper {
+
   private lateinit var serie: Serie
   private lateinit var callback: HelperCallback
   private var currentSetIdx = VALUE_NOT_SET
@@ -32,6 +33,8 @@ class StandardPresenterHelper @Inject constructor() : WorkoutPresenterHelper {
   }
 
   override fun getRestTime() = getCurrentSet().restTimeSec
+
+  override fun getSerie() = serie
 
   override fun determineNextStep(workoutStatus: ProgressStatus) =
       if (workoutStatus == COMPLETE) {
@@ -66,7 +69,7 @@ class StandardPresenterHelper @Inject constructor() : WorkoutPresenterHelper {
     callback.onSaveSerie(serie)
   }
 
-  private fun getCurrentSet() = when (serie) {
+  fun getCurrentSet() = when (serie) {
     is Set -> serie as Set
     is SuperSet -> (serie as SuperSet).setList[currentSetIdx]
     else -> throw IllegalStateException("Helper initialized with unsupported serie type= ${serie.type()}!")

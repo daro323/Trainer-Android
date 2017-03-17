@@ -21,4 +21,8 @@ class CyclicPresenterHelper @Inject constructor() : WorkoutPresenterHelper {
   override fun getRestTime(): Int {
     TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
   }
+
+  override fun getSerie(): Serie {
+    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+  }
 }
