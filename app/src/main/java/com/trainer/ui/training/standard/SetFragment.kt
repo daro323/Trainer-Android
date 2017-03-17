@@ -7,6 +7,7 @@ import android.view.View.VISIBLE
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
+import android.widget.Toast
 import com.trainer.R
 import com.trainer.base.BaseFragment
 import com.trainer.core.training.business.TrainingManager
@@ -126,10 +127,16 @@ class SetFragment : BaseFragment(R.layout.fragment_set) {
 
   private val onSubmitHandler = { v: View ->
     if (FormValidator.validate(activity, fieldsToValidate, SimpleErrorPopupCallback(activity))) {
-      presenterHelper.saveSetResult(weightValue(), repValue())
-      refreshUi(set, true)
+      if (isRepetitionInValid()) {
+        Toast.makeText(activity, R.string.result_missing_rep_count, Toast.LENGTH_SHORT).show()
+      } else {
+        presenterHelper.saveSetResult(weightValue(), repValue())
+        refreshUi(set, true)
+      }
     }
   }
+
+  private fun isRepetitionInValid() = (weightValue() > 0F && repValue() == 0)
 
   private fun setInputActive(isActive: Boolean, forRep: Repetition) {
     val isActiveVisibility = if (isActive) VISIBLE else GONE
