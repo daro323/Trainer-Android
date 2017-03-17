@@ -3,11 +3,10 @@ package com.trainer.ui.training
 import android.view.View
 import com.trainer.R
 import com.trainer.base.BaseFragment
+import com.trainer.core.training.business.TrainingManager
 import com.trainer.d2.common.ActivityComponent
 import com.trainer.extensions.arg
 import com.trainer.extensions.reduceWithDefault
-import com.trainer.core.training.business.TrainingManager
-import com.trainer.core.training.model.TrainingCategory
 import kotlinx.android.synthetic.main.fragment_stretch.*
 import javax.inject.Inject
 
@@ -18,12 +17,13 @@ class StretchFragment : BaseFragment(R.layout.fragment_stretch) {
 
   @Inject lateinit var trainingManager: TrainingManager
   private var stretchExerciseIdx: Int by arg(ARG_STRETCH_EXERCISE_IDX, VALUE_NOT_SET)
-  private val categoryOrdinal: Int by arg(ARG_TRAINING_CATEGORY_ORDINAL, VALUE_NOT_SET)
+  private val category: String by arg(ARG_TRAINING_CATEGORY, CATEGORY_NOT_SET)
 
 
   companion object {
     const val ARG_STRETCH_EXERCISE_IDX = "ARG_STRETCH_EXERCISE_IDX"
-    const val ARG_TRAINING_CATEGORY_ORDINAL = "ARG_TRAINING_CATEGORY_ORDINAL"
+    const val ARG_TRAINING_CATEGORY = "ARG_TRAINING_CATEGORY"
+    const val CATEGORY_NOT_SET = "CATEGORY_NOT_SET"
     const val VALUE_NOT_SET = -1
   }
 
@@ -37,11 +37,10 @@ class StretchFragment : BaseFragment(R.layout.fragment_stretch) {
   }
 
   private fun showStretch() {
-    require(categoryOrdinal != VALUE_NOT_SET) { "StretchFragment without ARG_TRAINING_CATEGORY_ORDINAL set!" }
+    require(category != CATEGORY_NOT_SET) { "StretchFragment without ARG_TRAINING_CATEGORY set!" }
     require(stretchExerciseIdx != VALUE_NOT_SET) { "StretchFragment without ARG_STRETCH_EXERCISE_IDX set!" }
 
-    categoryOrdinal
-        .run { TrainingCategory.values()[this] }
+    category
         .run { trainingManager.getStretchPlan().getStretchRoutine(this) }
         ?.run { stretchExercises[stretchExerciseIdx] }
         ?.apply {
@@ -57,6 +56,6 @@ class StretchFragment : BaseFragment(R.layout.fragment_stretch) {
             commentsView.visibility = View.VISIBLE
             commentsView.text = comments.reduceWithDefault("", { item -> "- $item" }, { acc, guideline -> "$acc\n- $guideline" })
           }
-        } ?: throw IllegalStateException("Can't show Stretch Exercise - exercise not found for index= $stretchExerciseIdx for category= ${TrainingCategory.values()[categoryOrdinal]}")
+        } ?: throw IllegalStateException("Can't show Stretch Exercise - exercise not found for index= $stretchExerciseIdx for category= $category")
   }
 }

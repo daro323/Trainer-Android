@@ -2,12 +2,11 @@ package com.trainer.ui.training.model
 
 import android.support.annotation.DrawableRes
 import com.trainer.core.training.model.ProgressStatus
-import com.trainer.core.training.model.TrainingCategory
 
 /**
  * Created by dariusz on 06/01/17.
  */
-data class TrainingDayItem(val trainingCategory: TrainingCategory,
+data class TrainingDayItem(val trainingCategory: String,
                            val count: Int,
                            val daysAgo: Int)
 

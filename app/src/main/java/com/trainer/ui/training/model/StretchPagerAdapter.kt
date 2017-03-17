@@ -6,18 +6,18 @@ import com.trainer.extensions.with
 import com.trainer.modules.training.standard.StretchExercise
 import com.trainer.ui.training.StretchFragment
 import com.trainer.ui.training.StretchFragment.Companion.ARG_STRETCH_EXERCISE_IDX
-import com.trainer.ui.training.StretchFragment.Companion.ARG_TRAINING_CATEGORY_ORDINAL
+import com.trainer.ui.training.StretchFragment.Companion.ARG_TRAINING_CATEGORY
 
 /**
  * Created by dariusz on 09/01/17.
  */
 class StretchPagerAdapter constructor(fragmentManager: FragmentManager,
                                       val data: List<StretchExercise>,
-                                      val trainingCategoryOrdinal: Int) : FragmentStatePagerAdapter(fragmentManager) {
+                                      val trainingCategory: String) : FragmentStatePagerAdapter(fragmentManager) {
 
   override fun getItem(position: Int) = StretchFragment().with(
       ARG_STRETCH_EXERCISE_IDX to position,
-      ARG_TRAINING_CATEGORY_ORDINAL to trainingCategoryOrdinal)
+      ARG_TRAINING_CATEGORY to trainingCategory)
 
   override fun getCount() = data.size
 }

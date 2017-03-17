@@ -40,7 +40,7 @@ class WorkoutPresenter @Inject constructor(val repo: TrainingRepository,
 
   fun getWorkoutStatus() = trainingDay.workout.status()
 
-  fun getWorkoutTitle() = trainingDay.category.name
+  fun getWorkoutTitle() = trainingDay.category
 
   fun getWorkoutCategory() = trainingDay.category
 

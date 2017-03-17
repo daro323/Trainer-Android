@@ -3,7 +3,7 @@ package com.trainer.modules.init.data.exercise
 import com.trainer.core.training.model.Exercise
 import com.trainer.core.training.model.Serie.Companion.createSet
 import com.trainer.core.training.model.Workout
-import com.trainer.modules.init.ExerciseImageMap.*
+import com.trainer.modules.init.InitExerciseImageMap.*
 import com.trainer.modules.training.standard.SuperSet
 
 /**

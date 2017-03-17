@@ -83,11 +83,11 @@ data class StretchExercise private constructor(val id: String,
 }
 
 @Keep
-data class StretchRoutine(val category: TrainingCategory,
+data class StretchRoutine(val category: String,
                           val stretchExercises: List<StretchExercise>)
 
 @Keep
 data class StretchPlan(val stretchRoutines: List<StretchRoutine>) {
 
-  fun getStretchRoutine(forCategory: TrainingCategory) = stretchRoutines.find { it.category == forCategory }
+  fun getStretchRoutine(forCategory: String) = stretchRoutines.find { it.category == forCategory }
 }

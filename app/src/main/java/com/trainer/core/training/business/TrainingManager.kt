@@ -3,7 +3,6 @@ package com.trainer.core.training.business
 import com.trainer.d2.scope.ApplicationScope
 import com.trainer.core.training.model.ProgressStatus.NEW
 import com.trainer.core.training.model.Serie
-import com.trainer.core.training.model.TrainingCategory
 import com.trainer.core.training.model.TrainingPlan
 import com.trainer.modules.training.standard.StretchPlan
 import javax.inject.Inject
@@ -18,7 +17,7 @@ class TrainingManager @Inject constructor(val repo: TrainingRepository,
   var workoutPresenter: WorkoutPresenter? = null
     private set
 
-  fun startWorkout(forCategory: TrainingCategory) {
+  fun startWorkout(forCategory: String) {
     require(isInitialized().not()) { "Can't start new workout - there is one already started!" }
     workoutPresenter = workoutPresenterProvider
         .get()

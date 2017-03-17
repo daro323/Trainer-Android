@@ -8,10 +8,10 @@ import com.trainer.R
 import com.trainer.base.BaseActivity
 import com.trainer.commons.typedviewholder.TypedViewHolderAdapter
 import com.trainer.commons.typedviewholder.registerHolder
+import com.trainer.core.training.business.TrainingManager
 import com.trainer.extensions.ioMain
 import com.trainer.extensions.start
 import com.trainer.modules.export.ExportManager
-import com.trainer.core.training.business.TrainingManager
 import com.trainer.ui.training.model.TrainingDayItem
 import kotlinx.android.synthetic.main.activity_list.*
 import kotlinx.android.synthetic.main.training_day_item.view.*
@@ -32,7 +32,7 @@ class TrainingDaysListActivity : BaseActivity(R.layout.activity_list) {
           trainingManager.startWorkout(model.trainingCategory)
           start<WorkoutListActivity>()
         }
-        nameText.text = model.trainingCategory.name
+        nameText.text = model.trainingCategory
         countText.text = model.count.toString()
         if (model.daysAgo > 0) daysAgoText.text = model.daysAgo.run { String.format(context.resources.getQuantityString(R.plurals.days_ago_plurals, this), this) }
       }

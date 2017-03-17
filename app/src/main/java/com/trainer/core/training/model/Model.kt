@@ -8,8 +8,8 @@ import com.trainer.core.training.model.ProgressStatus.*
 import com.trainer.core.training.model.WeightType.BODY_WEIGHT
 import com.trainer.core.training.model.WeightType.KG
 import com.trainer.extensions.daysSince
-import com.trainer.modules.init.ExerciseImageMap
-import com.trainer.modules.init.ExerciseImageMap.DEFAULT_IMAGE
+import com.trainer.modules.init.InitExerciseImageMap
+import com.trainer.modules.init.InitExerciseImageMap.DEFAULT_IMAGE
 import com.trainer.modules.training.cyclic.Cycle
 import com.trainer.modules.training.cyclic.CyclicRoutine
 import com.trainer.modules.training.standard.Set
@@ -31,15 +31,6 @@ enum class SerieType {    // Add new serie types here
 enum class WeightType {
   KG,
   BODY_WEIGHT   // For this the weight value is not applicable
-}
-
-@Keep
-enum class TrainingCategory {   // TODO: Move this to a specific training plan
-  CHEST,
-  BACK,
-  SHOULDERS,
-  ARMS,
-  LEGS
 }
 
 @Keep
@@ -66,13 +57,14 @@ class CoreConstants private constructor() {
 
 @Keep
 data class TrainingPlan(val name: String,
+                        val categories: kotlin.collections.Set<String>,
                         val trainingDays: MutableList<TrainingDay>) {
 
-  fun getTrainingDay(forCategory: TrainingCategory) = trainingDays.find { it.category == forCategory }
+  fun getTrainingDay(forCategory: String) = trainingDays.find { it.category == forCategory }
 }
 
 @Keep
-data class TrainingDay(val category: TrainingCategory,      // category should be unique within a training plan
+data class TrainingDay(val category: String,      // category should be unique within a training plan
                        val workout: Workout,
                        private var totalDone: Int = 0,
                        private var lastTrainedDate: String? = null) {
@@ -116,7 +108,7 @@ data class Workout(val series: MutableList<Serie>) {
 @Keep
 data class Exercise(val name: String,
                     val comments: List<String> = emptyList(),
-                    val imageInfo: ExerciseImageMap = DEFAULT_IMAGE,
+                    val imageInfo: InitExerciseImageMap = DEFAULT_IMAGE,
                     val weightType: WeightType = KG) {
 
   fun imageResource() = imageInfo.resource

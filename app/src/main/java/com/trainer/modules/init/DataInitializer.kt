@@ -5,11 +5,10 @@ import android.support.annotation.Keep
 import android.util.Log
 import com.trainer.R
 import com.trainer.core.training.business.TrainingManager
-import com.trainer.core.training.model.TrainingCategory
-import com.trainer.core.training.model.TrainingCategory.*
 import com.trainer.core.training.model.TrainingDay
 import com.trainer.core.training.model.TrainingPlan
 import com.trainer.d2.scope.ApplicationScope
+import com.trainer.modules.init.InitCategories.*
 import com.trainer.modules.init.data.exercise.ArmsExerciseInitData.Companion.ARMS_WORKOUT
 import com.trainer.modules.init.data.exercise.BackExerciseInitData.Companion.BACK_WORKOUT
 import com.trainer.modules.init.data.exercise.ChestExerciseInitData.Companion.CHEST_WORKOUT
@@ -22,6 +21,7 @@ import com.trainer.modules.init.data.stretch.StretchInitData.Companion.LEGS_DAY_
 import com.trainer.modules.init.data.stretch.StretchInitData.Companion.SHOULDERS_DAY_STRETCH_ROUTINE
 import com.trainer.modules.training.standard.StretchPlan
 import com.trainer.modules.training.standard.StretchRoutine
+import java.util.*
 import javax.inject.Inject
 
 /**
@@ -35,6 +35,7 @@ class DataInitializer @Inject constructor(val trainingManager: TrainingManager) 
   }
 
   init {
+    // Initialization of pre-bundled plans
     initializeTrainingPlan()
     initializeStretchPlan()
   }
@@ -49,7 +50,7 @@ class DataInitializer @Inject constructor(val trainingManager: TrainingManager) 
   }
 
   private fun initializeTrainingPlan() {
-    if (isPlanInitialized{ trainingManager.getTrainingPlan() }.not()) {
+    if (isPlanInitialized { trainingManager.getTrainingPlan() }.not()) {
       val trainingPlan = provideTrainingPlan()
       Log.d(TAG, "initializing training plan= ${trainingPlan.name}")
       trainingManager.setTrainingPlan(trainingPlan)
@@ -57,12 +58,16 @@ class DataInitializer @Inject constructor(val trainingManager: TrainingManager) 
   }
 
   private fun provideTrainingPlan(): TrainingPlan {
-    val initTrainingDays = TrainingCategory.values().flatMap { category -> listOf(provideTrainingDay(category)) }
-    return TrainingPlan(INIT_WORKOUT_PLAN_NAME, initTrainingDays.toMutableList())
+    val initTrainingDays = InitCategories.values().flatMap { category -> listOf(provideTrainingDay(category.toString())) }
+    val set = HashSet<String>()
+    (InitCategories.values().flatMap { category -> listOf(category.toString()) })
+        .run { forEach { set.add(it) } }
+
+    return TrainingPlan(INIT_WORKOUT_PLAN_NAME, set, initTrainingDays.toMutableList())
   }
 
-  private fun provideTrainingDay(category: TrainingCategory): TrainingDay {
-    return when(category) {
+  private fun provideTrainingDay(category: String): TrainingDay {
+    return when (InitCategories.valueOf(category)) {
       CHEST -> TrainingDay(category, CHEST_WORKOUT)
       LEGS -> TrainingDay(category, LEGS_WORKOUT)
       BACK -> TrainingDay(category, BACK_WORKOUT)
@@ -72,7 +77,7 @@ class DataInitializer @Inject constructor(val trainingManager: TrainingManager) 
   }
 
   private fun initializeStretchPlan() {
-    if (isPlanInitialized{ trainingManager.getStretchPlan() }.not()) {
+    if (isPlanInitialized { trainingManager.getStretchPlan() }.not()) {
       val stretchPlan = provideStretchPlan()
       Log.d(TAG, "initializing stretch plan")
       trainingManager.setStretchPlan(stretchPlan)
@@ -80,12 +85,12 @@ class DataInitializer @Inject constructor(val trainingManager: TrainingManager) 
   }
 
   private fun provideStretchPlan(): StretchPlan {
-    val initStretchRoutines = TrainingCategory.values().flatMap { category -> listOf(provideStretchRoutine(category)) }
+    val initStretchRoutines = InitCategories.values().flatMap { category -> listOf(provideStretchRoutine(category.toString())) }
     return StretchPlan(initStretchRoutines)
   }
 
-  private fun provideStretchRoutine(category: TrainingCategory): StretchRoutine {
-    return when(category) {
+  private fun provideStretchRoutine(category: String): StretchRoutine {
+    return when (InitCategories.valueOf(category)) {
       CHEST -> CHEST_DAY_STRETCH_ROUTINE
       LEGS -> LEGS_DAY_STRETCH_ROUTINE
       BACK -> BACK_DAY_STRETCH_ROUTINE
@@ -96,7 +101,16 @@ class DataInitializer @Inject constructor(val trainingManager: TrainingManager) 
 }
 
 @Keep
-enum class ExerciseImageMap(@DrawableRes val resource: Int) {
+enum class InitCategories {
+  CHEST,
+  BACK,
+  SHOULDERS,
+  ARMS,
+  LEGS
+}
+
+@Keep
+enum class InitExerciseImageMap(@DrawableRes val resource: Int) {
   // CHEST
   DEFAULT_IMAGE(R.mipmap.ic_exercise_default),
   BENCH_PRESS_IMAGE(R.drawable.ex_bench_press),

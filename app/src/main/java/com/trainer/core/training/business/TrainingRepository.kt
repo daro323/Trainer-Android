@@ -19,7 +19,7 @@ class TrainingRepository @Inject constructor(val sharedPrefs: SharedPreferences,
   companion object {
     const private val TRAINING_PLAN_KEY = "TRAINING_PLAN_KEY"
     const private val STRETCH_PLAN_KEY = "STRETCH_PLAN_KEY"
-    private val TRAINING_PLAN_NOT_INITIALIZED = TrainingPlan("Not initialized", mutableListOf())
+    private val TRAINING_PLAN_NOT_INITIALIZED = TrainingPlan("Not initialized", setOf(), mutableListOf())
     private val STRETCH_PLAN_NOT_INITIALIZED = StretchPlan(emptyList())
   }
 
