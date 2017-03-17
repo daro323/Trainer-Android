@@ -18,5 +18,7 @@ interface WorkoutPresenterHelper {
 
   interface HelperCallback {
     fun onSaveSerie(serie: Serie)
+
+    fun hasOtherSerieStarted(thanSerie: Serie): Boolean
   }
 }

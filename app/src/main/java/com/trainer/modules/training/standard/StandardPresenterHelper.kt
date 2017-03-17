@@ -54,11 +54,7 @@ class StandardPresenterHelper @Inject constructor() : WorkoutPresenterHelper {
     else -> throw IllegalStateException("Helper initialized with unsupported serie type= ${serie.type()}!")
   }
 
-  fun isCurrentSet(set: Set) = when (serie) {
-    is Set -> serie == set
-    is SuperSet -> (serie as SuperSet).setList[currentSetIdx] == set
-    else -> throw IllegalStateException("Helper initialized with unsupported serie type= ${serie.type()}!")
-  }
+  fun isCurrentSet(set: Set) = if (serie.status() == COMPLETE || callback.hasOtherSerieStarted(serie)) false else getCurrentSet() == set
 
   fun saveSetResult(weight: Float, rep: Int) {
     val currentSet = getCurrentSet()
@@ -67,6 +63,9 @@ class StandardPresenterHelper @Inject constructor() : WorkoutPresenterHelper {
     if (weight < 0 && weightType != BODY_WEIGHT) throw IllegalArgumentException("Missing weight value! It's expected in saveSetResult for weight type= $weightType")
 
     currentSet.progress.add(Repetition(weight, rep, weightType))
+    if (serie is SuperSet) {
+      (serie as SuperSet).setList[currentSetIdx] = currentSet
+    }
     callback.onSaveSerie(serie)
   }
 

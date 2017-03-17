@@ -110,7 +110,7 @@ class SetFragment : BaseFragment(R.layout.fragment_set) {
 
       require(iterationNumber <= seriesCount) { "Invalid state! current iteration nr= $iterationNumber exceeded the total series count= $seriesCount" }
 
-      val rep = if (onSubmit) progress[iterationIdx - 1] else lastProgress[iterationIdx]  // On submit show current result (don't swap result of next rep)
+      val rep = if (onSubmit) progress.last() else lastProgress[iterationIdx]  // On submit show current result (don't swap result of next rep)
 
       weightInput.setText(rep.weight.toString())
       repInput.setText(rep.repCount.toString())

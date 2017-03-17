@@ -3,6 +3,7 @@ package com.trainer.core.training.business
 import com.trainer.core.training.business.WorkoutPresenterHelper.HelperCallback
 import com.trainer.core.training.model.CoreConstants.Companion.VALUE_NOT_SET
 import com.trainer.core.training.model.ProgressStatus.COMPLETE
+import com.trainer.core.training.model.ProgressStatus.STARTED
 import com.trainer.core.training.model.Serie
 import com.trainer.core.training.model.TrainingDay
 import com.trainer.core.training.model.WorkoutEvent
@@ -76,17 +77,6 @@ class WorkoutPresenter @Inject constructor(val repo: TrainingRepository,
     }
   }
 
-  override fun onSaveSerie(serie: Serie) {
-    trainingDay.workout.series.indexOf(serie).apply {
-      trainingDay.workout.series[this] = serie
-    }
-    repo.saveTrainingDay(trainingDay)
-
-    val restTime = helper.getRestTime()
-    (if (getWorkoutStatus() != COMPLETE && restTime > 0) WorkoutEvent.REST else helper.determineNextStep(getWorkoutStatus()))
-        .apply { workoutEventsProcessor.onNext(this) }
-  }
-
   fun onStartRest() {
     restManager.startRest(getRestTime())
   }
@@ -98,4 +88,19 @@ class WorkoutPresenter @Inject constructor(val repo: TrainingRepository,
   fun restComplete() {
     workoutEventsProcessor.onNext(helper.determineNextStep(getWorkoutStatus()))
   }
+
+  override fun onSaveSerie(serie: Serie) {
+    trainingDay.workout.series.indexOf(serie).apply {
+      trainingDay.workout.series[this] = serie
+    }
+    repo.saveTrainingDay(trainingDay)
+
+    val restTime = helper.getRestTime()
+    (if (getWorkoutStatus() != COMPLETE && restTime > 0) WorkoutEvent.REST else helper.determineNextStep(getWorkoutStatus()))
+        .apply { workoutEventsProcessor.onNext(this) }
+  }
+
+  override fun hasOtherSerieStarted(thanSerie: Serie) = getWorkoutList()
+      .filter { it != thanSerie }
+      .any { it.status() == STARTED }
 }
