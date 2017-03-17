@@ -33,6 +33,8 @@ class WorkoutPresenter @Inject constructor(val repo: TrainingRepository,
 
   fun onWorkoutEvent(): Observable<WorkoutEvent> = workoutEventsProcessor.toObservable()
 
+  fun onRestEvent() = restManager.getRestEvents()
+
   fun getWorkoutList() = trainingDay.workout.series
 
   fun getWorkoutStatus() = trainingDay.workout.status()
@@ -40,6 +42,8 @@ class WorkoutPresenter @Inject constructor(val repo: TrainingRepository,
   fun getWorkoutTitle() = trainingDay.category.name
 
   fun getWorkoutCategory() = trainingDay.category
+
+  fun getRestTime() = helper.getRestTime()
 
   fun getCurrentSerie(): Serie {
     require(currentSerieIdx != VALUE_NOT_SET) { "Can't return current serie - it hasn't been selected yet!" }
@@ -92,10 +96,6 @@ class WorkoutPresenter @Inject constructor(val repo: TrainingRepository,
   }
 
   fun restComplete() {
-    helper.determineNextStep(getWorkoutStatus())
+    workoutEventsProcessor.onNext(helper.determineNextStep(getWorkoutStatus()))
   }
-
-  fun onRestEvent() = restManager.getRestEvents()
-
-  fun getRestTime() = helper.getRestTime()
 }
