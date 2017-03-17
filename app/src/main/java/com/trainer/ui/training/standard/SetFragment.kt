@@ -106,7 +106,8 @@ class SetFragment : BaseFragment(R.layout.fragment_set) {
   private fun refreshUi(forSet: Set, onSubmit: Boolean = false) {
     forSet.apply {
       val iterationIdx = if (forSet.status() == COMPLETE) seriesCount - 1 else progress.size   // Counted from zero!
-      val iterationNumber = if (presenterHelper.isCurrentSet(forSet)) progress.size + 1 else progress.size  // Counted from one!
+      val iterationNumber = if (presenterHelper.isCurrentSet(forSet) && status() != COMPLETE) progress.size + 1 else progress.size  // Counted from one!
+
       require(iterationNumber <= seriesCount) { "Invalid state! current iteration nr= $iterationNumber exceeded the total series count= $seriesCount" }
 
       val rep = if (onSubmit) progress[iterationIdx - 1] else lastProgress[iterationIdx]  // On submit show current result (don't swap result of next rep)

@@ -31,13 +31,7 @@ class StandardPresenterHelper @Inject constructor() : WorkoutPresenterHelper {
     this.callback = callback
   }
 
-  override fun getRestTime(): Int {
-    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-  }
-
-  override fun onSerieSelected(serieId: String) {
-    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-  }
+  override fun getRestTime() = getCurrentSet().restTimeSec
 
   override fun determineNextStep(workoutStatus: ProgressStatus) =
       if (workoutStatus == COMPLETE) {

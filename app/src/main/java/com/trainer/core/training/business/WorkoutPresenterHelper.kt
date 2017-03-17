@@ -12,8 +12,6 @@ interface WorkoutPresenterHelper {
 
   fun getRestTime(): Int
 
-  fun onSerieSelected(serieId: String)
-
   fun determineNextStep(workoutStatus: ProgressStatus): WorkoutEvent
 
   interface HelperCallback {
