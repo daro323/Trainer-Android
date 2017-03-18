@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="56dp">
+
+  <TextView
+      android:id="@+id/cycleHeader"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_toRightOf="@+id/cycleCount"
+      android:layout_toLeftOf="@+id/lastCycleCount"
+      android:layout_marginLeft="18dp"
+      android:layout_marginRight="18dp"
+      android:paddingBottom="8dp"
+      android:layout_centerHorizontal="true"
+      android:gravity="center"
+      android:text="Exercise Name"/>
+
+  <TextView
+      android:id="@id/cycleCount"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_below="@id/cycleHeader"
+      android:paddingLeft="60dp"
+      android:layout_alignParentLeft="true"
+      android:text="Cycle 2"/>
+
+  <TextView
+      android:id="@id/lastCycleCount"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_below="@id/cycleHeader"
+      android:paddingRight="60dp"
+      android:layout_alignParentRight="true"
+      android:text="Last 8"/>
+
+  <include
+      android:layout_below="@id/cycleCount"
+      android:layout_width="match_parent"
+      android:layout_marginTop="4dp"
+      android:layout_height="1dp"
+      layout="@layout/divider_horizontal"/>
+
+</RelativeLayout>

@@ -3,6 +3,7 @@ package com.trainer.extensions
 import android.app.Activity
 import android.app.Service
 import android.content.Intent
+import android.content.pm.ActivityInfo
 import android.support.annotation.IdRes
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentActivity
@@ -56,4 +57,12 @@ inline fun <reified T : Service> Activity.startServiceWith(intentSetup: Intent.(
   val intent = Intent(this, T::class.java)
   startService(intent.apply { intentSetup() })
   return intent
+}
+
+fun Activity.setLandscape() {
+  requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
+}
+
+fun Activity.setPortrait() {
+  requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 }

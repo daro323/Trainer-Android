@@ -6,15 +6,12 @@ import android.view.Menu
 import android.view.MenuItem
 import com.trainer.R
 import com.trainer.base.BaseActivity
-import com.trainer.extensions.ioMain
-import com.trainer.extensions.setupReplaceFragment
-import com.trainer.extensions.startForResult
-import com.trainer.extensions.with
 import com.trainer.core.training.business.TrainingManager
 import com.trainer.core.training.business.WorkoutPresenter
 import com.trainer.core.training.model.Serie
 import com.trainer.core.training.model.WorkoutEvent
 import com.trainer.core.training.model.WorkoutEvent.*
+import com.trainer.extensions.*
 import com.trainer.modules.training.cyclic.Cycle
 import com.trainer.modules.training.standard.Set
 import com.trainer.modules.training.standard.SuperSet
@@ -94,12 +91,15 @@ class SerieActivity : BaseActivity(R.layout.activity_serie) {
   }
 
   private fun showSerie(serie: Serie) {
-    when(serie) {
-      is Set -> { showSerieAsSet(serie) }
-      is SuperSet -> { showSerieAsSuperSet(serie) }
-      is Cycle -> { showSerieAsCycle(serie) }
-      else -> throw UnsupportedOperationException("Can't show Serie for unsupported type= ${serie.javaClass}")
-    }
+    setLandscape()
+    showSerieAsCycle(null)
+
+//    when(serie) {
+//      is Set -> { showSerieAsSet(serie) }
+//      is SuperSet -> { showSerieAsSuperSet(serie) }
+//      is Cycle -> { showSerieAsCycle(serie) }
+//      else -> throw UnsupportedOperationException("Can't show Serie for unsupported type= ${serie.javaClass}")
+//    }
   }
 
   private fun showSerieAsSet(set: Set) {
@@ -112,7 +112,7 @@ class SerieActivity : BaseActivity(R.layout.activity_serie) {
     setupReplaceFragment(R.id.serieContainer) { SuperSetFragment() }
   }
 
-  private fun showSerieAsCycle(cycle: Cycle) {
+  private fun showSerieAsCycle(cycle: Cycle?) {
     title = getString(R.string.cycle)
     setupReplaceFragment(R.id.serieContainer) { CycleFragment() }
   }

@@ -36,7 +36,7 @@ enum class WeightType {
 @Keep
 enum class WorkoutEvent {
   REST,
-  DO_NEXT,          // do whatever is next to complete current serie (either it's next serie or something within current serie, like Set in SuperSet)
+  DO_NEXT, // do whatever is next to complete current serie (either it's next serie or something within current serie, like Set in SuperSet)
   SERIE_COMPLETED,
   WORKOUT_COMPLETED
 }
@@ -64,7 +64,7 @@ data class TrainingPlan(val name: String,
 }
 
 @Keep
-data class TrainingDay(val category: String,      // category should be unique within a training plan
+data class TrainingDay(val category: String, // category should be unique within a training plan
                        val workout: Workout,
                        private var totalDone: Int = 0,
                        private var lastTrainedDate: String? = null) {
@@ -151,10 +151,8 @@ interface Serie {
 
     /* Automatically adds IDs as instance count */
     fun createCycle(cycleList: List<CyclicRoutine>,
-                    totalCycles: Int,
                     restTime: Int,
-                    cyclesCount: Int = -1,
-                    lastCyclesCount: Int = 0) = Cycle((++instanceCounter).toString(), cycleList, totalCycles, cyclesCount, lastCyclesCount, restTime)
+                    lastCyclesCount: Int = 0) = Cycle((++instanceCounter).toString(), cycleList, restTime, lastCyclesCount)
 
     private fun emptyRepetition(forExercise: Exercise) = Repetition(0f, 0, forExercise.weightType)
   }
