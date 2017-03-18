@@ -11,7 +11,10 @@ import com.trainer.core.training.business.WorkoutPresenter
 import com.trainer.core.training.model.Serie
 import com.trainer.core.training.model.WorkoutEvent
 import com.trainer.core.training.model.WorkoutEvent.*
-import com.trainer.extensions.*
+import com.trainer.extensions.ioMain
+import com.trainer.extensions.setupReplaceFragment
+import com.trainer.extensions.startForResult
+import com.trainer.extensions.with
 import com.trainer.modules.training.cyclic.Cycle
 import com.trainer.modules.training.standard.Set
 import com.trainer.modules.training.standard.SuperSet
@@ -91,7 +94,6 @@ class SerieActivity : BaseActivity(R.layout.activity_serie) {
   }
 
   private fun showSerie(serie: Serie) {
-    setLandscape()
     showSerieAsCycle(null)
 
 //    when(serie) {

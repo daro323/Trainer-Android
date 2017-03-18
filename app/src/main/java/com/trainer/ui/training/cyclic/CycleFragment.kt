@@ -6,7 +6,6 @@ import com.trainer.core.training.model.Exercise
 import com.trainer.d2.common.ActivityComponent
 import com.trainer.modules.training.cyclic.Cycle
 import com.trainer.modules.training.cyclic.CyclicRoutine
-import kotlinx.android.synthetic.main.fragment_cycle.*
 
 /**
  * Created by dariusz on 15/03/17.
@@ -30,6 +29,5 @@ class CycleFragment : BaseFragment(R.layout.fragment_cycle) {
 
   override fun onStart() {
     super.onStart()
-    header.start()
   }
 }

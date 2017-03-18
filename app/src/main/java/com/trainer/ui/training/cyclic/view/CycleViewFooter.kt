@@ -1,18 +1,15 @@
-package com.trainer.ui.training.cyclic
+package com.trainer.ui.training.cyclic.view
 
 import android.content.Context
 import android.util.AttributeSet
-import android.widget.RelativeLayout
-import android.widget.TextView
+import android.widget.FrameLayout
 import com.trainer.R
 import com.trainer.extensions.inflate
 
 /**
  * Created by dariusz on 18/03/17.
  */
-class CycleViewHeader : RelativeLayout {
-
-  private lateinit var header: TextView
+class CycleViewFooter: FrameLayout {
 
   constructor(context: Context) : super(context) {
     inflateLayout()
@@ -26,12 +23,7 @@ class CycleViewHeader : RelativeLayout {
     inflateLayout()
   }
 
-  fun start() {
-    header.text = "Duppa"
-  }
-
   private fun inflateLayout() {
-    val layout = inflate(R.layout.cycle_view_header, this, true)
-    header = layout.findViewById(R.id.cycleHeader) as TextView
+    val layout = inflate(R.layout.cycle_view_footer, this, true)
   }
 }

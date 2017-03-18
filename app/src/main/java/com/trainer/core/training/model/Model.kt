@@ -36,6 +36,7 @@ enum class WeightType {
 @Keep
 enum class WorkoutEvent {
   REST,
+  PREPARE,    // get ready for upcoming exercise
   DO_NEXT, // do whatever is next to complete current serie (either it's next serie or something within current serie, like Set in SuperSet)
   SERIE_COMPLETED,
   WORKOUT_COMPLETED
