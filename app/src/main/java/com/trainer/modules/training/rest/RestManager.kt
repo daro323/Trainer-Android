@@ -50,7 +50,11 @@ class RestManager @Inject constructor(val restNotification: RestNotificationMana
         .ioMain()
         .doOnSubscribe { restNotification.showNotification(service) }
         .doOnDispose { restNotification.hideNotification() }
-        .doOnNext { restNotification.updateNotification(it.countDown, service) }
+        .doOnNext {
+          restNotification.updateNotification(it.countDown, service)
+          restEventsProcessor.onNext(it)
+        }
+        .filter { it.state == RestState.FINISHED }
         .subscribe {
           vibrator.vibrate(VIBRATE_DURATION_MS)
           restNotification.showForRestFinished(service)

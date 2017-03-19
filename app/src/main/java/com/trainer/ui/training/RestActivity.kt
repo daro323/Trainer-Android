@@ -5,12 +5,12 @@ import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
 import com.trainer.R
 import com.trainer.base.BaseActivity
-import com.trainer.extensions.ioMain
-import com.trainer.modules.training.rest.RestEvent
-import com.trainer.modules.countdown.CountDownService
-import com.trainer.modules.training.rest.RestState.*
 import com.trainer.core.training.business.TrainingManager
 import com.trainer.core.training.business.WorkoutPresenter
+import com.trainer.extensions.ioMain
+import com.trainer.modules.countdown.CountDownService
+import com.trainer.modules.training.rest.RestEvent
+import com.trainer.modules.training.rest.RestState.*
 import io.reactivex.disposables.Disposables
 import kotlinx.android.synthetic.main.activity_rest.*
 import javax.inject.Inject
@@ -50,9 +50,7 @@ class RestActivity : BaseActivity(R.layout.activity_rest) {
   private fun onRestEvent(event: RestEvent) {
     when (event.state) {
 
-      IDLE -> CountDownService.start(this)
-
-      COUNTDOWN -> {
+      START, RESTING -> {
         updateCountDown(event.countDown)
         container.visibility = VISIBLE
       }
@@ -61,6 +59,8 @@ class RestActivity : BaseActivity(R.layout.activity_rest) {
         updateCountDown(event.countDown)
         close()
       }
+
+      else -> {}  //ignore
     }
   }
 
@@ -77,7 +77,7 @@ class RestActivity : BaseActivity(R.layout.activity_rest) {
 
   private fun subscribeForRest() {
     restSubscription.dispose()
-    restSubscription = presenter.onRestEvent()
+    restSubscription = presenter.onStartRest()
         .ioMain()
         .doOnSubscribe { progressView.max = presenter.getRestTime() }
         .subscribe { onRestEvent(it) }

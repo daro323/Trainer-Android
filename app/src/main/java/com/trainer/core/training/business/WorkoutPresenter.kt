@@ -34,8 +34,6 @@ class WorkoutPresenter @Inject constructor(val repo: TrainingRepository,
 
   fun onWorkoutEvent(): Observable<WorkoutEvent> = workoutEventsProcessor.toObservable()
 
-  fun onRestEvent() = restManager.getRestEvents()
-
   fun getWorkoutList() = trainingDay.workout.series
 
   fun getWorkoutStatus() = trainingDay.workout.status()
@@ -54,7 +52,7 @@ class WorkoutPresenter @Inject constructor(val repo: TrainingRepository,
   /**
    * Also automatically selects proper helper.
    */
-  fun selectSerie(id: String ) {
+  fun selectSerie(id: String) {
     val serie = trainingDay.workout.getSerie(id)?.apply {
       currentSerieIdx = trainingDay.workout.series.indexOf(this)
     } ?: throw IllegalArgumentException("Couldn't select serie of id= $id (doesn't exist in current workout)")
@@ -77,9 +75,9 @@ class WorkoutPresenter @Inject constructor(val repo: TrainingRepository,
     }
   }
 
-  fun onStartRest() {
-    restManager.startRest(getRestTime())
-  }
+  fun onStartRest() = restManager
+      .apply { startRest(getRestTime()) }
+      .run { getRestEvents() }
 
   fun onAbortRest() {
     restManager.abortRest()

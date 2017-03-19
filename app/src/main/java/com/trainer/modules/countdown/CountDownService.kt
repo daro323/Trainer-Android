@@ -74,6 +74,7 @@ class CountDownService : Service() {
   private fun doStartCountDown() {
     require(timer == null) { "Request to start CountDownService while service is already counting down!" }
     require(callbackClient != null && startValue != null) { "CountDownService started without required parameters!" }
+    Lg.d("Start count down!")
     timer = CountDownTimer()
     callbackClient!!.onCountDownServiceReady(this)
     timer!!.start(startValue!!)
@@ -83,6 +84,7 @@ class CountDownService : Service() {
    * Performed when CountDown is aborted by user
    */
   private fun doAbortCountDown() {
+    Lg.d("Abort count down")
     setWakeLockActive(false)
     cleanup()
     stopSelf()
@@ -102,6 +104,7 @@ class CountDownService : Service() {
   }
 
   private fun cleanup() {
+    Lg.d("cleanup count down!")
     timer?.abort()
     timer = null
   }
