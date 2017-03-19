@@ -4,8 +4,8 @@ import com.trainer.R
 import com.trainer.base.BaseFragment
 import com.trainer.core.training.model.Exercise
 import com.trainer.d2.common.ActivityComponent
-import com.trainer.modules.training.cyclic.Cycle
-import com.trainer.modules.training.cyclic.CyclicRoutine
+import com.trainer.modules.training.types.cyclic.Cycle
+import com.trainer.modules.training.types.cyclic.CyclicRoutine
 
 /**
  * Created by dariusz on 15/03/17.

@@ -20,8 +20,8 @@ import com.trainer.core.training.business.WorkoutPresenter
 import com.trainer.core.training.model.ProgressStatus.STARTED
 import com.trainer.core.training.model.Serie
 import com.trainer.core.training.model.WorkoutEvent.WORKOUT_COMPLETED
-import com.trainer.modules.training.standard.Set
-import com.trainer.modules.training.standard.SuperSet
+import com.trainer.modules.training.types.standard.Set
+import com.trainer.modules.training.types.standard.SuperSet
 import com.trainer.ui.training.model.SetItem
 import com.trainer.ui.training.model.SuperSetItem
 import io.reactivex.disposables.Disposables

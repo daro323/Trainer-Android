@@ -6,9 +6,9 @@ import android.view.View.VISIBLE
 import com.trainer.R
 import com.trainer.base.BaseActivity
 import com.trainer.extensions.ioMain
-import com.trainer.modules.rest.RestEvent
-import com.trainer.modules.rest.RestService
-import com.trainer.modules.rest.RestState.*
+import com.trainer.modules.training.rest.RestEvent
+import com.trainer.modules.countdown.CountDownService
+import com.trainer.modules.training.rest.RestState.*
 import com.trainer.core.training.business.TrainingManager
 import com.trainer.core.training.business.WorkoutPresenter
 import io.reactivex.disposables.Disposables
@@ -50,7 +50,7 @@ class RestActivity : BaseActivity(R.layout.activity_rest) {
   private fun onRestEvent(event: RestEvent) {
     when (event.state) {
 
-      IDLE -> RestService.startRest(this)
+      IDLE -> CountDownService.start(this)
 
       COUNTDOWN -> {
         updateCountDown(event.countDown)
@@ -66,7 +66,7 @@ class RestActivity : BaseActivity(R.layout.activity_rest) {
 
   private fun close() {
     restSubscription.dispose()
-    RestService.abortRest(this)
+    CountDownService.abort(this)
     finish()
   }
 

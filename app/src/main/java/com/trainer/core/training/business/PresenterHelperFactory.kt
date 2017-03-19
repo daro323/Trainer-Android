@@ -4,8 +4,8 @@ import com.trainer.core.training.business.WorkoutPresenterHelper.HelperCallback
 import com.trainer.core.training.model.Serie
 import com.trainer.core.training.model.SerieType.*
 import com.trainer.d2.scope.ApplicationScope
-import com.trainer.modules.training.cyclic.CyclicPresenterHelper
-import com.trainer.modules.training.standard.StandardPresenterHelper
+import com.trainer.modules.training.types.cyclic.CyclicPresenterHelper
+import com.trainer.modules.training.types.standard.StandardPresenterHelper
 import javax.inject.Inject
 import javax.inject.Provider
 

@@ -32,7 +32,7 @@
               android:screenOrientation="portrait"
               android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"
               android:launchMode="singleTop"/>
-    <service android:name=".modules.rest.RestService"/>
+    <service android:name=".modules.countdown.CountDownService"/>
 
   </application>
 

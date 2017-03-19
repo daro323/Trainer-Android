@@ -1,4 +1,4 @@
-package com.trainer.modules.training.standard
+package com.trainer.modules.training.types.standard
 
 import android.support.annotation.DrawableRes
 import android.support.annotation.Keep

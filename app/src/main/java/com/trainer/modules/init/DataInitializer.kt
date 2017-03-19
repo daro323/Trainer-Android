@@ -2,8 +2,8 @@ package com.trainer.modules.init
 
 import android.support.annotation.DrawableRes
 import android.support.annotation.Keep
-import android.util.Log
 import com.trainer.R
+import com.trainer.commons.Lg
 import com.trainer.core.training.business.TrainingManager
 import com.trainer.core.training.model.TrainingDay
 import com.trainer.core.training.model.TrainingPlan
@@ -19,8 +19,8 @@ import com.trainer.modules.init.data.stretch.StretchInitData.Companion.BACK_DAY_
 import com.trainer.modules.init.data.stretch.StretchInitData.Companion.CHEST_DAY_STRETCH_ROUTINE
 import com.trainer.modules.init.data.stretch.StretchInitData.Companion.LEGS_DAY_STRETCH_ROUTINE
 import com.trainer.modules.init.data.stretch.StretchInitData.Companion.SHOULDERS_DAY_STRETCH_ROUTINE
-import com.trainer.modules.training.standard.StretchPlan
-import com.trainer.modules.training.standard.StretchRoutine
+import com.trainer.modules.training.types.standard.StretchPlan
+import com.trainer.modules.training.types.standard.StretchRoutine
 import java.util.*
 import javax.inject.Inject
 
@@ -30,7 +30,6 @@ import javax.inject.Inject
 @ApplicationScope
 class DataInitializer @Inject constructor(val trainingManager: TrainingManager) {
   companion object {
-    const val TAG = "INIT"
     const private val INIT_WORKOUT_PLAN_NAME = "Menshilf Plan"
   }
 
@@ -52,7 +51,7 @@ class DataInitializer @Inject constructor(val trainingManager: TrainingManager) 
   private fun initializeTrainingPlan() {
     if (isPlanInitialized { trainingManager.getTrainingPlan() }.not()) {
       val trainingPlan = provideTrainingPlan()
-      Log.d(TAG, "initializing training plan= ${trainingPlan.name}")
+      Lg.d("initializing training plan= ${trainingPlan.name}")
       trainingManager.setTrainingPlan(trainingPlan)
     }
   }
@@ -79,7 +78,7 @@ class DataInitializer @Inject constructor(val trainingManager: TrainingManager) 
   private fun initializeStretchPlan() {
     if (isPlanInitialized { trainingManager.getStretchPlan() }.not()) {
       val stretchPlan = provideStretchPlan()
-      Log.d(TAG, "initializing stretch plan")
+      Lg.d("initializing stretch plan")
       trainingManager.setStretchPlan(stretchPlan)
     }
   }

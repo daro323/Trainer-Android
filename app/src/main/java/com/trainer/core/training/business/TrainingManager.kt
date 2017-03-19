@@ -4,7 +4,7 @@ import com.trainer.d2.scope.ApplicationScope
 import com.trainer.core.training.model.ProgressStatus.NEW
 import com.trainer.core.training.model.Serie
 import com.trainer.core.training.model.TrainingPlan
-import com.trainer.modules.training.standard.StretchPlan
+import com.trainer.modules.training.types.standard.StretchPlan
 import javax.inject.Inject
 import javax.inject.Provider
 

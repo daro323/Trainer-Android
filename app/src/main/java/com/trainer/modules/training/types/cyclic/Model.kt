@@ -1,4 +1,4 @@
-package com.trainer.modules.training.cyclic
+package com.trainer.modules.training.types.cyclic
 
 import android.support.annotation.Keep
 import com.trainer.core.training.model.Exercise

@@ -18,8 +18,8 @@ import com.trainer.core.training.model.WeightType.BODY_WEIGHT
 import com.trainer.d2.common.ActivityComponent
 import com.trainer.extensions.arg
 import com.trainer.extensions.reduceWithDefault
-import com.trainer.modules.training.standard.Set
-import com.trainer.modules.training.standard.StandardPresenterHelper
+import com.trainer.modules.training.types.standard.Set
+import com.trainer.modules.training.types.standard.StandardPresenterHelper
 import eu.inmite.android.lib.validations.form.FormValidator
 import eu.inmite.android.lib.validations.form.annotations.NotEmpty
 import eu.inmite.android.lib.validations.form.callback.SimpleErrorPopupCallback

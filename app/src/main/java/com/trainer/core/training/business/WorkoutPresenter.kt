@@ -9,7 +9,7 @@ import com.trainer.core.training.model.TrainingDay
 import com.trainer.core.training.model.WorkoutEvent
 import com.trainer.core.training.model.WorkoutEvent.SERIE_COMPLETED
 import com.trainer.core.training.model.WorkoutEvent.WORKOUT_COMPLETED
-import com.trainer.modules.rest.RestManager
+import com.trainer.modules.training.rest.RestManager
 import io.reactivex.Observable
 import io.reactivex.processors.BehaviorProcessor
 import javax.inject.Inject

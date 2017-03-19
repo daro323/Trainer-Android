@@ -1,4 +1,4 @@
-package com.trainer.modules.training.cyclic
+package com.trainer.modules.training.types.cyclic
 
 import com.trainer.core.training.business.WorkoutPresenterHelper
 import com.trainer.core.training.model.ProgressStatus

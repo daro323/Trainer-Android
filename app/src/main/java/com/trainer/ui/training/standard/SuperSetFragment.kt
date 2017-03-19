@@ -9,8 +9,8 @@ import com.trainer.core.training.business.WorkoutPresenter
 import com.trainer.core.training.model.WorkoutEvent.DO_NEXT
 import com.trainer.d2.common.ActivityComponent
 import com.trainer.extensions.ioMain
-import com.trainer.modules.training.standard.StandardPresenterHelper
-import com.trainer.modules.training.standard.SuperSet
+import com.trainer.modules.training.types.standard.StandardPresenterHelper
+import com.trainer.modules.training.types.standard.SuperSet
 import com.trainer.ui.training.model.SuperSetPagerAdapter
 import io.reactivex.disposables.Disposables
 import kotlinx.android.synthetic.main.fragment_pager.*

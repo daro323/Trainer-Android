@@ -4,7 +4,7 @@ import com.trainer.core.training.model.Exercise
 import com.trainer.core.training.model.Serie.Companion.createSet
 import com.trainer.core.training.model.Workout
 import com.trainer.modules.init.InitExerciseImageMap.*
-import com.trainer.modules.training.standard.SuperSet
+import com.trainer.modules.training.types.standard.SuperSet
 
 /**
  * Created by dariusz on 16/01/17.

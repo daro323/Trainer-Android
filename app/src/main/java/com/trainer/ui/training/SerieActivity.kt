@@ -15,9 +15,9 @@ import com.trainer.extensions.ioMain
 import com.trainer.extensions.setupReplaceFragment
 import com.trainer.extensions.startForResult
 import com.trainer.extensions.with
-import com.trainer.modules.training.cyclic.Cycle
-import com.trainer.modules.training.standard.Set
-import com.trainer.modules.training.standard.SuperSet
+import com.trainer.modules.training.types.cyclic.Cycle
+import com.trainer.modules.training.types.standard.Set
+import com.trainer.modules.training.types.standard.SuperSet
 import com.trainer.ui.training.cyclic.CycleFragment
 import com.trainer.ui.training.standard.SetFragment
 import com.trainer.ui.training.standard.SetFragment.Companion.ARG_SET_ID

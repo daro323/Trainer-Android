@@ -1,7 +1,7 @@
 package com.trainer.modules.init.data.stretch
 
 import com.trainer.R
-import com.trainer.modules.training.standard.StretchExercise.Companion.createStretch
+import com.trainer.modules.training.types.standard.StretchExercise.Companion.createStretch
 
 /**
  * Created by dariusz on 24/01/17.

@@ -1,4 +1,4 @@
-package com.trainer.modules.training.standard
+package com.trainer.modules.training.types.standard
 
 import com.trainer.core.training.business.WorkoutPresenterHelper
 import com.trainer.core.training.business.WorkoutPresenterHelper.HelperCallback

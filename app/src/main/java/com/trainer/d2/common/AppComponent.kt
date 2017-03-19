@@ -1,7 +1,7 @@
 package com.trainer.d2.common
 
 import com.trainer.base.BaseApplication
-import com.trainer.modules.rest.RestService
+import com.trainer.modules.countdown.CountDownService
 
 interface AppComponent {
 
@@ -9,5 +9,5 @@ interface AppComponent {
 
   fun inject(app: BaseApplication)
 
-  fun inject(service: RestService)
+  fun inject(service: CountDownService)
 }
