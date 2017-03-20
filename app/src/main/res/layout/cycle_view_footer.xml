@@ -11,14 +11,6 @@
       layout="@layout/divider_horizontal"/>
 
   <TextView
-      android:id="@+id/abort_view"
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      android:gravity="center"
-      android:visibility="gone"
-      android:text="@string/abort_btn"/>
-
-  <TextView
       android:id="@+id/finish_view"
       android:layout_width="match_parent"
       android:layout_height="match_parent"

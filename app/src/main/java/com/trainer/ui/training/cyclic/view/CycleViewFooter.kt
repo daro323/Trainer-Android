@@ -10,22 +10,22 @@ import com.trainer.R
 import com.trainer.extensions.inflate
 import com.trainer.ui.training.cyclic.CycleState
 import com.trainer.ui.training.cyclic.CycleState.*
-import com.trainer.ui.training.cyclic.CycleViewModel
+import com.trainer.ui.training.cyclic.CycleViewCallback
 import com.trainer.ui.training.cyclic.FooterViewModel
-import io.reactivex.Observable
 
 /**
  * Created by dariusz on 18/03/17.
  */
 class CycleViewFooter: FrameLayout {
 
-  private lateinit var abortView: TextView
   private lateinit var finishView: TextView
   private lateinit var nextExercise: TextView
   private lateinit var cycleProgressContainer: RelativeLayout
   private lateinit var cycleProgressCount: TextView
   private lateinit var totalCycleProgressCount: TextView
   private lateinit var cycleProgressBar: ProgressBar
+
+  private lateinit var callback: CycleViewCallback
 
   constructor(context: Context) : super(context) {
     inflateLayout()
@@ -39,17 +39,18 @@ class CycleViewFooter: FrameLayout {
     inflateLayout()
   }
 
-  fun bindViewModel(modelObservable: Observable<CycleViewModel>) {
-    modelObservable
-        .subscribe { updateUI(it.state, it.footerViewModel) }
+  fun bindViewModel(callback: CycleViewCallback) {
+    this.callback = callback.apply { getViewModelChanges().subscribe { updateUI(it.state, it.footerViewModel) } }
   }
 
   private fun updateUI(state: CycleState, footerViewModel: FooterViewModel) {
     when (state) {
       NEW -> {
-        abortView.visibility = VISIBLE
+        nextExercise.apply {
+          visibility = VISIBLE
+          text = String.format(context.getString(R.string.next_exercise_label), footerViewModel.nextExerciseName)
+        }
         finishView.visibility = GONE
-        nextExercise.visibility = GONE
         cycleProgressContainer.visibility = GONE
       }
 
@@ -77,7 +78,6 @@ class CycleViewFooter: FrameLayout {
 
   private fun inflateLayout() {
     inflate(R.layout.cycle_view_footer, this, true).apply {
-      abortView = findViewById(R.id.abort_view) as TextView
       finishView = findViewById(R.id.finish_view) as TextView
       nextExercise = findViewById(R.id.next_exercise_label) as TextView
       cycleProgressContainer = findViewById(R.id.cycle_progress_container) as RelativeLayout

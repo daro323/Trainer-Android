@@ -2,24 +2,25 @@ package com.trainer.ui.training.cyclic.view
 
 import android.content.Context
 import android.util.AttributeSet
-import android.widget.RelativeLayout
+import android.widget.FrameLayout
 import android.widget.TextView
 import com.trainer.R
 import com.trainer.extensions.inflate
 import com.trainer.ui.training.cyclic.CycleState
 import com.trainer.ui.training.cyclic.CycleState.*
-import com.trainer.ui.training.cyclic.CycleViewModel
+import com.trainer.ui.training.cyclic.CycleViewCallback
 import com.trainer.ui.training.cyclic.HeaderViewModel
-import io.reactivex.Observable
 
 /**
  * Created by dariusz on 18/03/17.
  */
-class CycleViewHeader : RelativeLayout {
+class CycleViewHeader : FrameLayout {
 
   private lateinit var header: TextView
   private lateinit var cyclesCount: TextView
   private lateinit var lastCyclesCount: TextView
+
+  private lateinit var callback: CycleViewCallback
 
   constructor(context: Context) : super(context) {
     inflateLayout()
@@ -33,8 +34,8 @@ class CycleViewHeader : RelativeLayout {
     inflateLayout()
   }
 
-  fun bindViewModel(modelObservable: Observable<CycleViewModel>) {
-    modelObservable.subscribe { updateUI(it.state, it.headerViewModel) }
+  fun bindViewModel(callback: CycleViewCallback) {
+    this.callback = callback.apply { getViewModelChanges().subscribe { updateUI(it.state, it.headerViewModel) } }
   }
 
   private fun updateUI(state: CycleState, hearedViewModel: HeaderViewModel) {

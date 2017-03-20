@@ -32,3 +32,7 @@ abstract class BaseFragment(@LayoutRes private val layoutRes: Int = -1) : Fragme
 
   protected abstract fun inject(component: ActivityComponent)
 }
+
+interface OnBackSupportingFragment {
+  fun onBackPressed(): Boolean
+}

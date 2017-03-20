@@ -5,6 +5,7 @@ import android.view.Menu
 import android.view.MenuItem
 import com.trainer.R
 import com.trainer.base.BaseActivity
+import com.trainer.base.OnBackSupportingFragment
 import com.trainer.core.training.business.TrainingManager
 import com.trainer.core.training.business.WorkoutPresenter
 import com.trainer.core.training.model.Serie
@@ -77,6 +78,17 @@ class SerieActivity : BaseActivity(R.layout.activity_serie) {
         finish()
       }
       WORKOUT_COMPLETED -> finish()
+    }
+  }
+
+  override fun onBackPressed() {
+    val fragment = supportFragmentManager.findFragmentById(R.id.serieContainer)
+    if (fragment is OnBackSupportingFragment) {
+      if (fragment.onBackPressed().not()) {
+        super.onBackPressed()
+      }
+    } else {
+      super.onBackPressed()
     }
   }
 

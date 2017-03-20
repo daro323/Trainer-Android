@@ -10,9 +10,8 @@ import com.trainer.extensions.inflate
 import com.trainer.ui.training.cyclic.BodyViewModel
 import com.trainer.ui.training.cyclic.CycleState
 import com.trainer.ui.training.cyclic.CycleState.*
-import com.trainer.ui.training.cyclic.CycleViewModel
+import com.trainer.ui.training.cyclic.CycleViewCallback
 import io.netopen.hotbitmapgg.library.view.RingProgressBar
-import io.reactivex.Observable
 
 /**
  * Created by dariusz on 18/03/17.
@@ -26,6 +25,8 @@ class CycleViewBody: FrameLayout {
   private lateinit var progressView: RingProgressBar
   private lateinit var exerciseCountDown: TextView
 
+  private lateinit var callback: CycleViewCallback
+
   constructor(context: Context) : super(context) {
     inflateLayout()
   }
@@ -38,9 +39,8 @@ class CycleViewBody: FrameLayout {
     inflateLayout()
   }
 
-  fun bindViewModel(modelObservable: Observable<CycleViewModel>) {
-    modelObservable
-        .subscribe { updateUI(it.state, it.bodyViewModel) }
+  fun bindViewModel(callback: CycleViewCallback) {
+    this.callback = callback.apply { getViewModelChanges().subscribe { updateUI(it.state, it.bodyViewModel) } }
   }
 
   private fun updateUI(state: CycleState, bodyViewModel: BodyViewModel) {
