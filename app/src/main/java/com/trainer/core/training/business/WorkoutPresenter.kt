@@ -10,8 +10,7 @@ import com.trainer.core.training.model.WorkoutEvent
 import com.trainer.core.training.model.WorkoutEvent.SERIE_COMPLETED
 import com.trainer.core.training.model.WorkoutEvent.WORKOUT_COMPLETED
 import com.trainer.modules.training.rest.RestManager
-import io.reactivex.Observable
-import io.reactivex.processors.PublishProcessor
+import io.reactivex.processors.BehaviorProcessor
 import javax.inject.Inject
 
 /**
@@ -26,13 +25,13 @@ class WorkoutPresenter @Inject constructor(val repo: TrainingRepository,
                                            val helperFactory: PresenterHelperFactory) : HelperCallback {
 
   lateinit var trainingDay: TrainingDay
-  private val workoutEventsProcessor = PublishProcessor.create<WorkoutEvent>()
+  private val workoutEventsProcessor = BehaviorProcessor.create<WorkoutEvent>()
   private lateinit var helper: WorkoutPresenterHelper
   private var currentSerieIdx: Int = VALUE_NOT_SET
 
   fun getHelper() = helper
 
-  fun onWorkoutEvent(): Observable<WorkoutEvent> = workoutEventsProcessor.toObservable()
+  fun onWorkoutEvent() = workoutEventsProcessor.toObservable()
 
   fun getWorkoutList() = trainingDay.workout.series
 
@@ -92,6 +91,7 @@ class WorkoutPresenter @Inject constructor(val repo: TrainingRepository,
 
   fun onAbortRest() {
     restManager.abortRest()
+    workoutEventsProcessor.onNext(helper.determineNextStep(getWorkoutStatus()))
   }
 
   fun restComplete() {
