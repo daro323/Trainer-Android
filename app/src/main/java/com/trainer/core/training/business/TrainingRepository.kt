@@ -73,4 +73,6 @@ class TrainingRepository @Inject constructor(val sharedPrefs: SharedPreferences,
     }
     return stretchPlan
   }
+
+  fun hasStretchPlan() = sharedPrefs.getString(STRETCH_PLAN_KEY, null) != null
 }

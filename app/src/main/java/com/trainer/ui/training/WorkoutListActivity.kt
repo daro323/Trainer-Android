@@ -107,14 +107,17 @@ class WorkoutListActivity : BaseActivity(R.layout.activity_list) {
     }
   }
 
-  override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+  override fun onCreateOptionsMenu(menu: Menu): Boolean {
     val inflater = menuInflater
     inflater.inflate(R.menu.workout_menu, menu)
+
+    // Invalidate menu items
+    if (trainingManager.hasStretchPlan().not()) menu.removeItem(R.id.show_stretching)
     return true
   }
 
   override fun onOptionsItemSelected(item: MenuItem): Boolean {
-    when(item.itemId) {
+    when (item.itemId) {
       R.id.show_stretching -> {
         StretchActivity.start(presenter.getWorkoutCategory(), this)
         return true
@@ -129,14 +132,16 @@ class WorkoutListActivity : BaseActivity(R.layout.activity_list) {
         .filter { it == WORKOUT_COMPLETED }
         .ioMain()
         .subscribe {
-          showConfigurablePopupAlert(R.string.close, R.string.stretch, R.string.workout_complete,
-              {
-                completeAndFinish()
-              },
-              {
-                StretchActivity.start(presenter.getWorkoutCategory(), this)
-                completeAndFinish()
-              })
+          if (trainingManager.hasStretchPlan()) {
+            showConfigurablePopupAlert(R.string.close, R.string.stretch, R.string.workout_complete,
+                { completeAndFinish() },
+                {
+                  StretchActivity.start(presenter.getWorkoutCategory(), this)
+                  completeAndFinish()
+                })
+          } else {
+            showConfirmPopupAlert(R.string.workout_complete) { completeAndFinish() }
+          }
         }
   }
 
@@ -180,7 +185,7 @@ class WorkoutListActivity : BaseActivity(R.layout.activity_list) {
 
   private fun createSetView(inflater: LayoutInflater, @DrawableRes setImageRes: Int, setName: String, isLast: Boolean, container: ViewGroup): View {
     if (isLast) {
-      val view = inflater.inflate( R.layout.set_item, container, false)
+      val view = inflater.inflate(R.layout.set_item, container, false)
       (view.findViewById(R.id.setItemImage) as ImageView).setImageResource(setImageRes)
       (view.findViewById(R.id.setItemName) as TextView).text = setName
       return view

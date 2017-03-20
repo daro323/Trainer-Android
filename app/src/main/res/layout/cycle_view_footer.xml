@@ -4,6 +4,12 @@
              android:layout_width="match_parent"
              android:layout_height="@dimen/cycle_header_footer_height">
 
+  <include
+      android:layout_width="match_parent"
+      android:layout_height="1dp"
+      android:gravity="top"
+      layout="@layout/divider_horizontal"/>
+
   <TextView
       android:id="@+id/abort_view"
       android:layout_width="match_parent"

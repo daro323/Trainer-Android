@@ -33,6 +33,7 @@ data class Cycle(private val _id: String,
 
   override fun skipRemaining() {
     cycleList.forEach { it.resetComplete() }
+    if (cyclesCount < 0) cyclesCount = 0    // Cycle wasn't even started
     isComplete = true
   }
 
@@ -47,7 +48,6 @@ data class Cycle(private val _id: String,
   }
 
   override fun complete() {
-    require(cyclesCount > 0) { "Attempt to mark Cycle as complete when there are not cycles complete!" }
     lastCyclesCount = cyclesCount
     cyclesCount = -1
     cycleList.forEach { it.resetComplete() }
