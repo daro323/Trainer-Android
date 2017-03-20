@@ -1,6 +1,5 @@
 package com.trainer.ui.training
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -10,10 +9,10 @@ import com.trainer.core.training.business.TrainingManager
 import com.trainer.core.training.business.WorkoutPresenter
 import com.trainer.core.training.model.Serie
 import com.trainer.core.training.model.WorkoutEvent
-import com.trainer.core.training.model.WorkoutEvent.*
+import com.trainer.core.training.model.WorkoutEvent.SERIE_COMPLETED
+import com.trainer.core.training.model.WorkoutEvent.WORKOUT_COMPLETED
 import com.trainer.extensions.ioMain
 import com.trainer.extensions.setupReplaceFragment
-import com.trainer.extensions.startForResult
 import com.trainer.extensions.with
 import com.trainer.modules.training.types.cyclic.Cycle
 import com.trainer.modules.training.types.standard.Set
@@ -27,10 +26,6 @@ import javax.inject.Inject
 
 
 class SerieActivity : BaseActivity(R.layout.activity_serie) {
-
-  companion object {
-    const private val REST_REQUEST_CODE = 666
-  }
 
   @Inject lateinit var trainingManager: TrainingManager
   private val presenter: WorkoutPresenter by lazy { trainingManager.workoutPresenter ?: throw IllegalStateException("Current workout not set!") }  // call this after component.inject()
@@ -50,13 +45,6 @@ class SerieActivity : BaseActivity(R.layout.activity_serie) {
   override fun onStop() {
     workoutEventsSubscription.dispose()
     super.onStop()
-  }
-
-  override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-    super.onActivityResult(requestCode, resultCode, data)
-    when(requestCode) {
-      REST_REQUEST_CODE -> presenter.restComplete()
-    }
   }
 
   override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -84,7 +72,6 @@ class SerieActivity : BaseActivity(R.layout.activity_serie) {
 
   private fun handleWorkoutEvent(workoutEvent: WorkoutEvent) {
     when(workoutEvent) {
-      REST -> startForResult<RestActivity>(REST_REQUEST_CODE)
       SERIE_COMPLETED -> {
         presenter.serieCompleteHandled()
         finish()

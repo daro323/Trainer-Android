@@ -75,6 +75,7 @@ class CountDownService : Service() {
     require(timer == null) { "Request to start CountDownService while service is already counting down!" }
     require(callbackClient != null && startValue != null) { "CountDownService started without required parameters!" }
     Lg.d("Start count down!")
+    setWakeLockActive(true)
     timer = CountDownTimer()
     callbackClient!!.onCountDownServiceReady(this)
     timer!!.start(startValue!!)
@@ -91,6 +92,7 @@ class CountDownService : Service() {
   }
 
   private fun setWakeLockActive(isActive: Boolean) {
+    Lg.d("setWakeLockActive to $isActive")
     if (isActive) {
       require(wakeLock == null) { "Request to acquire wake lock but it's already acquired!" }
       wakeLock = powerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, WAKELOCK_TAG).apply { acquire() }
@@ -107,5 +109,7 @@ class CountDownService : Service() {
     Lg.d("cleanup count down!")
     timer?.abort()
     timer = null
+    callbackClient = null
+    startValue = null
   }
 }

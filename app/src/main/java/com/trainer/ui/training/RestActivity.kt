@@ -57,6 +57,7 @@ class RestActivity : BaseActivity(R.layout.activity_rest) {
 
       FINISHED -> {
         updateCountDown(event.countDown)
+        presenter.restComplete()
         close()
       }
 

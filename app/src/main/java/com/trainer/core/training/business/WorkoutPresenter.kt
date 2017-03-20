@@ -11,7 +11,7 @@ import com.trainer.core.training.model.WorkoutEvent.SERIE_COMPLETED
 import com.trainer.core.training.model.WorkoutEvent.WORKOUT_COMPLETED
 import com.trainer.modules.training.rest.RestManager
 import io.reactivex.Observable
-import io.reactivex.processors.BehaviorProcessor
+import io.reactivex.processors.PublishProcessor
 import javax.inject.Inject
 
 /**
@@ -26,7 +26,7 @@ class WorkoutPresenter @Inject constructor(val repo: TrainingRepository,
                                            val helperFactory: PresenterHelperFactory) : HelperCallback {
 
   lateinit var trainingDay: TrainingDay
-  private val workoutEventsProcessor = BehaviorProcessor.create<WorkoutEvent>()
+  private val workoutEventsProcessor = PublishProcessor.create<WorkoutEvent>()
   private lateinit var helper: WorkoutPresenterHelper
   private var currentSerieIdx: Int = VALUE_NOT_SET
 
@@ -42,7 +42,7 @@ class WorkoutPresenter @Inject constructor(val repo: TrainingRepository,
 
   fun getWorkoutCategory() = trainingDay.category
 
-  fun getRestTime() = helper.getRestTime()
+  fun getRestTime() = 8//helper.getRestTime()
 
   fun getCurrentSerie(): Serie {
     require(currentSerieIdx != VALUE_NOT_SET) { "Can't return current serie - it hasn't been selected yet!" }

@@ -11,18 +11,24 @@ import android.widget.Toast
 import com.trainer.R
 import com.trainer.base.BaseFragment
 import com.trainer.core.training.business.TrainingManager
+import com.trainer.core.training.business.WorkoutPresenter
 import com.trainer.core.training.model.CoreConstants.Companion.WEIGHT_VALUE_NOT_APPLICABLE
 import com.trainer.core.training.model.ProgressStatus.COMPLETE
 import com.trainer.core.training.model.Repetition
 import com.trainer.core.training.model.WeightType.BODY_WEIGHT
+import com.trainer.core.training.model.WorkoutEvent
 import com.trainer.d2.common.ActivityComponent
 import com.trainer.extensions.arg
+import com.trainer.extensions.ioMain
 import com.trainer.extensions.reduceWithDefault
+import com.trainer.extensions.start
 import com.trainer.modules.training.types.standard.Set
 import com.trainer.modules.training.types.standard.StandardPresenterHelper
+import com.trainer.ui.training.RestActivity
 import eu.inmite.android.lib.validations.form.FormValidator
 import eu.inmite.android.lib.validations.form.annotations.NotEmpty
 import eu.inmite.android.lib.validations.form.callback.SimpleErrorPopupCallback
+import io.reactivex.disposables.Disposables
 import kotlinx.android.synthetic.main.fragment_set.*
 import javax.inject.Inject
 
@@ -32,9 +38,11 @@ import javax.inject.Inject
 class SetFragment : BaseFragment(R.layout.fragment_set) {
 
   @Inject lateinit var trainingManager: TrainingManager
-  private val presenterHelper: StandardPresenterHelper by lazy { (trainingManager.workoutPresenter?.getHelper() ?: throw IllegalStateException("Current workout presenter not set!") ) as StandardPresenterHelper }  // can call this only after component.inject()!
+  private val presenter: WorkoutPresenter by lazy { trainingManager.workoutPresenter ?: throw IllegalStateException("Current workout presenter not set!") }  // can call this only after component.inject()!
+  private val presenterHelper: StandardPresenterHelper by lazy { presenter.getHelper() as StandardPresenterHelper }  // can call this only after component.inject()!
   private var setId: String by arg(ARG_SET_ID)
   private lateinit var set: Set
+  private var workoutEventsSubscription = Disposables.disposed()
   private val fieldsToValidate: SetFragmentFieldValidator by lazy { SetFragmentFieldValidator(weightInput, repInput) }
   private val onInputFocusListener = { view: View, hasFocus: Boolean ->
     if (hasFocus) {
@@ -59,6 +67,12 @@ class SetFragment : BaseFragment(R.layout.fragment_set) {
     super.onStart()
     createUI(presenterHelper.getSet(setId))
     submitButton.setOnClickListener(onSubmitHandler)
+    subscribeForWorkoutEvents()
+  }
+
+  override fun onStop() {
+    workoutEventsSubscription.dispose()
+    super.onStop()
   }
 
   override fun setUserVisibleHint(isVisibleToUser: Boolean) {
@@ -68,6 +82,14 @@ class SetFragment : BaseFragment(R.layout.fragment_set) {
     } catch (e: UninitializedPropertyAccessException) {
       // Ignore - this callback came too early (earlier than component was injected)
     }
+  }
+
+  private fun subscribeForWorkoutEvents() {
+    workoutEventsSubscription.dispose()
+    workoutEventsSubscription = presenter.onWorkoutEvent()
+        .filter { it == WorkoutEvent.REST }
+        .ioMain()
+        .subscribe { activity.start<RestActivity>() }
   }
 
   private fun createUI(forSet: Set) {

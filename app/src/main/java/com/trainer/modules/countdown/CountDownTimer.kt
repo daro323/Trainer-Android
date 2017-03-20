@@ -1,5 +1,6 @@
 package com.trainer.modules.countdown
 
+import com.trainer.commons.Lg
 import com.trainer.modules.countdown.CountDownState.*
 import io.reactivex.Observable
 import io.reactivex.disposables.Disposables
@@ -21,6 +22,7 @@ class CountDownTimer {
   fun start(startValue: Int) {
     require(startValue > 0) { "Start dount down invoked with invalid start value= $startValue!" }
     require(countDownDisposable.isDisposed) { "Attempt to start counting down when count down is already ongoing!" }
+    Lg.d("start")
 
     countDownDisposable = Observable.interval(1, TimeUnit.SECONDS)
         .startWith(0)
@@ -35,6 +37,7 @@ class CountDownTimer {
   }
 
   fun abort() {
+    Lg.d("abort")
     countDownDisposable.dispose()
     countDownEventsProcessor.onNext(IDLE_STATE_EVENT)
   }
