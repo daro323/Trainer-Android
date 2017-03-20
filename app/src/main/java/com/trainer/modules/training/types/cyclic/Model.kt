@@ -25,7 +25,7 @@ data class Cycle(private val _id: String,
   override fun status() = when {
     cyclesCount == -1 -> NEW
     cyclesCount >= 0 && cycleList.any { it.isComplete.not() } -> STARTED
-    cyclesCount -> COMPLETE
+    cyclesCount >= 0 && cycleList.all { it.isComplete } -> COMPLETE
     else -> throw IllegalStateException("Invalid cycles count= $cyclesCount")
   }
 

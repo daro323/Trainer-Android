@@ -24,7 +24,7 @@ class CycleFragment : BaseFragment(R.layout.fragment_cycle) {
   private val presenterHelper: CyclicPresenterHelper by lazy { presenter.getHelper() as CyclicPresenterHelper }  // can call this only after component.inject()!
 
   private lateinit var cycle: Cycle
-  private lateinit var cycleViewModel: CycleViewModel
+  private val cycleViewModel: CycleViewModel = CycleViewModel.createNew()
   private val viewModelChengesProcessor = BehaviorProcessor.create<CycleViewModel>()
   private var workoutEventsSubscription = Disposables.disposed()
 
@@ -34,7 +34,7 @@ class CycleFragment : BaseFragment(R.layout.fragment_cycle) {
 
   override fun onStart() {
     super.onStart()
-    createUi(presenterHelper.getSerie() as Cycle)
+    createUi(presenterHelper.getSerie())
     subscribeForWorkoutEvents()
   }
 
@@ -57,6 +57,12 @@ class CycleFragment : BaseFragment(R.layout.fragment_cycle) {
       body.bindViewModel(this)
       footer.bindViewModel(this)
     }
+
+    presenterHelper.getCurrentRoutine().run {
+      // Set Header part
+      // Set Body part
+      // Set Footer part
+    }
   }
 
   private fun handleWorkoutEvent(event: WorkoutEvent) {
@@ -65,5 +71,9 @@ class CycleFragment : BaseFragment(R.layout.fragment_cycle) {
       PREPARE -> {}
       DO_NEXT -> {}
     }
+  }
+
+  private fun onUpdateViewModel() {
+    viewModelChengesProcessor.onNext(cycleViewModel)
   }
 }
