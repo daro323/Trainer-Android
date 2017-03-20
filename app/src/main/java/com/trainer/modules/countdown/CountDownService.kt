@@ -10,6 +10,7 @@ import javax.inject.Inject
 
 /**
  * Can only perform one count down at a time!
+ * Needs to be explicitly started, aborted, finished!
  * Created by dariusz on 15/01/17.
  */
 class CountDownService : Service() {
@@ -25,6 +26,7 @@ class CountDownService : Service() {
     private const val WAKELOCK_TAG = "CountDownService_WakeLock"
     private const val START_COUNT_DOWN_ACTION = "START_COUNT_DOWN_ACTION"
     private const val ABORT_COUNT_DOWN_ACTION = "ABORT_COUNT_DOWN_ACTION"
+    private const val FINISH_COUNT_DOWN_ACTION = "FINISH_COUNT_DOWN_ACTION"
 
     fun start(startValue: Int, callbackClient: CountDownServiceClient, context: Context) {
       this.callbackClient = callbackClient
@@ -35,6 +37,10 @@ class CountDownService : Service() {
     fun abort(context: Context) {
       callbackClient = null
       doStartService(context, ABORT_COUNT_DOWN_ACTION)
+    }
+
+    fun finish(context: Context) {
+      doStartService(context, FINISH_COUNT_DOWN_ACTION)
     }
 
     private fun doStartService(context: Context, startAction: String) {
@@ -57,7 +63,7 @@ class CountDownService : Service() {
 
     when (action) {
       START_COUNT_DOWN_ACTION -> doStartCountDown()
-      ABORT_COUNT_DOWN_ACTION -> doAbortCountDown()
+      ABORT_COUNT_DOWN_ACTION, FINISH_COUNT_DOWN_ACTION -> doAbortCountDown()
       else -> throw IllegalArgumentException("Unsupported CountDownService action= $action!")
     }
 

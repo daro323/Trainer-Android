@@ -89,7 +89,10 @@ class SetFragment : BaseFragment(R.layout.fragment_set) {
     workoutEventsSubscription = presenter.onWorkoutEvent()
         .filter { it == WorkoutEvent.REST }
         .ioMain()
-        .subscribe { activity.start<RestActivity>() }
+        .subscribe {
+          presenter.onStartRest()
+          activity.start<RestActivity>()
+        }
   }
 
   private fun createUI(forSet: Set) {

@@ -2,6 +2,7 @@ package com.trainer.modules.training.rest
 
 import android.content.Context
 import android.os.Vibrator
+import com.trainer.commons.Lg
 import com.trainer.d2.qualifier.ForApplication
 import com.trainer.d2.scope.ApplicationScope
 import com.trainer.extensions.ioMain
@@ -9,7 +10,7 @@ import com.trainer.modules.countdown.CountDownService
 import com.trainer.modules.countdown.CountDownServiceClient
 import com.trainer.modules.countdown.CountDownState
 import io.reactivex.disposables.Disposables
-import io.reactivex.processors.PublishProcessor
+import io.reactivex.processors.BehaviorProcessor
 import javax.inject.Inject
 
 /**
@@ -25,16 +26,23 @@ class RestManager @Inject constructor(val restNotification: RestNotificationMana
   }
 
   private var countDownDisposable = Disposables.disposed()
-  private var restEventsProcessor = PublishProcessor.create<RestEvent>()
+  private var restEventsProcessor = BehaviorProcessor.create<RestEvent>()
 
   fun startRest(initialStartValue: Int) {
+    Lg.d("startRest")
     CountDownService.start(initialStartValue, this, context)
   }
 
   fun abortRest() {
+    Lg.d("abortRest")
     countDownDisposable.dispose()
     CountDownService.abort(context)
     restEventsProcessor.onNext(RestEvent(0, RestState.ABORTED))
+  }
+
+  fun onRestComplete() {
+    Lg.d("onRestComplete")
+    CountDownService.finish(context)
   }
 
   override fun onCountDownServiceReady(service: CountDownService) {

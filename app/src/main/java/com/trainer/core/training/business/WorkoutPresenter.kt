@@ -42,8 +42,6 @@ class WorkoutPresenter @Inject constructor(val repo: TrainingRepository,
 
   fun getWorkoutCategory() = trainingDay.category
 
-  fun getRestTime() = 8//helper.getRestTime()
-
   fun getCurrentSerie(): Serie {
     require(currentSerieIdx != VALUE_NOT_SET) { "Can't return current serie - it hasn't been selected yet!" }
     return getWorkoutList()[currentSerieIdx]
@@ -75,18 +73,6 @@ class WorkoutPresenter @Inject constructor(val repo: TrainingRepository,
     }
   }
 
-  fun onStartRest() = restManager
-      .apply { startRest(getRestTime()) }
-      .run { getRestEvents() }
-
-  fun onAbortRest() {
-    restManager.abortRest()
-  }
-
-  fun restComplete() {
-    workoutEventsProcessor.onNext(helper.determineNextStep(getWorkoutStatus()))
-  }
-
   override fun onSaveSerie(serie: Serie) {
     trainingDay.workout.series.indexOf(serie).apply {
       trainingDay.workout.series[this] = serie
@@ -101,4 +87,19 @@ class WorkoutPresenter @Inject constructor(val repo: TrainingRepository,
   override fun hasOtherSerieStarted(thanSerie: Serie) = getWorkoutList()
       .filter { it != thanSerie }
       .any { it.status() == STARTED }
+
+  fun onStartRest() = restManager.startRest(getRestTime())
+
+  fun onAbortRest() {
+    restManager.abortRest()
+  }
+
+  fun restComplete() {
+    restManager.onRestComplete()
+    workoutEventsProcessor.onNext(helper.determineNextStep(getWorkoutStatus()))
+  }
+
+  fun onRestEvents() = restManager.getRestEvents()
+
+  fun getRestTime() = 4//helper.getRestTime()
 }

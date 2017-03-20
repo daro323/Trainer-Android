@@ -5,10 +5,10 @@ import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
 import com.trainer.R
 import com.trainer.base.BaseActivity
+import com.trainer.commons.Lg
 import com.trainer.core.training.business.TrainingManager
 import com.trainer.core.training.business.WorkoutPresenter
 import com.trainer.extensions.ioMain
-import com.trainer.modules.countdown.CountDownService
 import com.trainer.modules.training.rest.RestEvent
 import com.trainer.modules.training.rest.RestState.*
 import io.reactivex.disposables.Disposables
@@ -28,6 +28,7 @@ class RestActivity : BaseActivity(R.layout.activity_rest) {
   }
 
   override fun onStart() {
+    Lg.d("onStart()")
     super.onStart()
     initialize()
   }
@@ -43,7 +44,11 @@ class RestActivity : BaseActivity(R.layout.activity_rest) {
   }
 
   private fun initialize() {
-    countDownText.setOnClickListener { close() }
+    countDownText.setOnClickListener {
+      restSubscription.dispose()
+      presenter.onAbortRest()
+      finish()
+    }
     subscribeForRest()
   }
 
@@ -56,19 +61,15 @@ class RestActivity : BaseActivity(R.layout.activity_rest) {
       }
 
       FINISHED -> {
+        Lg.d("Finished - closing...")
         updateCountDown(event.countDown)
+        restSubscription.dispose()
         presenter.restComplete()
-        close()
+        finish()
       }
 
       else -> {}  //ignore
     }
-  }
-
-  private fun close() {
-    restSubscription.dispose()
-    CountDownService.abort(this)
-    finish()
   }
 
   private fun updateCountDown(countDown: Int) {
@@ -78,7 +79,7 @@ class RestActivity : BaseActivity(R.layout.activity_rest) {
 
   private fun subscribeForRest() {
     restSubscription.dispose()
-    restSubscription = presenter.onStartRest()
+    restSubscription = presenter.onRestEvents()
         .ioMain()
         .doOnSubscribe { progressView.max = presenter.getRestTime() }
         .subscribe { onRestEvent(it) }
