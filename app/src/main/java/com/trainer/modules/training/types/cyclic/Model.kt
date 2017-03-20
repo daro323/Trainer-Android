@@ -16,6 +16,7 @@ data class Cycle(private val _id: String,
                  val restTimeSec: Int,
                  var lastCyclesCount: Int,
                  var cyclesCount: Int = -1,
+                 var isComplete: Boolean = false,
                  private val type: SerieType = CYCLE) : Serie {
 
   override fun id() = _id
@@ -24,18 +25,20 @@ data class Cycle(private val _id: String,
 
   override fun status() = when {
     cyclesCount == -1 -> NEW
-    cyclesCount >= 0 && cycleList.any { it.isComplete.not() } -> STARTED
-    cyclesCount >= 0 && cycleList.all { it.isComplete } -> COMPLETE
+    cyclesCount >= 0 && isComplete.not() -> STARTED
+    isComplete -> COMPLETE
     else -> throw IllegalStateException("Invalid cycles count= $cyclesCount")
   }
 
   override fun skipRemaining() {
     cycleList.forEach { it.resetComplete() }
+    isComplete = true
   }
 
   fun start() {
     cyclesCount = 0
     cycleList.forEach { it.resetComplete() }
+    isComplete = false
   }
 
   fun startNext() {
@@ -47,6 +50,7 @@ data class Cycle(private val _id: String,
     lastCyclesCount = cyclesCount
     cyclesCount = -1
     cycleList.forEach { it.resetComplete() }
+    isComplete = true
   }
 
   override fun abort() {
@@ -68,7 +72,7 @@ data class Cycle(private val _id: String,
 data class CyclicRoutine constructor(val exercise: Exercise,
                                      val durationTimeSec: Int,
                                      val restTimeSec: Int,
-                                     var isComplete: Boolean,
+                                     var isComplete: Boolean = false,
                                      var countDownTime: Int = durationTimeSec) {
   fun complete() {
     isComplete = true

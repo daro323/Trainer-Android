@@ -44,4 +44,6 @@
   <string name="abort_btn">Abort</string>
   <string name="finish_btn">Finish</string>
   <string name="next_exercise_label" formatted="false">Next: %s</string>
+
+  <string name="cycle_new">New Cycle</string>
 </resources>

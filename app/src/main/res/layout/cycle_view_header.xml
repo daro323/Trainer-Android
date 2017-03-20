@@ -5,7 +5,7 @@
                 android:layout_height="@dimen/cycle_header_footer_height">
 
   <TextView
-      android:id="@+id/cycleHeader"
+      android:id="@+id/cycle_header"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_marginLeft="18dp"
@@ -13,25 +13,25 @@
       android:paddingBottom="12dp"
       android:layout_centerHorizontal="true"
       android:gravity="center"
-      android:text="Exercise Name"/>
+      tools:text="Exercise Name"/>
 
   <TextView
-      android:id="@+id/cycleCount"
+      android:id="@+id/cycle_count"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:layout_below="@id/cycleHeader"
+      android:layout_below="@id/cycle_header"
       android:paddingLeft="30dp"
       android:layout_alignParentLeft="true"
-      android:text="Cycle 2"/>
+      tools:text="Cycle 2"/>
 
   <TextView
-      android:id="@+id/lastCycleCount"
+      android:id="@+id/last_cycle_count"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:layout_below="@id/cycleHeader"
+      android:layout_below="@id/cycle_header"
       android:paddingRight="30dp"
       android:layout_alignParentRight="true"
-      android:text="Last 8"/>
+      tools:text="Last 8"/>
 
   <include
       android:layout_width="match_parent"

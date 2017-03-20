@@ -6,11 +6,12 @@ import com.trainer.ui.training.cyclic.CycleState.NEW
  * Created by dariusz on 18/03/17.
  */
 enum class CycleState {
-  NEW,
-  GET_READY,
-  PERFORMING,
-  RESTING,
-  DONE
+  NEW,        // User is presented starting screen
+  GET_READY,  // Getting ready (3 to 0 count down is initiated)
+  PERFORMING, // Performing a routine
+  RESTING,    // Resting between routines
+  DONE,       // Cycle routine set was performed, at this point we can do another cycle
+  COMPLETE    // Whole cycle is finished, at this point we can't perform another cycle
 }
 
 data class CycleViewModel(var state: CycleState,
@@ -25,7 +26,7 @@ data class CycleViewModel(var state: CycleState,
   }
 }
 
-data class HeaderViewModel(var headerTitle: String,
+data class HeaderViewModel(var exerciseName: String,
                            var cycleCount: Int,
                            var lastCycleCount: Int)
 

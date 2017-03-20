@@ -1,14 +1,16 @@
 package com.trainer.ui.training.cyclic
 
+import android.os.Bundle
+import android.view.View
 import com.trainer.R
 import com.trainer.base.BaseFragment
 import com.trainer.core.training.business.TrainingManager
 import com.trainer.core.training.business.WorkoutPresenter
+import com.trainer.core.training.model.ProgressStatus
 import com.trainer.core.training.model.WorkoutEvent
 import com.trainer.core.training.model.WorkoutEvent.*
 import com.trainer.d2.common.ActivityComponent
 import com.trainer.extensions.ioMain
-import com.trainer.modules.training.types.cyclic.Cycle
 import com.trainer.modules.training.types.cyclic.CyclicPresenterHelper
 import io.reactivex.disposables.Disposables
 import io.reactivex.processors.BehaviorProcessor
@@ -23,7 +25,6 @@ class CycleFragment : BaseFragment(R.layout.fragment_cycle) {
   private val presenter: WorkoutPresenter by lazy { trainingManager.workoutPresenter ?: throw IllegalStateException("Current workout presenter not set!") }  // can call this only after component.inject()!
   private val presenterHelper: CyclicPresenterHelper by lazy { presenter.getHelper() as CyclicPresenterHelper }  // can call this only after component.inject()!
 
-  private lateinit var cycle: Cycle
   private val cycleViewModel: CycleViewModel = CycleViewModel.createNew()
   private val viewModelChengesProcessor = BehaviorProcessor.create<CycleViewModel>()
   private var workoutEventsSubscription = Disposables.disposed()
@@ -32,9 +33,18 @@ class CycleFragment : BaseFragment(R.layout.fragment_cycle) {
     component.inject(this)
   }
 
+  override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    super.onViewCreated(view, savedInstanceState)
+    viewModelChengesProcessor.toObservable().apply {
+      header.bindViewModel(this)
+      body.bindViewModel(this)
+      footer.bindViewModel(this)
+    }
+    initViewModel()
+  }
+
   override fun onStart() {
     super.onStart()
-    createUi(presenterHelper.getSerie())
     subscribeForWorkoutEvents()
   }
 
@@ -50,30 +60,35 @@ class CycleFragment : BaseFragment(R.layout.fragment_cycle) {
         .subscribe { handleWorkoutEvent(it) }
   }
 
-  private fun createUi(cycle: Cycle) {
-    this.cycle = cycle
-    viewModelChengesProcessor.toObservable().apply {
-      header.bindViewModel(this)
-      body.bindViewModel(this)
-      footer.bindViewModel(this)
+  private fun initViewModel() {
+    val cycle = presenterHelper.getSerie()
+    val currentRoutine = presenterHelper.getCurrentRoutine()
+
+    // State
+    when (cycle.status()) {
+      ProgressStatus.NEW -> cycleViewModel.state = CycleState.NEW
+      ProgressStatus.COMPLETE -> cycleViewModel.state = CycleState.NEW
+      else -> {} // Ignore
     }
 
-    presenterHelper.getCurrentRoutine().run {
-      // Set Header part
-      // Set Body part
-      // Set Footer part
+    // Header
+    cycleViewModel.headerViewModel.apply {
+      exerciseName = currentRoutine.exercise.name
+      cycleCount = cycle.cyclesCount
+      lastCycleCount = cycle.lastCyclesCount
     }
+
+    viewModelChengesProcessor.onNext(cycleViewModel)
   }
 
   private fun handleWorkoutEvent(event: WorkoutEvent) {
     when (event) {
-      REST -> {}
-      PREPARE -> {}
-      DO_NEXT -> {}
+      REST -> {
+      }
+      PREPARE -> {
+      }
+      DO_NEXT -> {
+      }
     }
-  }
-
-  private fun onUpdateViewModel() {
-    viewModelChengesProcessor.onNext(cycleViewModel)
   }
 }
