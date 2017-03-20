@@ -81,14 +81,12 @@ class SerieActivity : BaseActivity(R.layout.activity_serie) {
   }
 
   private fun showSerie(serie: Serie) {
-    showSerieAsCycle(null)
-
-//    when(serie) {
-//      is Set -> { showSerieAsSet(serie) }
-//      is SuperSet -> { showSerieAsSuperSet(serie) }
-//      is Cycle -> { showSerieAsCycle(serie) }
-//      else -> throw UnsupportedOperationException("Can't show Serie for unsupported type= ${serie.javaClass}")
-//    }
+    when(serie) {
+      is Set -> { showSerieAsSet(serie) }
+      is SuperSet -> { showSerieAsSuperSet() }
+      is Cycle -> { showSerieAsCycle() }
+      else -> throw UnsupportedOperationException("Can't show Serie for unsupported type= ${serie.javaClass}")
+    }
   }
 
   private fun showSerieAsSet(set: Set) {
@@ -96,12 +94,12 @@ class SerieActivity : BaseActivity(R.layout.activity_serie) {
     setupReplaceFragment(R.id.serieContainer) { SetFragment().with(ARG_SET_ID to set.id()) }
   }
 
-  private fun showSerieAsSuperSet(superSet: SuperSet) {
+  private fun showSerieAsSuperSet() {
     title = getString(R.string.super_set)
     setupReplaceFragment(R.id.serieContainer) { SuperSetFragment() }
   }
 
-  private fun showSerieAsCycle(cycle: Cycle?) {
+  private fun showSerieAsCycle() {
     title = getString(R.string.cycle)
     setupReplaceFragment(R.id.serieContainer) { CycleFragment() }
   }

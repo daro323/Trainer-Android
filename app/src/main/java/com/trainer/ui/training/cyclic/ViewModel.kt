@@ -1,4 +1,4 @@
-package com.trainer.ui.training.cyclic.view
+package com.trainer.ui.training.cyclic
 
 /**
  * Created by dariusz on 18/03/17.

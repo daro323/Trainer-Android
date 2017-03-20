@@ -16,7 +16,6 @@ data class Cycle(private val _id: String,
                  val restTimeSec: Int,
                  var lastCyclesCount: Int,
                  var cyclesCount: Int = -1,
-                 var isComplete: Boolean = false,
                  private val type: SerieType = CYCLE) : Serie {
 
   override fun id() = _id
@@ -25,29 +24,34 @@ data class Cycle(private val _id: String,
 
   override fun status() = when {
     cyclesCount == -1 -> NEW
-    cyclesCount >= 0 && isComplete.not() -> STARTED
-    isComplete -> COMPLETE
+    cyclesCount >= 0 && cycleList.any { it.isComplete.not() } -> STARTED
+    cyclesCount -> COMPLETE
     else -> throw IllegalStateException("Invalid cycles count= $cyclesCount")
   }
 
-  override fun skipRemaining() { /* Do nothing and keep the current cyclesCount */
+  override fun skipRemaining() {
+    cycleList.forEach { it.resetComplete() }
   }
 
   fun start() {
-    isComplete = false
     cyclesCount = 0
+    cycleList.forEach { it.resetComplete() }
+  }
+
+  fun startNext() {
+    cycleList.forEach { it.resetComplete() }
   }
 
   override fun complete() {
     require(cyclesCount > 0) { "Attempt to mark Cycle as complete when there are not cycles complete!" }
     lastCyclesCount = cyclesCount
     cyclesCount = -1
-    isComplete = true
+    cycleList.forEach { it.resetComplete() }
   }
 
   override fun abort() {
     cyclesCount = -1
-    isComplete = true
+    cycleList.forEach { it.resetComplete() }
   }
 
   override fun equals(other: Any?) = other is Cycle && other.id() == this.id()
@@ -64,4 +68,13 @@ data class Cycle(private val _id: String,
 data class CyclicRoutine constructor(val exercise: Exercise,
                                      val durationTimeSec: Int,
                                      val restTimeSec: Int,
-                                     var countDownTime: Int = durationTimeSec)
+                                     var isComplete: Boolean,
+                                     var countDownTime: Int = durationTimeSec) {
+  fun complete() {
+    isComplete = true
+  }
+
+  fun resetComplete() {
+    isComplete = false
+  }
+}

@@ -6,6 +6,10 @@ import android.widget.RelativeLayout
 import android.widget.TextView
 import com.trainer.R
 import com.trainer.extensions.inflate
+import com.trainer.ui.training.cyclic.CycleState
+import com.trainer.ui.training.cyclic.CycleViewModel
+import com.trainer.ui.training.cyclic.HeaderViewModel
+import io.reactivex.Observable
 
 /**
  * Created by dariusz on 18/03/17.
@@ -24,6 +28,15 @@ class CycleViewHeader : RelativeLayout {
 
   constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
     inflateLayout()
+  }
+
+  fun bindViewModel(modelObservable: Observable<CycleViewModel>) {
+    modelObservable
+        .subscribe { updateUI(it.state, it.headerViewModel) }
+  }
+
+  private fun updateUI(state: CycleState, hearedViewModel: HeaderViewModel) {
+
   }
 
   private fun inflateLayout() {

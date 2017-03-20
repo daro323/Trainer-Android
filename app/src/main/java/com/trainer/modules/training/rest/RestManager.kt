@@ -26,7 +26,7 @@ class RestManager @Inject constructor(val restNotification: RestNotificationMana
   }
 
   private var countDownDisposable = Disposables.disposed()
-  private var restEventsProcessor = BehaviorProcessor.create<RestEvent>()
+  private val restEventsProcessor = BehaviorProcessor.create<RestEvent>()
 
   fun startRest(initialStartValue: Int) {
     Lg.d("startRest")

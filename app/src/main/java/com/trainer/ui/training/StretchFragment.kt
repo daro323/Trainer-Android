@@ -4,6 +4,7 @@ import android.view.View
 import com.trainer.R
 import com.trainer.base.BaseFragment
 import com.trainer.core.training.business.TrainingManager
+import com.trainer.core.training.model.CoreConstants.Companion.VALUE_NOT_SET
 import com.trainer.d2.common.ActivityComponent
 import com.trainer.extensions.arg
 import com.trainer.extensions.reduceWithDefault
@@ -24,7 +25,6 @@ class StretchFragment : BaseFragment(R.layout.fragment_stretch) {
     const val ARG_STRETCH_EXERCISE_IDX = "ARG_STRETCH_EXERCISE_IDX"
     const val ARG_TRAINING_CATEGORY = "ARG_TRAINING_CATEGORY"
     const val CATEGORY_NOT_SET = "CATEGORY_NOT_SET"
-    const val VALUE_NOT_SET = -1
   }
 
   override fun inject(component: ActivityComponent) {

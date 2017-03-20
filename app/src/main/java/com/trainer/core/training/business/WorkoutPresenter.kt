@@ -87,6 +87,10 @@ class WorkoutPresenter @Inject constructor(val repo: TrainingRepository,
       .filter { it != thanSerie }
       .any { it.status() == STARTED }
 
+  fun onPrepared() {
+    workoutEventsProcessor.onNext(helper.determineNextStep(getWorkoutStatus()))
+  }
+
   fun onStartRest() = restManager.startRest(getRestTime())
 
   fun onAbortRest() {
