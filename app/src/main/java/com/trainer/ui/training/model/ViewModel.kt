@@ -19,3 +19,7 @@ data class SuperSetItem(val id: String,
                         @DrawableRes val imageResList: List<Int>,
                         val namesList: List<String>,
                         val status: ProgressStatus)
+
+data class CycleItem(val id: String,
+                     val name: String,
+                     val status: ProgressStatus)

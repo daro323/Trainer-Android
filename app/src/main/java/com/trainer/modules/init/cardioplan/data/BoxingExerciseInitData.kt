@@ -20,7 +20,7 @@ class BoxingExerciseInitData private constructor() {
 
 
     val BOXING_WORKOUT = Workout(arrayListOf(
-        Serie.createCycle(arrayListOf(
+        Serie.createCycle("Dummy Boxing cycle", arrayListOf(
             CyclicRoutine(DUMMY_BOXING_EXERCISE, 20, 15),
             CyclicRoutine(DUMMY_BOXING_EXERCISE_2, 30, 10),
             CyclicRoutine(DUMMY_BOXING_EXERCISE_3, 10, 5)),

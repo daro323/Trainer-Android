@@ -20,7 +20,7 @@ class LandmineExerciseInitData private constructor() {
 
 
     val LANDMINE_WORKOUT = Workout(arrayListOf(
-        Serie.createCycle(arrayListOf(
+        Serie.createCycle("Dummy Landmine cycle", arrayListOf(
             CyclicRoutine(DUMMY_LANDMINE_EXERCISE, 20, 15),
             CyclicRoutine(DUMMY_LANDMINE_EXERCISE_2, 30, 10),
             CyclicRoutine(DUMMY_LANDMINE_EXERCISE_3, 10, 5)),

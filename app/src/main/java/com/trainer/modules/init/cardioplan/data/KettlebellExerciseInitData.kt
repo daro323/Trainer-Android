@@ -20,7 +20,7 @@ class KettlebellExerciseInitData private constructor() {
 
 
     val KETTLEBELL_WORKOUT = Workout(arrayListOf(
-        Serie.createCycle(arrayListOf(
+        Serie.createCycle("Dummy Kettlebell cycle", arrayListOf(
             CyclicRoutine(DUMMY_KETTLEBELL_EXERCISE, 20, 15),
             CyclicRoutine(DUMMY_KETTLEBELL_EXERCISE_2, 30, 10),
             CyclicRoutine(DUMMY_KETTLEBELL_EXERCISE_3, 10, 5)),

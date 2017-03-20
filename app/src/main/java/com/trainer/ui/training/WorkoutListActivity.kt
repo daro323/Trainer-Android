@@ -12,20 +12,23 @@ import com.trainer.base.BaseActivity
 import com.trainer.commons.StyleUtils
 import com.trainer.commons.typedviewholder.TypedViewHolderAdapter
 import com.trainer.commons.typedviewholder.registerHolder
-import com.trainer.extensions.ioMain
-import com.trainer.extensions.start
-import com.trainer.modules.export.ExportManager
 import com.trainer.core.training.business.TrainingManager
 import com.trainer.core.training.business.WorkoutPresenter
 import com.trainer.core.training.model.ProgressStatus.STARTED
 import com.trainer.core.training.model.Serie
 import com.trainer.core.training.model.WorkoutEvent.WORKOUT_COMPLETED
+import com.trainer.extensions.ioMain
+import com.trainer.extensions.start
+import com.trainer.modules.export.ExportManager
+import com.trainer.modules.training.types.cyclic.Cycle
 import com.trainer.modules.training.types.standard.Set
 import com.trainer.modules.training.types.standard.SuperSet
+import com.trainer.ui.training.model.CycleItem
 import com.trainer.ui.training.model.SetItem
 import com.trainer.ui.training.model.SuperSetItem
 import io.reactivex.disposables.Disposables
 import kotlinx.android.synthetic.main.activity_list.*
+import kotlinx.android.synthetic.main.cycle_item.view.*
 import kotlinx.android.synthetic.main.set_item.view.*
 import kotlinx.android.synthetic.main.super_set_container_item.view.*
 import java.util.*
@@ -60,6 +63,15 @@ class WorkoutListActivity : BaseActivity(R.layout.activity_list) {
         setItemName.text = model.name
         setItemImage.setImageResource(model.imageRes)
         setItemContentContainer.setBackgroundColor(ContextCompat.getColor(context, StyleUtils.getColorRes(model.status)))
+      }
+    }
+
+    registerHolder(R.layout.cycle_item) { model: CycleItem ->
+      itemView.apply {
+        cycleItemContainer.setOnClickListener { openSerie(model.id) }
+
+        cycleItemName.text = model.name
+        cycleItemContainer.setBackgroundColor(ContextCompat.getColor(context, StyleUtils.getColorRes(model.status)))
       }
     }
   }.build()
@@ -141,6 +153,8 @@ class WorkoutListActivity : BaseActivity(R.layout.activity_list) {
       when (serie) {
         is SuperSet -> result.add(createSuperSetItem(serie))
         is Set -> result.add(SetItem(serie.id(), serie.exercise.imageResource(), serie.exercise.name, serie.status()))
+        is Cycle -> result.add(CycleItem(serie.id(), serie.name, serie.status()))
+        else -> throw IllegalArgumentException("Unsupported serie type= ${serie.javaClass.name}")
       }
     }
     typedAdapter.data = result

@@ -12,6 +12,7 @@ import com.trainer.core.training.model.SerieType.CYCLE
  */
 @Keep
 data class Cycle(private val _id: String,
+                 val name: String,
                  val cycleList: List<CyclicRoutine>,
                  val restTimeSec: Int,
                  var lastCyclesCount: Int,
