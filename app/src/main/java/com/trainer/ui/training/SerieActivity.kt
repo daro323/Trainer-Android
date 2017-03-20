@@ -81,14 +81,14 @@ class SerieActivity : BaseActivity(R.layout.activity_serie) {
   }
 
   private fun showSerie(serie: Serie) {
-//    showSerieAsCycle(null)
+    showSerieAsCycle(null)
 
-    when(serie) {
-      is Set -> { showSerieAsSet(serie) }
-      is SuperSet -> { showSerieAsSuperSet(serie) }
-      is Cycle -> { showSerieAsCycle(serie) }
-      else -> throw UnsupportedOperationException("Can't show Serie for unsupported type= ${serie.javaClass}")
-    }
+//    when(serie) {
+//      is Set -> { showSerieAsSet(serie) }
+//      is SuperSet -> { showSerieAsSuperSet(serie) }
+//      is Cycle -> { showSerieAsCycle(serie) }
+//      else -> throw UnsupportedOperationException("Can't show Serie for unsupported type= ${serie.javaClass}")
+//    }
   }
 
   private fun showSerieAsSet(set: Set) {

@@ -8,8 +8,8 @@ import com.trainer.core.training.model.ProgressStatus.*
 import com.trainer.core.training.model.WeightType.BODY_WEIGHT
 import com.trainer.core.training.model.WeightType.KG
 import com.trainer.extensions.daysSince
-import com.trainer.modules.init.InitExerciseImageMap
-import com.trainer.modules.init.InitExerciseImageMap.DEFAULT_IMAGE
+import com.trainer.modules.init.menshilfplan.InitExerciseImageMap
+import com.trainer.modules.init.menshilfplan.InitExerciseImageMap.DEFAULT_IMAGE
 import com.trainer.modules.training.types.cyclic.Cycle
 import com.trainer.modules.training.types.cyclic.CyclicRoutine
 import com.trainer.modules.training.types.standard.Set
@@ -152,8 +152,8 @@ interface Serie {
 
     /* Automatically adds IDs as instance count */
     fun createCycle(cycleList: List<CyclicRoutine>,
-                    restTime: Int,
-                    lastCyclesCount: Int = 0) = Cycle((++instanceCounter).toString(), cycleList, restTime, lastCyclesCount)
+                    restTimeSec: Int,
+                    lastCyclesCount: Int = 0) = Cycle((++instanceCounter).toString(), cycleList, restTimeSec, lastCyclesCount)
 
     private fun emptyRepetition(forExercise: Exercise) = Repetition(0f, 0, forExercise.weightType)
   }

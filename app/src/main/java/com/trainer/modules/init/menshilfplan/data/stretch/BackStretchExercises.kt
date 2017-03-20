@@ -1,4 +1,4 @@
-package com.trainer.modules.init.data.stretch
+package com.trainer.modules.init.menshilfplan.data.stretch
 
 import com.trainer.R
 import com.trainer.modules.training.types.standard.StretchExercise.Companion.createStretch

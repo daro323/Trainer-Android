@@ -2,26 +2,21 @@ package com.trainer.ui.training.cyclic
 
 import com.trainer.R
 import com.trainer.base.BaseFragment
-import com.trainer.core.training.model.Exercise
+import com.trainer.core.training.business.TrainingManager
+import com.trainer.core.training.business.WorkoutPresenter
 import com.trainer.d2.common.ActivityComponent
 import com.trainer.modules.training.types.cyclic.Cycle
-import com.trainer.modules.training.types.cyclic.CyclicRoutine
+import com.trainer.modules.training.types.cyclic.CyclicPresenterHelper
+import javax.inject.Inject
 
 /**
  * Created by dariusz on 15/03/17.
  */
-// TODO: Implement meee
 class CycleFragment : BaseFragment(R.layout.fragment_cycle) {
-  val dummyCycle = getDummyCycle()
-
-  companion object {
-    private fun getDummyCycle() = Cycle(
-        "666",
-        listOf(
-            CyclicRoutine(Exercise("Dummy Exercise"), 30, 15),
-            CyclicRoutine(Exercise("Dummy Exercise 2"), 40, 20)),
-        60, 5)
-  }
+  private lateinit var cycle: Cycle
+  @Inject lateinit var trainingManager: TrainingManager
+  private val presenter: WorkoutPresenter by lazy { trainingManager.workoutPresenter ?: throw IllegalStateException("Current workout presenter not set!") }  // can call this only after component.inject()!
+  private val presenterHelper: CyclicPresenterHelper by lazy { presenter.getHelper() as CyclicPresenterHelper }  // can call this only after component.inject()!
 
   override fun inject(component: ActivityComponent) {
     component.inject(this)

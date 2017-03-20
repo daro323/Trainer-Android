@@ -1,10 +1,10 @@
-package com.trainer.modules.init.data.exercise
+package com.trainer.modules.init.menshilfplan.data.exercise
 
 import com.trainer.core.training.model.Exercise
 import com.trainer.core.training.model.Serie.Companion.createSet
 import com.trainer.core.training.model.WeightType.BODY_WEIGHT
 import com.trainer.core.training.model.Workout
-import com.trainer.modules.init.InitExerciseImageMap.*
+import com.trainer.modules.init.menshilfplan.InitExerciseImageMap.*
 
 /**
  * Created by dariusz on 16/01/17.
