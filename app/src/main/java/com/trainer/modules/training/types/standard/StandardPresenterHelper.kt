@@ -7,6 +7,7 @@ import com.trainer.core.training.model.ProgressStatus.COMPLETE
 import com.trainer.core.training.model.Repetition
 import com.trainer.core.training.model.Serie
 import com.trainer.core.training.model.WeightType.BODY_WEIGHT
+import io.reactivex.processors.BehaviorProcessor
 import javax.inject.Inject
 
 /**
@@ -19,6 +20,7 @@ class StandardPresenterHelper @Inject constructor() : WorkoutPresenterHelper {
   private lateinit var serie: Serie
   private lateinit var callback: HelperCallback
   private var currentSetIdx = VALUE_NOT_SET
+  private val standardStateEventsProcessor = BehaviorProcessor.create<StandardStateEvent>()
 
   companion object {
     const val DEFAULT_SET_INDEX = 0
@@ -36,7 +38,8 @@ class StandardPresenterHelper @Inject constructor() : WorkoutPresenterHelper {
   override fun getSerie() = serie
 
   override fun determineNextStep() {
-    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    refreshCurrentSetIdx()
+    standardStateEventsProcessor.onNext(StandardStateEvent.DO_NEXT)
   }
 
   fun getSet(id: String): Set = when (serie) {
@@ -65,6 +68,8 @@ class StandardPresenterHelper @Inject constructor() : WorkoutPresenterHelper {
     is SuperSet -> (serie as SuperSet).setList[currentSetIdx]
     else -> throw IllegalStateException("Helper initialized with unsupported serie type= ${serie.type()}!")
   }
+
+  fun getStandardStateEvents() = standardStateEventsProcessor.toObservable()
 
   /**
    * Updates currentSetIdx in current Serie to next unfinished Set with the least progress.

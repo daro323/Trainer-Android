@@ -12,6 +12,9 @@ interface WorkoutPresenterHelper {
 
   fun getSerie(): Serie
 
+  /**
+   * Should only be called when resting is done and both workout and current serie are NOT finished
+   */
   fun determineNextStep()
 
   interface HelperCallback {

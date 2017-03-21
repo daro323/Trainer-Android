@@ -3,7 +3,7 @@ package com.trainer.modules.training.types.cyclic
 import android.support.annotation.Nullable
 import com.trainer.core.training.business.WorkoutPresenterHelper
 import com.trainer.core.training.model.CoreConstants.Companion.VALUE_NOT_SET
-import com.trainer.core.training.model.ProgressStatus.COMPLETE
+import com.trainer.core.training.model.ProgressStatus.*
 import com.trainer.core.training.model.Serie
 import io.reactivex.processors.BehaviorProcessor
 import javax.inject.Inject
@@ -26,7 +26,22 @@ class CyclicPresenterHelper @Inject constructor(val performManager: PerformManag
     require(serie is Cycle) { "CyclicPresenterHelper expects to be initialized with Cycle Serie type! (instead it was ${serie.javaClass.name})" }
     cycle = serie as Cycle
     this.callback = callback
-    if (cycle.status() != COMPLETE) refreshCurrentRoutineIdx() else currentRoutineIdx = DEFAULT_ROUTINE_INDEX
+    when (cycle.status()) {
+      NEW -> {
+        refreshCurrentRoutineIdx()
+        cycleStateEventsProcessor.onNext(CycleState.NEW)
+      }
+
+      STARTED -> {
+        refreshCurrentRoutineIdx()
+        cycleStateEventsProcessor.onNext(CycleState.DONE)
+      }
+
+      COMPLETE -> {
+        currentRoutineIdx = DEFAULT_ROUTINE_INDEX
+        cycleStateEventsProcessor.onNext(CycleState.COMPLETE)
+      }
+    }
   }
 
   override fun getRestTime() = cycle.restTimeSec
@@ -34,7 +49,12 @@ class CyclicPresenterHelper @Inject constructor(val performManager: PerformManag
   override fun getSerie() = cycle
 
   override fun determineNextStep() {
-    cycleStateEventsProcessor.onNext(if (isCurrentRoutineTheLast()) CycleState.DONE else CycleState.RESTING)
+    if (isCurrentRoutineTheLast()) {
+      cycleStateEventsProcessor.onNext(CycleState.DONE)
+    } else {
+      refreshCurrentRoutineIdx()
+      cycleStateEventsProcessor.onNext(CycleState.PERFORMING)
+    }
   }
 
   fun getCurrentRoutine() = cycle.cycleList[currentRoutineIdx]
@@ -64,11 +84,6 @@ class CyclicPresenterHelper @Inject constructor(val performManager: PerformManag
   fun onPrepared() {
     require(currentRoutineIdx != VALUE_NOT_SET) { "Attempt to start cycle when current cycle routine is not set!" }
     performManager.startPerforming(getCurrentRoutine().durationTimeSec)
-  }
-
-  fun onRested() {
-    refreshCurrentRoutineIdx()
-    cycleStateEventsProcessor.onNext(CycleState.PERFORMING)
   }
 
   fun getPerformEvents() = performManager.getPerformEvents()

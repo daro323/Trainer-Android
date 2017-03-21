@@ -6,7 +6,6 @@ import com.trainer.R
 import com.trainer.base.BaseFragment
 import com.trainer.base.OnBackSupportingFragment
 import com.trainer.core.training.business.TrainingManager
-import com.trainer.core.training.business.WorkoutPresenter
 import com.trainer.core.training.model.ProgressStatus
 import com.trainer.d2.common.ActivityComponent
 import com.trainer.extensions.ioMain
@@ -26,8 +25,7 @@ import javax.inject.Inject
  */
 class CycleFragment : BaseFragment(R.layout.fragment_cycle), OnBackSupportingFragment, CycleViewCallback {
   @Inject lateinit var trainingManager: TrainingManager
-  private val presenter: WorkoutPresenter by lazy { trainingManager.workoutPresenter ?: throw IllegalStateException("Current workout presenter not set!") }  // can call this only after component.inject()!
-  private val presenterHelper: CyclicPresenterHelper by lazy { presenter.getHelper() as CyclicPresenterHelper }  // can call this only after component.inject()!
+  private val presenterHelper: CyclicPresenterHelper by lazy { (trainingManager.workoutPresenter?.getHelper() ?: throw IllegalStateException("Current workout presenter not set!") ) as CyclicPresenterHelper }  // can call this only after component.inject()!
 
   private val cycleViewModel: CycleViewModel = CycleViewModel.createNew()
   private val viewModelChengesProcessor = BehaviorProcessor.create<CycleViewModel>()
@@ -164,11 +162,12 @@ class CycleFragment : BaseFragment(R.layout.fragment_cycle), OnBackSupportingFra
     // TODO
     when (state) {
       NEW -> {}
+
       GET_READY -> subscribeForGetReadyCountDown()
 
-      PERFORMING -> {}
+      PERFORMING -> { subscribeForPerformingEvents() }
 
-      RESTING -> {}
+      RESTING -> {} // between routines
 
       DONE -> {}
 
