@@ -55,7 +55,13 @@ class CycleViewFooter: FrameLayout {
       }
 
       PERFORMING -> {
-        // TODO
+        finishView.visibility = GONE
+        nextExercise.visibility = GONE
+        cycleProgressContainer.visibility = VISIBLE
+        cycleProgressCount.text = footerViewModel.currentCount.toString()
+        totalCycleProgressCount.text = footerViewModel.totalCount.toString()
+        cycleProgressBar.max = footerViewModel.totalCount
+        cycleProgressBar.progress = footerViewModel.currentCount
       }
 
       RESTING -> {

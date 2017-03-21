@@ -19,7 +19,8 @@
   <string name="skip">Skip</string>
   <string name="stretch">Stretch</string>
   <string name="take_rest">Take a rest…</string>
-  <string name="countdown_text">%s sec\n\nClick to skip</string>
+  <string name="countdown_text_with_abort">%s sec\n\nClick to skip</string>
+  <string name="countdown_text">%s sec</string>
   <string name="notification_countdown_text">%s sec</string>
   <string name="empty_field">Empty field!</string>
   <string name="workout_complete">Workout complete!</string>
@@ -48,4 +49,7 @@
 
   <string name="cycle_new">New Cycle</string>
   <string name="cycle_get_ready">Get Ready</string>
+  <string name="cycle_ongoing_notification_title">Exercise in progress</string>
+  <string name="current_cycle">Cycles %s</string>
+  <string name="last_cycles">Last %s</string>
 </resources>

@@ -11,9 +11,8 @@ import com.trainer.core.training.model.SerieType.SUPER_SET
 /**
  * Created by dariusz on 15/03/17.
  */
-enum class StandardStateEvent {    // TODO: Incorporate those events in presenterHelper
-  DO_NEXT,
-  REST
+enum class StandardStateEvent {
+  DO_NEXT
 }
 
 @Keep

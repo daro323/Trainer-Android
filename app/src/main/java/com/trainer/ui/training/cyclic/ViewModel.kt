@@ -14,7 +14,7 @@ data class CycleViewModel(var state: CycleState,
   companion object {
     fun createNew() = CycleViewModel(NEW,
         HeaderViewModel("", 0, 0),
-        BodyViewModel(0),
+        BodyViewModel(0, 0),
         FooterViewModel("", 0, 0))
   }
 }
@@ -23,7 +23,8 @@ data class HeaderViewModel(var exerciseName: String,
                            var cycleCount: Int,
                            var lastCycleCount: Int)
 
-data class BodyViewModel(var countDown: Int)
+data class BodyViewModel(var countDown: Int,
+                         var totalCountDown: Int)
 
 data class FooterViewModel(var nextExerciseName: String,
                            var currentCount: Int,

@@ -66,14 +66,14 @@ class CyclicPresenterHelper @Inject constructor(val performManager: PerformManag
 
   fun getCurrentCycleNumber() = cycle.cycleList.indexOf(getCurrentRoutine()) + 1
 
-  fun onRoutineComplete() {
-    getCurrentRoutine().isComplete = true
-    cycleStateEventsProcessor.onNext(CycleState.RESTING)
-  }
-
   fun onStartCycle() {
     require(currentRoutineIdx != VALUE_NOT_SET) { "Attempt to start cycle when current cycle routine is not set!" }
     cycleStateEventsProcessor.onNext(CycleState.GET_READY)
+  }
+
+  fun onCompleteRoutine() {
+    getCurrentRoutine().isComplete = true
+    cycleStateEventsProcessor.onNext(CycleState.RESTING)
   }
 
   fun onCompleteCycle() {
@@ -84,6 +84,8 @@ class CyclicPresenterHelper @Inject constructor(val performManager: PerformManag
   fun onPrepared() {
     require(currentRoutineIdx != VALUE_NOT_SET) { "Attempt to start cycle when current cycle routine is not set!" }
     performManager.startPerforming(getCurrentRoutine().durationTimeSec)
+    cycle.start()
+    cycleStateEventsProcessor.onNext(CycleState.PERFORMING)
   }
 
   fun onRestedBetweenRoutines() {

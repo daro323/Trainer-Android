@@ -112,6 +112,7 @@ class CycleFragment : BaseFragment(R.layout.fragment_cycle), OnBackSupportingFra
 
     cycleViewModel.state = PERFORMING
     cycleViewModel.bodyViewModel.countDown = currentRoutine.durationTimeSec
+    cycleViewModel.bodyViewModel.totalCountDown = currentRoutine.durationTimeSec
     cycleViewModel.headerViewModel.apply {
       exerciseName = currentRoutine.exercise.name
       cycleCount = cycle.cyclesCount
@@ -132,7 +133,7 @@ class CycleFragment : BaseFragment(R.layout.fragment_cycle), OnBackSupportingFra
           viewModelChengesProcessor.onNext(cycleViewModel)
           if (it.state == CountDownState.FINISHED) {
             performEventsDisposable.dispose()
-            presenterHelper.onRoutineComplete()
+            presenterHelper.onCompleteRoutine()
           }
         }
   }

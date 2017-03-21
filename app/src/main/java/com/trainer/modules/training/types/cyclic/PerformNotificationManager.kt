@@ -26,7 +26,7 @@ class PerformNotificationManager @Inject constructor(val notificationManager: No
 
   fun showNotification(forService: Service) {
     forService.startForeground(NOTIFICATION_ID, notificationBuilder.run {
-      setContentTitle(context.getString(R.string.rest_ongoing_notification_title))
+      setContentTitle(context.getString(R.string.cycle_ongoing_notification_title))
       build()
     })
   }

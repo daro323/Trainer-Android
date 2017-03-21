@@ -38,22 +38,39 @@ class CycleViewHeader : FrameLayout {
     this.callback = callback.apply { getViewModelChanges().subscribe { updateUI(it.state, it.headerViewModel) } }
   }
 
-  private fun updateUI(state: CycleState, hearedViewModel: HeaderViewModel) {
+  private fun updateUI(state: CycleState, headerViewModel: HeaderViewModel) {
     when (state) {
       NEW -> {
-        header.text = context.getString(R.string.cycle_new)
+        header.apply {
+          visibility = VISIBLE
+          text = context.getString(R.string.cycle_new)
+        }
         cyclesCount.visibility = GONE
         lastCyclesCount.visibility = GONE
       }
 
       GET_READY -> {
-        header.text = context.getString(R.string.cycle_get_ready)
+        header.apply {
+          visibility = VISIBLE
+          text = context.getString(R.string.cycle_get_ready)
+        }
         cyclesCount.visibility = GONE
         lastCyclesCount.visibility = GONE
       }
 
       PERFORMING -> {
-        // TODO
+        header.apply {
+          visibility = VISIBLE
+          text = headerViewModel.exerciseName
+        }
+        cyclesCount.apply {
+          visibility = VISIBLE
+          text = String.format(context.getString(R.string.current_cycle), headerViewModel.cycleCount.toString())
+        }
+        lastCyclesCount.apply {
+          visibility = VISIBLE
+          text = String.format(context.getString(R.string.last_cycles), headerViewModel.lastCycleCount.toString())
+        }
       }
 
       RESTING -> {

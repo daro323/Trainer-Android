@@ -74,7 +74,7 @@ class RestActivity : BaseActivity(R.layout.activity_rest) {
 
   private fun updateCountDown(countDown: Int) {
     progressView.progress = countDown
-    countDownText.text = String.format(getString(R.string.countdown_text), countDown)
+    countDownText.text = String.format(getString(R.string.countdown_text_with_abort), countDown)
   }
 
   private fun subscribeForRest() {
