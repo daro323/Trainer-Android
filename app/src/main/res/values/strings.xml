@@ -47,4 +47,5 @@
   <string name="next_exercise_label" formatted="false">Next: %s</string>
 
   <string name="cycle_new">New Cycle</string>
+  <string name="cycle_get_ready">Get Ready</string>
 </resources>

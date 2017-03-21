@@ -45,17 +45,13 @@ class CycleViewFooter: FrameLayout {
 
   private fun updateUI(state: CycleState, footerViewModel: FooterViewModel) {
     when (state) {
-      NEW -> {
+      NEW, GET_READY -> {
         nextExercise.apply {
           visibility = VISIBLE
           text = String.format(context.getString(R.string.next_exercise_label), footerViewModel.nextExerciseName)
         }
         finishView.visibility = GONE
         cycleProgressContainer.visibility = GONE
-      }
-
-      GET_READY -> {
-        // TODO
       }
 
       PERFORMING -> {

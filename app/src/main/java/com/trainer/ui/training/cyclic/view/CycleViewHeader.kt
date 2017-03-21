@@ -47,7 +47,9 @@ class CycleViewHeader : FrameLayout {
       }
 
       GET_READY -> {
-        // TODO
+        header.text = context.getString(R.string.cycle_get_ready)
+        cyclesCount.visibility = GONE
+        lastCyclesCount.visibility = GONE
       }
 
       PERFORMING -> {

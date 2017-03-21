@@ -54,7 +54,13 @@ class CycleViewBody: FrameLayout {
       }
 
       GET_READY -> {
-        // TODO
+        startBtn.visibility = GONE
+        doMoreBtn.visibility = GONE
+        progressContainer.visibility = GONE
+        getReadyCountDown.apply {
+          visibility = VISIBLE
+          text = bodyViewModel.countDown.toString()
+        }
       }
 
       PERFORMING -> {
