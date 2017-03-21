@@ -6,8 +6,8 @@ import android.widget.FrameLayout
 import android.widget.TextView
 import com.trainer.R
 import com.trainer.extensions.inflate
-import com.trainer.ui.training.cyclic.CycleState
-import com.trainer.ui.training.cyclic.CycleState.*
+import com.trainer.modules.training.types.cyclic.CycleState
+import com.trainer.modules.training.types.cyclic.CycleState.*
 import com.trainer.ui.training.cyclic.CycleViewCallback
 import com.trainer.ui.training.cyclic.HeaderViewModel
 

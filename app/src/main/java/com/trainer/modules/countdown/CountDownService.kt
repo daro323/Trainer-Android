@@ -16,7 +16,7 @@ import javax.inject.Inject
 class CountDownService : Service() {
 
   @Inject lateinit var powerManager: PowerManager
-  private var timer: CountDownTimer? = null
+  private var timer: CountingDownTimer? = null
   private var wakeLock: PowerManager.WakeLock? = null
 
   companion object {
@@ -82,7 +82,7 @@ class CountDownService : Service() {
     require(callbackClient != null && startValue != null) { "CountDownService started without required parameters!" }
     Lg.d("Start count down!")
     setWakeLockActive(true)
-    timer = CountDownTimer()
+    timer = CountingDownTimer()
     callbackClient!!.onCountDownServiceReady(this)
     timer!!.start(startValue!!)
   }

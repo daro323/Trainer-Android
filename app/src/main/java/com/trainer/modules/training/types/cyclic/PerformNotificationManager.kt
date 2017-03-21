@@ -1,4 +1,4 @@
-package com.trainer.modules.training.rest
+package com.trainer.modules.training.types.cyclic
 
 import android.app.NotificationManager
 import android.app.PendingIntent
@@ -9,19 +9,19 @@ import com.trainer.R
 import com.trainer.base.BaseNotificationManager
 import com.trainer.d2.qualifier.ForApplication
 import com.trainer.d2.scope.ApplicationScope
-import com.trainer.ui.training.RestActivity
+import com.trainer.ui.training.SerieActivity
 import javax.inject.Inject
 
 /**
- * So far
- * Created by dariusz on 20/01/17.
+ * Created by dariusz on 21/03/17.
  */
 @ApplicationScope
-class RestNotificationManager @Inject constructor(val notificationManager: NotificationManager,
-                                                  @ForApplication val context: Context) : BaseNotificationManager() {
+class PerformNotificationManager @Inject constructor(val notificationManager: NotificationManager,
+                                                     @ForApplication val context: Context) : BaseNotificationManager() {
+
   companion object {
-    const private val NOTIFICATION_ID = 997
-    const private val DUMMY_REQUESTCODE = 111
+    const private val NOTIFICATION_ID = 998
+    const private val DUMMY_REQUESTCODE = 222
   }
 
   fun showNotification(forService: Service) {
@@ -38,9 +38,12 @@ class RestNotificationManager @Inject constructor(val notificationManager: Notif
     })
   }
 
-  fun showForRestFinished(forService: Service) {
+  /**
+   * Shown when whole Cycle is complete
+   */
+  fun showForPerformFinished(forService: Service) {
     forService.startForeground(NOTIFICATION_ID, notificationBuilder.run {
-      setContentTitle(context.getString(R.string.rest_finished_notification_title))
+      setContentTitle(context.getString(R.string.cycle_finished_notification_title))
       setContentText("")
       build()
     })
@@ -48,7 +51,7 @@ class RestNotificationManager @Inject constructor(val notificationManager: Notif
 
   override fun provideNotificationManager() = notificationManager
   override fun provideContext() = context
-  override fun provideContentIntent() = Intent(context, RestActivity::class.java)
+  override fun provideContentIntent() = Intent(context, SerieActivity::class.java)
       .run { PendingIntent.getActivity(context, DUMMY_REQUESTCODE, this, PendingIntent.FLAG_UPDATE_CURRENT) }
   override fun provideNotificationId() = NOTIFICATION_ID
 }

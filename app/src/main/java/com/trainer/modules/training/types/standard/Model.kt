@@ -11,6 +11,11 @@ import com.trainer.core.training.model.SerieType.SUPER_SET
 /**
  * Created by dariusz on 15/03/17.
  */
+enum class StandardEvent {    // TODO: Incorporate those events in presenterHelper
+  DO_NEXT,
+  REST
+}
+
 @Keep
 data class Set constructor(private val _id: String,
                            val exercise: Exercise,

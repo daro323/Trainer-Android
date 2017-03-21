@@ -6,7 +6,6 @@ import com.trainer.R
 import com.trainer.base.BaseFragment
 import com.trainer.core.training.business.TrainingManager
 import com.trainer.core.training.business.WorkoutPresenter
-import com.trainer.core.training.model.WorkoutEvent.DO_NEXT
 import com.trainer.d2.common.ActivityComponent
 import com.trainer.extensions.ioMain
 import com.trainer.modules.training.types.standard.StandardPresenterHelper

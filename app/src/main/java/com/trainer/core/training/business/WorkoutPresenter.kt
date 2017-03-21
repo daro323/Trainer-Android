@@ -65,11 +65,7 @@ class WorkoutPresenter @Inject constructor(val repo: TrainingRepository,
   }
 
   fun serieCompleteHandled() {
-    if (getWorkoutStatus() == COMPLETE) {
-      workoutEventsProcessor.onNext(WORKOUT_COMPLETED)
-    } else {
-      workoutEventsProcessor.onNext(WorkoutEvent.DO_NEXT)
-    }
+    determineNextStep()
   }
 
   override fun onSaveSerie(serie: Serie) {
@@ -79,31 +75,36 @@ class WorkoutPresenter @Inject constructor(val repo: TrainingRepository,
     repo.saveTrainingDay(trainingDay)
 
     val restTime = helper.getRestTime()
-    (if (getWorkoutStatus() != COMPLETE && restTime > 0) WorkoutEvent.REST else helper.determineNextStep(getWorkoutStatus()))
-        .apply { workoutEventsProcessor.onNext(this) }
+    if (getWorkoutStatus() != COMPLETE && restTime > 0) workoutEventsProcessor.onNext(WorkoutEvent.REST) else determineNextStep()
   }
 
   override fun hasOtherSerieStarted(thanSerie: Serie) = getWorkoutList()
       .filter { it != thanSerie }
       .any { it.status() == STARTED }
 
-  fun onPrepared() {
-    workoutEventsProcessor.onNext(helper.determineNextStep(getWorkoutStatus()))
-  }
-
   fun onStartRest() = restManager.startRest(getRestTime())
 
   fun onAbortRest() {
     restManager.abortRest()
-    workoutEventsProcessor.onNext(helper.determineNextStep(getWorkoutStatus()))
+    determineNextStep()
   }
 
   fun restComplete() {
     restManager.onRestComplete()
-    workoutEventsProcessor.onNext(helper.determineNextStep(getWorkoutStatus()))
+    determineNextStep()
   }
 
   fun onRestEvents() = restManager.getRestEvents()
 
-  fun getRestTime() = 4//helper.getRestTime()
+  fun getRestTime() = helper.getRestTime()
+
+  private fun determineNextStep() {
+    if (getWorkoutStatus() == COMPLETE) {
+      workoutEventsProcessor.onNext(WORKOUT_COMPLETED)
+    } else if (helper.getSerie().status() == COMPLETE) {
+      workoutEventsProcessor.onNext(SERIE_COMPLETED)
+    } else {
+      helper.determineNextStep()
+    }
+  }
 }

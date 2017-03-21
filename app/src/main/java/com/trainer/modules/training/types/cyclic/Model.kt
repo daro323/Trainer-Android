@@ -10,6 +10,16 @@ import com.trainer.core.training.model.SerieType.CYCLE
 /**
  * Created by dariusz on 15/03/17.
  */
+
+enum class CycleState {
+  NEW,        // User is presented starting screen
+  GET_READY,  // Getting ready (3 to 0 count down is initiated)
+  PERFORMING, // Performing a routine
+  RESTING,    // Resting between routines
+  DONE,       // Cycle routine set was performed, at this point we can do another cycle
+  COMPLETE    // Whole cycle is finished, at this point we can't perform another cycle
+}
+
 @Keep
 data class Cycle(private val _id: String,
                  val name: String,
@@ -73,8 +83,7 @@ data class Cycle(private val _id: String,
 data class CyclicRoutine constructor(val exercise: Exercise,
                                      val durationTimeSec: Int,
                                      val restTimeSec: Int,
-                                     var isComplete: Boolean = false,
-                                     var countDownTime: Int = durationTimeSec) {
+                                     var isComplete: Boolean = false) {
   fun complete() {
     isComplete = true
   }

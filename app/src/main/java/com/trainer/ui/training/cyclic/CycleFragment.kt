@@ -8,12 +8,13 @@ import com.trainer.base.OnBackSupportingFragment
 import com.trainer.core.training.business.TrainingManager
 import com.trainer.core.training.business.WorkoutPresenter
 import com.trainer.core.training.model.ProgressStatus
-import com.trainer.core.training.model.WorkoutEvent
-import com.trainer.core.training.model.WorkoutEvent.*
 import com.trainer.d2.common.ActivityComponent
 import com.trainer.extensions.ioMain
+import com.trainer.modules.countdown.CountDownState
+import com.trainer.modules.countdown.CountingDownTimer
+import com.trainer.modules.training.types.cyclic.CycleState
+import com.trainer.modules.training.types.cyclic.CycleState.*
 import com.trainer.modules.training.types.cyclic.CyclicPresenterHelper
-import com.trainer.ui.training.cyclic.CycleState.*
 import com.trainer.ui.training.cyclic.CycleViewEvent.*
 import io.reactivex.disposables.Disposables
 import io.reactivex.processors.BehaviorProcessor
@@ -30,7 +31,10 @@ class CycleFragment : BaseFragment(R.layout.fragment_cycle), OnBackSupportingFra
 
   private val cycleViewModel: CycleViewModel = CycleViewModel.createNew()
   private val viewModelChengesProcessor = BehaviorProcessor.create<CycleViewModel>()
+
   private var workoutEventsSubscription = Disposables.disposed()
+  private var timerDisposable = Disposables.disposed()
+  private var performEventsDisposable = Disposables.disposed()
 
   override fun inject(component: ActivityComponent) {
     component.inject(this)
@@ -46,11 +50,13 @@ class CycleFragment : BaseFragment(R.layout.fragment_cycle), OnBackSupportingFra
 
   override fun onStart() {
     super.onStart()
-    subscribeForWorkoutEvents()
+    subscribeForCycleStateEvents()
   }
 
   override fun onStop() {
     workoutEventsSubscription.dispose()
+    timerDisposable.dispose()
+    performEventsDisposable.dispose()
     super.onStop()
   }
 
@@ -62,20 +68,72 @@ class CycleFragment : BaseFragment(R.layout.fragment_cycle), OnBackSupportingFra
 
   override fun getViewModelChanges() = viewModelChengesProcessor.toObservable()
 
-  override fun onCycleViewEvent(event: CycleViewEvent) {
+  override fun onViewEvent(event: CycleViewEvent) {
     // TODO
     when (event) {
-      START -> {}
-      ONE_MORE -> {}
-      FINISH -> {}
+      START -> presenterHelper.onStartCycle()
+
+      ONE_MORE -> {
+      }
+      FINISH -> {
+      }
     }
   }
 
-  private fun subscribeForWorkoutEvents() {
+  private fun subscribeForGetReadyCountDown() {
+    timerDisposable.dispose()
+    CountingDownTimer()
+        .apply {
+          timerDisposable = onCountDownEvents()
+              .ioMain()
+              .doOnSubscribe { cycleViewModel.state = GET_READY }
+              .doOnDispose { abort() }
+              .subscribe {
+                cycleViewModel.bodyViewModel.countDown = it.countDown
+                if (it.state == CountDownState.FINISHED) {
+                  timerDisposable.dispose()
+                  subscribeForPerformingEvents()
+                }
+              }
+        }.start(CyclicPresenterHelper.GET_READY_TIME_SEC)
+  }
+
+  private fun subscribeForCycleStateEvents() {
     workoutEventsSubscription.dispose()
-    workoutEventsSubscription = presenter.onWorkoutEvent()
+    workoutEventsSubscription = presenterHelper.getCycleStateEvents()
         .ioMain()
-        .subscribe { handleWorkoutEvent(it) }
+        .subscribe { handleCycleStateEvent(it) }
+  }
+
+  private fun subscribeForPerformingEvents() {
+    val cycle = presenterHelper.getSerie()
+    val currentRoutine = presenterHelper.getCurrentRoutine()
+
+    cycleViewModel.state = PERFORMING
+    cycleViewModel.bodyViewModel.countDown = currentRoutine.durationTimeSec
+    cycleViewModel.headerViewModel.apply {
+      exerciseName = currentRoutine.exercise.name
+      cycleCount = cycle.cyclesCount
+      lastCycleCount = cycle.lastCyclesCount
+    }
+    cycleViewModel.footerViewModel.apply {
+      presenterHelper.getNextRoutine()?.apply { nextExerciseName = exercise.name }
+      currentCount = presenterHelper.getCurrentCycleNumber()
+      totalCount = presenterHelper.getCycleRoutinesCount()
+    }
+    viewModelChengesProcessor.onNext(cycleViewModel)
+
+    performEventsDisposable.dispose()
+    performEventsDisposable = presenterHelper.getPerformEvents()
+        .ioMain()
+        .subscribe {
+          cycleViewModel.bodyViewModel.countDown = it.countDown
+          viewModelChengesProcessor.onNext(cycleViewModel)
+          if (it.state == CountDownState.FINISHED) {
+            performEventsDisposable.dispose()
+            presenterHelper.onRoutineComplete()
+          }
+        }
   }
 
   private fun initViewModel() {
@@ -102,15 +160,19 @@ class CycleFragment : BaseFragment(R.layout.fragment_cycle), OnBackSupportingFra
     viewModelChengesProcessor.onNext(cycleViewModel)
   }
 
-  private fun handleWorkoutEvent(event: WorkoutEvent) {
+  private fun handleCycleStateEvent(state: CycleState) {
     // TODO
-    when (event) {
-      REST -> {
-      }
-      PREPARE -> {
-      }
-      DO_NEXT -> {
-      }
+    when (state) {
+      NEW -> {}
+      GET_READY -> subscribeForGetReadyCountDown()
+
+      PERFORMING -> {}
+
+      RESTING -> {}
+
+      DONE -> {}
+
+      COMPLETE -> {}
     }
   }
 }

@@ -10,7 +10,7 @@ import java.util.concurrent.TimeUnit
 /**
  * Created by dariusz on 19/03/17.
  */
-class CountDownTimer {
+class CountingDownTimer {
 
   private val countDownEventsProcessor = BehaviorProcessor.createDefault(IDLE_STATE_EVENT)
   private var countDownDisposable = Disposables.disposed()

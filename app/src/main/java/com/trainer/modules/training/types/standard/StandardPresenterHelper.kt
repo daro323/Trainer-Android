@@ -3,12 +3,10 @@ package com.trainer.modules.training.types.standard
 import com.trainer.core.training.business.WorkoutPresenterHelper
 import com.trainer.core.training.business.WorkoutPresenterHelper.HelperCallback
 import com.trainer.core.training.model.CoreConstants.Companion.VALUE_NOT_SET
-import com.trainer.core.training.model.ProgressStatus
 import com.trainer.core.training.model.ProgressStatus.COMPLETE
 import com.trainer.core.training.model.Repetition
 import com.trainer.core.training.model.Serie
 import com.trainer.core.training.model.WeightType.BODY_WEIGHT
-import com.trainer.core.training.model.WorkoutEvent.*
 import javax.inject.Inject
 
 /**
@@ -37,16 +35,9 @@ class StandardPresenterHelper @Inject constructor() : WorkoutPresenterHelper {
 
   override fun getSerie() = serie
 
-  override fun determineNextStep(workoutStatus: ProgressStatus) =
-      if (workoutStatus == COMPLETE) {
-        WORKOUT_COMPLETED
-      } else if (serie.status() == COMPLETE) {
-        currentSetIdx = DEFAULT_SET_INDEX
-        SERIE_COMPLETED
-      } else {
-        refreshCurrentSetIdx()
-        DO_NEXT
-      }
+  override fun determineNextStep() {
+    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+  }
 
   fun getSet(id: String): Set = when (serie) {
     is Set -> (serie as Set).apply { if (id() != id) throw IllegalArgumentException("Couldn't find set for ID= $id") }
