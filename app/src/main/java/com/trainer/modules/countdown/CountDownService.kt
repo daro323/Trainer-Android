@@ -70,11 +70,6 @@ class CountDownService : Service() {
     return START_REDELIVER_INTENT
   }
 
-  override fun onDestroy() {
-    cleanup()
-    super.onDestroy()
-  }
-
   fun onCountDownEvents() = timer!!.onCountDownEvents()
 
   private fun doStartCountDown() {

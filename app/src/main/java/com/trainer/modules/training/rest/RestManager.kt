@@ -14,6 +14,7 @@ import io.reactivex.processors.BehaviorProcessor
 import javax.inject.Inject
 
 /**
+ * This class needs to be explicitly started/aborted/finished in order to correctly handle lifecycle of ForegroundService cooperator
  * Created by dariusz on 18/01/17.
  */
 @ApplicationScope
@@ -42,6 +43,7 @@ class RestManager @Inject constructor(val restNotification: RestNotificationMana
 
   fun onRestComplete() {
     Lg.d("onRestComplete")
+    countDownDisposable.dispose()
     CountDownService.finish(context)
   }
 
@@ -64,7 +66,7 @@ class RestManager @Inject constructor(val restNotification: RestNotificationMana
         }
         .filter { it.state == RestState.FINISHED }
         .subscribe {
-          vibrator.vibrate(VIBRATE_DURATION_MS)
+//          vibrator.vibrate(VIBRATE_DURATION_MS)
           restNotification.showForRestFinished(service)
         }
   }

@@ -37,6 +37,7 @@ class PerformManager @Inject constructor(val performNotificationManager: Perform
 
   fun onPerformingComplete() {
     Lg.d("onPerformingComplete")
+    countDownDisposable.dispose()
     CountDownService.finish(context)
   }
 

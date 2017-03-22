@@ -12,6 +12,7 @@ import com.trainer.d2.common.ActivityComponent
 import com.trainer.extensions.ioMain
 import com.trainer.modules.countdown.CountDownState
 import com.trainer.modules.countdown.CountingDownTimer
+import com.trainer.modules.training.rest.RestState
 import com.trainer.modules.training.types.cyclic.CycleState
 import com.trainer.modules.training.types.cyclic.CycleState.*
 import com.trainer.modules.training.types.cyclic.CyclicPresenterHelper
@@ -36,6 +37,7 @@ class CycleFragment : BaseFragment(R.layout.fragment_cycle), OnBackSupportingFra
   private var cycleStateEventsSubscription = Disposables.disposed()
   private var timerDisposable = Disposables.disposed()
   private var performEventsDisposable = Disposables.disposed()
+  private var restDisposable = Disposables.disposed()
 
   override fun inject(component: ActivityComponent) {
     component.inject(this)
@@ -59,6 +61,7 @@ class CycleFragment : BaseFragment(R.layout.fragment_cycle), OnBackSupportingFra
     cycleStateEventsSubscription.dispose()
     timerDisposable.dispose()
     performEventsDisposable.dispose()
+    restDisposable.dispose()
     super.onStop()
   }
 
@@ -111,8 +114,10 @@ class CycleFragment : BaseFragment(R.layout.fragment_cycle), OnBackSupportingFra
     val currentRoutine = presenterHelper.getCurrentRoutine()
 
     cycleViewModel.state = PERFORMING
-    cycleViewModel.bodyViewModel.countDown = currentRoutine.durationTimeSec
-    cycleViewModel.bodyViewModel.totalCountDown = currentRoutine.durationTimeSec
+    cycleViewModel.bodyViewModel.apply {
+      countDown = currentRoutine.durationTimeSec
+      totalCountDown = currentRoutine.durationTimeSec
+    }
     cycleViewModel.headerViewModel.apply {
       exerciseName = currentRoutine.exercise.name
       cycleCount = cycle.cyclesCount
@@ -134,6 +139,37 @@ class CycleFragment : BaseFragment(R.layout.fragment_cycle), OnBackSupportingFra
           if (it.state == CountDownState.FINISHED) {
             performEventsDisposable.dispose()
             presenterHelper.onCompleteRoutine()
+          }
+        }
+  }
+
+  private fun subscribeForRest() {
+    val currentRoutine = presenterHelper.getCurrentRoutine()
+
+    cycleViewModel.state = RESTING
+    cycleViewModel.bodyViewModel.apply {
+      countDown = currentRoutine.restTimeSec
+      totalCountDown = currentRoutine.restTimeSec
+    }
+    cycleViewModel.footerViewModel.nextExerciseName = presenterHelper.getNextRoutine()!!.exercise.name
+    viewModelChengesProcessor.onNext(cycleViewModel)
+
+    restDisposable.dispose()
+    restDisposable = presenterHelper.getRestBetweenRoutinesEvents()
+        .ioMain()
+        .doOnSubscribe {
+          cycleViewModel.bodyViewModel.totalCountDown = presenterHelper.getCurrentRoutine().restTimeSec
+          cycleViewModel.bodyViewModel.countDown = presenterHelper.getCurrentRoutine().restTimeSec
+          presenterHelper.onStartRestBetweenRoutines()
+        }
+        .doOnNext {
+          cycleViewModel.bodyViewModel.countDown = it.countDown
+          viewModelChengesProcessor.onNext(cycleViewModel)
+        }
+        .subscribe {
+          if (it.state == RestState.FINISHED) {
+            presenterHelper.onRestedBetweenRoutines()
+            restDisposable.dispose()
           }
         }
   }
@@ -162,6 +198,7 @@ class CycleFragment : BaseFragment(R.layout.fragment_cycle), OnBackSupportingFra
 
       ONE_MORE -> {
       }
+
       FINISH -> {
       }
     }
@@ -176,8 +213,7 @@ class CycleFragment : BaseFragment(R.layout.fragment_cycle), OnBackSupportingFra
 
       PERFORMING -> subscribeForPerformingEvents()
 
-      RESTING -> {
-      } // between routines
+      RESTING -> subscribeForRest()
 
       DONE -> {
       }

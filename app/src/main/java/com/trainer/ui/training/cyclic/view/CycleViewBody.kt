@@ -63,7 +63,7 @@ class CycleViewBody: FrameLayout {
         }
       }
 
-      PERFORMING -> {
+      PERFORMING, RESTING -> {
         startBtn.visibility = GONE
         doMoreBtn.visibility = GONE
         getReadyCountDown.visibility = GONE
@@ -73,10 +73,6 @@ class CycleViewBody: FrameLayout {
           progress = bodyViewModel.countDown
         }
         exerciseCountDown.text = String.format(context.getString(R.string.countdown_text), bodyViewModel.countDown)
-      }
-
-      RESTING -> {
-        // TODO
       }
 
       DONE -> {

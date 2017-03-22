@@ -74,7 +74,12 @@ class CycleViewHeader : FrameLayout {
       }
 
       RESTING -> {
-        // TODO
+        header.apply {
+          visibility = VISIBLE
+          text = context.getString(R.string.cycle_resting)
+        }
+        cyclesCount.visibility = GONE
+        lastCyclesCount.visibility = GONE
       }
 
       DONE -> {

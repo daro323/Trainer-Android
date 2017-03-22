@@ -45,7 +45,7 @@ class CycleViewFooter: FrameLayout {
 
   private fun updateUI(state: CycleState, footerViewModel: FooterViewModel) {
     when (state) {
-      NEW, GET_READY -> {
+      NEW, GET_READY, RESTING -> {
         nextExercise.apply {
           visibility = VISIBLE
           text = String.format(context.getString(R.string.next_exercise_label), footerViewModel.nextExerciseName)
@@ -62,10 +62,6 @@ class CycleViewFooter: FrameLayout {
         totalCycleProgressCount.text = footerViewModel.totalCount.toString()
         cycleProgressBar.max = footerViewModel.totalCount
         cycleProgressBar.progress = footerViewModel.currentCount
-      }
-
-      RESTING -> {
-        // TODO
       }
 
       DONE -> {

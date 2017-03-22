@@ -49,6 +49,7 @@
 
   <string name="cycle_new">New Cycle</string>
   <string name="cycle_get_ready">Get Ready</string>
+  <string name="cycle_resting">Rest</string>
   <string name="cycle_ongoing_notification_title">Exercise in progress</string>
   <string name="current_cycle">Cycles %s</string>
   <string name="last_cycles">Last %s</string>

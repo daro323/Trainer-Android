@@ -5,13 +5,15 @@ import com.trainer.core.training.business.WorkoutPresenterHelper
 import com.trainer.core.training.model.CoreConstants.Companion.VALUE_NOT_SET
 import com.trainer.core.training.model.ProgressStatus.*
 import com.trainer.core.training.model.Serie
+import com.trainer.modules.training.rest.RestManager
 import io.reactivex.processors.BehaviorProcessor
 import javax.inject.Inject
 
 /**
  * Created by dariusz on 15/03/17.
  */
-class CyclicPresenterHelper @Inject constructor(val performManager: PerformManager) : WorkoutPresenterHelper {
+class CyclicPresenterHelper @Inject constructor(val performManager: PerformManager,
+                                                val restManager: RestManager) : WorkoutPresenterHelper {
   private lateinit var cycle: Cycle
   private lateinit var callback: WorkoutPresenterHelper.HelperCallback
   private var currentRoutineIdx = VALUE_NOT_SET
@@ -44,8 +46,6 @@ class CyclicPresenterHelper @Inject constructor(val performManager: PerformManag
     }
   }
 
-  override fun getRestTime() = cycle.restTimeSec
-
   override fun getSerie() = cycle
 
   override fun determineNextStep() {
@@ -73,7 +73,8 @@ class CyclicPresenterHelper @Inject constructor(val performManager: PerformManag
 
   fun onCompleteRoutine() {
     getCurrentRoutine().isComplete = true
-    cycleStateEventsProcessor.onNext(CycleState.RESTING)
+    performManager.onPerformingComplete()
+    if (isCurrentRoutineTheLast()) callback.onSaveSerie(cycle) else cycleStateEventsProcessor.onNext(CycleState.RESTING)
   }
 
   fun onCompleteCycle() {
@@ -88,11 +89,20 @@ class CyclicPresenterHelper @Inject constructor(val performManager: PerformManag
     cycleStateEventsProcessor.onNext(CycleState.PERFORMING)
   }
 
+  fun getPerformEvents() = performManager.getPerformEvents()
+
+  override fun getRestTime() = cycle.restTimeSec
+
+  fun onStartRestBetweenRoutines() {
+    restManager.startRest(getCurrentRoutine().restTimeSec)
+  }
+
   fun onRestedBetweenRoutines() {
+    restManager.onRestComplete()
     determineNextStep()
   }
 
-  fun getPerformEvents() = performManager.getPerformEvents()
+  fun getRestBetweenRoutinesEvents() = restManager.getRestEvents()
 
   fun getCycleStateEvents() = cycleStateEventsProcessor.toObservable()
 
