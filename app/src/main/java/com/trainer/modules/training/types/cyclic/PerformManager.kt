@@ -39,6 +39,7 @@ class PerformManager @Inject constructor(val performNotificationManager: Perform
     Lg.d("onPerformingComplete")
     countDownDisposable.dispose()
     CountDownService.finish(context)
+    performEventsProcessor.onNext(CountDownEvent(0, CountDownState.IDLE))
   }
 
   override fun onCountDownServiceReady(service: CountDownService) {
