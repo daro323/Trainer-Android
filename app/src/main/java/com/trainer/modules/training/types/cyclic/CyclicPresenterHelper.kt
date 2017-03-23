@@ -53,6 +53,7 @@ class CyclicPresenterHelper @Inject constructor(val performManager: PerformManag
       cycleStateEventsProcessor.onNext(CycleState.DONE)
     } else {
       refreshCurrentRoutineIdx()
+      performManager.startPerforming(getCurrentRoutine().durationTimeSec)
       cycleStateEventsProcessor.onNext(CycleState.PERFORMING)
     }
   }

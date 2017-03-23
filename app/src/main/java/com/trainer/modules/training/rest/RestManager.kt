@@ -20,7 +20,7 @@ import javax.inject.Inject
 @ApplicationScope
 class RestManager @Inject constructor(val restNotification: RestNotificationManager,
                                       val vibrator: Vibrator,
-                                      @ForApplication val context: Context) : CountDownServiceClient {
+                                      @ForApplication val context: Context) {
 
   companion object {
     private const val VIBRATE_DURATION_MS = 1200L

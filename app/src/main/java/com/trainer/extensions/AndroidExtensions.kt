@@ -45,6 +45,7 @@ fun Intent.putExtras(vararg extras: Pair<String, Any?>) {
   val bundle = getExtras() ?: Bundle().apply { putExtras(this) }
   bundle.fillWith(extras)
 }
+inline fun Intent.with(action: String, intentSetup: Intent.() -> Unit) = Intent(action).apply { intentSetup() }
 
 private fun Bundle.fillWith(extras: Array<out Pair<String, Any?>> = emptyArray()) {
   for ((key, value) in extras) {

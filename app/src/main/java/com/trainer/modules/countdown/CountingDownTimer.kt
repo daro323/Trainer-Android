@@ -19,7 +19,7 @@ class CountingDownTimer {
     val IDLE_STATE_EVENT = CountDownEvent(0, IDLE)
   }
 
-  fun start(startValue: Int) {
+  fun start(startValue: Int): Observable<CountDownEvent> {
     require(startValue > 0) { "Start dount down invoked with invalid start value= $startValue!" }
     require(countDownDisposable.isDisposed) { "Attempt to start counting down when count down is already ongoing!" }
     Lg.d("start")
@@ -34,13 +34,13 @@ class CountingDownTimer {
         }
         .doOnNext { countDownEventsProcessor.onNext(it) }
         .subscribe { if (it.state == FINISHED) countDownDisposable.dispose() }
+
+    return countDownEventsProcessor.toObservable()
   }
 
   fun abort() {
     Lg.d("abort")
     countDownDisposable.dispose()
-    countDownEventsProcessor.onNext(IDLE_STATE_EVENT)
+    countDownEventsProcessor.onComplete()
   }
-
-  fun onCountDownEvents() = countDownEventsProcessor.toObservable()
 }
