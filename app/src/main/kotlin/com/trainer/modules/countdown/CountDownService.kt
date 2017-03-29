@@ -25,6 +25,7 @@ class CountDownService : Service() {
   @Inject lateinit var powerManager: PowerManager
   @Inject lateinit var notificationProvider: CountDownNotificationProvider
   private lateinit var notification: CountDownNotification
+  private var startId: Int = -1
   private var timer: CountingDownTimer? = null
   private var wakeLock: PowerManager.WakeLock? = null
 
@@ -73,6 +74,7 @@ class CountDownService : Service() {
 
   override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
     val action = intent.action ?: throw IllegalArgumentException("CountDownService started without provided action!")
+    this.startId = startId
     Lg.d("CountDown Service was freshly started with action= $action")
 
     when (action) {
@@ -111,7 +113,7 @@ class CountDownService : Service() {
   private fun doFinishCountDown() {
     Lg.d("Abort count down")
     cleanup()
-    stopSelf()
+    stopSelf(startId)
   }
 
   private fun setWakeLockActive(isActive: Boolean) {
@@ -119,6 +121,7 @@ class CountDownService : Service() {
     if (isActive) {
       require(wakeLock == null) { "Request to acquire wake lock but it's already acquired!" }
       wakeLock = powerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, WAKELOCK_TAG).apply { acquire() }
+      require(wakeLock != null) { "WakeLock requested but not received!" }
     } else {
       require(wakeLock != null) { "Request to free wake lock but there is non acquired!" }
       wakeLock = wakeLock!!.run {
