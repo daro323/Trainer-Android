@@ -41,6 +41,7 @@ class SetFragment : BaseFragment(R.layout.fragment_set) {
   private val presenter: WorkoutPresenter by lazy { trainingManager.workoutPresenter ?: throw IllegalStateException("Current workout presenter not set!") }  // can call this only after component.inject()!
   private val presenterHelper: StandardPresenterHelper by lazy { presenter.getHelper() as StandardPresenterHelper }  // can call this only after component.inject()!
   private var setId: String by arg(ARG_SET_ID)
+  private var shownAsSetSerie: Boolean by arg(ARG_SHOWN_AS_SET_SERIE, false)
   private lateinit var set: Set
   private var workoutEventsSubscription = Disposables.disposed()
   private val fieldsToValidate: SetFragmentFieldValidator by lazy { SetFragmentFieldValidator(weightInput, repInput) }
@@ -57,6 +58,7 @@ class SetFragment : BaseFragment(R.layout.fragment_set) {
 
   companion object {
     const val ARG_SET_ID = "ARG_SET_ID"
+    const val ARG_SHOWN_AS_SET_SERIE = "ARG_SHOWN_AS_SET_SERIE"
   }
 
   override fun inject(component: ActivityComponent) {
@@ -67,7 +69,7 @@ class SetFragment : BaseFragment(R.layout.fragment_set) {
     super.onStart()
     createUI(presenterHelper.getSet(setId))
     submitButton.setOnClickListener(onSubmitHandler)
-    subscribeForWorkoutEvents()
+    if (shownAsSetSerie) subscribeForWorkoutEvents()
   }
 
   override fun onStop() {
@@ -78,7 +80,12 @@ class SetFragment : BaseFragment(R.layout.fragment_set) {
   override fun setUserVisibleHint(isVisibleToUser: Boolean) {
     super.setUserVisibleHint(isVisibleToUser)
     try {
-      if (isVisibleToUser) refreshUi(presenterHelper.getSet(setId))
+      if (isVisibleToUser) {
+        refreshUi(presenterHelper.getSet(setId))
+        subscribeForWorkoutEvents()
+      } else {
+        workoutEventsSubscription.dispose()
+      }
     } catch (e: UninitializedPropertyAccessException) {
       // Ignore - this callback came too early (earlier than component was injected)
     }

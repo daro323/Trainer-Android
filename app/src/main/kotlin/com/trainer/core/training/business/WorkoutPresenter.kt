@@ -64,7 +64,7 @@ class WorkoutPresenter @Inject constructor(val repo: TrainingRepository,
   }
 
   fun serieCompleteHandled() {
-    determineNextStep()
+    workoutEventsProcessor.onNext(ONGOING)
   }
 
   override fun onSaveSerie(serie: Serie) {

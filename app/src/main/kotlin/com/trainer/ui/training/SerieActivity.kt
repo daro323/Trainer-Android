@@ -21,6 +21,7 @@ import com.trainer.modules.training.types.standard.SuperSet
 import com.trainer.ui.training.cyclic.CycleFragment
 import com.trainer.ui.training.standard.SetFragment
 import com.trainer.ui.training.standard.SetFragment.Companion.ARG_SET_ID
+import com.trainer.ui.training.standard.SetFragment.Companion.ARG_SHOWN_AS_SET_SERIE
 import com.trainer.ui.training.standard.SuperSetFragment
 import io.reactivex.disposables.Disposables
 import javax.inject.Inject
@@ -104,7 +105,10 @@ class SerieActivity : BaseActivity(R.layout.activity_serie) {
 
   private fun showSerieAsSet(set: Set) {
     title = getString(R.string.set)
-    setupReplaceFragment(R.id.serieContainer) { SetFragment().with(ARG_SET_ID to set.id()) }
+    setupReplaceFragment(R.id.serieContainer) { SetFragment()
+        .with(
+            ARG_SET_ID to set.id(),
+            ARG_SHOWN_AS_SET_SERIE to true) }
   }
 
   private fun showSerieAsSuperSet() {
