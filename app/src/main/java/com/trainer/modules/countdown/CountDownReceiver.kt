@@ -12,10 +12,15 @@ import com.trainer.d2.qualifier.ForApplication
  */
 class CountDownReceiver constructor(private val onCountDownAction: (Int) -> Unit) {
 
+  companion object {
+    const val COUNT_DOWN_EVENT_ACTION = "COUNT_DOWN_EVENT_ACTION"
+    const val COUNT_DOWN_EVENT_ARG = "COUNT_DOWN_EVENT_ARG"
+  }
+
   private val receiver: BroadcastReceiver by lazy {
     object : BroadcastReceiver() {
       override fun onReceive(context: Context, intent: Intent) {
-        intent.getIntExtra(CountDownService.COUNT_DOWN_EVENT_ARG, -1)
+        intent.getIntExtra(COUNT_DOWN_EVENT_ARG, -1)
             .run {
               require(this != -1) { "CountDownService.COUNT_DOWN_EVENT_ARG received without count down value being provided!" }
               onCountDownAction(this)
@@ -25,10 +30,10 @@ class CountDownReceiver constructor(private val onCountDownAction: (Int) -> Unit
   }
 
   fun register(@ForApplication context: Context) {
-    LocalBroadcastManager.getInstance(context).registerReceiver(receiver, IntentFilter(CountDownService.COUNT_DOWN_EVENT_ACTION))
+    LocalBroadcastManager.getInstance(context).registerReceiver(receiver, IntentFilter(COUNT_DOWN_EVENT_ACTION))
   }
 
-  fun unregisterAndDispose(@ForApplication context: Context) {
+  fun unregister(@ForApplication context: Context) {
     LocalBroadcastManager.getInstance(context).unregisterReceiver(receiver)
   }
 }

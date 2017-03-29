@@ -9,6 +9,7 @@ import com.trainer.R
 import com.trainer.base.BaseNotificationManager
 import com.trainer.d2.qualifier.ForApplication
 import com.trainer.d2.scope.ApplicationScope
+import com.trainer.modules.countdown.CountDownNotificationProvider
 import com.trainer.ui.training.RestActivity
 import javax.inject.Inject
 
@@ -18,27 +19,24 @@ import javax.inject.Inject
  */
 @ApplicationScope
 class RestNotificationManager @Inject constructor(val notificationManager: NotificationManager,
-                                                  @ForApplication val context: Context) : BaseNotificationManager() {
+                                                  @ForApplication val context: Context) : BaseNotificationManager(), CountDownNotificationProvider.CountDownNotification {
   companion object {
     const private val NOTIFICATION_ID = 997
     const private val DUMMY_REQUESTCODE = 111
   }
 
-  fun showNotification(forService: Service) {
-    forService.startForeground(NOTIFICATION_ID, notificationBuilder.run {
-      setContentTitle(context.getString(R.string.rest_ongoing_notification_title))
-      build()
-    })
+  override fun showNotification(restTime: Int, forService: Service) {
+    if (restTime > 0) {
+      forService.startForeground(NOTIFICATION_ID, notificationBuilder.run {
+        setContentText(String.format(context.getString(R.string.notification_countdown_text), restTime))
+        build()
+      })
+    } else {
+      showForRestFinished(forService)
+    }
   }
 
-  fun updateNotification(restTime: Int, forService: Service) {
-    forService.startForeground(NOTIFICATION_ID, notificationBuilder.run {
-      setContentText(String.format(context.getString(R.string.notification_countdown_text), restTime))
-      build()
-    })
-  }
-
-  fun showForRestFinished(forService: Service) {
+  private fun showForRestFinished(forService: Service) {
     forService.startForeground(NOTIFICATION_ID, notificationBuilder.run {
       setContentTitle(context.getString(R.string.rest_finished_notification_title))
       setContentText("")

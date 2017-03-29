@@ -36,9 +36,8 @@
   <string name="set">Set</string>
   <string name="super_set">Super Set</string>
   <string name="cycle">Cycle</string>
-  <string name="rest_ongoing_notification_title">Resting in progress</string>
   <string name="cycle_routine_ongoing">Cycle exercise in progress</string>
-  <string name="cycle_finished_notification_title">Cycle finished</string>
+  <string name="finished_notification_title">Finished</string>
   <string name="rest_finished_notification_title">Rest finished</string>
   <string name="export_plan_warning">Sure you want to export? This will override existing exported plan.</string>
   <string name="result_missing_rep_count">Provide reps count!</string>
@@ -50,7 +49,6 @@
   <string name="cycle_new">New Cycle</string>
   <string name="cycle_get_ready">Get Ready</string>
   <string name="cycle_resting">Rest</string>
-  <string name="cycle_ongoing_notification_title">Exercise in progress</string>
   <string name="current_cycle">Cycles %s</string>
   <string name="last_cycles">Last %s</string>
 </resources>

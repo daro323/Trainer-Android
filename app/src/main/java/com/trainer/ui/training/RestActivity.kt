@@ -9,8 +9,6 @@ import com.trainer.commons.Lg
 import com.trainer.core.training.business.TrainingManager
 import com.trainer.core.training.business.WorkoutPresenter
 import com.trainer.extensions.ioMain
-import com.trainer.modules.training.rest.RestEvent
-import com.trainer.modules.training.rest.RestState.*
 import io.reactivex.disposables.Disposables
 import kotlinx.android.synthetic.main.activity_rest.*
 import javax.inject.Inject
@@ -52,23 +50,16 @@ class RestActivity : BaseActivity(R.layout.activity_rest) {
     subscribeForRest()
   }
 
-  private fun onRestEvent(event: RestEvent) {
-    when (event.state) {
-
-      START, RESTING -> {
-        updateCountDown(event.countDown)
-        container.visibility = VISIBLE
-      }
-
-      FINISHED -> {
-        Lg.d("Finished - closing...")
-        updateCountDown(event.countDown)
-        restSubscription.dispose()
-        presenter.restComplete()
-        finish()
-      }
-
-      else -> {}  //ignore
+  private fun onRestEvent(countDown: Int) {
+    if (countDown > 0) {
+      updateCountDown(countDown)
+      container.visibility = VISIBLE
+    } else {
+      Lg.d("Finished - closing...")
+      updateCountDown(countDown)
+      restSubscription.dispose()
+      presenter.restComplete()
+      finish()
     }
   }
 

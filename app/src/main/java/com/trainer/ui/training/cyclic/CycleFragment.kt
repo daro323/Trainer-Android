@@ -10,9 +10,8 @@ import com.trainer.core.training.business.WorkoutPresenter
 import com.trainer.core.training.model.WorkoutEvent
 import com.trainer.d2.common.ActivityComponent
 import com.trainer.extensions.ioMain
-import com.trainer.modules.countdown.CountDownState
+import com.trainer.modules.countdown.CountDownService.Companion.abort
 import com.trainer.modules.countdown.CountingDownTimer
-import com.trainer.modules.training.rest.RestState
 import com.trainer.modules.training.types.cyclic.CycleState
 import com.trainer.modules.training.types.cyclic.CycleState.*
 import com.trainer.modules.training.types.cyclic.CyclicPresenterHelper
@@ -85,21 +84,18 @@ class CycleFragment : BaseFragment(R.layout.fragment_cycle), OnBackSupportingFra
 
   private fun subscribeForGetReadyCountDown() {
     timerDisposable.dispose()
-    CountingDownTimer()
-        .apply {
-          timerDisposable = onCountDownEvents()
-              .ioMain()
-              .doOnSubscribe { cycleViewModel.state = GET_READY }
-              .doOnDispose { abort() }
-              .subscribe {
-                cycleViewModel.bodyViewModel.countDown = it.countDown
-                viewModelChengesProcessor.onNext(cycleViewModel)
-                if (it.state == CountDownState.FINISHED) {
-                  timerDisposable.dispose()
-                  presenterHelper.onPrepared()
-                }
-              }
-        }.start(CyclicPresenterHelper.GET_READY_TIME_SEC)
+    timerDisposable = CountingDownTimer().start(CyclicPresenterHelper.GET_READY_TIME_SEC)
+        .ioMain()
+        .doOnSubscribe { cycleViewModel.state = GET_READY }
+        .doOnDispose { abort(activity) }
+        .subscribe {
+          cycleViewModel.bodyViewModel.countDown = it
+          viewModelChengesProcessor.onNext(cycleViewModel)
+          if (it == 0) {
+            timerDisposable.dispose()
+            presenterHelper.onPrepared()
+          }
+        }
   }
 
   private fun subscribeForCycleStateEvents() {
@@ -134,9 +130,9 @@ class CycleFragment : BaseFragment(R.layout.fragment_cycle), OnBackSupportingFra
     performEventsDisposable = presenterHelper.getPerformEvents()
         .ioMain()
         .subscribe {
-          cycleViewModel.bodyViewModel.countDown = it.countDown
+          cycleViewModel.bodyViewModel.countDown = it
           viewModelChengesProcessor.onNext(cycleViewModel)
-          if (it.state == CountDownState.FINISHED) {
+          if (it == 0) {
             performEventsDisposable.dispose()
             presenterHelper.onCompleteRoutine()
           }
@@ -163,11 +159,11 @@ class CycleFragment : BaseFragment(R.layout.fragment_cycle), OnBackSupportingFra
           presenterHelper.onStartRestBetweenRoutines()
         }
         .doOnNext {
-          cycleViewModel.bodyViewModel.countDown = it.countDown
+          cycleViewModel.bodyViewModel.countDown = it
           viewModelChengesProcessor.onNext(cycleViewModel)
         }
         .subscribe {
-          if (it.state == RestState.FINISHED) {
+          if (it == 0) {
             presenterHelper.onRestedBetweenRoutines()
             restDisposable.dispose()
           }

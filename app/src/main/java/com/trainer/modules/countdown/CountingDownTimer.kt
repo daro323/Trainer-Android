@@ -1,7 +1,6 @@
 package com.trainer.modules.countdown
 
 import com.trainer.commons.Lg
-import com.trainer.modules.countdown.CountDownState.*
 import io.reactivex.Observable
 import io.reactivex.disposables.Disposables
 import io.reactivex.processors.BehaviorProcessor
@@ -12,14 +11,10 @@ import java.util.concurrent.TimeUnit
  */
 class CountingDownTimer {
 
-  private val countDownEventsProcessor = BehaviorProcessor.createDefault(IDLE_STATE_EVENT)
+  private val countDownEventsProcessor = BehaviorProcessor.create<Int>()
   private var countDownDisposable = Disposables.disposed()
 
-  companion object {
-    val IDLE_STATE_EVENT = CountDownEvent(0, IDLE)
-  }
-
-  fun start(startValue: Int): Observable<CountDownEvent> {
+  fun start(startValue: Int): Observable<Int> {
     require(startValue > 0) { "Start dount down invoked with invalid start value= $startValue!" }
     require(countDownDisposable.isDisposed) { "Attempt to start counting down when count down is already ongoing!" }
     Lg.d("start")
@@ -27,13 +22,8 @@ class CountingDownTimer {
     countDownDisposable = Observable.interval(1, TimeUnit.SECONDS)
         .startWith(0)
         .map { (startValue - it).toInt() }
-        .map {
-          if (it > 0) CountDownEvent(it, COUNTDOWN)
-          else if (it == 0) CountDownEvent(it, FINISHED)
-          else throw IllegalStateException("")
-        }
         .doOnNext { countDownEventsProcessor.onNext(it) }
-        .subscribe { if (it.state == FINISHED) countDownDisposable.dispose() }
+        .subscribe { if (it == 0) countDownDisposable.dispose() }
 
     return countDownEventsProcessor.toObservable()
   }
