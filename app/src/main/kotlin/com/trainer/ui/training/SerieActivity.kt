@@ -78,6 +78,7 @@ class SerieActivity : BaseActivity(R.layout.activity_serie) {
         finish()
       }
       WORKOUT_COMPLETED -> finish()
+      else -> {}  // Ignore
     }
   }
 
