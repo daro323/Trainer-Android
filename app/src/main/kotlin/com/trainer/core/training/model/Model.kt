@@ -35,6 +35,7 @@ enum class WeightType {
 
 @Keep
 enum class WorkoutEvent {
+  ONGOING,
   REST,
   SERIE_COMPLETED,
   WORKOUT_COMPLETED

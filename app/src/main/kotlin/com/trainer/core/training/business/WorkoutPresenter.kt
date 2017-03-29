@@ -7,8 +7,7 @@ import com.trainer.core.training.model.ProgressStatus.STARTED
 import com.trainer.core.training.model.Serie
 import com.trainer.core.training.model.TrainingDay
 import com.trainer.core.training.model.WorkoutEvent
-import com.trainer.core.training.model.WorkoutEvent.SERIE_COMPLETED
-import com.trainer.core.training.model.WorkoutEvent.WORKOUT_COMPLETED
+import com.trainer.core.training.model.WorkoutEvent.*
 import com.trainer.modules.training.rest.RestManager
 import io.reactivex.processors.BehaviorProcessor
 import javax.inject.Inject
@@ -104,6 +103,7 @@ class WorkoutPresenter @Inject constructor(val repo: TrainingRepository,
     } else if (helper.getSerie().status() == COMPLETE) {
       workoutEventsProcessor.onNext(SERIE_COMPLETED)
     } else {
+      workoutEventsProcessor.onNext(ONGOING)
       helper.determineNextStep()
     }
   }

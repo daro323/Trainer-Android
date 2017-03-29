@@ -31,8 +31,7 @@ class RestManager @Inject constructor(val vibrator: Vibrator,
     countDownReceiver = CountDownService.start(initialStartValue, RESTING, context) {
       restEventsProcessor.onNext(it)
       if (it == 0) onCountDownFinished()
-    }
-        .apply { register(context) }
+    }.apply { register(context) }
   }
 
   fun abortRest() {

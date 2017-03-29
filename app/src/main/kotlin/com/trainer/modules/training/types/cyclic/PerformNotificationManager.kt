@@ -28,6 +28,7 @@ class PerformNotificationManager @Inject constructor(val notificationManager: No
   override fun showNotification(restTime: Int, forService: Service) {
     if (restTime > 0) {
       forService.startForeground(NOTIFICATION_ID, notificationBuilder.run {
+        setContentTitle(context.getString(R.string.cycle_routine_ongoing_notification_title))
         setContentText(String.format(context.getString(R.string.notification_countdown_text), restTime))
         build()
       })

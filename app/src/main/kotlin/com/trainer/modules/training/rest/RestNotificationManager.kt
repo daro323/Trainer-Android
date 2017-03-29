@@ -28,6 +28,7 @@ class RestNotificationManager @Inject constructor(val notificationManager: Notif
   override fun showNotification(restTime: Int, forService: Service) {
     if (restTime > 0) {
       forService.startForeground(NOTIFICATION_ID, notificationBuilder.run {
+        setContentTitle(context.getString(R.string.rest_in_progress_notification_title))
         setContentText(String.format(context.getString(R.string.notification_countdown_text), restTime))
         build()
       })
