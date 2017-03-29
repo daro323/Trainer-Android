@@ -10,7 +10,6 @@ import com.trainer.core.training.business.WorkoutPresenter
 import com.trainer.core.training.model.WorkoutEvent
 import com.trainer.d2.common.ActivityComponent
 import com.trainer.extensions.ioMain
-import com.trainer.modules.countdown.CountDownService.Companion.abort
 import com.trainer.modules.countdown.CountingDownTimer
 import com.trainer.modules.training.types.cyclic.CycleState
 import com.trainer.modules.training.types.cyclic.CycleState.*
@@ -87,7 +86,6 @@ class CycleFragment : BaseFragment(R.layout.fragment_cycle), OnBackSupportingFra
     timerDisposable = CountingDownTimer().start(CyclicPresenterHelper.GET_READY_TIME_SEC)
         .ioMain()
         .doOnSubscribe { cycleViewModel.state = GET_READY }
-        .doOnDispose { abort(activity) }
         .subscribe {
           cycleViewModel.bodyViewModel.countDown = it
           viewModelChengesProcessor.onNext(cycleViewModel)
@@ -129,6 +127,7 @@ class CycleFragment : BaseFragment(R.layout.fragment_cycle), OnBackSupportingFra
     performEventsDisposable.dispose()
     performEventsDisposable = presenterHelper.getPerformEvents()
         .ioMain()
+        .filter { it >= 0 }
         .subscribe {
           cycleViewModel.bodyViewModel.countDown = it
           viewModelChengesProcessor.onNext(cycleViewModel)
@@ -154,8 +153,6 @@ class CycleFragment : BaseFragment(R.layout.fragment_cycle), OnBackSupportingFra
     restDisposable = presenterHelper.getRestBetweenRoutinesEvents()
         .ioMain()
         .doOnSubscribe {
-          cycleViewModel.bodyViewModel.totalCountDown = presenterHelper.getCurrentRoutine().restTimeSec
-          cycleViewModel.bodyViewModel.countDown = presenterHelper.getCurrentRoutine().restTimeSec
           presenterHelper.onStartRestBetweenRoutines()
         }
         .doOnNext {

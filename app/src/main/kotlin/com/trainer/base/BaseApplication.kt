@@ -8,6 +8,7 @@ import com.trainer.commons.Lg
 import com.trainer.d2.common.ActivityComponent
 import com.trainer.d2.common.ActivityModule
 import com.trainer.d2.common.AppComponent
+import com.trainer.modules.init.menshilfplan.CardioPlanInitializer
 import com.trainer.modules.init.menshilfplan.MenshilfPlanInitializer
 import javax.inject.Inject
 
@@ -16,7 +17,7 @@ import javax.inject.Inject
  */
 abstract class BaseApplication : Application() {
 
-  @Inject lateinit var dataInitializer: MenshilfPlanInitializer
+  @Inject lateinit var dataInitializer: CardioPlanInitializer
   lateinit var appComponent: AppComponent
 
   companion object {

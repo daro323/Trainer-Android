@@ -26,11 +26,11 @@ class RestManager @Inject constructor(val vibrator: Vibrator,
   private var countDownReceiver: CountDownReceiver? = null
   private val restEventsProcessor = BehaviorProcessor.create<Int>()
 
-  fun startRest(initialStartValue: Int) {
+  fun startRest(initialStartValue: Int, withVibration: Boolean = true) {
     Lg.d("startRest")
     countDownReceiver = CountDownService.start(initialStartValue, RESTING, context) {
       restEventsProcessor.onNext(it)
-      if (it == 0) onCountDownFinished()
+      if (it == 0) onCountDownFinished(withVibration)
     }.apply { register(context) }
   }
 
@@ -50,8 +50,8 @@ class RestManager @Inject constructor(val vibrator: Vibrator,
 
   fun getRestEvents() = restEventsProcessor.toObservable()
 
-  private fun onCountDownFinished() {
-    vibrator.vibrate(VIBRATE_DURATION_MS)
+  private fun onCountDownFinished(vibrationActive: Boolean) {
+    if (vibrationActive) vibrator.vibrate(VIBRATE_DURATION_MS)
   }
 
   private fun finish() {

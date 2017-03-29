@@ -95,7 +95,7 @@ class CyclicPresenterHelper @Inject constructor(val performManager: PerformManag
   override fun getRestTime() = cycle.restTimeSec
 
   fun onStartRestBetweenRoutines() {
-    restManager.startRest(getCurrentRoutine().restTimeSec)
+    restManager.startRest(getCurrentRoutine().restTimeSec, withVibration = false)
   }
 
   fun onRestedBetweenRoutines() {

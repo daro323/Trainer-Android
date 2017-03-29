@@ -54,7 +54,7 @@ class CountDownService : Service() {
       startWith(context, FINISH_COUNT_DOWN_ACTION)
     }
 
-    fun startWith(context: Context, startAction: String, intentSetup: (Intent.() -> Unit)? = null) {
+    private fun startWith(context: Context, startAction: String, intentSetup: (Intent.() -> Unit)? = null) {
       Intent(context, CountDownService::class.java)
           .apply {
             action = startAction
@@ -79,7 +79,7 @@ class CountDownService : Service() {
       START_COUNT_DOWN_ACTION -> intent.run {
         doStartCountDown(getIntExtra(START_VALUE_ARG, -1), CountDownNotificationProvider.Type.valueOf(getStringExtra(NOTIFICATION_TYPE_ARG)))
       }
-      ABORT_COUNT_DOWN_ACTION, FINISH_COUNT_DOWN_ACTION -> doAbortCountDown()
+      ABORT_COUNT_DOWN_ACTION, FINISH_COUNT_DOWN_ACTION -> doFinishCountDown()
       else -> throw IllegalArgumentException("Unsupported CountDownService action= $action!")
     }
 
@@ -108,7 +108,7 @@ class CountDownService : Service() {
   /**
    * Performed when CountDown is aborted by user
    */
-  private fun doAbortCountDown() {
+  private fun doFinishCountDown() {
     Lg.d("Abort count down")
     cleanup()
     stopSelf()

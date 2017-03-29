@@ -44,5 +44,6 @@ class PerformManager @Inject constructor(@ForApplication val context: Context) {
   private fun finish() {
     countDownReceiver!!.unregister(context)
     countDownReceiver = null
+    performEventsProcessor.onNext(-1)
   }
 }
