@@ -22,15 +22,6 @@ class ChestExerciseInitData private constructor() {
             "Opuszczaj powoli, wyciskaj dynamicznie."),
         BENCH_PRESS_IMAGE)
 
-    private val PULL_UPS = Exercise("Podciąganie nachwytem",
-        arrayListOf("Drążek musisz minąć brodą.",
-            "Ruch zatrzymuj na sekundę na górze.",
-            "Nogi skrzyżuj w kostkach i ugnij w kolanach.",
-            "Ściągaj łopatki.",
-            "Opuszczaj się powoli."),
-        PULL_UPS_IMAGE,
-        BODY_WEIGHT)
-
     private val INCLINE_DUMBELL_PRESS = Exercise("Wyciskanie hantli na ławce skośnej",
         arrayListOf("Ławka nachylona do max 30 stopni.",
             "Klata wypchnięta do przodu.",
@@ -38,72 +29,27 @@ class ChestExerciseInitData private constructor() {
             "Łokcie nie schodzą poniżej 90 stopni."),
         INCLINE_DUMBELL_PRESS_IMAGE)
 
-    private val SINGLE_DUMBELL_ROW = Exercise("Wiosłowanie hantlą",
-        arrayListOf("Plecy równoległe do sufitu.",
-            "Przyciągaj hantlę do boku klatki piersiowej (do pachy).",
-            "Ściągaj łopatki podczas podnoszenia.",
-            "Opuszczając nie rosprostuj ręki do końca."),
-        SINGLE_DUMBELL_ROW_IMAGE)
-
-    private val CHEST_DIPS = Exercise("Pompki na poręczach",
+    private val WEIGHTED_DIPS = Exercise("Pompki na poręczach",
         arrayListOf("Pochyl głowę i ciało do przodu.",
             "Ściągaj łopatki podczas ruchu."),
         CHEST_DIPS_IMAGE,
         BODY_WEIGHT)
 
-    private val DUMBELL_PUSHUP = Exercise("Pompka na hantlach",
-        arrayListOf("Po obniżeniu zatrzymaj na sekundę ruch.",
-            "Nie pozwól korpusowi na żadną rotację.",
-            "Hantlę przyciągnij do boku brzucha.",
-            "Jedno powtórzenie to przyciągniecie hantli do lewej i prawej."),
-        DUMBELL_PUSHUP_IMAGE)
 
-    private val OVERHEAD_TRICEPS_CABLE_EXTENSIONS = Exercise("Prostowanie przedramion",
-        arrayListOf("Wyciąg obniż poniżej linii barków.",
-            "Prostuj dynamicznym ruchem."),
-        TRICEPS_EXTENSIONS_IMAGE)
-
-    private val TRICEPS_CABLE_PUSHDOWN = Exercise("Ściąganie linek w dół",
-        arrayListOf("Łokcie lekko przed biodrami.",
-            "Ściągając w dół rób lekki krok do tyłu.",
-            "Rozszerzaj linki w końcowej fazie ruchu."),
-        TRICEPS_PULLDOWN_IMAGE)
-
-    private val SUPINATED_BICEPS_CURL = Exercise("Naprzemienne uginanie przedramion z supinacją",
-        arrayListOf("Chwyć hantle na skraju zewnętrznej strony (trudniejsza supinacja).",
-            "Skręcanie nadgarsteka i uginanie ramion jako jeden ruch.",
-            "Uginaj do maksymalnego napięcia bicepsa.",
-            "Wracaj bardzo powoli."),
-        SUPINATED_BICEPS_CURL_IMAGE)
 
 
 
 
     val CHEST_WORKOUT = Workout(arrayListOf(
-        SuperSet(arrayListOf(
-            createSet(BENCH_PRESS,
-                arrayListOf("Zrób 4 serie po 10, 8, 7, 6 repet."),
-                4, 0),
-            createSet(PULL_UPS,
-                arrayListOf("Zrób 3 serie na max repet."),
-                3, 100))
-        ),
-        SuperSet(arrayListOf(
-            createSet(INCLINE_DUMBELL_PRESS,
-                arrayListOf("Zrób 3 serie po 10, 9 i 8 repet."),
-                3, 0),
-            createSet(SINGLE_DUMBELL_ROW,
-                arrayListOf("Zrób 3 serie po 10, 8, 7 repet."),
-                3, 80)
-        )),
-        SuperSet(arrayListOf(
-            createSet(CHEST_DIPS,
-                arrayListOf("Zrób 1 serie na max repet."),
-                1, 0),
-            createSet(DUMBELL_PUSHUP,
-                arrayListOf("Zrób 1 serie po max repet"),
-                1, 70))
-        ),
+        createSet(BENCH_PRESS,
+            arrayListOf("Zrób 3 serie"),
+            3, 100),
+        createSet(INCLINE_DUMBELL_PRESS,
+            arrayListOf("Zrób 3 serie"),
+            3, 80),
+        createSet(WEIGHTED_DIPS,
+            arrayListOf("Zrób 3 serie"),
+            3, 0),
         SuperSet(arrayListOf(
             createSet(OVERHEAD_TRICEPS_CABLE_EXTENSIONS,
                 arrayListOf("Zrób 2 serie po 10 repet."),

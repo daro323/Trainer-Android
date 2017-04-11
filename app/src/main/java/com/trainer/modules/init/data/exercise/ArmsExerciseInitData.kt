@@ -2,10 +2,7 @@ package com.trainer.modules.init.data.exercise
 
 import com.trainer.core.training.model.Exercise
 import com.trainer.core.training.model.Serie.Companion.createSet
-import com.trainer.core.training.model.WeightType.BODY_WEIGHT
 import com.trainer.core.training.model.Workout
-import com.trainer.modules.init.InitExerciseImageMap
-import com.trainer.modules.init.InitExerciseImageMap.*
 import com.trainer.modules.training.standard.SuperSet
 
 /**
@@ -14,68 +11,75 @@ import com.trainer.modules.training.standard.SuperSet
 class ArmsExerciseInitData private constructor() {
 
   companion object {
-    private val NARROW_GRIP_PULLUP = Exercise("Podciąganie wąskim podchwytem",
-        arrayListOf("Podciągaj się aż miniesz drążek głową.",
-            "Przytrzymaj podciągnięcie na 3 sekundy."),
-        NARROW_GRIP_PULLUP_IMAGE,
-        BODY_WEIGHT)
+    private val WEIGHTED_CHINUPS = Exercise("Weighted Chin-Ups",
+        arrayListOf(
+            "Chwyt na szerokość ramion.",
+            "Podciągaj się aż broda minie drążek.",
+            "Przytrzymaj podciągnięcie na 3 sekundy.",
+            "Ruch wykonuj powoli."))
 
-    private val TRICEPS_DIPS = Exercise("Pompki na poręczach na triceps",
-        arrayListOf("Łokcie blisko tułowia.",
-            "Tułów i głowa prosto."),
-        CHEST_DIPS_IMAGE,
-        BODY_WEIGHT)
-
-    private val SEATED_BARBELL_SHOULDER_PRESS = Exercise("Wyciskanie sztangi siedząc",
-        arrayListOf("Mocno chwytaj sztangę.",
-            "Nadgarstki powinny być w linii z łokciami.",
-            "Dozwolone jest jedynie lekkie wygięcie pleców."),
-        SEATED_BARBELL_SHOULDER_PRESS_IMAGE)
-
-    private val BARBELL_BENT_OVER_ROW = Exercise("Wiosłowanie sztangą w opadzie",
-        arrayListOf("Pochyl się od 45 do 60 stopni.",
-            "Tułów stabilny bez ruchów.",
-            "Sztandze pozwól opadać w prostych rękach.",
-            "Przyciągaj do górnej części brzucha.",
-            "Opuszczaj dwa razy wolniejszym ruchem."),
-        BARBELL_ROW_IMAGE)
-
-    private val BARBELL_BICEPS_CURL = Exercise("Uginanie przedramion",
-        arrayListOf("Podnoś do maksymalnego spięcia bicepsa.",
-            "W końcowej fazie unieś łokcie.",
+    private val BARBELL_CURLS = Exercise("Barbell Curls",
+        arrayListOf(
+            "Chwyt na szerokość ramion lub lekko szerzej",
+            "Podnoś do maksymalnego spięcia bicepsa.",
             "Opuszczaj bardzo bardzo powoli.",
-            "Opuszczaj do pełnego wyprostu."),
-        BARBELL_BICEPS_CURL_IMAGE)
+            "Opuszczaj do pełnego wyprostu."))
 
-    private val LEANING_TRICEPS_CABLE_EXTENSIONS = Exercise("Prostowanie przedramion w pochyleniu na wyciągu",
-        arrayListOf("Wracaj bardzo bardzo powoli."))
+    private val SUPINATED_CURLS = Exercise("Supinated Dumbell Curls",
+        arrayListOf(
+            "Chwyć hantle na skraju zewnętrznej strony (trudniejsza supinacja).",
+            "Skręcanie nadgarsteka i uginanie ramion jako jeden ruch.",
+            "Uginaj do maksymalnego napięcia bicepsa.",
+            "Wracaj bardzo powoli."))
+
+    private val HAMMER_CURLS = Exercise("Hammer Curls",
+        arrayListOf(
+            "Ramiona ściągnięte do tyłu."))
+
+
+    private val WEIGHTED_TRICEPS_DIPS = Exercise("Weighted Dips",
+        arrayListOf(
+            "Łokcie blisko tułowia.",
+            "Tułów i głowa prosto."))
+
+    private val CLOSE_GRIP_BENCH = Exercise("Close Grip Bench",
+        arrayListOf(
+            "Chwyt troche węższy niż szerokość ramion.",
+            "Łokcie blisko tułowia.",
+            "Tułów i głowa prosto."))
+
+    private val OVERHEAD_TRICEPS_CABLE_EXTENSIONS = Exercise("Overhead Cable Extensions",
+        arrayListOf(
+            "Wyciąg obniż poniżej linii barków.",
+            "Prostuj dynamicznym ruchem."))
+
+    private val TRICEPS_CABLE_PUSHDOWN = Exercise("Cable Extensions",
+        arrayListOf(
+            "Łokcie lekko przed biodrami.",
+            "Ściągając w dół rób lekki krok do tyłu.",
+            "Rozszerzaj linki w końcowej fazie ruchu."))
 
 
     val ARMS_WORKOUT = Workout(arrayListOf(
-        SuperSet(arrayListOf(
-            createSet(NARROW_GRIP_PULLUP,
-                arrayListOf("Zrób 3 serie po max repet."),
-                3, 0),
-            createSet(TRICEPS_DIPS,
-                arrayListOf("Zrób 3 serie po max repet."),
-                3, 80)
-        )),
-        SuperSet(arrayListOf(
-            createSet(SEATED_BARBELL_SHOULDER_PRESS,
-                arrayListOf("Zrób 3 serie po 10, 8, 6 repet."),
-                3, 0),
-            createSet(BARBELL_BENT_OVER_ROW,
-                arrayListOf("Zrób 3 serie po 8, 7, 6 repet."),
-                3, 90)
-        )),
-        SuperSet(arrayListOf(
-            createSet(BARBELL_BICEPS_CURL,
-                arrayListOf("Zrób 3 serie po 8, 7, 6 repet."),
-                3, 0),
-            createSet(LEANING_TRICEPS_CABLE_EXTENSIONS,
-                arrayListOf("Zrób 3 serie po 8, 7, 6 repet."),
-                3, 80)
-        ))
+        SuperSet(
+            arrayListOf(
+                createSet(WEIGHTED_CHINUPS, 3, 0),
+                createSet(WEIGHTED_TRICEPS_DIPS, 3, 75))),
+
+        SuperSet(
+            arrayListOf(
+                createSet(BARBELL_CURLS, 3, 0),
+                createSet(OVERHEAD_TRICEPS_CABLE_EXTENSIONS, 3, 75))),
+
+        SuperSet(
+            arrayListOf(
+                createSet(SUPINATED_CURLS, 2, 0),
+                createSet(CLOSE_GRIP_BENCH, 2, 75))),
+
+        SuperSet(
+            arrayListOf(
+                createSet(HAMMER_CURLS, 2, 0),
+                createSet(TRICEPS_CABLE_PUSHDOWN, 2, 75)))
     ))
   }
 }

@@ -24,14 +24,6 @@ class LegsExerciseInitData private constructor() {
             "Nie prostuj nóg do końca (niech będą lekko ugięte)."),
         MACHINE_LEG_PRESS_IMAGE)
 
-    private val BULGARIAN_SPLIT_SQUAT = Exercise("Wykroki z oparciem",
-        arrayListOf("Wykonuj z hantlami.",
-            "Kolano nie może wyprzedzać palców u stopy.",
-            "Podczas ruchu kolano musi pozostać w tej samej pozycji.",
-            "Tułów prosto, nie pochylaj się do przodu.",
-            "Wracając nie cofaj tułowia."),
-        BULGARIAN_SPLIT_SQUAT_IMAGE)
-
     private val LEG_CURLS = Exercise("Uginanie nóg na maszynie",
         arrayListOf("Oparcie ustaw tak, żeby kolano było na wysokości osi obrotu ramienia.",
             "Stopy prosto palce wycelowane w górę."),
@@ -43,8 +35,6 @@ class LegsExerciseInitData private constructor() {
         CALF_RAISE_IMAGE)
 
 
-
-
     val LEGS_WORKOUT = Workout(arrayListOf(
         createSet(FRONT_SQUAT,
             arrayListOf("Zrób 4 serie po 10, 8, 7, 6 repet."),
@@ -52,9 +42,6 @@ class LegsExerciseInitData private constructor() {
         createSet(MACHINE_LEG_PRESS,
             arrayListOf("Zrób 4 serie po 10, 8, 7, 7 repet."),
             4, 80),
-        createSet(BULGARIAN_SPLIT_SQUAT,
-            arrayListOf("Zrób 2 serie po 10 repet."),
-            2, 80),
         SuperSet(arrayListOf(
             createSet(LEG_CURLS,
                 arrayListOf("Zrób 3 serie po 10 repet."),

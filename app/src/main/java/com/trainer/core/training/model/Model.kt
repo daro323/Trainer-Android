@@ -1,15 +1,15 @@
 package com.trainer.core.training.model
 
+import android.support.annotation.DrawableRes
 import android.support.annotation.Keep
 import android.support.annotation.Nullable
 import com.fasterxml.jackson.annotation.JsonSubTypes
 import com.fasterxml.jackson.annotation.JsonTypeInfo
+import com.trainer.R
 import com.trainer.core.training.model.ProgressStatus.*
 import com.trainer.core.training.model.WeightType.BODY_WEIGHT
 import com.trainer.core.training.model.WeightType.KG
 import com.trainer.extensions.daysSince
-import com.trainer.modules.init.InitExerciseImageMap
-import com.trainer.modules.init.InitExerciseImageMap.DEFAULT_IMAGE
 import com.trainer.modules.training.cyclic.Cycle
 import com.trainer.modules.training.cyclic.CyclicRoutine
 import com.trainer.modules.training.standard.Set
@@ -36,7 +36,7 @@ enum class WeightType {
 @Keep
 enum class WorkoutEvent {
   REST,
-  DO_NEXT,          // do whatever is next to complete current serie (either it's next serie or something within current serie, like Set in SuperSet)
+  DO_NEXT, // do whatever is next to complete current serie (either it's next serie or something within current serie, like Set in SuperSet)
   SERIE_COMPLETED,
   WORKOUT_COMPLETED
 }
@@ -64,7 +64,7 @@ data class TrainingPlan(val name: String,
 }
 
 @Keep
-data class TrainingDay(val category: String,      // category should be unique within a training plan
+data class TrainingDay(val category: String, // category should be unique within a training plan
                        val workout: Workout,
                        private var totalDone: Int = 0,
                        private var lastTrainedDate: String? = null) {
@@ -108,10 +108,8 @@ data class Workout(val series: MutableList<Serie>) {
 @Keep
 data class Exercise(val name: String,
                     val comments: List<String> = emptyList(),
-                    val imageInfo: InitExerciseImageMap = DEFAULT_IMAGE,
+                    @DrawableRes val imageResource: Int = R.mipmap.ic_exercise_default,
                     val weightType: WeightType = KG) {
-
-  fun imageResource() = imageInfo.resource
 }
 
 @Keep
@@ -143,9 +141,9 @@ interface Serie {
     var instanceCounter: Int = 0
     /* Automatically adds IDs as instance count */
     fun createSet(exercise: Exercise,
-                  guidelines: List<String>,
                   seriesCount: Int,
                   restTimeSec: Int,
+                  guidelines: List<String> = emptyList(),
                   progress: MutableList<Repetition> = mutableListOf(),
                   lastProgress: List<Repetition> = (1..seriesCount).map { emptyRepetition(exercise) }.toList()) = Set((++instanceCounter).toString(), exercise, guidelines, seriesCount, restTimeSec, progress, lastProgress)
 

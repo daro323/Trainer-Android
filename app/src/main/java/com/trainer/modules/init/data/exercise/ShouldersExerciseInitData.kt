@@ -12,11 +12,9 @@ import com.trainer.modules.training.standard.SuperSet
 class ShouldersExerciseInitData private constructor() {
 
   companion object {
-    private val SEATED_DUMBELL_SHOULDER_PRESS = Exercise("Wyciskanie na barki siedząc",
-        arrayListOf("Nie zapieraj się głową podczas wyciskania.",
-            "Łokcie i ramiona lekko przed sobą (nie cofaj za plecy).",
-            "Opuszczaj do 90 stopni w ugięciu ramion."),
-        SEATED_DUMBELL_SHOULDER_PRESS_IMAGE)
+    private val STANDING_SHOULDER_PUSH_PRESS = Exercise("Wyciskanie na barki stojąc",
+        arrayListOf("Zaczynasz z lekkiego ugięcia kolan",
+            "Wyciskanie (press) łączysz z momentem wyprostu kolan (push)"))
 
     private val BARBELL_ROW = Exercise("Wiosłowanie sztangą w opadzie",
         arrayListOf("Sztandze pozwól opadać w prostych rękach.",
@@ -57,14 +55,12 @@ class ShouldersExerciseInitData private constructor() {
 
 
     val SHOULDERS_WORKOUT = Workout(arrayListOf(
-        SuperSet(arrayListOf(
-            createSet(SEATED_DUMBELL_SHOULDER_PRESS,
-                arrayListOf("Zrób 4 serie po 8, 8, 7, 6 repet."),
-                4, 0),
-            createSet(BARBELL_ROW,
-                arrayListOf("Zrób 4 serie po 8, 8, 7, 6 repet."),
-                4, 80)
-        )),
+        createSet(STANDING_SHOULDER_PUSH_PRESS,
+            arrayListOf("Zrób 3 serie"),
+            3, 100),
+        createSet(BARBELL_ROW,
+            arrayListOf("Zrób 4 serie po 8, 8, 7, 6 repet."),
+            4, 80),
         SuperSet(arrayListOf(
             createSet(DUMBELL_SHOULDER_SIDE_RAISE,
                 arrayListOf("Zrób 3 serie po 8, 7, 6 repet."),
