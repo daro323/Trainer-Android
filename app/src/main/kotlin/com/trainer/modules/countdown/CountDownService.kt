@@ -4,11 +4,10 @@ import android.app.Service
 import android.content.Context
 import android.content.Intent
 import android.os.PowerManager
-import android.support.v4.content.LocalBroadcastManager
 import com.trainer.base.BaseApplication
 import com.trainer.commons.Lg
 import com.trainer.extensions.ioMain
-import com.trainer.extensions.with
+import com.trainer.extensions.sendLocalBroadcast
 import com.trainer.modules.countdown.CountDownNotificationProvider.CountDownNotification
 import com.trainer.modules.countdown.CountDownReceiver.Companion.COUNT_DOWN_EVENT_ACTION
 import com.trainer.modules.countdown.CountDownReceiver.Companion.COUNT_DOWN_EVENT_ARG
@@ -100,10 +99,7 @@ class CountDownService : Service() {
       start(startValue)
           .ioMain()
           .doOnNext { notification.showNotification(it, this@CountDownService) }
-          .subscribe {
-            LocalBroadcastManager.getInstance(applicationContext).sendBroadcast(
-                Intent().with(COUNT_DOWN_EVENT_ACTION) { putExtra(COUNT_DOWN_EVENT_ARG, it) })
-          }
+          .subscribe { sendCountDownEvent(it) }
     }
   }
 
@@ -137,5 +133,9 @@ class CountDownService : Service() {
     timer?.abort()
     timer = null
     notification.hideNotification()
+  }
+
+  private fun sendCountDownEvent(countDown: Int) {
+    sendLocalBroadcast(COUNT_DOWN_EVENT_ACTION) { putExtra(COUNT_DOWN_EVENT_ARG, countDown) }
   }
 }

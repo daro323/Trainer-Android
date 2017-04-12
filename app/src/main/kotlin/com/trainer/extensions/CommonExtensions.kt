@@ -1,6 +1,9 @@
 package com.trainer.extensions
 
+import android.app.Service
+import android.content.Intent
 import android.content.SharedPreferences
+import android.support.v4.content.LocalBroadcastManager
 import android.util.Log
 import org.threeten.bp.LocalDate
 import org.threeten.bp.temporal.ChronoUnit
@@ -23,7 +26,7 @@ fun SharedPreferences.saveInt(key: String, value: Int) {
       .apply()
 }
 
-inline fun <S, T: S> Iterable<T>.reduceWithDefault(default: S, firstOperation: (S) -> S, operation: (S, T) -> S): S {
+inline fun <S, T : S> Iterable<T>.reduceWithDefault(default: S, firstOperation: (S) -> S, operation: (S, T) -> S): S {
   val iterator = this.iterator()
   if (!iterator.hasNext()) return default
   var accumulator: S = firstOperation(iterator.next())
@@ -42,3 +45,7 @@ fun File.writeString(data: String) {
 }
 
 fun LocalDate.daysSince(fromDate: LocalDate) = ChronoUnit.DAYS.between(fromDate, this)
+
+fun Service.sendLocalBroadcast(action: String, intentSetup: Intent.() -> Unit) {
+  LocalBroadcastManager.getInstance(applicationContext).sendBroadcast(Intent().with(action, intentSetup))
+}
