@@ -82,7 +82,7 @@ data class Cycle(private val _id: String,
 @Keep
 data class CyclicRoutine constructor(val exercise: Exercise,
                                      val durationTimeSec: Int,
-                                     val restTimeSec: Int,
+                                     val restTimeSec: Int = 0,
                                      var isComplete: Boolean = false) {
   fun complete() {
     isComplete = true

@@ -16,20 +16,18 @@ import com.trainer.modules.training.types.cyclic.CycleState.*
 import com.trainer.modules.training.types.cyclic.CyclicPresenterHelper
 import com.trainer.ui.training.cyclic.CycleViewEvent.*
 import io.reactivex.disposables.Disposables
-import io.reactivex.processors.BehaviorProcessor
 import kotlinx.android.synthetic.main.fragment_cycle.*
 import javax.inject.Inject
 
 /**
  * Created by dariusz on 15/03/17.
  */
-class CycleFragment : BaseFragment(R.layout.fragment_cycle), OnBackSupportingFragment, CycleViewCallback {
+class CycleFragment : BaseFragment(R.layout.fragment_cycle), OnBackSupportingFragment {
   @Inject lateinit var trainingManager: TrainingManager
   private val presenter: WorkoutPresenter by lazy { trainingManager.workoutPresenter ?: throw IllegalStateException("Current workout presenter not set!") }  // can call this only after component.inject()!
   private val presenterHelper: CyclicPresenterHelper by lazy { presenter.getHelper() as CyclicPresenterHelper }  // can call this only after component.inject()!
 
-  private val cycleViewModel: CycleViewModel = CycleViewModel.createNew()
-  private val viewModelChengesProcessor = BehaviorProcessor.create<CycleViewModel>()
+  private lateinit var fragmentPresenter: CycleFragmentPresenter
 
   private var workoutEventsSubscription = Disposables.disposed()
   private var cycleStateEventsSubscription = Disposables.disposed()
@@ -43,9 +41,11 @@ class CycleFragment : BaseFragment(R.layout.fragment_cycle), OnBackSupportingFra
 
   override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
-    header.bindViewModel(this)
-    body.bindViewModel(this)
-    footer.bindViewModel(this)
+    fragmentPresenter = CycleFragmentPresenter(handleViewEvent).apply {
+      header.bindViewModel(this)
+      body.bindViewModel(this)
+      footer.bindViewModel(this)
+    }
   }
 
   override fun onStart() {
@@ -64,12 +64,10 @@ class CycleFragment : BaseFragment(R.layout.fragment_cycle), OnBackSupportingFra
   }
 
   // Back click only available when cycle is not ongoing
-  override fun onBackPressed() = when (cycleViewModel.state) {
+  override fun onBackPressed() = when (fragmentPresenter.getDisplayState()) {
     NEW, DONE, COMPLETE -> false
     else -> true
   }
-
-  override fun getViewModelChanges() = viewModelChengesProcessor.toObservable()
 
   private fun subscribeForWorkoutEvents() {
     workoutEventsSubscription.dispose()
@@ -85,10 +83,8 @@ class CycleFragment : BaseFragment(R.layout.fragment_cycle), OnBackSupportingFra
     timerDisposable.dispose()
     timerDisposable = CountingDownTimer().start(CyclicPresenterHelper.GET_READY_TIME_SEC)
         .ioMain()
-        .doOnSubscribe { cycleViewModel.state = GET_READY }
         .subscribe {
-          cycleViewModel.bodyViewModel.countDown = it
-          viewModelChengesProcessor.onNext(cycleViewModel)
+          fragmentPresenter.displayGetReady(it)
           if (it == 0) {
             timerDisposable.dispose()
             presenterHelper.onPrepared()
@@ -107,30 +103,19 @@ class CycleFragment : BaseFragment(R.layout.fragment_cycle), OnBackSupportingFra
     val cycle = presenterHelper.getSerie()
     val currentRoutine = presenterHelper.getCurrentRoutine()
 
-    cycleViewModel.state = PERFORMING
-    cycleViewModel.bodyViewModel.apply {
-      countDown = currentRoutine.durationTimeSec
-      totalCountDown = currentRoutine.durationTimeSec
-    }
-    cycleViewModel.headerViewModel.apply {
-      exerciseName = currentRoutine.exercise.name
-      cycleCount = cycle.cyclesCount
-      lastCycleCount = cycle.lastCyclesCount
-    }
-    cycleViewModel.footerViewModel.apply {
-      presenterHelper.getNextRoutine()?.apply { nextExerciseName = exercise.name }
-      currentCount = presenterHelper.getCurrentCycleNumber()
-      totalCount = presenterHelper.getCycleRoutinesCount()
-    }
-    viewModelChengesProcessor.onNext(cycleViewModel)
-
     performEventsDisposable.dispose()
     performEventsDisposable = presenterHelper.getPerformEvents()
         .ioMain()
         .filter { it >= 0 }
         .subscribe {
-          cycleViewModel.bodyViewModel.countDown = it
-          viewModelChengesProcessor.onNext(cycleViewModel)
+          fragmentPresenter.displayPerforming(
+              performCountDown = it,
+              cyclesCount = cycle.cyclesCount,
+              lastCyclesCount = cycle.lastCyclesCount,
+              currentRoutineNr = presenterHelper.getCurrentCycleNumber(),
+              routinesCount = presenterHelper.getCycleRoutinesCount(),
+              currentRoutine = currentRoutine,
+              nextRoutine = presenterHelper.getNextRoutine())
           if (it == 0) {
             performEventsDisposable.dispose()
             presenterHelper.onCompleteRoutine()
@@ -140,15 +125,6 @@ class CycleFragment : BaseFragment(R.layout.fragment_cycle), OnBackSupportingFra
 
   private fun subscribeForRest() {
     val currentRoutine = presenterHelper.getCurrentRoutine()
-
-    cycleViewModel.state = RESTING
-    cycleViewModel.bodyViewModel.apply {
-      countDown = currentRoutine.restTimeSec
-      totalCountDown = currentRoutine.restTimeSec
-    }
-    cycleViewModel.footerViewModel.nextExerciseName = presenterHelper.getNextRoutine()!!.exercise.name
-    viewModelChengesProcessor.onNext(cycleViewModel)
-
     restDisposable.dispose()
     restDisposable = presenterHelper.getRestBetweenRoutinesEvents()
         .filter { it >= 0 }
@@ -157,8 +133,10 @@ class CycleFragment : BaseFragment(R.layout.fragment_cycle), OnBackSupportingFra
           presenterHelper.onStartRestBetweenRoutines()
         }
         .doOnNext {
-          cycleViewModel.bodyViewModel.countDown = it
-          viewModelChengesProcessor.onNext(cycleViewModel)
+          fragmentPresenter.displayResting(
+              restCountDown = it,
+              restTotalTime = currentRoutine.restTimeSec,
+              nextExerciseName = presenterHelper.getNextRoutine()!!.exercise.name)
         }
         .subscribe {
           if (it == 0) {
@@ -169,23 +147,10 @@ class CycleFragment : BaseFragment(R.layout.fragment_cycle), OnBackSupportingFra
   }
 
   private fun initViewModel() {
-    val cycle = presenterHelper.getSerie()
-    val currentRoutine = presenterHelper.getCurrentRoutine()
-
-    cycleViewModel.state = NEW
-
-    cycleViewModel.headerViewModel.apply {
-      exerciseName = currentRoutine.exercise.name
-      cycleCount = cycle.cyclesCount
-      lastCycleCount = cycle.lastCyclesCount
-    }
-
-    cycleViewModel.footerViewModel.nextExerciseName = currentRoutine.exercise.name
-
-    viewModelChengesProcessor.onNext(cycleViewModel)
+    fragmentPresenter.displayNew(presenterHelper.getCurrentRoutine().exercise.name)
   }
 
-  override fun onViewEvent(event: CycleViewEvent) {
+  private val handleViewEvent = { event: CycleViewEvent ->
     // TODO
     when (event) {
       START -> presenterHelper.onStartCycle()

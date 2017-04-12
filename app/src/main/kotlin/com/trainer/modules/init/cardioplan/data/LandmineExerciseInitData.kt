@@ -23,7 +23,7 @@ class LandmineExerciseInitData private constructor() {
         Serie.createCycle("Dummy Landmine cycle", arrayListOf(
             CyclicRoutine(DUMMY_LANDMINE_EXERCISE, 3, 3),
             CyclicRoutine(DUMMY_LANDMINE_EXERCISE_2, 3, 3),
-            CyclicRoutine(DUMMY_LANDMINE_EXERCISE_3, 3, 3)),
+            CyclicRoutine(DUMMY_LANDMINE_EXERCISE_3, 3)),
             6)
     ))
   }

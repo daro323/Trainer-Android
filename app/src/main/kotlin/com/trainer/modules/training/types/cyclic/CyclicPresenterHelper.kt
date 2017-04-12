@@ -75,7 +75,12 @@ class CyclicPresenterHelper @Inject constructor(val performManager: PerformManag
   fun onCompleteRoutine() {
     getCurrentRoutine().isComplete = true
     performManager.onPerformingComplete()
-    if (isCurrentRoutineTheLast()) callback.onSaveSerie(cycle) else cycleStateEventsProcessor.onNext(CycleState.RESTING)
+    if (isCurrentRoutineTheLast()) {
+      callback.onSaveSerie(cycle)
+      cycleStateEventsProcessor.onNext(CycleState.DONE)
+    } else {
+      cycleStateEventsProcessor.onNext(CycleState.RESTING)
+    }
   }
 
   fun onCompleteCycle() {
