@@ -151,6 +151,7 @@ class CycleFragment : BaseFragment(R.layout.fragment_cycle), OnBackSupportingFra
 
     restDisposable.dispose()
     restDisposable = presenterHelper.getRestBetweenRoutinesEvents()
+        .filter { it >= 0 }
         .ioMain()
         .doOnSubscribe {
           presenterHelper.onStartRestBetweenRoutines()

@@ -57,5 +57,6 @@ class RestManager @Inject constructor(val vibrator: Vibrator,
   private fun finish() {
     countDownReceiver!!.unregister(context)
     countDownReceiver = null
+    restEventsProcessor.onNext(-1)
   }
 }
