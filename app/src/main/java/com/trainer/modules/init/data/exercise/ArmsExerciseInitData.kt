@@ -25,7 +25,7 @@ class ArmsExerciseInitData private constructor() {
             "Opuszczaj bardzo bardzo powoli.",
             "Opuszczaj do pełnego wyprostu."))
 
-    private val SUPINATED_CURLS = Exercise("Supinated Dumbell Curls",
+    private val SUPINATED_DUMBBELL_CURLS = Exercise("Supinated Dumbbell Curls",
         arrayListOf(
             "Chwyć hantle na skraju zewnętrznej strony (trudniejsza supinacja).",
             "Skręcanie nadgarsteka i uginanie ramion jako jeden ruch.",
@@ -73,7 +73,7 @@ class ArmsExerciseInitData private constructor() {
 
         SuperSet(
             arrayListOf(
-                createSet(SUPINATED_CURLS, 2, 0),
+                createSet(SUPINATED_DUMBBELL_CURLS, 2, 0),
                 createSet(CLOSE_GRIP_BENCH, 2, 75))),
 
         SuperSet(

@@ -19,7 +19,7 @@ class ChestExerciseInitData private constructor() {
             "Opuszczaj do kąta prostego, nie niżej.",
             "Opuszczaj powoli, wyciskaj dynamicznie."))
 
-    private val INCLINE_DUMBELL_PRESS = Exercise("Incline Dumbell Press",
+    private val INCLINE_DUMBBELL_PRESS = Exercise("Incline Dumbbell Press",
         arrayListOf(
             "Ławka nachylona do max 30 stopni.",
             "Klata wypchnięta do przodu.",
@@ -39,7 +39,7 @@ class ChestExerciseInitData private constructor() {
 
     val CHEST_WORKOUT = Workout(arrayListOf(
         createSet(BENCH_PRESS, 4, 100),
-        createSet(INCLINE_DUMBELL_PRESS, 4, 90),
+        createSet(INCLINE_DUMBBELL_PRESS, 4, 90),
         createSet(WEIGHTED_CHEST_DIPS, 3, 90),
         createSet(CABLE_CROSSOVER_CHEST_PRESS, 3, 75)
     ))

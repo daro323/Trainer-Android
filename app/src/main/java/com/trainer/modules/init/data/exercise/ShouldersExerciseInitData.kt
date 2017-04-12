@@ -3,7 +3,6 @@ package com.trainer.modules.init.data.exercise
 import com.trainer.core.training.model.Exercise
 import com.trainer.core.training.model.Serie.Companion.createSet
 import com.trainer.core.training.model.Workout
-import com.trainer.modules.init.InitExerciseImageMap.*
 import com.trainer.modules.training.standard.SuperSet
 
 /**
@@ -12,70 +11,65 @@ import com.trainer.modules.training.standard.SuperSet
 class ShouldersExerciseInitData private constructor() {
 
   companion object {
-    private val STANDING_SHOULDER_PUSH_PRESS = Exercise("Wyciskanie na barki stojąc",
-        arrayListOf("Zaczynasz z lekkiego ugięcia kolan",
-            "Wyciskanie (press) łączysz z momentem wyprostu kolan (push)"))
+    private val STANDING_OVERHEAD_PRESS = Exercise("Standing Overhead Press")
 
     private val BARBELL_ROW = Exercise("Wiosłowanie sztangą w opadzie",
         arrayListOf("Sztandze pozwól opadać w prostych rękach.",
             "Przyciągaj do górnej części brzucha.",
-            "Opuszczaj dwa razy wolniejszym ruchem."),
-        BARBELL_ROW_IMAGE)
+            "Opuszczaj dwa razy wolniejszym ruchem."))
 
-    private val DUMBELL_SHOULDER_SIDE_RAISE = Exercise("Unoszenie hantli do boku",
-        arrayListOf("Uważaj, żeby nie angażować mięśni karku.",
+    private val LATERAL_DUMBBELL_RAISE = Exercise("Lateral Dumbbell Raise",
+        arrayListOf(
+            "Uważaj, żeby nie angażować mięśni karku.",
+            "Prowadź łokciem.",
             "Ściągnij łopatki.",
             "Unoś hantlę na wysokość brody.",
             "Opuszczaj powoli.",
-            "Wykonuj jedną hantlą na raz."),
-        DUMBELL_SHOULDER_SIDE_RAISE_IMAGE)
+            "Wykonuj jedną hantlą na raz."))
 
-    private val DUMBELL_SHOULDER_RAISE = Exercise("Unoszenie hantli na skos",
-        arrayListOf("Wykonuj jedną hantlą na raz.",
+    private val FRONT_ACROSS_DUMBBELL_RAISE = Exercise("Front & Across Dumbbell Raise",
+        arrayListOf(
+            "Wykonuj jedną hantlą na raz.",
             "Ściągnij łopatki i wypchnij klatę do przodu.",
             "Nie bujaj tułowiem.",
             "Hantle unieś do przodu i delikatnie na skos ciała.",
-            "Opuszczaj powoli."),
-        DUMBELL_SHOULDER_RAISE_IMAGE)
+            "Opuszczaj powoli."))
 
-    private val CABLE_TO_HEAD_PULL = Exercise("Przyciąganie liny",
-        arrayListOf("Wyciąg liny ustawiony na wysokości krtani.",
+    private val CABLE_TO_HEAD_PULL = Exercise("Cable to Head Pull",
+        arrayListOf(
+            "Wyciąg liny ustawiony na wysokości krtani.",
             "Kciuki skierowane do ciebie.",
             "Ruch inicjuj ściągając łopatki.",
             "Końce liny przeciągnij nad uszy.",
             "Szerokim łukiem prowadź łokcie na boki.",
-            "Wracaj powoli."),
-        CABLE_TO_HEAD_PULL_IMAGE)
+            "Wracaj powoli."))
 
-    private val LYING_DUMBELL_ROTATIONS = Exercise("Unoszenie hantli w leżeniu bokiem",
-        arrayListOf("Stopy trzymaj razem, jedna na drugiej.",
+    private val LYING_DUMBBELL_ROTATIONS = Exercise("Lying Dumbbell Rotations",
+        arrayListOf(
+            "Stopy trzymaj razem, jedna na drugiej.",
             "Łokieć i ramię dociśnij do korpusu (swobodnie).",
-            "Ruch wykonuj dokładnie i spokojnie."),
-        LYING_DUMBELL_ROTATIONS_IMAGE)
+            "Ruch wykonuj dokładnie i spokojnie."))
+
+    private val TRAPS_ROTATE_AND_PULL = Exercise("Traps Rotate & Pull")
+
+    private val TRAPS_PLATE_RAISE = Exercise("Traps Plate Raise",
+        arrayListOf(
+            "Podnoś talerz od pozycji poziomej w górę."
+        ))
 
 
     val SHOULDERS_WORKOUT = Workout(arrayListOf(
-        createSet(STANDING_SHOULDER_PUSH_PRESS,
-            arrayListOf("Zrób 3 serie"),
-            3, 100),
-        createSet(BARBELL_ROW,
-            arrayListOf("Zrób 4 serie po 8, 8, 7, 6 repet."),
-            4, 80),
+        createSet(STANDING_OVERHEAD_PRESS, 3, 80),
+        createSet(LATERAL_DUMBBELL_RAISE, 3, 80),
+        createSet(FRONT_ACROSS_DUMBBELL_RAISE, 3, 80),
         SuperSet(arrayListOf(
-            createSet(DUMBELL_SHOULDER_SIDE_RAISE,
-                arrayListOf("Zrób 3 serie po 8, 7, 6 repet."),
-                3, 0),
-            createSet(DUMBELL_SHOULDER_RAISE,
-                arrayListOf("Zrób 3 serie po 8, 7, 6 repet."),
-                3, 80)
+            createSet(CABLE_TO_HEAD_PULL, 3, 0),
+            createSet(LYING_DUMBBELL_ROTATIONS, 3, 70)
         )),
+
         SuperSet(arrayListOf(
-            createSet(CABLE_TO_HEAD_PULL,
-                arrayListOf("Zrób 3 serie po 10 repet."),
-                3, 0),
-            createSet(LYING_DUMBELL_ROTATIONS,
-                arrayListOf("Zrób 3 serie po 10 repet na obie strony."),
-                3, 70)
+            createSet(TRAPS_ROTATE_AND_PULL, 2, 0),
+            createSet(TRAPS_PLATE_RAISE, 2, 60)
         ))
     ))
   }
