@@ -44,30 +44,35 @@ object Lg {
     VERBOSE = LOGLEVEL - 1 < Log.VERBOSE
   }
 
+  @Deprecated("Use logd()")
   fun d(tag: String, message: String) {
     if (DEBUG) {
       Log.d(tag, wrapMessage(message))
     }
   }
 
+  @Deprecated("Use logi()")
   fun i(tag: String, message: String) {
     if (INFO) {
       Log.i(tag, wrapMessage(message))
     }
   }
 
+  @Deprecated("Use logw()")
   fun w(tag: String, message: String) {
     if (WARN) {
       Log.w(tag, wrapMessage(message))
     }
   }
 
+  @Deprecated("Use logw()")
   fun w(tag: String, message: String, tr: Throwable) {
     if (WARN) {
       Log.w(tag, wrapMessage(message), tr)
     }
   }
 
+  @Deprecated("Use logw()")
   fun w(tag: String, message: String, e: Exception) {
     if (WARN) {
       Log.w(tag, wrapMessage(message), e)
@@ -80,72 +85,84 @@ object Lg {
     }
   }
 
+  @Deprecated("Use loge()")
   fun e(tag: String, message: String) {
     if (ERROR) {
       Log.e(tag, wrapMessage(message))
     }
   }
 
+  @Deprecated("Use loge()")
   fun e(tag: String, message: String, tr: Throwable) {
     if (ERROR) {
       Log.e(tag, wrapMessage(message), tr)
     }
   }
 
+  @Deprecated("Use loge()")
   fun e(tag: String, message: String, e: Exception) {
     if (ERROR) {
       Log.e(tag, wrapMessage(message), e)
     }
   }
 
+  @Deprecated("Use logd()")
   fun d(message: String) {
     if (DEBUG) {
       Log.d(tag, wrapMessage(message))
     }
   }
 
+  @Deprecated("Use logi()")
   fun i(message: String) {
     if (INFO) {
       Log.i(tag, wrapMessage(message))
     }
   }
 
+  @Deprecated("Use logw()")
   fun w(message: String) {
     if (WARN) {
       Log.w(tag, wrapMessage(message))
     }
   }
 
+  @Deprecated("Use logw()")
   fun w(message: String, tr: Throwable) {
     if (WARN) {
       Log.w(tag, wrapMessage(message), tr)
     }
   }
 
+  @Deprecated("Use logw()")
   fun w(message: String, e: Exception) {
     if (WARN) {
       Log.w(tag, wrapMessage(message), e)
     }
   }
 
+  @Deprecated("Use logv()")
   fun v(message: String) {
     if (VERBOSE) {
       Log.v(tag, wrapMessage(message))
     }
   }
 
+  @Deprecated("Use loge()")
   fun e(message: String) {
     if (ERROR) {
       Log.e(tag, wrapMessage(message))
     }
   }
 
+  @Deprecated("Use loge()")
   fun e(message: String, tr: Throwable) {
     if (ERROR) {
       Log.e(tag, wrapMessage(message), tr)
     }
   }
 
+  @Deprecated("Use loge()")
   fun e(message: String, e: Exception) {
     if (ERROR) {
       Log.e(tag, wrapMessage(message), e)
