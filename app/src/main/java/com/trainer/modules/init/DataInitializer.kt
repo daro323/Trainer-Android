@@ -29,7 +29,7 @@ import javax.inject.Inject
 class DataInitializer @Inject constructor(val trainingManager: TrainingManager) {
   companion object {
     const val TAG = "INIT"
-    const private val INIT_WORKOUT_PLAN_NAME = "Menshilf Plan"
+    const private val INIT_WORKOUT_PLAN_NAME = "Buff Plan"
   }
 
   init {

@@ -12,14 +12,14 @@ import com.trainer.base.BaseActivity
 import com.trainer.commons.StyleUtils
 import com.trainer.commons.typedviewholder.TypedViewHolderAdapter
 import com.trainer.commons.typedviewholder.registerHolder
-import com.trainer.extensions.ioMain
-import com.trainer.extensions.start
-import com.trainer.modules.export.ExportManager
 import com.trainer.core.training.business.TrainingManager
 import com.trainer.core.training.business.WorkoutPresenter
 import com.trainer.core.training.model.ProgressStatus.STARTED
 import com.trainer.core.training.model.Serie
 import com.trainer.core.training.model.WorkoutEvent.WORKOUT_COMPLETED
+import com.trainer.extensions.ioMain
+import com.trainer.extensions.start
+import com.trainer.modules.export.ExportManager
 import com.trainer.modules.training.standard.Set
 import com.trainer.modules.training.standard.SuperSet
 import com.trainer.ui.training.model.SetItem
@@ -140,7 +140,7 @@ class WorkoutListActivity : BaseActivity(R.layout.activity_list) {
     list.forEach { serie ->
       when (serie) {
         is SuperSet -> result.add(createSuperSetItem(serie))
-        is Set -> result.add(SetItem(serie.id(), serie.exercise.imageResource(), serie.exercise.name, serie.status()))
+        is Set -> result.add(SetItem(serie.id(), serie.exercise.imageResource, serie.exercise.name, serie.status()))
       }
     }
     typedAdapter.data = result
@@ -153,7 +153,7 @@ class WorkoutListActivity : BaseActivity(R.layout.activity_list) {
     superSet.setList
         .flatMap { series -> listOf((series).exercise) }
         .forEach { exercise ->
-          imageResList.add(exercise.imageResource())
+          imageResList.add(exercise.imageResource)
           namesList.add(exercise.name)
         }
     return SuperSetItem(superSet.id(), imageResList, namesList, superSet.status())
