@@ -2,11 +2,14 @@ package com.trainer.extensions
 
 import android.app.Activity
 import android.app.Service
+import android.content.Context
 import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.support.annotation.IdRes
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentActivity
+import android.view.View
+import android.view.inputmethod.InputMethodManager
 
 /**
  * Created by dariusz on 06/01/17.
@@ -66,3 +69,9 @@ fun Activity.setLandscape() {
 fun Activity.setPortrait() {
   requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 }
+
+/** Hides keyboard, needs a view to obtain window token */
+fun Activity.hideKeyboard(view: View) = (getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager).hideSoftInputFromWindow(view.windowToken, 0)
+
+/** Hides keyboard, needs a view to obtain window token */
+fun Fragment.hideKeyboard(view: View) = activity?.hideKeyboard(view)
