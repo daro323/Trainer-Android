@@ -18,7 +18,7 @@
       android:visibility="gone"
       android:text="@string/finish_btn"/>
 
-  <TextView
+  <Button
       android:id="@+id/next_exercise_label"
       android:layout_width="match_parent"
       android:layout_height="match_parent"

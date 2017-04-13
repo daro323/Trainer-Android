@@ -5,7 +5,9 @@ import android.util.AttributeSet
 import android.widget.FrameLayout
 import android.widget.TextView
 import com.trainer.R
+import com.trainer.extensions.goneView
 import com.trainer.extensions.inflate
+import com.trainer.extensions.visibleView
 import com.trainer.modules.training.types.cyclic.CycleState
 import com.trainer.modules.training.types.cyclic.CycleState.*
 import com.trainer.ui.training.cyclic.CycleViewCallback
@@ -42,52 +44,74 @@ class CycleViewHeader : FrameLayout {
     when (state) {
       NEW -> {
         header.apply {
-          visibility = VISIBLE
+          visibleView()
           text = context.getString(R.string.cycle_new)
         }
-        cyclesCount.visibility = GONE
-        lastCyclesCount.visibility = GONE
+        cyclesCount.goneView()
+        lastCyclesCount.goneView()
       }
 
       GET_READY -> {
         header.apply {
-          visibility = VISIBLE
+          visibleView()
           text = context.getString(R.string.cycle_get_ready)
         }
-        cyclesCount.visibility = GONE
-        lastCyclesCount.visibility = GONE
+        cyclesCount.goneView()
+        lastCyclesCount.goneView()
       }
 
       PERFORMING -> {
         header.apply {
-          visibility = VISIBLE
+          visibleView()
           text = headerViewModel.exerciseName
         }
         cyclesCount.apply {
-          visibility = VISIBLE
+          visibleView()
           text = String.format(context.getString(R.string.current_cycle), headerViewModel.cycleCount.toString())
         }
         lastCyclesCount.apply {
-          visibility = VISIBLE
+          visibleView()
           text = String.format(context.getString(R.string.last_cycles), headerViewModel.lastCycleCount.toString())
         }
       }
 
       RESTING -> {
         header.apply {
-          visibility = VISIBLE
+          visibleView()
           text = context.getString(R.string.cycle_resting)
         }
-        cyclesCount.visibility = GONE
-        lastCyclesCount.visibility = GONE
+        cyclesCount.goneView()
+        lastCyclesCount.goneView()
       }
 
       DONE -> {
-        // TODO
+        header.apply {
+          visibleView()
+          text = context.getString(R.string.cycle_done)
+        }
+        cyclesCount.apply {
+          visibleView()
+          text = String.format(context.getString(R.string.current_cycle), headerViewModel.cycleCount.toString())
+        }
+        lastCyclesCount.apply {
+          visibleView()
+          text = String.format(context.getString(R.string.last_cycles), headerViewModel.lastCycleCount.toString())
+        }
       }
 
       COMPLETE -> {
-        // TODO
+        header.apply {
+          visibleView()
+          text = context.getString(R.string.cycle_complete)
+        }
+        cyclesCount.apply {
+          visibleView()
+          text = String.format(context.getString(R.string.current_cycle), headerViewModel.cycleCount.toString())
+        }
+        lastCyclesCount.apply {
+          visibleView()
+          text = String.format(context.getString(R.string.last_cycles), headerViewModel.lastCycleCount.toString())
+        }
       }
     }
   }

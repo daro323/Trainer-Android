@@ -7,7 +7,9 @@ import android.widget.ProgressBar
 import android.widget.RelativeLayout
 import android.widget.TextView
 import com.trainer.R
+import com.trainer.extensions.goneView
 import com.trainer.extensions.inflate
+import com.trainer.extensions.visibleView
 import com.trainer.modules.training.types.cyclic.CycleState
 import com.trainer.modules.training.types.cyclic.CycleState.*
 import com.trainer.ui.training.cyclic.CycleViewCallback
@@ -47,17 +49,17 @@ class CycleViewFooter: FrameLayout {
     when (state) {
       NEW, GET_READY, RESTING -> {
         nextExercise.apply {
-          visibility = VISIBLE
+          visibleView()
           text = String.format(context.getString(R.string.next_exercise_label), footerViewModel.nextExerciseName)
         }
-        finishView.visibility = GONE
-        cycleProgressContainer.visibility = GONE
+        finishView.goneView()
+        cycleProgressContainer.goneView()
       }
 
       PERFORMING -> {
-        finishView.visibility = GONE
-        nextExercise.visibility = GONE
-        cycleProgressContainer.visibility = VISIBLE
+        finishView.goneView()
+        nextExercise.goneView()
+        cycleProgressContainer.visibleView()
         cycleProgressCount.text = footerViewModel.currentCount.toString()
         totalCycleProgressCount.text = footerViewModel.totalCount.toString()
         cycleProgressBar.max = footerViewModel.totalCount
@@ -65,11 +67,15 @@ class CycleViewFooter: FrameLayout {
       }
 
       DONE -> {
-        // TODO
+        finishView.visibleView()
+        nextExercise.goneView()
+        cycleProgressContainer.goneView()
       }
 
       COMPLETE -> {
-        // TODO
+        finishView.goneView()
+        nextExercise.goneView()
+        cycleProgressContainer.goneView()
       }
     }
   }

@@ -51,7 +51,7 @@ class RestManager @Inject constructor(val vibrator: Vibrator,
   fun getRestEvents() = restEventsProcessor.toObservable()
 
   private fun onCountDownFinished(vibrationActive: Boolean) {
-    if (vibrationActive) vibrator.vibrate(VIBRATE_DURATION_MS)
+//    if (vibrationActive) vibrator.vibrate(VIBRATE_DURATION_MS)
   }
 
   private fun finish() {

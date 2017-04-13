@@ -177,7 +177,7 @@ class CycleFragment : BaseFragment(R.layout.fragment_cycle), OnBackSupportingFra
 
       RESTING -> subscribeForRest()
 
-      DONE -> fragmentPresenter.displayDone()
+      DONE -> presenterHelper.getSerie().run { fragmentPresenter.displayDone(cyclesCount, lastCyclesCount) }
 
       COMPLETE -> {
       }

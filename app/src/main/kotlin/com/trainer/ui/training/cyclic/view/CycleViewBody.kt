@@ -6,7 +6,9 @@ import android.widget.Button
 import android.widget.FrameLayout
 import android.widget.TextView
 import com.trainer.R
+import com.trainer.extensions.goneView
 import com.trainer.extensions.inflate
+import com.trainer.extensions.visibleView
 import com.trainer.modules.training.types.cyclic.CycleState
 import com.trainer.modules.training.types.cyclic.CycleState.*
 import com.trainer.ui.training.cyclic.BodyViewModel
@@ -47,27 +49,27 @@ class CycleViewBody: FrameLayout {
   private fun updateUI(state: CycleState, bodyViewModel: BodyViewModel) {
     when (state) {
       NEW -> {
-        startBtn.visibility = VISIBLE
-        doMoreBtn.visibility = GONE
-        getReadyCountDown.visibility = GONE
-        progressContainer.visibility = GONE
+        startBtn.visibleView()
+        doMoreBtn.goneView()
+        getReadyCountDown.goneView()
+        progressContainer.goneView()
       }
 
       GET_READY -> {
-        startBtn.visibility = GONE
-        doMoreBtn.visibility = GONE
-        progressContainer.visibility = GONE
+        startBtn.goneView()
+        doMoreBtn.goneView()
+        progressContainer.goneView()
         getReadyCountDown.apply {
-          visibility = VISIBLE
+          visibleView()
           text = bodyViewModel.countDown.toString()
         }
       }
 
       PERFORMING, RESTING -> {
-        startBtn.visibility = GONE
-        doMoreBtn.visibility = GONE
-        getReadyCountDown.visibility = GONE
-        progressContainer.visibility = VISIBLE
+        startBtn.goneView()
+        doMoreBtn.goneView()
+        getReadyCountDown.goneView()
+        progressContainer.visibleView()
         progressView.apply {
           max = bodyViewModel.totalCountDown
           progress = bodyViewModel.countDown
@@ -76,11 +78,17 @@ class CycleViewBody: FrameLayout {
       }
 
       DONE -> {
-        // TODO
+        startBtn.goneView()
+        doMoreBtn.visibleView()
+        getReadyCountDown.goneView()
+        progressContainer.goneView()
       }
 
       COMPLETE -> {
-        // TODO
+        startBtn.goneView()
+        doMoreBtn.goneView()
+        getReadyCountDown.goneView()
+        progressContainer.goneView()
       }
     }
   }

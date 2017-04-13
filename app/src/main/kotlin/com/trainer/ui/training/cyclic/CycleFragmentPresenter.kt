@@ -75,5 +75,6 @@ class CycleFragmentPresenter(private val onViewEventHandler: (CycleViewEvent) ->
       cycleCount = cyclesCount
       lastCycleCount = lastCyclesCount
     }
+    viewModelChengesProcessor.onNext(viewModel)
   }
 }
