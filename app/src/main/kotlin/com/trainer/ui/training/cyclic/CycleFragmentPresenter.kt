@@ -21,8 +21,13 @@ class CycleFragmentPresenter(private val onViewEventHandler: (CycleViewEvent) ->
   fun getDisplayState() = viewModel.state
 
   fun displayNew(firstExerciseName: String,
-                 lastCyclesCount: Int) {
-    viewModel.state = NEW
+                 lastCyclesCount: Int,
+                 isActive: Boolean) {
+
+    viewModel.apply {
+      state = NEW
+      this.isActive = isActive
+    }
     viewModel.footerViewModel.nextExerciseName = firstExerciseName
     viewModel.headerViewModel.apply {
       lastCycleCount = lastCyclesCount

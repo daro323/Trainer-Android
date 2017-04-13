@@ -11,9 +11,9 @@ import com.trainer.extensions.inflate
 import com.trainer.extensions.visibleView
 import com.trainer.modules.training.types.cyclic.CycleState
 import com.trainer.modules.training.types.cyclic.CycleState.*
-import com.trainer.ui.training.cyclic.BodyViewModel
 import com.trainer.ui.training.cyclic.CycleViewCallback
 import com.trainer.ui.training.cyclic.CycleViewEvent
+import com.trainer.ui.training.cyclic.CycleViewModel
 import io.netopen.hotbitmapgg.library.view.RingProgressBar
 
 /**
@@ -43,13 +43,15 @@ class CycleViewBody: FrameLayout {
   }
 
   fun bindViewModel(callback: CycleViewCallback) {
-    this.callback = callback.apply { getViewModelChanges().subscribe { updateUI(it.state, it.bodyViewModel) } }
+    this.callback = callback.apply { getViewModelChanges().subscribe { updateUI(it.state, it) } }
   }
 
-  private fun updateUI(state: CycleState, bodyViewModel: BodyViewModel) {
+  private fun updateUI(state: CycleState, cycleViewModel: CycleViewModel) {
+    val bodyViewModel = cycleViewModel.bodyViewModel
+
     when (state) {
       NEW -> {
-        startBtn.visibleView()
+        if (cycleViewModel.isActive) startBtn.visibleView() else startBtn.goneView()
         doMoreBtn.goneView()
         getReadyCountDown.goneView()
         progressContainer.goneView()

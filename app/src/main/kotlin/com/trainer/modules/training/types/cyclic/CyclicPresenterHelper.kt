@@ -91,6 +91,8 @@ class CyclicPresenterHelper @Inject constructor(val performManager: PerformManag
     }
   }
 
+  fun isCycleCurrentSerie() = !(cycle.status() == COMPLETE || callback.hasOtherSerieStarted(cycle))
+
   fun onCompleteCycle() {
     cycle.done()
     callback.onSaveSerie(cycle)

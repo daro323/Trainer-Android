@@ -150,7 +150,9 @@ class CycleFragment : BaseFragment(R.layout.fragment_cycle), OnBackSupportingFra
   }
 
   private fun initViewModel() {
-    fragmentPresenter.displayNew(presenterHelper.getCurrentRoutine().exercise.name, presenterHelper.getSerie().lastCyclesCount)
+    fragmentPresenter.displayNew(presenterHelper.getCurrentRoutine().exercise.name,
+        presenterHelper.getSerie().lastCyclesCount,
+        presenterHelper.isCycleCurrentSerie())
   }
 
   private val handleViewEvent = { event: CycleViewEvent ->

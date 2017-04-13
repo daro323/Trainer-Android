@@ -10,7 +10,8 @@ import io.reactivex.Observable
 data class CycleViewModel(var state: CycleState,
                           val headerViewModel: HeaderViewModel,
                           val bodyViewModel: BodyViewModel,
-                          val footerViewModel: FooterViewModel) {
+                          val footerViewModel: FooterViewModel,
+                          var isActive: Boolean = true) {
   companion object {
     fun createNew() = CycleViewModel(NEW,
         HeaderViewModel("", 0, 0),

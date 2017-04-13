@@ -67,6 +67,9 @@ data class Set constructor(private val _id: String,
 class SuperSet(val setList: MutableList<Set>,
                private val type: SerieType = SUPER_SET) : CompositeSerie<Set>(setList) {
 
+  init {
+    require(setList.dropLast(1).all { it.restTimeSec == 0 }) { "Inner Sets in a SuperSet shouldn't contain rest times!" }   // Verify data consistency
+  }
   override fun type() = type
 }
 
