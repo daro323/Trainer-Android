@@ -10,7 +10,7 @@
       android:gravity="top"
       layout="@layout/divider_horizontal"/>
 
-  <TextView
+  <Button
       android:id="@+id/finish_view"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
@@ -18,7 +18,7 @@
       android:visibility="gone"
       android:text="@string/finish_btn"/>
 
-  <Button
+  <TextView
       android:id="@+id/next_exercise_label"
       android:layout_width="match_parent"
       android:layout_height="match_parent"

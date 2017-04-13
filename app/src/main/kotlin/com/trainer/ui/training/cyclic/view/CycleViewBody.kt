@@ -96,7 +96,7 @@ class CycleViewBody: FrameLayout {
   private fun inflateLayout() {
     inflate(R.layout.cycle_view_body, this, true).apply {
       startBtn = (findViewById(R.id.start_button) as Button).apply { setOnClickListener { callback.onViewEvent(CycleViewEvent.START) } }
-      doMoreBtn = findViewById(R.id.do_more_button) as Button
+      doMoreBtn = (findViewById(R.id.do_more_button) as Button).apply { setOnClickListener { callback.onViewEvent(CycleViewEvent.ONE_MORE) } }
       getReadyCountDown = findViewById(R.id.get_ready_countdown) as TextView
       progressContainer = findViewById(R.id.progress_container) as FrameLayout
       progressView = findViewById(R.id.progress_view) as RingProgressBar

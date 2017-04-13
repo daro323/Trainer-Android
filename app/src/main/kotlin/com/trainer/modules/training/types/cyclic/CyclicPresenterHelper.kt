@@ -69,6 +69,13 @@ class CyclicPresenterHelper @Inject constructor(val performManager: PerformManag
 
   fun onStartCycle() {
     require(currentRoutineIdx != VALUE_NOT_SET) { "Attempt to start cycle when current cycle routine is not set!" }
+    cycle.start()
+    cycleStateEventsProcessor.onNext(CycleState.GET_READY)
+  }
+
+  fun onStartAnotherCycle() {
+    cycle.startNext()
+    refreshCurrentRoutineIdx()
     cycleStateEventsProcessor.onNext(CycleState.GET_READY)
   }
 
@@ -92,7 +99,6 @@ class CyclicPresenterHelper @Inject constructor(val performManager: PerformManag
   fun onPrepared() {
     require(currentRoutineIdx != VALUE_NOT_SET) { "Attempt to start cycle when current cycle routine is not set!" }
     performManager.startPerforming(getCurrentRoutine().durationTimeSec)
-    cycle.start()
     cycleStateEventsProcessor.onNext(CycleState.PERFORMING)
   }
 

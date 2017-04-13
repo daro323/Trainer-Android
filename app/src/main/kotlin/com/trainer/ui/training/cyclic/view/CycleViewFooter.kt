@@ -2,10 +2,7 @@ package com.trainer.ui.training.cyclic.view
 
 import android.content.Context
 import android.util.AttributeSet
-import android.widget.FrameLayout
-import android.widget.ProgressBar
-import android.widget.RelativeLayout
-import android.widget.TextView
+import android.widget.*
 import com.trainer.R
 import com.trainer.extensions.goneView
 import com.trainer.extensions.inflate
@@ -13,6 +10,7 @@ import com.trainer.extensions.visibleView
 import com.trainer.modules.training.types.cyclic.CycleState
 import com.trainer.modules.training.types.cyclic.CycleState.*
 import com.trainer.ui.training.cyclic.CycleViewCallback
+import com.trainer.ui.training.cyclic.CycleViewEvent
 import com.trainer.ui.training.cyclic.FooterViewModel
 
 /**
@@ -20,7 +18,7 @@ import com.trainer.ui.training.cyclic.FooterViewModel
  */
 class CycleViewFooter: FrameLayout {
 
-  private lateinit var finishView: TextView
+  private lateinit var finishView: Button
   private lateinit var nextExercise: TextView
   private lateinit var cycleProgressContainer: RelativeLayout
   private lateinit var cycleProgressCount: TextView
@@ -82,7 +80,7 @@ class CycleViewFooter: FrameLayout {
 
   private fun inflateLayout() {
     inflate(R.layout.cycle_view_footer, this, true).apply {
-      finishView = findViewById(R.id.finish_view) as TextView
+      finishView = (findViewById(R.id.finish_view) as Button).apply { setOnClickListener { callback.onViewEvent(CycleViewEvent.FINISH) } }
       nextExercise = findViewById(R.id.next_exercise_label) as TextView
       cycleProgressContainer = findViewById(R.id.cycle_progress_container) as RelativeLayout
       cycleProgressCount = findViewById(R.id.cycle_progress_count) as TextView

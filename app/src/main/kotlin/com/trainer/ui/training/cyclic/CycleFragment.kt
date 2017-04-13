@@ -158,8 +158,7 @@ class CycleFragment : BaseFragment(R.layout.fragment_cycle), OnBackSupportingFra
     when (event) {
       START -> presenterHelper.onStartCycle()
 
-      ONE_MORE -> {
-      }
+      ONE_MORE -> presenterHelper.onStartAnotherCycle()
 
       FINISH -> {
       }
