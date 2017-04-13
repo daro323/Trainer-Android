@@ -40,7 +40,7 @@ data class Set constructor(private val _id: String,
     while (progress.size < seriesCount) progress.add(Repetition(0f, 0, exercise.weightType))
   }
 
-  override fun complete() {
+  override fun completeAndReset() {
     require(progress.size == seriesCount) { "Attempt to mark set as complete when there is still some missing progress!" }
     lastProgress = progress
     progress = mutableListOf()

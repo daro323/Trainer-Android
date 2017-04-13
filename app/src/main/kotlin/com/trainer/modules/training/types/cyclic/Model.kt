@@ -57,11 +57,15 @@ data class Cycle(private val _id: String,
     cycleList.forEach { it.resetComplete() }
   }
 
-  override fun complete() {
+  fun done() {
+    isComplete = true
+  }
+
+  override fun completeAndReset() {
     lastCyclesCount = cyclesCount
     cyclesCount = -1
     cycleList.forEach { it.resetComplete() }
-    isComplete = true
+    isComplete = false
   }
 
   override fun abort() {

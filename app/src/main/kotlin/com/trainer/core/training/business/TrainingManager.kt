@@ -1,6 +1,7 @@
 package com.trainer.core.training.business
 
 import com.trainer.core.training.model.ProgressStatus.NEW
+import com.trainer.core.training.model.ProgressStatus.STARTED
 import com.trainer.core.training.model.Serie
 import com.trainer.core.training.model.TrainingPlan
 import com.trainer.d2.scope.ApplicationScope
@@ -55,7 +56,7 @@ class TrainingManager @Inject constructor(val repo: TrainingRepository,
 
     workoutPresenter?.apply {
       // Clean up the TrainingDay
-      getWorkoutList().forEach(Serie::complete)
+      getWorkoutList().forEach(Serie::completeAndReset)
 
       // Increase totalDone count
       trainingDay.updateAsDone()

@@ -48,7 +48,10 @@ class CycleViewHeader : FrameLayout {
           text = context.getString(R.string.cycle_new)
         }
         cyclesCount.goneView()
-        lastCyclesCount.goneView()
+        lastCyclesCount.apply {
+          visibleView()
+          text = String.format(context.getString(R.string.last_cycles), headerViewModel.lastCycleCount.toString())
+        }
       }
 
       GET_READY -> {

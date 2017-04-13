@@ -150,23 +150,20 @@ class CycleFragment : BaseFragment(R.layout.fragment_cycle), OnBackSupportingFra
   }
 
   private fun initViewModel() {
-    fragmentPresenter.displayNew(presenterHelper.getCurrentRoutine().exercise.name)
+    fragmentPresenter.displayNew(presenterHelper.getCurrentRoutine().exercise.name, presenterHelper.getSerie().lastCyclesCount)
   }
 
   private val handleViewEvent = { event: CycleViewEvent ->
-    // TODO
     when (event) {
       START -> presenterHelper.onStartCycle()
 
       ONE_MORE -> presenterHelper.onStartAnotherCycle()
 
-      FINISH -> {
-      }
+      FINISH -> presenterHelper.onCompleteCycle()
     }
   }
 
   private fun handleCycleStateEvent(state: CycleState) {
-    // TODO
     when (state) {
       NEW -> initViewModel()
 
@@ -178,8 +175,7 @@ class CycleFragment : BaseFragment(R.layout.fragment_cycle), OnBackSupportingFra
 
       DONE -> presenterHelper.getSerie().run { fragmentPresenter.displayDone(cyclesCount, lastCyclesCount) }
 
-      COMPLETE -> {
-      }
+      COMPLETE -> presenterHelper.getSerie().run { fragmentPresenter.displayComplete(cyclesCount, lastCyclesCount) }
     }
   }
 }

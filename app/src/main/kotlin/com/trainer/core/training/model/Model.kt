@@ -135,7 +135,7 @@ interface Serie {
   fun id(): String
   fun status(): ProgressStatus
   fun skipRemaining()
-  fun complete()
+  fun completeAndReset()
   fun abort()
   fun type(): SerieType
 
@@ -174,7 +174,7 @@ abstract class CompositeSerie<out T : Serie> constructor(val seriesList: List<T>
 
   override fun skipRemaining() = seriesList.forEach(Serie::skipRemaining)
 
-  override fun complete() = seriesList.forEach(Serie::complete)
+  override fun completeAndReset() = seriesList.forEach(Serie::completeAndReset)
 
   override fun abort() = seriesList.forEach(Serie::abort)
 }
