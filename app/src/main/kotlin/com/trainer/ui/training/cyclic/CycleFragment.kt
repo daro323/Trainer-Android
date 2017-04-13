@@ -87,7 +87,7 @@ class CycleFragment : BaseFragment(R.layout.fragment_cycle), OnBackSupportingFra
     timerDisposable = CountingDownTimer().start(CyclicPresenterHelper.GET_READY_TIME_SEC)
         .ioMain()
         .subscribe {
-          fragmentPresenter.displayGetReady(it)
+          fragmentPresenter.displayGetReady(it, presenterHelper.getCurrentRoutine().exercise.name)
           if (it == 0) {
             timerDisposable.dispose()
             presenterHelper.onPrepared()

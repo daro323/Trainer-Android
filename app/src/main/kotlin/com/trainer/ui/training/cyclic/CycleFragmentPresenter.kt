@@ -30,8 +30,10 @@ class CycleFragmentPresenter(private val onViewEventHandler: (CycleViewEvent) ->
     viewModelChengesProcessor.onNext(viewModel)
   }
 
-  fun displayGetReady(getReadyCountDown: Int) {
+  fun displayGetReady(getReadyCountDown: Int,
+                      firstExerciseName: String) {
     viewModel.state = GET_READY
+    viewModel.footerViewModel.nextExerciseName = firstExerciseName
     viewModel.bodyViewModel.countDown = getReadyCountDown
     viewModelChengesProcessor.onNext(viewModel)
   }
