@@ -127,7 +127,7 @@ class CyclicPresenterHelper @Inject constructor(val performManager: PerformManag
   private fun refreshCurrentRoutineIdx() {
     require(cycle.status() != COMPLETE) { "Can't refreshCurrentRoutineIdx on a completed cycle!" }
     currentRoutineIdx = cycle.cycleList
-        .first { !it.isComplete }
-        .run { cycle.cycleList.indexOf(this) }
+        .firstOrNull { !it.isComplete }
+        ?.run { cycle.cycleList.indexOf(this) } ?: 0    // When cycle is done but not yet marked as complete - go to first item
   }
 }
