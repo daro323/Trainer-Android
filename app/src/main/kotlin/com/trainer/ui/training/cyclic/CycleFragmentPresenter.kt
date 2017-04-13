@@ -67,4 +67,13 @@ class CycleFragmentPresenter(private val onViewEventHandler: (CycleViewEvent) ->
     viewModel.footerViewModel.nextExerciseName = nextExerciseName
     viewModelChengesProcessor.onNext(viewModel)
   }
+
+  fun displayDone(cyclesCount: Int,
+                  lastCyclesCount: Int) {
+    viewModel.state = DONE
+    viewModel.headerViewModel.apply {
+      cycleCount = cyclesCount
+      lastCycleCount = lastCyclesCount
+    }
+  }
 }

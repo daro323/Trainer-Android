@@ -10,10 +10,12 @@ import com.trainer.core.training.business.WorkoutPresenter
 import com.trainer.core.training.model.WorkoutEvent
 import com.trainer.d2.common.ActivityComponent
 import com.trainer.extensions.ioMain
+import com.trainer.extensions.start
 import com.trainer.modules.countdown.CountingDownTimer
 import com.trainer.modules.training.types.cyclic.CycleState
 import com.trainer.modules.training.types.cyclic.CycleState.*
 import com.trainer.modules.training.types.cyclic.CyclicPresenterHelper
+import com.trainer.ui.training.RestActivity
 import com.trainer.ui.training.cyclic.CycleViewEvent.*
 import io.reactivex.disposables.Disposables
 import kotlinx.android.synthetic.main.fragment_cycle.*
@@ -75,7 +77,8 @@ class CycleFragment : BaseFragment(R.layout.fragment_cycle), OnBackSupportingFra
         .ioMain()
         .filter { it == WorkoutEvent.REST }   // Rest between cycles - start full screen rest
         .subscribe {
-          // TODO
+          presenter.onStartRest()
+          activity.start<RestActivity>()
         }
   }
 
@@ -174,8 +177,7 @@ class CycleFragment : BaseFragment(R.layout.fragment_cycle), OnBackSupportingFra
 
       RESTING -> subscribeForRest()
 
-      DONE -> {
-      }
+      DONE -> fragmentPresenter.displayDone()
 
       COMPLETE -> {
       }
