@@ -95,7 +95,7 @@ class CyclicPresenterHelper @Inject constructor(val performManager: PerformManag
 
   fun onCompleteCycle() {
     cycle.done()
-    callback.onSaveSerie(cycle)
+    callback.onSaveSerie(cycle, true)
   }
 
   fun onPrepared() {

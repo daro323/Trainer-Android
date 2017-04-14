@@ -67,14 +67,16 @@ class WorkoutPresenter @Inject constructor(val repo: TrainingRepository,
     workoutEventsProcessor.onNext(ONGOING)
   }
 
-  override fun onSaveSerie(serie: Serie) {
+  override fun onSaveSerie(serie: Serie, skipRest: Boolean) {
     trainingDay.workout.series.indexOf(serie).apply {
       trainingDay.workout.series[this] = serie
     }
     repo.saveTrainingDay(trainingDay)
 
     val restTime = helper.getRestTime()
-    if (getWorkoutStatus() != COMPLETE && restTime > 0) workoutEventsProcessor.onNext(WorkoutEvent.REST) else determineNextStep()
+
+    if (skipRest.not() && getWorkoutStatus() != COMPLETE && restTime > 0) workoutEventsProcessor.onNext(WorkoutEvent.REST)
+    else determineNextStep()
   }
 
   override fun hasOtherSerieStarted(thanSerie: Serie) = getWorkoutList()

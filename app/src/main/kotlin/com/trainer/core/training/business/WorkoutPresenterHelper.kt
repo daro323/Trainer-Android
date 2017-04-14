@@ -18,7 +18,7 @@ interface WorkoutPresenterHelper {
   fun determineNextStep()
 
   interface HelperCallback {
-    fun onSaveSerie(serie: Serie)
+    fun onSaveSerie(serie: Serie, skipRest: Boolean = false)
 
     fun hasOtherSerieStarted(thanSerie: Serie): Boolean
   }
