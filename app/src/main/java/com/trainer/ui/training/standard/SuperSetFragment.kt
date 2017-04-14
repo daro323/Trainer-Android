@@ -49,7 +49,7 @@ class SuperSetFragment : BaseFragment(R.layout.fragment_pager) {
 
   private fun initialize() {
     superSet = presenterHelper.getSerie() as SuperSet
-    adapter = SuperSetPagerAdapter(childFragmentManager, superSet.setList)
+    adapter = SuperSetPagerAdapter(childFragmentManager, superSet.seriesList)
     pagerView.adapter = adapter
     goToNextSet()
   }
@@ -64,6 +64,6 @@ class SuperSetFragment : BaseFragment(R.layout.fragment_pager) {
 
   private fun goToNextSet() {
     val currentSet = presenterHelper.getCurrentSet()
-    pagerView.currentItem = superSet.setList.indexOf(currentSet)
+    pagerView.currentItem = superSet.seriesList.indexOf(currentSet)
   }
 }

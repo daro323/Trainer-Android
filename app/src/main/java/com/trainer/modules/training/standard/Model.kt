@@ -60,8 +60,8 @@ data class Set constructor(private val _id: String,
 }
 
 @Keep
-class SuperSet(val setList: MutableList<Set>,
-               private val type: SerieType = SUPER_SET) : CompositeSerie<Set>(setList) {
+class SuperSet(seriesList: MutableList<Set>,
+               private val type: SerieType = SUPER_SET) : CompositeSerie<Set>(seriesList) {
 
   override fun type() = type
 }

@@ -159,7 +159,7 @@ interface Serie {
 }
 
 @Keep
-abstract class CompositeSerie<out T : Serie> constructor(val seriesList: List<T>) : Serie {
+abstract class CompositeSerie<T : Serie> constructor(val seriesList: MutableList<T>) : Serie {
   override fun id() = seriesList
       .map(Serie::id)
       .reduce { acc, item -> "$acc$item" }
