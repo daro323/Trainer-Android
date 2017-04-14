@@ -44,7 +44,7 @@ class StandardPresenterHelper @Inject constructor() : WorkoutPresenterHelper {
 
   fun getSet(id: String): Set = when (serie) {
     is Set -> (serie as Set).apply { if (id() != id) throw IllegalArgumentException("Couldn't find set for ID= $id") }
-    is SuperSet -> (serie as SuperSet).run { setList.find { it.id() == id } ?: throw IllegalArgumentException("Couldn't find set for ID= $id") }
+    is SuperSet -> (serie as SuperSet).run { seriesList.find { it.id() == id } ?: throw IllegalArgumentException("Couldn't find set for ID= $id") }
     else -> throw IllegalStateException("Helper initialized with unsupported serie type= ${serie.type()}!")
   }
 
@@ -58,14 +58,14 @@ class StandardPresenterHelper @Inject constructor() : WorkoutPresenterHelper {
 
     currentSet.progress.add(Repetition(weight, rep, weightType))
     if (serie is SuperSet) {
-      (serie as SuperSet).setList[currentSetIdx] = currentSet
+      (serie as SuperSet).seriesList[currentSetIdx] = currentSet
     }
     callback.onSaveSerie(serie)
   }
 
   fun getCurrentSet() = when (serie) {
     is Set -> serie as Set
-    is SuperSet -> (serie as SuperSet).setList[currentSetIdx]
+    is SuperSet -> (serie as SuperSet).seriesList[currentSetIdx]
     else -> throw IllegalStateException("Helper initialized with unsupported serie type= ${serie.type()}!")
   }
 
@@ -78,12 +78,12 @@ class StandardPresenterHelper @Inject constructor() : WorkoutPresenterHelper {
   private fun refreshCurrentSetIdx() {
     currentSetIdx = when (serie) {
       is Set -> VALUE_NOT_SET
-      is SuperSet -> (serie as SuperSet).setList
+      is SuperSet -> (serie as SuperSet).seriesList
           .filter { it.status() != COMPLETE }
           .sortedBy { it.progress.size }
           .first()
           .run {
-            (serie as SuperSet).setList.indexOf(this)
+            (serie as SuperSet).seriesList.indexOf(this)
           }
       else -> throw IllegalStateException("Can't refreshCurrentSetIdx for unsupported serie type= ${serie.type()}")
     }
