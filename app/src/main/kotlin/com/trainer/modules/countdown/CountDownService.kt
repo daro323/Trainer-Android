@@ -1,14 +1,15 @@
 package com.trainer.modules.countdown
 
+import android.app.NotificationManager
 import android.app.Service
 import android.content.Context
 import android.content.Intent
 import android.os.PowerManager
 import com.trainer.base.BaseApplication
 import com.trainer.commons.Lg
+import com.trainer.d2.qualifier.ForApplication
 import com.trainer.extensions.ioMain
 import com.trainer.extensions.sendLocalBroadcast
-import com.trainer.modules.countdown.CountDownNotificationProvider.CountDownNotification
 import com.trainer.modules.countdown.CountDownReceiver.Companion.COUNT_DOWN_EVENT_ACTION
 import com.trainer.modules.countdown.CountDownReceiver.Companion.COUNT_DOWN_EVENT_ARG
 import javax.inject.Inject
@@ -21,8 +22,10 @@ import javax.inject.Inject
  */
 class CountDownService : Service() {
 
+  @Inject @ForApplication lateinit var context: Context
   @Inject lateinit var powerManager: PowerManager
-  @Inject lateinit var notificationProvider: CountDownNotificationProvider
+  @Inject lateinit var notificationManager: NotificationManager
+
   private lateinit var notification: CountDownNotification
   private var startId: Int = -1
   private var timer: CountingDownTimer? = null
@@ -36,12 +39,12 @@ class CountDownService : Service() {
     private const val FINISH_COUNT_DOWN_ACTION = "FINISH_COUNT_DOWN_ACTION"
 
     private const val START_VALUE_ARG = "START_VALUE_ARG"
-    private const val NOTIFICATION_TYPE_ARG = "NOTIFICATION_TYPE_ARG"
+    private const val NOTIFICATION_DATA_ARG = "NOTIFICATION_DATA_ARG"
 
-    fun start(startValue: Int, notificationType: CountDownNotificationProvider.Type, context: Context, onCountDownAction: (Int) -> Unit): CountDownReceiver {
+    fun start(startValue: Int, notificationData: CountDownNotification.InitData, context: Context, onCountDownAction: (Int) -> Unit): CountDownReceiver {
       startWith(context, START_COUNT_DOWN_ACTION) {
         putExtra(START_VALUE_ARG, startValue)
-        putExtra(NOTIFICATION_TYPE_ARG, notificationType.name)
+        putExtra(NOTIFICATION_DATA_ARG, notificationData)
       }
       return CountDownReceiver(onCountDownAction)
     }
@@ -77,23 +80,22 @@ class CountDownService : Service() {
     Lg.d("CountDown Service was freshly started with action= $action")
 
     when (action) {
-      START_COUNT_DOWN_ACTION -> intent.run {
-        doStartCountDown(getIntExtra(START_VALUE_ARG, -1), CountDownNotificationProvider.Type.valueOf(getStringExtra(NOTIFICATION_TYPE_ARG)))
-      }
+      START_COUNT_DOWN_ACTION -> intent.run { doStartCountDown(getIntExtra(START_VALUE_ARG, -1), getParcelableExtra(NOTIFICATION_DATA_ARG)) }
+
       ABORT_COUNT_DOWN_ACTION, FINISH_COUNT_DOWN_ACTION -> doFinishCountDown()
+
       else -> throw IllegalArgumentException("Unsupported CountDownService action= $action!")
     }
-
     return START_REDELIVER_INTENT
   }
 
-  private fun doStartCountDown(startValue: Int, notificationType: CountDownNotificationProvider.Type) {
+  private fun doStartCountDown(startValue: Int, notificationData: CountDownNotification.InitData) {
     require(timer == null) { "Request to start CountDownService while service is already counting down!" }
     require(startValue > 0) { "Request to start CountDownService without providing a valid startValue! (was= $startValue)" }
 
     Lg.d("Start count down!")
     setWakeLockActive(true)
-    notification = notificationProvider.getNotification(notificationType)
+    notification = CountDownNotification(notificationData, context, notificationManager)
 
     timer = CountingDownTimer().apply {
       start(startValue)

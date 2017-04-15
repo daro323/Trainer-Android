@@ -6,6 +6,7 @@ import com.trainer.core.training.model.CoreConstants.Companion.VALUE_NOT_SET
 import com.trainer.core.training.model.ProgressStatus.*
 import com.trainer.core.training.model.Serie
 import com.trainer.modules.training.rest.RestManager
+import com.trainer.ui.training.SerieActivity
 import io.reactivex.processors.BehaviorProcessor
 import javax.inject.Inject
 
@@ -114,7 +115,9 @@ class CyclicPresenterHelper @Inject constructor(val performManager: PerformManag
   override fun getRestTime() = cycle.restTimeSec
 
   fun onStartRestBetweenRoutines() {
-    restManager.startRest(getCurrentRoutine().restTimeSec, withVibration = false)
+    restManager.startRest(getCurrentRoutine().restTimeSec,
+        pendingIntentClassName = SerieActivity::class.java.name,
+        withVibration = false)
   }
 
   fun onRestedBetweenRoutines() {

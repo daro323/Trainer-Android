@@ -9,6 +9,7 @@ import com.trainer.core.training.model.TrainingDay
 import com.trainer.core.training.model.WorkoutEvent
 import com.trainer.core.training.model.WorkoutEvent.*
 import com.trainer.modules.training.rest.RestManager
+import com.trainer.ui.training.RestActivity
 import io.reactivex.processors.BehaviorProcessor
 import javax.inject.Inject
 
@@ -86,7 +87,7 @@ class WorkoutPresenter @Inject constructor(val repo: TrainingRepository,
       .filter { it != thanSerie }
       .any { it.status() == STARTED }
 
-  fun onStartRest() = restManager.startRest(getRestTime())
+  fun onStartRest() = restManager.startRest(getRestTime(), RestActivity::class.java.name)
 
   fun onAbortRest() {
     restManager.abortRest()

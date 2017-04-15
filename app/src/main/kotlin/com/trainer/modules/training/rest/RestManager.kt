@@ -5,7 +5,7 @@ import android.os.Vibrator
 import com.trainer.commons.Lg
 import com.trainer.d2.qualifier.ForApplication
 import com.trainer.d2.scope.ApplicationScope
-import com.trainer.modules.countdown.CountDownNotificationProvider.Type.RESTING
+import com.trainer.modules.countdown.CountDownNotification
 import com.trainer.modules.countdown.CountDownReceiver
 import com.trainer.modules.countdown.CountDownService
 import io.reactivex.processors.BehaviorProcessor
@@ -26,9 +26,9 @@ class RestManager @Inject constructor(val vibrator: Vibrator,
   private var countDownReceiver: CountDownReceiver? = null
   private val restEventsProcessor = BehaviorProcessor.create<Int>()
 
-  fun startRest(initialStartValue: Int, withVibration: Boolean = true) {
+  fun startRest(initialStartValue: Int, notificationData: CountDownNotification.InitData, withVibration: Boolean = true) {
     Lg.d("startRest")
-    countDownReceiver = CountDownService.start(initialStartValue, RESTING, context) {
+    countDownReceiver = CountDownService.start(initialStartValue, notificationData, context) {
       restEventsProcessor.onNext(it)
       if (it == 0) onCountDownFinished(withVibration)
     }.apply { register(context) }

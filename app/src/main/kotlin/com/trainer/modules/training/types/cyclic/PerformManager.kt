@@ -4,7 +4,7 @@ import android.content.Context
 import com.trainer.commons.Lg
 import com.trainer.d2.qualifier.ForApplication
 import com.trainer.d2.scope.ApplicationScope
-import com.trainer.modules.countdown.CountDownNotificationProvider.Type.PERFORMING
+import com.trainer.modules.countdown.CountDownNotification
 import com.trainer.modules.countdown.CountDownReceiver
 import com.trainer.modules.countdown.CountDownService
 import io.reactivex.processors.BehaviorProcessor
@@ -19,9 +19,9 @@ class PerformManager @Inject constructor(@ForApplication val context: Context) {
   private var countDownReceiver: CountDownReceiver? = null
   private val performEventsProcessor = BehaviorProcessor.create<Int>()
 
-  fun startPerforming(initValue: Int) {
+  fun startPerforming(initValue: Int, notificationData: CountDownNotification.InitData) {
     Lg.d("startPerforming")
-    countDownReceiver = CountDownService.start(initValue, PERFORMING, context) { performEventsProcessor.onNext(it) }
+    countDownReceiver = CountDownService.start(initValue, notificationData, context) { performEventsProcessor.onNext(it) }
         .apply { register(context) }
   }
 
