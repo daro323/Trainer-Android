@@ -58,6 +58,11 @@ class CyclicPresenterHelper @Inject constructor(val performManager: PerformManag
     }
   }
 
+  override fun onSkipSerie() {
+    if (restManager.isResting()) restManager.abortRest()
+    if (performManager.isPerforming()) performManager.abortPerforming()
+  }
+
   fun getCurrentRoutine() = cycle.cycleList[currentRoutineIdx]
 
   @Nullable

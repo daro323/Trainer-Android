@@ -41,6 +41,8 @@ class PerformManager @Inject constructor(@ForApplication val context: Context) {
 
   fun getPerformEvents() = performEventsProcessor.toObservable()
 
+  fun isPerforming() = countDownReceiver != null
+
   private fun finish() {
     countDownReceiver!!.unregister(context)
     countDownReceiver = null

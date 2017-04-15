@@ -42,6 +42,10 @@ class StandardPresenterHelper @Inject constructor() : WorkoutPresenterHelper {
     standardStateEventsProcessor.onNext(StandardStateEvent.DO_NEXT)
   }
 
+  override fun onSkipSerie() {
+    // Ignore...
+  }
+
   fun getSet(id: String): Set = when (serie) {
     is Set -> (serie as Set).apply { if (id() != id) throw IllegalArgumentException("Couldn't find set for ID= $id") }
     is SuperSet -> (serie as SuperSet).run { seriesList.find { it.id() == id } ?: throw IllegalArgumentException("Couldn't find set for ID= $id") }

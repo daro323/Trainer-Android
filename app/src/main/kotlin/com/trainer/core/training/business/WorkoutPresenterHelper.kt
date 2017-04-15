@@ -12,6 +12,8 @@ interface WorkoutPresenterHelper {
 
   fun getSerie(): Serie
 
+  fun onSkipSerie()
+
   /**
    * Should only be called when resting is done and both workout and current serie are NOT finished
    */

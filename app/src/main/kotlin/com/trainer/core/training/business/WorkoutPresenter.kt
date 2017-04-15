@@ -59,6 +59,8 @@ class WorkoutPresenter @Inject constructor(val repo: TrainingRepository,
   fun skipSerie() {
     val currentSerie = getCurrentSerie()
     if (currentSerie.status() != COMPLETE) currentSerie.skipRemaining()
+    if (restManager.isResting()) restManager.abortRest()
+    helper.onSkipSerie()
     repo.saveTrainingPlan()
     workoutEventsProcessor.onNext(SERIE_COMPLETED)
   }
