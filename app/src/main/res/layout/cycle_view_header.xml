@@ -13,6 +13,7 @@
       android:paddingBottom="12dp"
       android:layout_centerHorizontal="true"
       android:gravity="center"
+      android:textAppearance="@style/Textappearance.Trainer.Headline"
       tools:text="Exercise Name"/>
 
   <TextView
@@ -22,6 +23,7 @@
       android:layout_below="@id/cycle_header"
       android:paddingLeft="30dp"
       android:layout_alignParentLeft="true"
+      android:textAppearance="@style/Textappearance.Trainer.Label"
       tools:text="Cycle 2"/>
 
   <TextView
@@ -31,6 +33,7 @@
       android:layout_below="@id/cycle_header"
       android:paddingRight="30dp"
       android:layout_alignParentRight="true"
+      android:textAppearance="@style/Textappearance.Trainer.Label"
       tools:text="Last 8"/>
 
   <include

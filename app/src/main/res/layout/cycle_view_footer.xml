@@ -23,7 +23,9 @@
       android:layout_width="match_parent"
       android:layout_height="match_parent"
       android:visibility="gone"
-      android:gravity="center"/>
+      android:gravity="center"
+      android:textAppearance="@style/Textappearance.Trainer.Headline"
+      tools:text="Next exercise 3"/>
 
   <RelativeLayout
       android:id="@+id/cycle_progress_container"
@@ -37,6 +39,7 @@
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
         android:layout_height="wrap_content"
+        android:textAppearance="@style/Textappearance.Trainer.Label"
         tools:text="3"/>
 
     <ProgressBar
@@ -58,6 +61,7 @@
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:layout_height="wrap_content"
+        android:textAppearance="@style/Textappearance.Trainer.Label"
         tools:text="10"/>
 
   </RelativeLayout>

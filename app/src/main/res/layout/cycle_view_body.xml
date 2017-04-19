@@ -27,6 +27,7 @@
       android:layout_height="wrap_content"
       android:layout_gravity="center"
       android:visibility="gone"
+      android:textAppearance="@style/Textappearance.Trainer.Headline"
       tools:text="3"/>
 
   <FrameLayout
