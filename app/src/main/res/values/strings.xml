@@ -36,8 +36,7 @@
   <string name="set">Set</string>
   <string name="super_set">Super Set</string>
   <string name="cycle">Cycle</string>
-  <string name="finished_notification_title">Finished</string>
-  <string name="rest_finished_notification_title">Rest finished</string>
+  <string name="countdown_finished_notification">Finished</string>
   <string name="rest_in_progress_notification_title">Resting in progress</string>
   <string name="cycle_routine_ongoing_notification_title">Cycle exercise in progress</string>
   <string name="export_plan_warning">Sure you want to export? This will override existing exported plan.</string>

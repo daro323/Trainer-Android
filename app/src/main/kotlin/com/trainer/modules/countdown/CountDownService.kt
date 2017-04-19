@@ -7,7 +7,6 @@ import android.content.Intent
 import android.os.PowerManager
 import com.trainer.base.BaseApplication
 import com.trainer.commons.Lg
-import com.trainer.d2.qualifier.ForApplication
 import com.trainer.extensions.ioMain
 import com.trainer.extensions.sendLocalBroadcast
 import com.trainer.modules.countdown.CountDownReceiver.Companion.COUNT_DOWN_EVENT_ACTION
@@ -22,7 +21,6 @@ import javax.inject.Inject
  */
 class CountDownService : Service() {
 
-  @Inject @ForApplication lateinit var context: Context
   @Inject lateinit var powerManager: PowerManager
   @Inject lateinit var notificationManager: NotificationManager
 
@@ -95,7 +93,7 @@ class CountDownService : Service() {
 
     Lg.d("Start count down!")
     setWakeLockActive(true)
-    notification = CountDownNotification(notificationData, context, notificationManager)
+    notification = CountDownNotification(notificationData, applicationContext, notificationManager)
 
     timer = CountingDownTimer().apply {
       start(startValue)

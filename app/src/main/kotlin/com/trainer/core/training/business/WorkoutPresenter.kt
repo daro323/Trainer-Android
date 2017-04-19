@@ -1,5 +1,6 @@
 package com.trainer.core.training.business
 
+import com.trainer.R
 import com.trainer.core.training.business.WorkoutPresenterHelper.HelperCallback
 import com.trainer.core.training.model.CoreConstants.Companion.VALUE_NOT_SET
 import com.trainer.core.training.model.ProgressStatus.COMPLETE
@@ -8,6 +9,7 @@ import com.trainer.core.training.model.Serie
 import com.trainer.core.training.model.TrainingDay
 import com.trainer.core.training.model.WorkoutEvent
 import com.trainer.core.training.model.WorkoutEvent.*
+import com.trainer.modules.countdown.CountDownNotification
 import com.trainer.modules.training.rest.RestManager
 import com.trainer.ui.training.RestActivity
 import io.reactivex.processors.BehaviorProcessor
@@ -87,7 +89,11 @@ class WorkoutPresenter @Inject constructor(val repo: TrainingRepository,
       .filter { it != thanSerie }
       .any { it.status() == STARTED }
 
-  fun onStartRest() = restManager.startRest(getRestTime(), RestActivity::class.java.name)
+  fun onStartRest() {
+    restManager.startRest(getRestTime(),
+        notificationData = CountDownNotification.InitData(R.string.rest_in_progress_notification_title, RestActivity::class.java.name, CountDownNotification.DUMMY_REQUESTCODE, CountDownNotification.REST_NOTIFICATION_ID),
+        withVibration = false)
+  }
 
   fun onAbortRest() {
     restManager.abortRest()

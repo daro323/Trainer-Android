@@ -3,10 +3,6 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
-kapt {
-  generateStubs = true
-}
-
 android {
   compileSdkVersion 25
   buildToolsVersion "25.0.2"
@@ -60,6 +56,8 @@ android {
   }
 }
 
+kapt { generateStubs = true }
+
 dependencies {
   compile fileTree(dir: 'libs', include: ['*.jar'])
   androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
@@ -71,6 +69,11 @@ dependencies {
   compile "com.android.support:support-annotations:$support_lib_version"
   compile "com.android.support:recyclerview-v7:$support_lib_version"
   compile "com.android.support:gridlayout-v7:$support_lib_version"
+
+  // PaperParcel
+  compile "nz.bradcampbell:paperparcel:$paperparcel_version"
+  compile "nz.bradcampbell:paperparcel-kotlin:$paperparcel_version"
+  kapt "nz.bradcampbell:paperparcel-compiler:$paperparcel_version"
 
   // Kotlin
   compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
@@ -103,11 +106,6 @@ dependencies {
 
   // File picker
   compile 'com.github.angads25:filepicker:1.0.6'
-
-  // Paper parcel
-  compile "nz.bradcampbell:paperparcel:$paperparcel_version"
-  compile "nz.bradcampbell:paperparcel-kotlin:$paperparcel_version"
-  kapt "nz.bradcampbell:paperparcel-compiler:$paperparcel_version"
 
   androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
     exclude group: 'com.android.support', module: 'support-annotations'

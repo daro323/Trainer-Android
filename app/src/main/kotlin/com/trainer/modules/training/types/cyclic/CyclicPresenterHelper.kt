@@ -1,10 +1,13 @@
 package com.trainer.modules.training.types.cyclic
 
 import android.support.annotation.Nullable
+import com.trainer.R
 import com.trainer.core.training.business.WorkoutPresenterHelper
 import com.trainer.core.training.model.CoreConstants.Companion.VALUE_NOT_SET
 import com.trainer.core.training.model.ProgressStatus.*
 import com.trainer.core.training.model.Serie
+import com.trainer.modules.countdown.CountDownNotification
+import com.trainer.modules.countdown.CountDownNotification.Companion.DUMMY_REQUESTCODE
 import com.trainer.modules.training.rest.RestManager
 import com.trainer.ui.training.SerieActivity
 import io.reactivex.processors.BehaviorProcessor
@@ -54,8 +57,7 @@ class CyclicPresenterHelper @Inject constructor(val performManager: PerformManag
       cycleStateEventsProcessor.onNext(CycleState.DONE)
     } else {
       refreshCurrentRoutineIdx()
-      performManager.startPerforming(getCurrentRoutine().durationTimeSec)
-      cycleStateEventsProcessor.onNext(CycleState.PERFORMING)
+      startPerforming()
     }
   }
 
@@ -106,8 +108,7 @@ class CyclicPresenterHelper @Inject constructor(val performManager: PerformManag
 
   fun onPrepared() {
     require(currentRoutineIdx != VALUE_NOT_SET) { "Attempt to start cycle when current cycle routine is not set!" }
-    performManager.startPerforming(getCurrentRoutine().durationTimeSec)
-    cycleStateEventsProcessor.onNext(CycleState.PERFORMING)
+    startPerforming()
   }
 
   fun getPerformEvents() = performManager.getPerformEvents()
@@ -116,7 +117,7 @@ class CyclicPresenterHelper @Inject constructor(val performManager: PerformManag
 
   fun onStartRestBetweenRoutines() {
     restManager.startRest(getCurrentRoutine().restTimeSec,
-        pendingIntentClassName = SerieActivity::class.java.name,
+        notificationData = CountDownNotification.InitData(R.string.rest_in_progress_notification_title, SerieActivity::class.java.name, DUMMY_REQUESTCODE, CountDownNotification.CYCLE_ROUTINE_REST_NOTIFICATION_ID),
         withVibration = false)
   }
 
@@ -139,5 +140,11 @@ class CyclicPresenterHelper @Inject constructor(val performManager: PerformManag
     currentRoutineIdx = cycle.cycleList
         .firstOrNull { !it.isComplete }
         ?.run { cycle.cycleList.indexOf(this) } ?: 0    // When cycle is done but not yet marked as complete - go to first item
+  }
+
+  private fun startPerforming() {
+    performManager.startPerforming(getCurrentRoutine().durationTimeSec,
+        CountDownNotification.InitData(R.string.cycle_routine_ongoing_notification_title, SerieActivity::class.java.name, DUMMY_REQUESTCODE, CountDownNotification.PERFORMING_NOTIFICATION_ID))
+    cycleStateEventsProcessor.onNext(CycleState.PERFORMING)
   }
 }
