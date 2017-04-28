@@ -33,11 +33,11 @@ class LandmineExerciseInitData private constructor() {
             CyclicRoutine(DUMMY_LANDMINE_EXERCISE_2, 2, 2)),
             2),
 
-        Serie.createSet(DUMMY_SET, emptyList(), 2, 2),
+        Serie.createSet(DUMMY_SET, 2, 2),
 
         SuperSet(arrayListOf(
-            Serie.createSet(DUMMY_SET_2, emptyList(), 2, 0),
-            Serie.createSet(DUMMY_SET_3, emptyList(), 2, 2)
+            Serie.createSet(DUMMY_SET_2, 2, 0),
+            Serie.createSet(DUMMY_SET_3, 2, 2)
         ))
     ))
   }

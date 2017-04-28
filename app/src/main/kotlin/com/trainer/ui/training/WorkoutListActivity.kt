@@ -157,7 +157,7 @@ class WorkoutListActivity : BaseActivity(R.layout.activity_list) {
     list.forEach { serie ->
       when (serie) {
         is SuperSet -> result.add(createSuperSetItem(serie))
-        is Set -> result.add(SetItem(serie.id(), serie.exercise.imageResource(), serie.exercise.name, serie.status()))
+        is Set -> result.add(SetItem(serie.id(), serie.exercise.imageResource, serie.exercise.name, serie.status()))
         is Cycle -> result.add(CycleItem(serie.id(), serie.name, serie.status()))
         else -> throw IllegalArgumentException("Unsupported serie type= ${serie.javaClass.name}")
       }

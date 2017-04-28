@@ -9,7 +9,6 @@ import com.trainer.d2.common.ActivityComponent
 import com.trainer.d2.common.ActivityModule
 import com.trainer.d2.common.AppComponent
 import com.trainer.modules.init.menshilfplan.CardioPlanInitializer
-import com.trainer.modules.init.menshilfplan.MenshilfPlanInitializer
 import javax.inject.Inject
 
 /**

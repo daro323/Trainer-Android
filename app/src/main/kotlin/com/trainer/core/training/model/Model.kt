@@ -10,10 +10,10 @@ import com.trainer.core.training.model.ProgressStatus.*
 import com.trainer.core.training.model.WeightType.BODY_WEIGHT
 import com.trainer.core.training.model.WeightType.KG
 import com.trainer.extensions.daysSince
-import com.trainer.modules.training.cyclic.Cycle
-import com.trainer.modules.training.cyclic.CyclicRoutine
-import com.trainer.modules.training.standard.Set
-import com.trainer.modules.training.standard.SuperSet
+import com.trainer.modules.training.types.cyclic.Cycle
+import com.trainer.modules.training.types.cyclic.CyclicRoutine
+import com.trainer.modules.training.types.standard.SuperSet
+import com.trainer.modules.training.types.standard.Set
 import org.threeten.bp.LocalDate
 import org.threeten.bp.format.DateTimeFormatter
 

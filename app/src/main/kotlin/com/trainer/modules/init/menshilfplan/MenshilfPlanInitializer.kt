@@ -1,15 +1,14 @@
 package com.trainer.modules.init.menshilfplan
 
 import android.support.annotation.Keep
-import com.trainer.R
 import com.trainer.commons.Lg
 import com.trainer.core.training.business.TrainingManager
 import com.trainer.core.training.model.TrainingDay
 import com.trainer.core.training.model.TrainingPlan
 import com.trainer.d2.scope.ApplicationScope
+import com.trainer.modules.init.data.exercise.ArmsExerciseInitData.Companion.ARMS_WORKOUT
+import com.trainer.modules.init.data.exercise.BackExerciseInitData.Companion.BACK_WORKOUT
 import com.trainer.modules.init.menshilfplan.InitCategories.*
-import com.trainer.modules.init.menshilfplan.data.exercise.ArmsExerciseInitData.Companion.ARMS_WORKOUT
-import com.trainer.modules.init.menshilfplan.data.exercise.BackExerciseInitData.Companion.BACK_WORKOUT
 import com.trainer.modules.init.menshilfplan.data.exercise.ChestExerciseInitData.Companion.CHEST_WORKOUT
 import com.trainer.modules.init.menshilfplan.data.exercise.LegsExerciseInitData.Companion.LEGS_WORKOUT
 import com.trainer.modules.init.menshilfplan.data.exercise.ShouldersExerciseInitData.Companion.SHOULDERS_WORKOUT
