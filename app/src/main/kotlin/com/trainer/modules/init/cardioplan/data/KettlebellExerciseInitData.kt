@@ -12,19 +12,36 @@ class KettlebellExerciseInitData private constructor() {
 
   companion object {
 
-    private val DUMMY_KETTLEBELL_EXERCISE = Exercise("Dummy Kettlebell Exercise")
-
-    private val DUMMY_KETTLEBELL_EXERCISE_2 = Exercise("Dummy Kettlebell Exercise 2")
-
-    private val DUMMY_KETTLEBELL_EXERCISE_3 = Exercise("Dummy Kettlebell Exercise 3")
+    private val SWING = Exercise("Swing")
+    private val SQUAT_PRESS_LEFT = Exercise("Squat & Press (Left Arm)")
+    private val SWING_BETWEEN_LEGS = Exercise("Swing Between Legs")
+    private val SQUAT_PRESS_RIGTH = Exercise("Squat & Press (Right Arm)")
+    private val HALO = Exercise("Halo")
+    private val LUNGE_PASS = Exercise("Lunge Pass")
+    private val HIGH_PULL = Exercise("High Pull")
+    private val GOBLET_SQUAT_WITH_ABDUCT_LEFT = Exercise("Goblet Squat (Abduct Left)")
+    private val SNATCH = Exercise("Snatch")
+    private val GOBLET_SQUAT_WITH_ABDUCT_RIGHT = Exercise("Goblet Squat (Abduct Right)")
+    private val SIDE_CHOP_LEFT = Exercise("Side Chop (Left)")
+    private val RUSSIAN_TWIST = Exercise("Russian Twist")
+    private val SIDE_CHOP_RIGHT = Exercise("Side Chop (Right)")
 
 
     val KETTLEBELL_WORKOUT = Workout(arrayListOf(
-        Serie.createCycle("Dummy Kettlebell cycle", arrayListOf(
-            CyclicRoutine(DUMMY_KETTLEBELL_EXERCISE, 20, 15),
-            CyclicRoutine(DUMMY_KETTLEBELL_EXERCISE_2, 30, 10),
-            CyclicRoutine(DUMMY_KETTLEBELL_EXERCISE_3, 10, 5)),
-            60)
-    ))
+        Serie.createCycle("Kettlebell Cycle", arrayListOf(
+            CyclicRoutine(SWING, 20, 20),
+            CyclicRoutine(SQUAT_PRESS_LEFT, 20, 20),
+            CyclicRoutine(SWING_BETWEEN_LEGS, 20, 20),
+            CyclicRoutine(SQUAT_PRESS_RIGTH, 20, 20),
+            CyclicRoutine(HALO, 20, 20),
+            CyclicRoutine(LUNGE_PASS, 20, 20),
+            CyclicRoutine(HIGH_PULL, 20, 20),
+            CyclicRoutine(GOBLET_SQUAT_WITH_ABDUCT_LEFT, 20, 20),
+            CyclicRoutine(SNATCH, 20, 20),
+            CyclicRoutine(GOBLET_SQUAT_WITH_ABDUCT_RIGHT, 20, 20),
+            CyclicRoutine(SIDE_CHOP_LEFT, 20, 20),
+            CyclicRoutine(RUSSIAN_TWIST, 20, 20),
+            CyclicRoutine(SIDE_CHOP_RIGHT, 20, 20)),
+            60)))
   }
 }
