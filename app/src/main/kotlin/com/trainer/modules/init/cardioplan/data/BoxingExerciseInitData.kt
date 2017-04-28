@@ -12,19 +12,23 @@ class BoxingExerciseInitData private constructor() {
 
   companion object {
 
-    private val DUMMY_BOXING_EXERCISE = Exercise("Dummy BOXING Exercise")
-
-    private val DUMMY_BOXING_EXERCISE_2 = Exercise("Dummy BOXING Exercise 2")
-
-    private val DUMMY_BOXING_EXERCISE_3 = Exercise("Dummy BOXING Exercise 3")
-
+    private val LEFT_JAB = Exercise("Left Jab")
+    private val RIGHT_CROSS = Exercise("Right Cross")
+    private val LEFT_BODY = Exercise("Left Body")
+    private val RIGHT_BODY = Exercise("Right Body")
+    private val LEFT_HOOK = Exercise("Left Hook")
+    private val RIGHT_HOOK = Exercise("Right Hook")
+    private val ALTERNATING_PUNCHES_WITH_SIDE_PUNCH = Exercise("Alternating Punches with Side Punch")
 
     val BOXING_WORKOUT = Workout(arrayListOf(
-        Serie.createCycle("Dummy Boxing cycle", arrayListOf(
-            CyclicRoutine(DUMMY_BOXING_EXERCISE, 20, 15),
-            CyclicRoutine(DUMMY_BOXING_EXERCISE_2, 30, 10),
-            CyclicRoutine(DUMMY_BOXING_EXERCISE_3, 10, 5)),
-            60)
-    ))
+        Serie.createCycle("Boxing Cycle", arrayListOf(
+            CyclicRoutine(LEFT_JAB, 35, 20),
+            CyclicRoutine(RIGHT_CROSS, 35, 20),
+            CyclicRoutine(LEFT_BODY, 35, 20),
+            CyclicRoutine(RIGHT_BODY, 35, 20),
+            CyclicRoutine(LEFT_HOOK, 35, 20),
+            CyclicRoutine(RIGHT_HOOK, 35, 20),
+            CyclicRoutine(ALTERNATING_PUNCHES_WITH_SIDE_PUNCH, 45, 0)),
+            60)))
   }
 }

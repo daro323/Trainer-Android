@@ -32,7 +32,7 @@ class LandmineExerciseInitData private constructor() {
             CyclicRoutine(ONE_LEG_OFFSET_ROW, 20, 20),
             CyclicRoutine(ROTATIONAL_CLEAN_N_PRESS, 20, 20),
             CyclicRoutine(ONE_ARM_BENDED_ROW, 20, 20),
-            CyclicRoutine(BOX_JUMPS, 20, 20)),
+            CyclicRoutine(BOX_JUMPS, 20, 0)),
             60)))
   }
 }

@@ -41,7 +41,7 @@ class KettlebellExerciseInitData private constructor() {
             CyclicRoutine(GOBLET_SQUAT_WITH_ABDUCT_RIGHT, 20, 20),
             CyclicRoutine(SIDE_CHOP_LEFT, 20, 20),
             CyclicRoutine(RUSSIAN_TWIST, 20, 20),
-            CyclicRoutine(SIDE_CHOP_RIGHT, 20, 20)),
+            CyclicRoutine(SIDE_CHOP_RIGHT, 20, 0)),
             60)))
   }
 }
