@@ -26,7 +26,7 @@ import javax.inject.Inject
  * Created by dariusz on 05/01/17.
  */
 @ApplicationScope
-class DataInitializer @Inject constructor(val trainingManager: TrainingManager) {
+class MenshilfPlanInitializer @Inject constructor(val trainingManager: TrainingManager) {
   companion object {
     const val TAG = "INIT"
     const private val INIT_WORKOUT_PLAN_NAME = "Buff Plan"
