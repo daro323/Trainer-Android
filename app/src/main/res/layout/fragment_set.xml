@@ -49,7 +49,7 @@
         android:layout_height="1dp"/>
 
     <TextView
-        android:id="@+id/guidelines_label"
+        android:id="@+id/guidelinesLabelView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/parentarea_divider"
@@ -60,7 +60,7 @@
         android:id="@+id/guidelinesTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/guidelines_label"
+        android:layout_below="@id/guidelinesLabelView"
         android:paddingBottom="@dimen/small_padding"
         android:textAppearance="@style/Textappearance.Trainer.ContinuousText"
         tools:text="- Brace your butt to prevent from farting\n- Don't cheat by not lifting at all"/>

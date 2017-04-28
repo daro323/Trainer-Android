@@ -18,10 +18,7 @@ import com.trainer.core.training.model.Repetition
 import com.trainer.core.training.model.WeightType.BODY_WEIGHT
 import com.trainer.core.training.model.WorkoutEvent
 import com.trainer.d2.common.ActivityComponent
-import com.trainer.extensions.arg
-import com.trainer.extensions.ioMain
-import com.trainer.extensions.reduceWithDefault
-import com.trainer.extensions.start
+import com.trainer.extensions.*
 import com.trainer.modules.training.types.standard.Set
 import com.trainer.modules.training.types.standard.StandardPresenterHelper
 import com.trainer.ui.training.RestActivity
@@ -108,14 +105,22 @@ class SetFragment : BaseFragment(R.layout.fragment_set) {
       val weightType = exercise.weightType
       exerciseImage.setImageResource(this.exercise.imageResource)
       nameTextView.text = exercise.name
-      guidelinesTextView.text = guidelines.reduceWithDefault("", { item -> "- $item" }, { acc, guideline -> "$acc\n- $guideline" })
+
+      if (guidelines.isEmpty()) {
+        guidelinesLabelView.goneView()
+        guidelinesTextView.goneView()
+      } else {
+        guidelinesLabelView.visibleView()
+        guidelinesTextView.visibleView()
+        guidelinesTextView.text = guidelines.reduceWithDefault("", { item -> "- $item" }, { acc, guideline -> "$acc\n- $guideline" })
+      }
 
       if (exercise.comments.isEmpty()) {
-        commentsLabelView.visibility = GONE
-        commentsTextView.visibility = GONE
+        commentsLabelView.goneView()
+        commentsTextView.goneView()
       } else {
-        commentsLabelView.visibility = VISIBLE
-        commentsTextView.visibility = VISIBLE
+        commentsLabelView.visibleView()
+        commentsTextView.visibleView()
         commentsTextView.text = exercise.comments.reduceWithDefault("", { item -> "- $item" }, { acc, guideline -> "$acc\n- $guideline" })
       }
 
