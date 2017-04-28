@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+             android:layout_height="@dimen/cycle_header_footer_height">
+
+  <include
+      android:layout_width="match_parent"
+      android:layout_height="1dp"
+      android:gravity="top"
+      layout="@layout/divider_horizontal"/>
+
+  <Button
+      android:id="@+id/finish_view"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:gravity="center"
+      android:visibility="gone"
+      android:text="@string/finish_btn"/>
+
+  <TextView
+      android:id="@+id/next_exercise_label"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:visibility="gone"
+      android:gravity="center"
+      android:textAppearance="@style/Textappearance.Trainer.Headline"
+      tools:text="Next exercise 3"/>
+
+  <RelativeLayout
+      android:id="@+id/cycle_progress_container"
+      android:layout_width="match_parent"
+      android:visibility="gone"
+      android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/cycle_progress_count"
+        android:layout_width="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/Textappearance.Trainer.Label"
+        tools:text="3"/>
+
+    <ProgressBar
+        android:id="@+id/cycle_progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_toRightOf="@id/cycle_progress_count"
+        android:layout_toLeftOf="@+id/total_cycle_progress_count"
+        android:layout_centerVertical="true"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:max="100"
+        android:progress="30"/>
+
+    <TextView
+        android:id="@id/total_cycle_progress_count"
+        android:layout_width="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/Textappearance.Trainer.Label"
+        tools:text="10"/>
+
+  </RelativeLayout>
+</FrameLayout>

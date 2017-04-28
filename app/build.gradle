@@ -1,10 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
-
-kapt {
-  generateStubs = true
-}
+apply plugin: 'kotlin-kapt'
 
 android {
   compileSdkVersion 25
@@ -13,8 +10,8 @@ android {
     applicationId "com.trainer"
     minSdkVersion 15
     targetSdkVersion 25
-    versionCode 3
-    versionName "1.0.0"
+    versionCode 4
+    versionName "1.1.0"
     testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
     buildConfigField 'String', 'REL_PATH_TO_PLANS', '"/TrainerApp/training_plans/"'
@@ -37,6 +34,7 @@ android {
       minifyEnabled true
       proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
       signingConfig signingConfigs.releasekey
+      debuggable true
     }
 
     debug {
@@ -58,6 +56,8 @@ android {
   }
 }
 
+kapt { generateStubs = true }
+
 dependencies {
   compile fileTree(dir: 'libs', include: ['*.jar'])
   androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
@@ -70,6 +70,11 @@ dependencies {
   compile "com.android.support:recyclerview-v7:$support_lib_version"
   compile "com.android.support:gridlayout-v7:$support_lib_version"
 
+  // PaperParcel
+  compile "nz.bradcampbell:paperparcel:$paperparcel_version"
+  compile "nz.bradcampbell:paperparcel-kotlin:$paperparcel_version"
+  kapt "nz.bradcampbell:paperparcel-compiler:$paperparcel_version"
+
   // Kotlin
   compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 
@@ -78,8 +83,8 @@ dependencies {
   kapt "com.google.dagger:dagger-compiler:$dagger_version"
 
   // RxJava 2
-  compile 'io.reactivex.rxjava2:rxjava:2.0.5'
-  compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
+  compile "io.reactivex.rxjava2:rxjava:$rxjava_2_version"
+  compile "io.reactivex.rxjava2:rxandroid:$rxandroid_2_version"
 
   // Picasso
   compile "com.squareup.picasso:picasso:$picasso_version"

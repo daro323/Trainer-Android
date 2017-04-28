@@ -19,7 +19,8 @@
   <string name="skip">Skip</string>
   <string name="stretch">Stretch</string>
   <string name="take_rest">Take a rest…</string>
-  <string name="countdown_text">%s sec\n\nClick to skip</string>
+  <string name="countdown_text_with_abort">%s sec\n\nClick to skip</string>
+  <string name="countdown_text">%s sec</string>
   <string name="notification_countdown_text">%s sec</string>
   <string name="empty_field">Empty field!</string>
   <string name="workout_complete">Workout complete!</string>
@@ -35,8 +36,21 @@
   <string name="set">Set</string>
   <string name="super_set">Super Set</string>
   <string name="cycle">Cycle</string>
-  <string name="rest_ongoing_notification_title">Resting in progress</string>
-  <string name="rest_finished_notification_title">Rest finished</string>
+  <string name="countdown_finished_notification">Finished</string>
+  <string name="rest_in_progress_notification_title">Resting in progress</string>
+  <string name="cycle_routine_ongoing_notification_title">Cycle exercise in progress</string>
   <string name="export_plan_warning">Sure you want to export? This will override existing exported plan.</string>
   <string name="result_missing_rep_count">Provide reps count!</string>
+  <string name="start_btn">Start</string>
+  <string name="one_more_btn">One more</string>
+  <string name="finish_btn">Finish</string>
+  <string name="next_exercise_label" formatted="false">Next: %s</string>
+
+  <string name="cycle_new">New Cycle</string>
+  <string name="cycle_get_ready">Get Ready</string>
+  <string name="cycle_resting">Rest</string>
+  <string name="current_cycle">Cycles %s</string>
+  <string name="last_cycles">Last %s</string>
+  <string name="cycle_done">Cycle Done</string>
+  <string name="cycle_complete">Cycle Complete</string>
 </resources>
