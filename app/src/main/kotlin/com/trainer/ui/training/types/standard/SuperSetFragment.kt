@@ -1,4 +1,4 @@
-package com.trainer.ui.training.standard
+package com.trainer.ui.training.types.standard
 
 import android.os.Bundle
 import android.view.View
@@ -10,7 +10,7 @@ import com.trainer.extensions.ioMain
 import com.trainer.modules.training.types.standard.StandardPresenterHelper
 import com.trainer.modules.training.types.standard.StandardStateEvent
 import com.trainer.modules.training.types.standard.SuperSet
-import com.trainer.ui.training.model.SuperSetPagerAdapter
+import com.trainer.ui.training.types.model.SuperSetPagerAdapter
 import io.reactivex.disposables.Disposables
 import kotlinx.android.synthetic.main.fragment_pager.*
 import javax.inject.Inject

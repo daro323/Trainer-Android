@@ -36,7 +36,7 @@
       android:layout_height="match_parent"
       android:layout_margin="@dimen/activity_margin"
       android:visibility="gone"
-      tools:context="com.trainer.ui.training.RestActivity">
+      tools:context="com.trainer.ui.training.rest.RestActivity">
 
     <io.netopen.hotbitmapgg.library.view.RingProgressBar
         android:id="@+id/progress_view"

@@ -1,4 +1,4 @@
-package com.trainer.ui.training.model
+package com.trainer.ui.training.types.model
 
 import android.support.annotation.DrawableRes
 import com.trainer.core.training.model.ProgressStatus

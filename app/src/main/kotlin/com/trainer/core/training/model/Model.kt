@@ -12,8 +12,8 @@ import com.trainer.core.training.model.WeightType.KG
 import com.trainer.extensions.daysSince
 import com.trainer.modules.training.types.cyclic.Cycle
 import com.trainer.modules.training.types.cyclic.CyclicRoutine
-import com.trainer.modules.training.types.standard.SuperSet
 import com.trainer.modules.training.types.standard.Set
+import com.trainer.modules.training.types.standard.SuperSet
 import org.threeten.bp.LocalDate
 import org.threeten.bp.format.DateTimeFormatter
 
@@ -131,6 +131,7 @@ data class Repetition(val weight: Float,
     JsonSubTypes.Type(value = Cycle::class, name = "Cycle"))
 interface Serie {
   fun id(): String
+  fun name(): String
   fun status(): ProgressStatus
   fun skipRemaining()
   fun completeAndReset()
@@ -158,10 +159,13 @@ interface Serie {
 }
 
 @Keep
-abstract class CompositeSerie<T : Serie> constructor(val seriesList: MutableList<T>) : Serie {
+abstract class CompositeSerie<T : Serie> constructor(val name: String,
+                                                     val seriesList: MutableList<T>) : Serie {
   override fun id() = seriesList
       .map(Serie::id)
       .reduce { acc, item -> "$acc$item" }
+
+  override fun name() = name
 
   override fun status() = when {
     seriesList.all { it.status() == NEW } -> NEW

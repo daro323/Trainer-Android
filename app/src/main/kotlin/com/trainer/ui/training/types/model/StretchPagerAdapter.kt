@@ -1,12 +1,12 @@
-package com.trainer.ui.training.model
+package com.trainer.ui.training.types.model
 
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentStatePagerAdapter
 import com.trainer.extensions.with
 import com.trainer.modules.training.types.standard.StretchExercise
-import com.trainer.ui.training.StretchFragment
-import com.trainer.ui.training.StretchFragment.Companion.ARG_STRETCH_EXERCISE_IDX
-import com.trainer.ui.training.StretchFragment.Companion.ARG_TRAINING_CATEGORY
+import com.trainer.ui.training.stretch.StretchFragment
+import com.trainer.ui.training.stretch.StretchFragment.Companion.ARG_STRETCH_EXERCISE_IDX
+import com.trainer.ui.training.stretch.StretchFragment.Companion.ARG_TRAINING_CATEGORY
 
 /**
  * Created by dariusz on 09/01/17.

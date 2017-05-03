@@ -5,9 +5,11 @@ import android.app.Service
 import android.content.Context
 import android.content.Intent
 import android.content.pm.ActivityInfo
+import android.support.annotation.ColorRes
 import android.support.annotation.IdRes
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentActivity
+import android.support.v4.content.ContextCompat
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 
@@ -75,3 +77,5 @@ fun Activity.hideKeyboard(view: View) = (getSystemService(Context.INPUT_METHOD_S
 
 /** Hides keyboard, needs a view to obtain window token */
 fun Fragment.hideKeyboard(view: View) = activity?.hideKeyboard(view)
+
+fun Activity.getColorFromRes(@ColorRes colorRes: Int) = ContextCompat.getColor(this, colorRes)

@@ -27,6 +27,8 @@ data class Set constructor(private val _id: String,
 
   override fun id() = _id
 
+  override fun name() = exercise.name
+
   override fun type() = type
 
   override fun status() = when {
@@ -64,8 +66,9 @@ data class Set constructor(private val _id: String,
 }
 
 @Keep
-class SuperSet(seriesList: MutableList<Set>,
-               private val type: SerieType = SUPER_SET) : CompositeSerie<Set>(seriesList) {
+class SuperSet(name: String,
+               seriesList: MutableList<Set>,
+               private val type: SerieType = SUPER_SET) : CompositeSerie<Set>(name, seriesList) {
 
   init {
     require(seriesList.dropLast(1).all { it.restTimeSec == 0 }) { "Inner Sets in a SuperSet shouldn't contain rest times!" }   // Verify data consistency

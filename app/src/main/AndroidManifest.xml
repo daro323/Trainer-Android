@@ -27,9 +27,9 @@
     <activity android:name=".ui.training.SerieActivity"
               android:screenOrientation="portrait"
               android:launchMode="singleTop"/>
-    <activity android:name=".ui.training.StretchActivity"
+    <activity android:name=".ui.training.stretch.StretchActivity"
               android:screenOrientation="portrait"/>
-    <activity android:name=".ui.training.RestActivity"
+    <activity android:name=".ui.training.rest.RestActivity"
               android:screenOrientation="portrait"
               android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"
               android:launchMode="singleTop"/>

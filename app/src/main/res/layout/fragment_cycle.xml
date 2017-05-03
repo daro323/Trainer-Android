@@ -3,20 +3,20 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-  <com.trainer.ui.training.cyclic.view.CycleViewHeader
+  <com.trainer.ui.training.types.cyclic.view.CycleViewHeader
       android:id="@+id/header"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:layout_alignParentTop="true"/>
 
-  <com.trainer.ui.training.cyclic.view.CycleViewBody
+  <com.trainer.ui.training.types.cyclic.view.CycleViewBody
       android:id="@+id/body"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:layout_below="@id/header"
       android:layout_above="@+id/footer"/>
 
-  <com.trainer.ui.training.cyclic.view.CycleViewFooter
+  <com.trainer.ui.training.types.cyclic.view.CycleViewFooter
       android:id="@id/footer"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"

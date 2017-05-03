@@ -32,6 +32,8 @@ data class Cycle(private val _id: String,
 
   override fun id() = _id
 
+  override fun name() = name
+
   override fun type() = type
 
   override fun status() = when {

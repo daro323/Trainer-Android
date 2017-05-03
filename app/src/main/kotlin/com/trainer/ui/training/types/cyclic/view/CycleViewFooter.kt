@@ -1,4 +1,4 @@
-package com.trainer.ui.training.cyclic.view
+package com.trainer.ui.training.types.cyclic.view
 
 import android.content.Context
 import android.util.AttributeSet
@@ -9,9 +9,9 @@ import com.trainer.extensions.inflate
 import com.trainer.extensions.visibleView
 import com.trainer.modules.training.types.cyclic.CycleState
 import com.trainer.modules.training.types.cyclic.CycleState.*
-import com.trainer.ui.training.cyclic.CycleViewCallback
-import com.trainer.ui.training.cyclic.CycleViewEvent
-import com.trainer.ui.training.cyclic.FooterViewModel
+import com.trainer.ui.training.types.cyclic.CycleViewCallback
+import com.trainer.ui.training.types.cyclic.CycleViewEvent
+import com.trainer.ui.training.types.cyclic.FooterViewModel
 
 /**
  * Created by dariusz on 18/03/17.

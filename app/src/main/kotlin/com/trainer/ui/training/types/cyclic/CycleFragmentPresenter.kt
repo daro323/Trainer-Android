@@ -1,4 +1,4 @@
-package com.trainer.ui.training.cyclic
+package com.trainer.ui.training.types.cyclic
 
 import com.trainer.modules.training.types.cyclic.CycleState.*
 import com.trainer.modules.training.types.cyclic.CyclicRoutine

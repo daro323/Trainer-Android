@@ -12,7 +12,7 @@ import com.trainer.core.training.business.TrainingManager
 import com.trainer.extensions.ioMain
 import com.trainer.extensions.start
 import com.trainer.modules.export.ExportManager
-import com.trainer.ui.training.model.TrainingDayItem
+import com.trainer.ui.training.types.model.TrainingDayItem
 import kotlinx.android.synthetic.main.activity_list.*
 import kotlinx.android.synthetic.main.training_day_item.view.*
 import javax.inject.Inject

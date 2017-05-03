@@ -62,15 +62,17 @@ class ShouldersExerciseInitData private constructor() {
         createSet(STANDING_OVERHEAD_PRESS, 3, 80),
         createSet(LATERAL_DUMBBELL_RAISE, 3, 80),
         createSet(FRONT_ACROSS_DUMBBELL_RAISE, 3, 80),
-        SuperSet(arrayListOf(
-            createSet(CABLE_TO_HEAD_PULL, 3, 0),
-            createSet(LYING_DUMBBELL_ROTATIONS, 3, 70)
-        )),
+        SuperSet("Cable to Head Pulls & Lying Dumbbell Rotations",
+            arrayListOf(
+                createSet(CABLE_TO_HEAD_PULL, 3, 0),
+                createSet(LYING_DUMBBELL_ROTATIONS, 3, 70)
+            )),
 
-        SuperSet(arrayListOf(
-            createSet(TRAPS_ROTATE_AND_PULL, 2, 0),
-            createSet(TRAPS_PLATE_RAISE, 2, 60)
-        ))
+        SuperSet("Traps Rotate Pull & Traps Plate Raise",
+            arrayListOf(
+                createSet(TRAPS_ROTATE_AND_PULL, 2, 0),
+                createSet(TRAPS_PLATE_RAISE, 2, 60)
+            ))
     ))
   }
 }

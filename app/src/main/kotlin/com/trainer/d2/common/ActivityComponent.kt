@@ -3,9 +3,12 @@ package com.trainer.d2.common
 import com.trainer.base.BaseActivity
 import com.trainer.d2.scope.ActivityScope
 import com.trainer.ui.training.*
-import com.trainer.ui.training.cyclic.CycleFragment
-import com.trainer.ui.training.standard.SetFragment
-import com.trainer.ui.training.standard.SuperSetFragment
+import com.trainer.ui.training.rest.RestActivity
+import com.trainer.ui.training.stretch.StretchActivity
+import com.trainer.ui.training.stretch.StretchFragment
+import com.trainer.ui.training.types.cyclic.CycleFragment
+import com.trainer.ui.training.types.standard.SetFragment
+import com.trainer.ui.training.types.standard.SuperSetFragment
 import dagger.Subcomponent
 
 @Subcomponent(modules = arrayOf(ActivityModule::class))

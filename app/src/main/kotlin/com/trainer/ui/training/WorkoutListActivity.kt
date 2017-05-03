@@ -23,9 +23,10 @@ import com.trainer.modules.export.ExportManager
 import com.trainer.modules.training.types.cyclic.Cycle
 import com.trainer.modules.training.types.standard.Set
 import com.trainer.modules.training.types.standard.SuperSet
-import com.trainer.ui.training.model.CycleItem
-import com.trainer.ui.training.model.SetItem
-import com.trainer.ui.training.model.SuperSetItem
+import com.trainer.ui.training.stretch.StretchActivity
+import com.trainer.ui.training.types.model.CycleItem
+import com.trainer.ui.training.types.model.SetItem
+import com.trainer.ui.training.types.model.SuperSetItem
 import io.reactivex.disposables.Disposables
 import kotlinx.android.synthetic.main.activity_list.*
 import kotlinx.android.synthetic.main.cycle_item.view.*

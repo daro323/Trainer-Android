@@ -1,4 +1,4 @@
-package com.trainer.ui.training
+package com.trainer.ui.training.stretch
 
 import android.view.View
 import com.trainer.R

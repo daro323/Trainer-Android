@@ -1,4 +1,4 @@
-package com.trainer.ui.training
+package com.trainer.ui.training.stretch
 
 import android.app.Activity
 import android.os.Bundle
@@ -6,7 +6,7 @@ import com.trainer.R
 import com.trainer.base.BaseActivity
 import com.trainer.core.training.business.TrainingManager
 import com.trainer.extensions.startWith
-import com.trainer.ui.training.model.StretchPagerAdapter
+import com.trainer.ui.training.types.model.StretchPagerAdapter
 import kotlinx.android.synthetic.main.activity_stretch_pager.*
 import javax.inject.Inject
 

@@ -48,10 +48,11 @@ class LegsExerciseInitData private constructor() {
         createSet(WALKING_LUNGES, 3, 100),
         createSet(MACHINE_LEG_PRESS, 3, 90),
         createSet(ROMANIAN_DEADLIFT, 2, 75),
-        SuperSet(arrayListOf(
-            createSet(LEG_CURLS, 3, 0),
-            createSet(CALF_RAISE, 3, 60)
-        ))
+        SuperSet("Leg Curls & Calf Raises",
+            arrayListOf(
+                createSet(LEG_CURLS, 3, 0),
+                createSet(CALF_RAISE, 3, 60)
+            ))
     ))
   }
 }

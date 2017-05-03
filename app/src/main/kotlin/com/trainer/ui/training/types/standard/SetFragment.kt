@@ -1,4 +1,4 @@
-package com.trainer.ui.training.standard
+package com.trainer.ui.training.types.standard
 
 import android.content.Context
 import android.view.View
@@ -21,7 +21,7 @@ import com.trainer.d2.common.ActivityComponent
 import com.trainer.extensions.*
 import com.trainer.modules.training.types.standard.Set
 import com.trainer.modules.training.types.standard.StandardPresenterHelper
-import com.trainer.ui.training.RestActivity
+import com.trainer.ui.training.rest.RestActivity
 import eu.inmite.android.lib.validations.form.FormValidator
 import eu.inmite.android.lib.validations.form.annotations.NotEmpty
 import eu.inmite.android.lib.validations.form.callback.SimpleErrorPopupCallback

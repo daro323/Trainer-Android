@@ -42,11 +42,10 @@ class ArmsExerciseInitData private constructor() {
             "Łokcie blisko tułowia.",
             "Tułów i głowa prosto."))
 
-    private val CLOSE_GRIP_BENCH = Exercise("Close Grip Bench",
+    private val DUMBBELL_TRICEPS_KICKBACKS = Exercise("Dumbbell Triceps Kickbacks",
         arrayListOf(
-            "Chwyt troche węższy niż szerokość ramion.",
-            "Łokcie blisko tułowia.",
-            "Tułów i głowa prosto."))
+            "Tułów oprzyj stabilnie na ławeczce.",
+            "Opuszczaj jedynie do kąta prostego w łokciu."))
 
     private val OVERHEAD_TRICEPS_CABLE_EXTENSIONS = Exercise("Overhead Cable Extensions",
         arrayListOf(
@@ -61,22 +60,22 @@ class ArmsExerciseInitData private constructor() {
 
 
     val ARMS_WORKOUT = Workout(arrayListOf(
-        SuperSet(
+        SuperSet("Chin-Ups & Triceps Dips",
             arrayListOf(
                 createSet(WEIGHTED_CHINUPS, 3, 0),
                 createSet(WEIGHTED_TRICEPS_DIPS, 3, 75))),
 
-        SuperSet(
+        SuperSet("Barbell Curls & Overhead Triceps Cable",
             arrayListOf(
                 createSet(BARBELL_CURLS, 3, 0),
                 createSet(OVERHEAD_TRICEPS_CABLE_EXTENSIONS, 3, 75))),
 
-        SuperSet(
+        SuperSet("Supinated Dumbbell & Triceps Kickbacks",
             arrayListOf(
                 createSet(SUPINATED_DUMBBELL_CURLS, 2, 0),
-                createSet(CLOSE_GRIP_BENCH, 2, 75))),
+                createSet(DUMBBELL_TRICEPS_KICKBACKS, 2, 75))),
 
-        SuperSet(
+        SuperSet("Hammer Curls & Triceps Cable Pushdowns",
             arrayListOf(
                 createSet(HAMMER_CURLS, 2, 0),
                 createSet(TRICEPS_CABLE_PUSHDOWN, 2, 75)))

@@ -11,7 +11,7 @@ import com.trainer.core.training.model.WorkoutEvent
 import com.trainer.core.training.model.WorkoutEvent.*
 import com.trainer.modules.countdown.CountDownNotification
 import com.trainer.modules.training.rest.RestManager
-import com.trainer.ui.training.RestActivity
+import com.trainer.ui.training.rest.RestActivity
 import io.reactivex.processors.BehaviorProcessor
 import javax.inject.Inject
 
@@ -92,7 +92,7 @@ class WorkoutPresenter @Inject constructor(val repo: TrainingRepository,
   fun onStartRest() {
     restManager.startRest(getRestTime(),
         notificationData = CountDownNotification.InitData(R.string.rest_in_progress_notification_title, RestActivity::class.java.name, CountDownNotification.DUMMY_REQUESTCODE, CountDownNotification.REST_NOTIFICATION_ID),
-        withVibration = false)
+        withVibration = true)
   }
 
   fun onAbortRest() {

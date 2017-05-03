@@ -1,16 +1,22 @@
-package com.trainer.ui.training
+package com.trainer.ui.training.rest
 
 import android.os.Bundle
+import android.support.v7.widget.LinearLayoutManager
 import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
 import com.trainer.R
 import com.trainer.base.BaseActivity
 import com.trainer.commons.Lg
+import com.trainer.commons.typedviewholder.TypedViewHolderAdapter
+import com.trainer.commons.typedviewholder.registerHolder
 import com.trainer.core.training.business.TrainingManager
 import com.trainer.core.training.business.WorkoutPresenter
+import com.trainer.core.training.model.ProgressStatus
+import com.trainer.extensions.getColorFromRes
 import com.trainer.extensions.ioMain
 import io.reactivex.disposables.Disposables
 import kotlinx.android.synthetic.main.activity_rest.*
+import kotlinx.android.synthetic.main.progress_list_item.view.*
 import javax.inject.Inject
 
 class RestActivity : BaseActivity(R.layout.activity_rest) {
@@ -19,6 +25,16 @@ class RestActivity : BaseActivity(R.layout.activity_rest) {
 
   private val presenter: WorkoutPresenter by lazy { trainingManager.workoutPresenter ?: throw IllegalStateException("Current workout not set!") }  // call this after component.inject()
   private var restSubscription = Disposables.disposed()
+  private val typedAdapter = TypedViewHolderAdapter.Builder<Any>().apply {
+    registerHolder(R.layout.progress_list_item) { model: ProgressItem ->
+      itemView.apply {
+        uiProgressItemName.text = model.name
+        uiProgressItemName.setTextColor(
+            if (model.isCurrent) getColorFromRes(R.color.colorAccent) else getColorFromRes(R.color.black)
+        )
+      }
+    }
+  }.build()
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -47,7 +63,18 @@ class RestActivity : BaseActivity(R.layout.activity_rest) {
       presenter.onAbortRest()
       finish()
     }
+    showProgressList()
     subscribeForRest()
+  }
+
+  private fun showProgressList() {
+    presenter.getWorkoutList()
+        .filter { it.status() != ProgressStatus.COMPLETE }
+        .map { ProgressItem(it.name(), it.status() == ProgressStatus.STARTED) }
+        .run { typedAdapter.data = this }
+
+    uiProgressList.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+    uiProgressList.adapter = typedAdapter
   }
 
   private fun onRestEvent(countDown: Int) {

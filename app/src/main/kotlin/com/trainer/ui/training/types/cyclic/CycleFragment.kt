@@ -1,4 +1,4 @@
-package com.trainer.ui.training.cyclic
+package com.trainer.ui.training.types.cyclic
 
 import android.os.Bundle
 import android.view.View
@@ -15,8 +15,8 @@ import com.trainer.modules.countdown.CountingDownTimer
 import com.trainer.modules.training.types.cyclic.CycleState
 import com.trainer.modules.training.types.cyclic.CycleState.*
 import com.trainer.modules.training.types.cyclic.CyclicPresenterHelper
-import com.trainer.ui.training.RestActivity
-import com.trainer.ui.training.cyclic.CycleViewEvent.*
+import com.trainer.ui.training.rest.RestActivity
+import com.trainer.ui.training.types.cyclic.CycleViewEvent.*
 import io.reactivex.disposables.Disposables
 import kotlinx.android.synthetic.main.fragment_cycle.*
 import javax.inject.Inject

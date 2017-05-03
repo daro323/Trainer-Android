@@ -18,11 +18,11 @@ import com.trainer.extensions.with
 import com.trainer.modules.training.types.cyclic.Cycle
 import com.trainer.modules.training.types.standard.Set
 import com.trainer.modules.training.types.standard.SuperSet
-import com.trainer.ui.training.cyclic.CycleFragment
-import com.trainer.ui.training.standard.SetFragment
-import com.trainer.ui.training.standard.SetFragment.Companion.ARG_SET_ID
-import com.trainer.ui.training.standard.SetFragment.Companion.ARG_SHOWN_AS_SET_SERIE
-import com.trainer.ui.training.standard.SuperSetFragment
+import com.trainer.ui.training.types.cyclic.CycleFragment
+import com.trainer.ui.training.types.standard.SetFragment
+import com.trainer.ui.training.types.standard.SetFragment.Companion.ARG_SET_ID
+import com.trainer.ui.training.types.standard.SetFragment.Companion.ARG_SHOWN_AS_SET_SERIE
+import com.trainer.ui.training.types.standard.SuperSetFragment
 import io.reactivex.disposables.Disposables
 import javax.inject.Inject
 
