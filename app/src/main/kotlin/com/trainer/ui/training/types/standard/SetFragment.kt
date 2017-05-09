@@ -45,7 +45,7 @@ class SetFragment : BaseFragment(R.layout.fragment_set) {
   private val onInputFocusListener = { view: View, hasFocus: Boolean ->
     if (hasFocus) {
       (view as EditText).apply {
-        if (activity != null) this.postDelayed({ setText("") }, 100)
+        if (activity != null && text.isNotEmpty()) this.postDelayed({ text.clear() }, 100)
       }
 
       scrollView.postDelayed({
@@ -130,8 +130,9 @@ class SetFragment : BaseFragment(R.layout.fragment_set) {
       repInput.setOnFocusChangeListener(onInputFocusListener)
       repInput.setOnEditorActionListener { textView, actionId, keyEvent ->
         if (actionId == EditorInfo.IME_ACTION_DONE) {
+          hideKeyboard(textView)
           onSubmitHandler(submitButton)
-          true
+          false
         } else {
           false
         }
