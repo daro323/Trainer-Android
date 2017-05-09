@@ -66,7 +66,7 @@ class SetFragment : BaseFragment(R.layout.fragment_set) {
     super.onStart()
     createUI(presenterHelper.getSet(setId))
     submitButton.setOnClickListener(onSubmitHandler)
-    if (shownAsSetSerie) subscribeForWorkoutEvents()
+    if (shownAsSetSerie || userVisibleHint) subscribeForWorkoutEvents()
   }
 
   override fun onStop() {
@@ -130,9 +130,8 @@ class SetFragment : BaseFragment(R.layout.fragment_set) {
       repInput.setOnFocusChangeListener(onInputFocusListener)
       repInput.setOnEditorActionListener { textView, actionId, keyEvent ->
         if (actionId == EditorInfo.IME_ACTION_DONE) {
-          hideKeyboard(textView)
-          onSubmitHandler(submitButton)
-          false
+          onSubmitHandler(textView)
+          true
         } else {
           false
         }
