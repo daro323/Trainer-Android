@@ -11,6 +11,7 @@ import com.trainer.core.training.model.SerieType.SUPER_SET
 /**
  * Created by dariusz on 15/03/17.
  */
+@Keep
 enum class StandardStateEvent {
   DO_NEXT
 }

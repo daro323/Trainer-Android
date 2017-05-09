@@ -50,6 +50,8 @@
    long consumerNode;
 }
 
+-ignorewarnings
+
 # Kotlin
 -keep class kotlin.** { *;}
 -dontnote kotlin.**

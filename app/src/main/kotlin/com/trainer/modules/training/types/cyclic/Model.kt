@@ -10,7 +10,7 @@ import com.trainer.core.training.model.SerieType.CYCLE
 /**
  * Created by dariusz on 15/03/17.
  */
-
+@Keep
 enum class CycleState {
   NEW,        // User is presented starting screen
   GET_READY,  // Getting ready (3 to 0 count down is initiated)

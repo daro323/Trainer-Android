@@ -1,5 +1,6 @@
 package com.trainer.ui.training.types.cyclic
 
+import android.support.annotation.Keep
 import com.trainer.modules.training.types.cyclic.CycleState
 import com.trainer.modules.training.types.cyclic.CycleState.NEW
 import io.reactivex.Observable
@@ -7,6 +8,7 @@ import io.reactivex.Observable
 /**
  * Created by dariusz on 18/03/17.
  */
+@Keep
 data class CycleViewModel(var state: CycleState,
                           val headerViewModel: HeaderViewModel,
                           val bodyViewModel: BodyViewModel,
@@ -20,13 +22,14 @@ data class CycleViewModel(var state: CycleState,
   }
 }
 
+@Keep
 data class HeaderViewModel(var exerciseName: String,
                            var cycleCount: Int,
                            var lastCycleCount: Int)
-
+@Keep
 data class BodyViewModel(var countDown: Int,
                          var totalCountDown: Int)
-
+@Keep
 data class FooterViewModel(var nextExerciseName: String,
                            var currentCount: Int,
                            var totalCount: Int)
@@ -36,6 +39,7 @@ interface CycleViewCallback {
   fun onViewEvent(event: CycleViewEvent)
 }
 
+@Keep
 enum class CycleViewEvent {
   START,
   ONE_MORE,
