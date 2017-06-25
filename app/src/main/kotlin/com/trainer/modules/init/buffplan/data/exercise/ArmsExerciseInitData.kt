@@ -1,4 +1,4 @@
-package com.trainer.modules.init.data.exercise
+package com.trainer.modules.init.buffplan.data.exercise
 
 import com.trainer.core.training.model.Exercise
 import com.trainer.core.training.model.Serie.Companion.createSet

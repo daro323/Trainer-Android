@@ -7,6 +7,8 @@ import com.trainer.core.training.model.TrainingDay
 import com.trainer.core.training.model.TrainingPlan
 import com.trainer.d2.scope.ApplicationScope
 import com.trainer.modules.init.buffplan.InitCategories.*
+import com.trainer.modules.init.buffplan.data.exercise.ArmsExerciseInitData.Companion.ARMS_WORKOUT
+import com.trainer.modules.init.buffplan.data.exercise.BackExerciseInitData.Companion.BACK_WORKOUT
 import com.trainer.modules.init.buffplan.data.exercise.ChestExerciseInitData.Companion.CHEST_WORKOUT
 import com.trainer.modules.init.buffplan.data.exercise.LegsExerciseInitData.Companion.LEGS_WORKOUT
 import com.trainer.modules.init.buffplan.data.exercise.ShouldersExerciseInitData.Companion.SHOULDERS_WORKOUT
@@ -15,8 +17,6 @@ import com.trainer.modules.init.buffplan.data.stretch.StretchInitData.Companion.
 import com.trainer.modules.init.buffplan.data.stretch.StretchInitData.Companion.CHEST_DAY_STRETCH_ROUTINE
 import com.trainer.modules.init.buffplan.data.stretch.StretchInitData.Companion.LEGS_DAY_STRETCH_ROUTINE
 import com.trainer.modules.init.buffplan.data.stretch.StretchInitData.Companion.SHOULDERS_DAY_STRETCH_ROUTINE
-import com.trainer.modules.init.data.exercise.ArmsExerciseInitData.Companion.ARMS_WORKOUT
-import com.trainer.modules.init.data.exercise.BackExerciseInitData.Companion.BACK_WORKOUT
 import com.trainer.modules.training.types.standard.StretchPlan
 import com.trainer.modules.training.types.standard.StretchRoutine
 import java.util.*
