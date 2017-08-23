@@ -16,6 +16,9 @@ android {
 
     buildConfigField 'String', 'REL_PATH_TO_PLANS', '"/TrainerApp/training_plans/"'
     buildConfigField 'String', 'PLAN_FILE_NAME_TEMPLATE', '"%s.pln"'
+    buildConfigField "boolean", "IS_STAGE", 'false'
+    buildConfigField "boolean", "IS_LIVE", 'false'
+
 
     project.ext.set("appName", "Trainer")
   }
@@ -41,6 +44,19 @@ android {
       versionNameSuffix "-DEBUG"
     }
   }
+
+  productFlavors {
+    stage {
+      buildConfigField "boolean", "IS_STAGE", 'true'
+      buildConfigField 'String', 'SERVER_ENDPOINT', '"http://192.168.217.113:8080"'
+    }
+
+    live {
+      buildConfigField "boolean", "IS_LIVE", 'true'
+      buildConfigField 'String', 'SERVER_ENDPOINT', '"http://dummy-live-server.com"'      // TODO: Fill this when server is deployed
+    }
+  }
+
   sourceSets {
     main.java.srcDirs += 'src/main/kotlin'
   }
