@@ -1,4 +1,4 @@
-package com.trainer.core.training.model
+package com.trainer.modules.training
 
 import android.support.annotation.DrawableRes
 import android.support.annotation.Keep
@@ -6,10 +6,9 @@ import android.support.annotation.Nullable
 import com.fasterxml.jackson.annotation.JsonSubTypes
 import com.fasterxml.jackson.annotation.JsonTypeInfo
 import com.trainer.R
-import com.trainer.core.training.model.ProgressStatus.*
-import com.trainer.core.training.model.WeightType.BODY_WEIGHT
-import com.trainer.core.training.model.WeightType.KG
 import com.trainer.extensions.daysSince
+import com.trainer.modules.training.ProgressStatus.*
+import com.trainer.modules.training.WeightType.*
 import com.trainer.modules.training.types.cyclic.Cycle
 import com.trainer.modules.training.types.cyclic.CyclicRoutine
 import com.trainer.modules.training.types.standard.Set

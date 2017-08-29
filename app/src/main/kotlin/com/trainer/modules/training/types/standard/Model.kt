@@ -3,10 +3,10 @@ package com.trainer.modules.training.types.standard
 import android.support.annotation.DrawableRes
 import android.support.annotation.Keep
 import com.trainer.R
-import com.trainer.core.training.model.*
-import com.trainer.core.training.model.ProgressStatus.*
-import com.trainer.core.training.model.SerieType.SET
-import com.trainer.core.training.model.SerieType.SUPER_SET
+import com.trainer.modules.training.*
+import com.trainer.modules.training.ProgressStatus.*
+import com.trainer.modules.training.SerieType.SET
+import com.trainer.modules.training.SerieType.SUPER_SET
 
 /**
  * Created by dariusz on 15/03/17.

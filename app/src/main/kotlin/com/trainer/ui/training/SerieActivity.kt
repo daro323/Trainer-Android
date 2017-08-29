@@ -6,12 +6,12 @@ import android.view.MenuItem
 import com.trainer.R
 import com.trainer.base.BaseActivity
 import com.trainer.base.OnBackSupportingFragment
-import com.trainer.core.training.business.TrainingManager
-import com.trainer.core.training.business.WorkoutPresenter
-import com.trainer.core.training.model.Serie
-import com.trainer.core.training.model.WorkoutEvent
-import com.trainer.core.training.model.WorkoutEvent.SERIE_COMPLETED
-import com.trainer.core.training.model.WorkoutEvent.WORKOUT_COMPLETED
+import com.trainer.modules.training.WorkoutManager
+import com.trainer.modules.training.WorkoutPresenter
+import com.trainer.modules.training.Serie
+import com.trainer.modules.training.WorkoutEvent
+import com.trainer.modules.training.WorkoutEvent.SERIE_COMPLETED
+import com.trainer.modules.training.WorkoutEvent.WORKOUT_COMPLETED
 import com.trainer.extensions.ioMain
 import com.trainer.extensions.setupReplaceFragment
 import com.trainer.extensions.with
@@ -29,8 +29,8 @@ import javax.inject.Inject
 
 class SerieActivity : BaseActivity(R.layout.activity_serie) {
 
-  @Inject lateinit var trainingManager: TrainingManager
-  private val presenter: WorkoutPresenter by lazy { trainingManager.workoutPresenter ?: throw IllegalStateException("Current workout not set!") }  // call this after component.inject()
+  @Inject lateinit var workoutManager: WorkoutManager
+  private val presenter: WorkoutPresenter by lazy { workoutManager.workoutPresenter ?: throw IllegalStateException("Current workout not set!") }  // call this after component.inject()
   private var workoutEventsSubscription = Disposables.disposed()
 
   override fun onCreate(savedInstanceState: Bundle?) {

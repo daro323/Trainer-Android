@@ -7,11 +7,13 @@ import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.support.annotation.ColorRes
 import android.support.annotation.IdRes
+import android.support.annotation.StringRes
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentActivity
 import android.support.v4.content.ContextCompat
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import android.widget.Toast
 
 /**
  * Created by dariusz on 06/01/17.
@@ -79,3 +81,6 @@ fun Activity.hideKeyboard(view: View) = (getSystemService(Context.INPUT_METHOD_S
 fun Fragment.hideKeyboard(view: View) = activity?.hideKeyboard(view)
 
 fun Activity.getColorFromRes(@ColorRes colorRes: Int) = ContextCompat.getColor(this, colorRes)
+
+fun Activity.showQuickMessage(@StringRes messageId: Int) = Toast.makeText(this, messageId, Toast.LENGTH_SHORT).show()
+fun Activity.showSlowMessage(@StringRes messageId: Int) = Toast.makeText(this, messageId, Toast.LENGTH_LONG).show()

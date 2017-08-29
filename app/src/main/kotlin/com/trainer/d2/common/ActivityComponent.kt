@@ -2,7 +2,10 @@ package com.trainer.d2.common
 
 import com.trainer.base.BaseActivity
 import com.trainer.d2.scope.ActivityScope
-import com.trainer.ui.training.*
+import com.trainer.ui.training.SerieActivity
+import com.trainer.ui.training.TrainingDaysListActivity
+import com.trainer.ui.training.TrainingPlanListActivity
+import com.trainer.ui.training.WorkoutListActivity
 import com.trainer.ui.training.rest.RestActivity
 import com.trainer.ui.training.stretch.StretchActivity
 import com.trainer.ui.training.stretch.StretchFragment
@@ -22,6 +25,7 @@ interface ActivityComponent {
   fun inject(activity: SerieActivity)
   fun inject(activity: RestActivity)
   fun inject(activity: StretchActivity)
+  fun inject(activity: TrainingPlanListActivity)
 
   fun inject(fragment: SetFragment)
   fun inject(fragment: StretchFragment)

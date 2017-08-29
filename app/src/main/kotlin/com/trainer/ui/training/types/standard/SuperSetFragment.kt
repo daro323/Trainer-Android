@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.view.View
 import com.trainer.R
 import com.trainer.base.BaseFragment
-import com.trainer.core.training.business.TrainingManager
+import com.trainer.modules.training.WorkoutManager
 import com.trainer.d2.common.ActivityComponent
 import com.trainer.extensions.ioMain
 import com.trainer.modules.training.types.standard.StandardPresenterHelper
@@ -20,11 +20,11 @@ import javax.inject.Inject
  */
 class SuperSetFragment : BaseFragment(R.layout.fragment_pager) {
 
-  @Inject lateinit var trainingManager: TrainingManager
+  @Inject lateinit var workoutManager: WorkoutManager
   private lateinit var adapter: SuperSetPagerAdapter
   private lateinit var superSet: SuperSet
   private var standardEventsSubscription = Disposables.disposed()
-  private val presenterHelper: StandardPresenterHelper by lazy { (trainingManager.workoutPresenter?.getHelper() ?: throw IllegalStateException("Current workout presenter not set!") ) as StandardPresenterHelper }  // can call this only after component.inject()!
+  private val presenterHelper: StandardPresenterHelper by lazy { (workoutManager.workoutPresenter?.getHelper() ?: throw IllegalStateException("Current workout presenter not set!") ) as StandardPresenterHelper }  // can call this only after component.inject()!
 
   override fun inject(component: ActivityComponent) {
     component.inject(this)

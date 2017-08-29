@@ -21,4 +21,8 @@ class PersistenceModule {
   @Provides
   @ApplicationScope
   fun provideTrainingDatabase(@ForApplication context: Context) = Room.databaseBuilder(context, TrainingDatabase::class.java, TRAINING_DATABASE_NAME)
+
+  @Provides
+  @ApplicationScope
+  fun provideTrainingPlanDao(trainingDatabase: TrainingDatabase) = trainingDatabase.trainingPlanDao()
 }

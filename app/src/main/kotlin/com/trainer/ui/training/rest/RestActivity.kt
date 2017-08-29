@@ -9,24 +9,24 @@ import com.trainer.base.BaseActivity
 import com.trainer.commons.Lg
 import com.trainer.commons.typedviewholder.TypedViewHolderAdapter
 import com.trainer.commons.typedviewholder.registerHolder
-import com.trainer.core.training.business.TrainingManager
-import com.trainer.core.training.business.WorkoutPresenter
-import com.trainer.core.training.model.ProgressStatus
+import com.trainer.modules.training.WorkoutManager
+import com.trainer.modules.training.WorkoutPresenter
+import com.trainer.modules.training.ProgressStatus
 import com.trainer.extensions.getColorFromRes
 import com.trainer.extensions.ioMain
 import io.reactivex.disposables.Disposables
 import kotlinx.android.synthetic.main.activity_rest.*
-import kotlinx.android.synthetic.main.progress_list_item.view.*
+import kotlinx.android.synthetic.main.item_progress.view.*
 import javax.inject.Inject
 
 class RestActivity : BaseActivity(R.layout.activity_rest) {
 
-  @Inject lateinit var trainingManager: TrainingManager
+  @Inject lateinit var workoutManager: WorkoutManager
 
-  private val presenter: WorkoutPresenter by lazy { trainingManager.workoutPresenter ?: throw IllegalStateException("Current workout not set!") }  // call this after component.inject()
+  private val presenter: WorkoutPresenter by lazy { workoutManager.workoutPresenter ?: throw IllegalStateException("Current workout not set!") }  // call this after component.inject()
   private var restSubscription = Disposables.disposed()
   private val typedAdapter = TypedViewHolderAdapter.Builder<Any>().apply {
-    registerHolder(R.layout.progress_list_item) { model: ProgressItem ->
+    registerHolder(R.layout.item_progress) { model: ProgressItem ->
       itemView.apply {
         uiProgressItemName.text = model.name
         uiProgressItemName.setTextColor(

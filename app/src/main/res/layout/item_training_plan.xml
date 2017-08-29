@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:id="@+id/ui_training_plan_container"
+              xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/ui_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/list_item_padding"
+        android:textAppearance="@style/TextAppearance.Trainer.ListHeadline"
+        tools:text="List Item number 1" />
+
+  <include
+      android:id="@+id/ui_parenarea_divider"
+      layout="@layout/divider_horizontal"
+      android:layout_width="match_parent"
+      android:layout_height="1dp" />
+
+</LinearLayout>

@@ -3,8 +3,8 @@ package com.trainer.ui.training.stretch
 import android.view.View
 import com.trainer.R
 import com.trainer.base.BaseFragment
-import com.trainer.core.training.business.TrainingManager
-import com.trainer.core.training.model.CoreConstants.Companion.VALUE_NOT_SET
+import com.trainer.modules.training.WorkoutManager
+import com.trainer.modules.training.CoreConstants.Companion.VALUE_NOT_SET
 import com.trainer.d2.common.ActivityComponent
 import com.trainer.extensions.arg
 import com.trainer.extensions.reduceWithDefault
@@ -16,7 +16,7 @@ import javax.inject.Inject
  */
 class StretchFragment : BaseFragment(R.layout.fragment_stretch) {
 
-  @Inject lateinit var trainingManager: TrainingManager
+  @Inject lateinit var workoutManager: WorkoutManager
   private var stretchExerciseIdx: Int by arg(ARG_STRETCH_EXERCISE_IDX, VALUE_NOT_SET)
   private val category: String by arg(ARG_TRAINING_CATEGORY, CATEGORY_NOT_SET)
 
@@ -41,7 +41,7 @@ class StretchFragment : BaseFragment(R.layout.fragment_stretch) {
     require(stretchExerciseIdx != VALUE_NOT_SET) { "StretchFragment without ARG_STRETCH_EXERCISE_IDX set!" }
 
     category
-        .run { trainingManager.getStretchPlan().getStretchRoutine(this) }
+        .run { workoutManager.getStretchPlan().getStretchRoutine(this) }
         ?.run { stretchExercises[stretchExerciseIdx] }
         ?.apply {
           nameView.text = name

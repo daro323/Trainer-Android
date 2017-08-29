@@ -3,9 +3,9 @@ package com.trainer.modules.init.buffplan
 import android.support.annotation.DrawableRes
 import android.support.annotation.Keep
 import com.trainer.commons.Lg
-import com.trainer.core.training.business.TrainingManager
-import com.trainer.core.training.model.TrainingDay
-import com.trainer.core.training.model.TrainingPlan
+import com.trainer.modules.training.WorkoutManager
+import com.trainer.modules.training.TrainingDay
+import com.trainer.modules.training.TrainingPlan
 import com.trainer.d2.scope.ApplicationScope
 import com.trainer.modules.init.cardioplan.data.BoxingExerciseInitData.Companion.BOXING_WORKOUT
 import com.trainer.modules.init.cardioplan.data.KettlebellExerciseInitData.Companion.KETTLEBELL_WORKOUT
@@ -18,7 +18,7 @@ import javax.inject.Inject
  * Created by dariusz on 05/01/17.
  */
 @ApplicationScope
-class CardioPlanInitializer @Inject constructor(val trainingManager: TrainingManager) {
+class CardioPlanInitializer @Inject constructor(val workoutManager: WorkoutManager) {
   companion object {
     const private val INIT_WORKOUT_PLAN_NAME = "Cardio Plan"
   }
@@ -38,10 +38,10 @@ class CardioPlanInitializer @Inject constructor(val trainingManager: TrainingMan
   }
 
   private fun initializeTrainingPlan() {
-    if (isPlanInitialized { trainingManager.getTrainingPlan() }.not()) {
+    if (isPlanInitialized { workoutManager.getTrainingPlan() }.not()) {
       val trainingPlan = provideTrainingPlan()
       Lg.d("initializing training plan= ${trainingPlan.name}")
-      trainingManager.setTrainingPlan(trainingPlan)
+      workoutManager.setTrainingPlan(trainingPlan)
     }
   }
 

@@ -10,13 +10,13 @@ import android.widget.EditText
 import android.widget.Toast
 import com.trainer.R
 import com.trainer.base.BaseFragment
-import com.trainer.core.training.business.TrainingManager
-import com.trainer.core.training.business.WorkoutPresenter
-import com.trainer.core.training.model.CoreConstants.Companion.WEIGHT_VALUE_NOT_APPLICABLE
-import com.trainer.core.training.model.ProgressStatus.COMPLETE
-import com.trainer.core.training.model.Repetition
-import com.trainer.core.training.model.WeightType.BODY_WEIGHT
-import com.trainer.core.training.model.WorkoutEvent
+import com.trainer.modules.training.WorkoutManager
+import com.trainer.modules.training.WorkoutPresenter
+import com.trainer.modules.training.CoreConstants.Companion.WEIGHT_VALUE_NOT_APPLICABLE
+import com.trainer.modules.training.ProgressStatus.COMPLETE
+import com.trainer.modules.training.Repetition
+import com.trainer.modules.training.WeightType.BODY_WEIGHT
+import com.trainer.modules.training.WorkoutEvent
 import com.trainer.d2.common.ActivityComponent
 import com.trainer.extensions.*
 import com.trainer.modules.training.types.standard.Set
@@ -34,8 +34,8 @@ import javax.inject.Inject
  */
 class SetFragment : BaseFragment(R.layout.fragment_set) {
 
-  @Inject lateinit var trainingManager: TrainingManager
-  private val presenter: WorkoutPresenter by lazy { trainingManager.workoutPresenter ?: throw IllegalStateException("Current workout presenter not set!") }  // can call this only after component.inject()!
+  @Inject lateinit var workoutManager: WorkoutManager
+  private val presenter: WorkoutPresenter by lazy { workoutManager.workoutPresenter ?: throw IllegalStateException("Current workout presenter not set!") }  // can call this only after component.inject()!
   private val presenterHelper: StandardPresenterHelper by lazy { presenter.getHelper() as StandardPresenterHelper }  // can call this only after component.inject()!
   private var setId: String by arg(ARG_SET_ID)
   private var shownAsSetSerie: Boolean by arg(ARG_SHOWN_AS_SET_SERIE, false)

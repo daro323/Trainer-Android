@@ -4,7 +4,7 @@ import android.app.Activity
 import android.os.Bundle
 import com.trainer.R
 import com.trainer.base.BaseActivity
-import com.trainer.core.training.business.TrainingManager
+import com.trainer.modules.training.WorkoutManager
 import com.trainer.extensions.startWith
 import com.trainer.ui.training.types.model.StretchPagerAdapter
 import kotlinx.android.synthetic.main.activity_stretch_pager.*
@@ -15,12 +15,12 @@ import javax.inject.Inject
  */
 class StretchActivity : BaseActivity(R.layout.activity_stretch_pager) {
 
-  @Inject lateinit var trainingManager: TrainingManager
+  @Inject lateinit var workoutManager: WorkoutManager
   private lateinit var adapter: StretchPagerAdapter
   private val category by lazy { intent.getStringExtra(ARG_TRAINING_CATEGORY)
       .apply { if (this == null) throw IllegalArgumentException("StretchActivity shown without ARG_TRAINING_CATEGORY!") }
   }
-  private val stretchRoutine by lazy { trainingManager.getStretchPlan().getStretchRoutine(category) }
+  private val stretchRoutine by lazy { workoutManager.getStretchPlan().getStretchRoutine(category) }
 
   companion object {
     const val ARG_TRAINING_CATEGORY = "ARG_TRAINING_CATEGORY"

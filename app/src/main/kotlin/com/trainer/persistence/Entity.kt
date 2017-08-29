@@ -4,7 +4,7 @@ import android.arch.persistence.room.Entity
 import android.arch.persistence.room.ForeignKey
 import android.arch.persistence.room.PrimaryKey
 import android.support.annotation.Keep
-import com.trainer.core.training.model.Workout
+import com.trainer.modules.training.Workout
 
 /**
  * Created by dariusz on 29.08.17.

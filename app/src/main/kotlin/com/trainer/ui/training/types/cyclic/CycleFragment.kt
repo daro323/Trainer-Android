@@ -5,9 +5,9 @@ import android.view.View
 import com.trainer.R
 import com.trainer.base.BaseFragment
 import com.trainer.base.OnBackSupportingFragment
-import com.trainer.core.training.business.TrainingManager
-import com.trainer.core.training.business.WorkoutPresenter
-import com.trainer.core.training.model.WorkoutEvent
+import com.trainer.modules.training.WorkoutManager
+import com.trainer.modules.training.WorkoutPresenter
+import com.trainer.modules.training.WorkoutEvent
 import com.trainer.d2.common.ActivityComponent
 import com.trainer.extensions.ioMain
 import com.trainer.extensions.start
@@ -25,8 +25,8 @@ import javax.inject.Inject
  * Created by dariusz on 15/03/17.
  */
 class CycleFragment : BaseFragment(R.layout.fragment_cycle), OnBackSupportingFragment {
-  @Inject lateinit var trainingManager: TrainingManager
-  private val presenter: WorkoutPresenter by lazy { trainingManager.workoutPresenter ?: throw IllegalStateException("Current workout presenter not set!") }  // can call this only after component.inject()!
+  @Inject lateinit var workoutManager: WorkoutManager
+  private val presenter: WorkoutPresenter by lazy { workoutManager.workoutPresenter ?: throw IllegalStateException("Current workout presenter not set!") }  // can call this only after component.inject()!
   private val presenterHelper: CyclicPresenterHelper by lazy { presenter.getHelper() as CyclicPresenterHelper }  // can call this only after component.inject()!
 
   private lateinit var fragmentPresenter: CycleFragmentPresenter

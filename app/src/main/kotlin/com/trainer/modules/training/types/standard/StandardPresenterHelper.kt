@@ -1,12 +1,12 @@
 package com.trainer.modules.training.types.standard
 
-import com.trainer.core.training.business.WorkoutPresenterHelper
-import com.trainer.core.training.business.WorkoutPresenterHelper.HelperCallback
-import com.trainer.core.training.model.CoreConstants.Companion.VALUE_NOT_SET
-import com.trainer.core.training.model.ProgressStatus.COMPLETE
-import com.trainer.core.training.model.Repetition
-import com.trainer.core.training.model.Serie
-import com.trainer.core.training.model.WeightType.BODY_WEIGHT
+import com.trainer.modules.training.WorkoutPresenterHelper
+import com.trainer.modules.training.WorkoutPresenterHelper.HelperCallback
+import com.trainer.modules.training.CoreConstants.Companion.VALUE_NOT_SET
+import com.trainer.modules.training.ProgressStatus.COMPLETE
+import com.trainer.modules.training.Repetition
+import com.trainer.modules.training.Serie
+import com.trainer.modules.training.WeightType.BODY_WEIGHT
 import io.reactivex.processors.BehaviorProcessor
 import javax.inject.Inject
 

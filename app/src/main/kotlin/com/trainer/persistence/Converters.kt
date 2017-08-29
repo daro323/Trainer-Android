@@ -1,7 +1,7 @@
 package com.trainer.persistence
 
 import android.arch.persistence.room.TypeConverter
-import com.trainer.core.training.model.Workout
+import com.trainer.modules.training.Workout
 import com.trainer.d2.common.AppModule
 
 /**

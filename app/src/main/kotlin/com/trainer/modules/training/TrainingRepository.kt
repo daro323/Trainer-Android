@@ -1,12 +1,11 @@
-package com.trainer.core.training.business
+package com.trainer.modules.training
 
 import android.content.SharedPreferences
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.trainer.core.training.model.TrainingDay
-import com.trainer.core.training.model.TrainingPlan
 import com.trainer.d2.scope.ApplicationScope
 import com.trainer.extensions.saveString
 import com.trainer.modules.training.types.standard.StretchPlan
+import com.trainer.persistence.TrainingPlanDao
 import javax.inject.Inject
 
 /**
@@ -14,8 +13,18 @@ import javax.inject.Inject
  * Created by dariusz on 05/01/17.
  */
 @ApplicationScope
-class TrainingRepository @Inject constructor(val sharedPrefs: SharedPreferences,
+class TrainingRepository @Inject constructor(val trainingPlanDao: TrainingPlanDao,
+                                             val sharedPrefs: SharedPreferences,
                                              val mapper: ObjectMapper) {
+
+  fun getAllTrainingPlans() = trainingPlanDao.listAllPlans()
+
+
+
+
+
+
+  // TODO: Remove deprecated stuff
   companion object {
     const private val TRAINING_PLAN_KEY = "TRAINING_PLAN_KEY"
     const private val STRETCH_PLAN_KEY = "STRETCH_PLAN_KEY"

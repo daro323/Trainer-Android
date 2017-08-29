@@ -1,10 +1,7 @@
-package com.trainer.core.training.business
+package com.trainer.modules.training
 
-import com.trainer.core.training.model.ProgressStatus.NEW
-import com.trainer.core.training.model.ProgressStatus.STARTED
-import com.trainer.core.training.model.Serie
-import com.trainer.core.training.model.TrainingPlan
 import com.trainer.d2.scope.ApplicationScope
+import com.trainer.modules.training.ProgressStatus.NEW
 import com.trainer.modules.training.types.standard.StretchPlan
 import javax.inject.Inject
 import javax.inject.Provider
@@ -13,8 +10,8 @@ import javax.inject.Provider
  * Created by dariusz on 06/01/17.
  */
 @ApplicationScope
-class TrainingManager @Inject constructor(val repo: TrainingRepository,
-                                          val workoutPresenterProvider: Provider<WorkoutPresenter>) {
+class WorkoutManager @Inject constructor(val repo: TrainingRepository,
+                                         val workoutPresenterProvider: Provider<WorkoutPresenter>) {
   var workoutPresenter: WorkoutPresenter? = null
     private set
 
@@ -28,7 +25,7 @@ class TrainingManager @Inject constructor(val repo: TrainingRepository,
   /**
    * Automatically starts training for already started workout.
    */
-  fun continueTraining(): Boolean {
+  fun continueWorkout(): Boolean {
     return getTrainingPlan().run {
       val alreadyStartedDay = trainingDays.find { it.workout.status() != NEW }
       if (alreadyStartedDay != null) {
@@ -67,6 +64,14 @@ class TrainingManager @Inject constructor(val repo: TrainingRepository,
     workoutPresenter = null
   }
 
+  private fun reset() {
+    workoutPresenter = null
+  }
+
+  private fun isInitialized() = workoutPresenter != null
+
+  // Move this to the TrainingPlanManager ---------------------
+
   fun getTrainingPlan() = repo.getTrainingPlan()
 
   fun setTrainingPlan(trainingPlan: TrainingPlan) {
@@ -80,11 +85,5 @@ class TrainingManager @Inject constructor(val repo: TrainingRepository,
 
   fun setStretchPlan(stretchPlan: StretchPlan) {
     repo.saveStretchPlan(stretchPlan)
-  }
-
-  private fun isInitialized() = workoutPresenter != null
-
-  private fun reset() {
-    workoutPresenter = null
   }
 }

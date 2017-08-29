@@ -8,8 +8,8 @@ import com.trainer.R
 import com.trainer.d2.qualifier.ForApplication
 import com.trainer.d2.scope.ApplicationScope
 import com.trainer.extensions.writeString
-import com.trainer.core.training.business.TrainingManager
-import com.trainer.core.training.model.TrainingPlan
+import com.trainer.modules.training.WorkoutManager
+import com.trainer.modules.training.TrainingPlan
 import io.reactivex.Completable
 import java.io.File
 import javax.inject.Inject
@@ -20,7 +20,7 @@ import javax.inject.Inject
  */
 @ApplicationScope
 class ExportManager @Inject constructor(val mapper: ObjectMapper,
-                                        val trainingManager: TrainingManager,
+                                        val workoutManager: WorkoutManager,
                                         @ForApplication val context: Context) {
 
   companion object {
@@ -41,7 +41,7 @@ class ExportManager @Inject constructor(val mapper: ObjectMapper,
 
     File(filePath)
         .run { mapper.readValue(readText(), TrainingPlan::class.java) }
-        .run { trainingManager.setTrainingPlan(this) }
+        .run { workoutManager.setTrainingPlan(this) }
   }
 
   fun getTrainingStorageDir(): File? = File(TRAINING_EXTERNAL_STORAGE_PATH)
@@ -51,7 +51,7 @@ class ExportManager @Inject constructor(val mapper: ObjectMapper,
   private fun doExport() {
     checkExternalStorageAccess()
 
-    trainingManager.getTrainingPlan().apply {
+    workoutManager.getTrainingPlan().apply {
       getTrainingStorageDir()
           .run { File(this, getCanonicalPlanFileName(this@apply.name)) }
           .run { writeString(mapper.writeValueAsString(this@apply)) }

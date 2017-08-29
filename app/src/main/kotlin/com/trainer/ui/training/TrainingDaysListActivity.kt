@@ -8,13 +8,13 @@ import com.trainer.R
 import com.trainer.base.BaseActivity
 import com.trainer.commons.typedviewholder.TypedViewHolderAdapter
 import com.trainer.commons.typedviewholder.registerHolder
-import com.trainer.core.training.business.TrainingManager
+import com.trainer.modules.training.WorkoutManager
 import com.trainer.extensions.ioMain
 import com.trainer.extensions.start
 import com.trainer.modules.export.ExportManager
 import com.trainer.ui.training.types.model.TrainingDayItem
 import kotlinx.android.synthetic.main.activity_list.*
-import kotlinx.android.synthetic.main.training_day_item.view.*
+import kotlinx.android.synthetic.main.item_training_day.view.*
 import javax.inject.Inject
 
 /**
@@ -22,14 +22,14 @@ import javax.inject.Inject
  */
 class TrainingDaysListActivity : BaseActivity(R.layout.activity_list) {
 
-  @Inject lateinit var trainingManager: TrainingManager
+  @Inject lateinit var workoutManager: WorkoutManager
   @Inject lateinit var exportManager: ExportManager
 
   private val adapter = TypedViewHolderAdapter.Builder<Any>().apply {
-    registerHolder(R.layout.training_day_item) { model: TrainingDayItem ->
+    registerHolder(R.layout.item_training_day) { model: TrainingDayItem ->
       itemView.apply {
         training_day_item_container.setOnClickListener {
-          trainingManager.startWorkout(model.trainingCategory)
+          workoutManager.startWorkout(model.trainingCategory)
           start<WorkoutListActivity>()
         }
         nameText.text = model.trainingCategory
@@ -46,7 +46,7 @@ class TrainingDaysListActivity : BaseActivity(R.layout.activity_list) {
 
   override fun onStart() {
     super.onStart()
-    if (trainingManager.continueTraining()) {
+    if (workoutManager.continueWorkout()) {
       start<WorkoutListActivity>()
     } else {
       buildUi()
@@ -89,11 +89,11 @@ class TrainingDaysListActivity : BaseActivity(R.layout.activity_list) {
   }
 
   private fun buildUi() {
-    title = trainingManager.getTrainingPlan().name
+    title = workoutManager.getTrainingPlan().name
     recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
     recyclerView.adapter = adapter
 
-    trainingManager.getTrainingPlan().trainingDays
+    workoutManager.getTrainingPlan().trainingDays
         .flatMap { listOf(TrainingDayItem(it.category, it.getTotalDone(), it.trainedDaysAgo())) }
         .run { adapter.data = this }
   }

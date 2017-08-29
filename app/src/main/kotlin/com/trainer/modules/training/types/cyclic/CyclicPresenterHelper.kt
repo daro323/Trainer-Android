@@ -2,13 +2,13 @@ package com.trainer.modules.training.types.cyclic
 
 import android.support.annotation.Nullable
 import com.trainer.R
-import com.trainer.core.training.business.WorkoutPresenterHelper
-import com.trainer.core.training.model.CoreConstants.Companion.VALUE_NOT_SET
-import com.trainer.core.training.model.ProgressStatus.*
-import com.trainer.core.training.model.Serie
+import com.trainer.modules.training.WorkoutPresenterHelper
+import com.trainer.modules.training.CoreConstants.Companion.VALUE_NOT_SET
+import com.trainer.modules.training.ProgressStatus.*
+import com.trainer.modules.training.Serie
 import com.trainer.modules.countdown.CountDownNotification
 import com.trainer.modules.countdown.CountDownNotification.Companion.DUMMY_REQUESTCODE
-import com.trainer.modules.training.rest.RestManager
+import com.trainer.modules.training.RestManager
 import com.trainer.ui.training.SerieActivity
 import io.reactivex.processors.BehaviorProcessor
 import javax.inject.Inject

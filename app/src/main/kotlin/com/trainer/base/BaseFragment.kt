@@ -1,5 +1,7 @@
 package com.trainer.base
 
+import android.arch.lifecycle.LifecycleRegistry
+import android.arch.lifecycle.LifecycleRegistryOwner
 import android.content.Context
 import android.os.Bundle
 import android.support.annotation.LayoutRes
@@ -11,7 +13,9 @@ import com.trainer.d2.common.ActivityComponent
 /**
  * Created by dariusz on 09/01/17.
  */
-abstract class BaseFragment(@LayoutRes private val layoutRes: Int = -1) : Fragment() {
+abstract class BaseFragment(@LayoutRes private val layoutRes: Int = -1) : Fragment(), LifecycleRegistryOwner {
+
+  private val lifecycleRegistry by lazy { LifecycleRegistry(this) }
 
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) = when (layoutRes) {
     -1 -> null
@@ -22,6 +26,8 @@ abstract class BaseFragment(@LayoutRes private val layoutRes: Int = -1) : Fragme
     super.onAttach(context)
     inject(getComponent(context))
   }
+
+  override fun getLifecycle() = lifecycleRegistry
 
   internal fun getComponent(context: Context): ActivityComponent {
     if (context !is BaseActivity) {

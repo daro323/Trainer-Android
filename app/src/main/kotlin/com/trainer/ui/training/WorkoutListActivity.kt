@@ -12,14 +12,14 @@ import com.trainer.base.BaseActivity
 import com.trainer.commons.StyleUtils
 import com.trainer.commons.typedviewholder.TypedViewHolderAdapter
 import com.trainer.commons.typedviewholder.registerHolder
-import com.trainer.core.training.business.TrainingManager
-import com.trainer.core.training.business.WorkoutPresenter
-import com.trainer.core.training.model.ProgressStatus.STARTED
-import com.trainer.core.training.model.Serie
-import com.trainer.core.training.model.WorkoutEvent.WORKOUT_COMPLETED
 import com.trainer.extensions.ioMain
 import com.trainer.extensions.start
 import com.trainer.modules.export.ExportManager
+import com.trainer.modules.training.ProgressStatus.STARTED
+import com.trainer.modules.training.Serie
+import com.trainer.modules.training.WorkoutEvent.WORKOUT_COMPLETED
+import com.trainer.modules.training.WorkoutManager
+import com.trainer.modules.training.WorkoutPresenter
 import com.trainer.modules.training.types.cyclic.Cycle
 import com.trainer.modules.training.types.standard.Set
 import com.trainer.modules.training.types.standard.SuperSet
@@ -29,9 +29,9 @@ import com.trainer.ui.training.types.model.SetItem
 import com.trainer.ui.training.types.model.SuperSetItem
 import io.reactivex.disposables.Disposables
 import kotlinx.android.synthetic.main.activity_list.*
-import kotlinx.android.synthetic.main.cycle_item.view.*
-import kotlinx.android.synthetic.main.set_item.view.*
-import kotlinx.android.synthetic.main.super_set_container_item.view.*
+import kotlinx.android.synthetic.main.item_cycle.view.*
+import kotlinx.android.synthetic.main.item_set.view.*
+import kotlinx.android.synthetic.main.item_super_set_container.view.*
 import java.util.*
 import javax.inject.Inject
 
@@ -40,13 +40,13 @@ import javax.inject.Inject
  */
 class WorkoutListActivity : BaseActivity(R.layout.activity_list) {
 
-  @Inject lateinit var trainingManager: TrainingManager
+  @Inject lateinit var workoutManager: WorkoutManager
   @Inject lateinit var exportManager: ExportManager
-  private val presenter: WorkoutPresenter by lazy { trainingManager.workoutPresenter ?: throw IllegalStateException("Current workout not set!") }  // can call this only after component.inject()!
+  private val presenter: WorkoutPresenter by lazy { workoutManager.workoutPresenter ?: throw IllegalStateException("Current workout not set!") }  // can call this only after component.inject()!
   private var workoutEventsSubscription = Disposables.disposed()
 
   private val typedAdapter = TypedViewHolderAdapter.Builder<Any>().apply {
-    registerHolder(R.layout.super_set_container_item) { model: SuperSetItem ->
+    registerHolder(R.layout.item_super_set_container) { model: SuperSetItem ->
       itemView.apply {
         superSetItemContainer.setOnClickListener { openSerie(model.id) }
         require(model.imageResList.size == model.namesList.size) { "Super set adapter item invalid - list of images is not the same size as list of names!" }
@@ -57,7 +57,7 @@ class WorkoutListActivity : BaseActivity(R.layout.activity_list) {
       }
     }
 
-    registerHolder(R.layout.set_item) { model: SetItem ->
+    registerHolder(R.layout.item_set) { model: SetItem ->
       itemView.apply {
         setItemContentContainer.setOnClickListener { openSerie(model.id) }
 
@@ -67,7 +67,7 @@ class WorkoutListActivity : BaseActivity(R.layout.activity_list) {
       }
     }
 
-    registerHolder(R.layout.cycle_item) { model: CycleItem ->
+    registerHolder(R.layout.item_cycle) { model: CycleItem ->
       itemView.apply {
         cycleItemContainer.setOnClickListener { openSerie(model.id) }
 
@@ -99,11 +99,11 @@ class WorkoutListActivity : BaseActivity(R.layout.activity_list) {
   override fun onBackPressed() {
     if (presenter.getWorkoutStatus() == STARTED) {
       showCancelablePopupAlert(R.string.confirm_workout_abort, {
-        trainingManager.abortWorkout()
+        workoutManager.abortWorkout()
         finish()
       })
     } else {
-      trainingManager.abortWorkout()
+      workoutManager.abortWorkout()
       super.onBackPressed()
     }
   }
@@ -113,7 +113,7 @@ class WorkoutListActivity : BaseActivity(R.layout.activity_list) {
     inflater.inflate(R.menu.workout_menu, menu)
 
     // Invalidate menu items
-    if (trainingManager.hasStretchPlan().not()) menu.removeItem(R.id.show_stretching)
+    if (workoutManager.hasStretchPlan().not()) menu.removeItem(R.id.show_stretching)
     return true
   }
 
@@ -133,7 +133,7 @@ class WorkoutListActivity : BaseActivity(R.layout.activity_list) {
         .filter { it == WORKOUT_COMPLETED }
         .ioMain()
         .subscribe {
-          if (trainingManager.hasStretchPlan()) {
+          if (workoutManager.hasStretchPlan()) {
             showConfigurablePopupAlert(R.string.close, R.string.stretch, R.string.workout_complete,
                 { completeAndFinish() },
                 {
@@ -147,7 +147,7 @@ class WorkoutListActivity : BaseActivity(R.layout.activity_list) {
   }
 
   private fun completeAndFinish() {
-    trainingManager.completeWorkout()
+    workoutManager.completeWorkout()
     exportManager.exportCurrentTrainingPlan().ioMain().subscribe()
     finish()
   }
@@ -186,12 +186,12 @@ class WorkoutListActivity : BaseActivity(R.layout.activity_list) {
 
   private fun createSetView(inflater: LayoutInflater, @DrawableRes setImageRes: Int, setName: String, isLast: Boolean, container: ViewGroup): View {
     if (isLast) {
-      val view = inflater.inflate(R.layout.set_item, container, false)
+      val view = inflater.inflate(R.layout.item_set, container, false)
       (view.findViewById(R.id.setItemImage) as ImageView).setImageResource(setImageRes)
       (view.findViewById(R.id.setItemName) as TextView).text = setName
       return view
     } else {
-      val view = inflater.inflate(R.layout.super_set_item, container, false)
+      val view = inflater.inflate(R.layout.item_super_set, container, false)
       (view.findViewById(R.id.superSetItemImage) as ImageView).setImageResource(setImageRes)
       (view.findViewById(R.id.superSetItemName) as TextView).text = setName
       return view
