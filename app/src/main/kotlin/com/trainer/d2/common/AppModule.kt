@@ -22,6 +22,12 @@ class AppModule(private val app: BaseApplication) {
 
   companion object {
     private const val PREFS_NAME = "weff43r2f34f23ff-wef3"
+
+    fun createJackson() = ObjectMapper().apply {
+      registerKotlinModule()
+      setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY)
+      configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
+    }
   }
 
   @Provides @ApplicationScope
@@ -56,9 +62,5 @@ class AppModule(private val app: BaseApplication) {
 
   @Provides
   @ApplicationScope
-  internal fun provideJackson() = ObjectMapper().apply {
-    registerKotlinModule()
-    setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY)
-    configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
-  }
+  internal fun provideJackson() = createJackson()
 }
