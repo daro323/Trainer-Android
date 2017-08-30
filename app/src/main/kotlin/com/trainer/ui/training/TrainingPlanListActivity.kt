@@ -8,13 +8,16 @@ import com.trainer.base.BaseActivity
 import com.trainer.commons.typedviewholder.TypedViewHolderAdapter
 import com.trainer.commons.typedviewholder.registerHolder
 import com.trainer.extensions.showQuickMessage
+import com.trainer.modules.training.plan.TrainingPlanManager
 import com.trainer.viewmodel.training.TrainingPlanItem
 import com.trainer.viewmodel.training.TrainingPlanViewModel
 import kotlinx.android.synthetic.main.activity_list.*
 import kotlinx.android.synthetic.main.item_training_plan.view.*
+import javax.inject.Inject
 
 class TrainingPlanListActivity : BaseActivity(R.layout.activity_list) {
 
+  @Inject lateinit var trainingPlanManager: TrainingPlanManager
   private lateinit var trainingPlanVM: TrainingPlanViewModel
 
   private val adapter = TypedViewHolderAdapter.Builder<Any>().apply {
@@ -33,6 +36,13 @@ class TrainingPlanListActivity : BaseActivity(R.layout.activity_list) {
     trainingPlanVM = getViewModel(TrainingPlanViewModel::class.java).apply {
       getTrainingPlans().observe(this@TrainingPlanListActivity, Observer(showTrainingPlans))
     }
+    title = getString(R.string.select_training_plan)
+  }
+
+  // TODO: Remove me
+  override fun onStart() {
+    super.onStart()
+    trainingPlanManager.getAllTrainingPlansAsync()
   }
 
   private val showTrainingPlans = { plans: List<TrainingPlanItem>? ->

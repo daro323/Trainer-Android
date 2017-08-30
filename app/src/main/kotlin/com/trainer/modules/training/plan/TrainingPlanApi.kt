@@ -23,11 +23,11 @@ interface TrainingPlanApi {
 
 
   @Keep
-  @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY)
+  @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
   @JsonSubTypes(
-      JsonSubTypes.Type(value = SetResponse::class, name = "SetResponse"),
-      JsonSubTypes.Type(value = SuperSetResponse::class, name = "SuperSetResponse"),
-      JsonSubTypes.Type(value = CycleResponse::class, name = "CycleResponse"))
+      JsonSubTypes.Type(value = SetResponse::class, name = "SET"),
+      JsonSubTypes.Type(value = SuperSetResponse::class, name = "SUPER_SET"),
+      JsonSubTypes.Type(value = CycleResponse::class, name = "CYCLE"))
   interface SerieResponse
 
   @Keep
@@ -56,19 +56,19 @@ interface TrainingPlanApi {
                          val restTimeSec: Int,
                          val guidelines: List<String>,
                          val lastProgress: List<Repetition>,
-                         val type: SerieType)
+                         val type: SerieType) : SerieResponse
 
   @Keep
   data class SuperSetResponse(val name: String,
                               val seriesList: List<SetResponse>,
-                              val type: SerieType)
+                              val type: SerieType) : SerieResponse
 
   @Keep
   data class CycleResponse(val name: String,
                            val cycleList: List<CyclicRoutineResponse>,
                            val restTimeSec: Int,
                            val lastCyclesCount: Int,
-                           val type: SerieType)
+                           val type: SerieType) : SerieResponse
 
   @Keep
   data class CyclicRoutineResponse constructor(val exercise_id: String,

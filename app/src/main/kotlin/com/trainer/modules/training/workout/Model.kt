@@ -3,6 +3,7 @@ package com.trainer.modules.training.workout
 import android.support.annotation.DrawableRes
 import android.support.annotation.Keep
 import android.support.annotation.Nullable
+import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.annotation.JsonSubTypes
 import com.fasterxml.jackson.annotation.JsonTypeInfo
 import com.trainer.R
@@ -21,15 +22,15 @@ import org.threeten.bp.format.DateTimeFormatter
  */
 @Keep
 enum class SerieType {    // Add new serie types here
-  SET,
-  SUPER_SET,
-  CYCLE
+  @JsonProperty("SET") SET,
+  @JsonProperty("SUPER_SET") SUPER_SET,
+  @JsonProperty("CYCLE") CYCLE
 }
 
 @Keep
 enum class WeightType {
-  KG,
-  BODY_WEIGHT   // For this the weight value is not applicable
+  @JsonProperty("KG") KG,
+  @JsonProperty("BODY_WEIGHT") BODY_WEIGHT   // For this the weight value is not applicable
 }
 
 @Keep
