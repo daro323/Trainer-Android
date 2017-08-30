@@ -15,12 +15,12 @@ import dagger.Provides
 class PersistenceModule {
 
   companion object {
-    private final val TRAINING_DATABASE_NAME = "training_db"
+    private val TRAINING_DATABASE_NAME = "training_db"
   }
 
   @Provides
   @ApplicationScope
-  fun provideTrainingDatabase(@ForApplication context: Context) = Room.databaseBuilder(context, TrainingDatabase::class.java, TRAINING_DATABASE_NAME)
+  fun provideTrainingDatabase(@ForApplication context: Context) = Room.databaseBuilder(context, TrainingDatabase::class.java, TRAINING_DATABASE_NAME).build()
 
   @Provides
   @ApplicationScope

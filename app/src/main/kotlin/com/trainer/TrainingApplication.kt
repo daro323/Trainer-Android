@@ -3,6 +3,7 @@ package com.trainer
 import com.trainer.base.BaseApplication
 import com.trainer.d2.common.AppComponent
 import com.trainer.d2.common.AppModule
+import com.trainer.d2.common.PersistenceModule
 import com.trainer.d2.scope.ApplicationScope
 import dagger.Component
 
@@ -16,6 +17,8 @@ class TrainingApplication : BaseApplication() {
   }
 
   @ApplicationScope
-  @Component(modules = arrayOf(AppModule::class))
+  @Component(modules = arrayOf(
+      AppModule::class,
+      PersistenceModule::class))
   interface TrainingAppComponent : AppComponent
 }

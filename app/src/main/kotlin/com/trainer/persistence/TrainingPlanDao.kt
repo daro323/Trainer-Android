@@ -2,7 +2,6 @@ package com.trainer.persistence
 
 import android.arch.lifecycle.LiveData
 import android.arch.persistence.room.*
-import com.trainer.modules.training.TrainingPlan
 
 /**
  * Created by dariusz on 29.08.17.
@@ -10,15 +9,15 @@ import com.trainer.modules.training.TrainingPlan
 @Dao
 interface TrainingPlanDao {
 
-  @Query("SELECT * FROM ${TrainingPlanEntity.TABLE_NAME}")
+  @Query("SELECT * FROM TrainingPlans")
   fun listAllPlans(): LiveData<List<TrainingPlanEntity>>
 
   @Insert
-  fun addPlan(plan: TrainingPlan)
+  fun addPlan(planEntity: TrainingPlanEntity)
 
   @Delete
-  fun removePlan(plan: TrainingPlan)
+  fun removePlan(planEntity: TrainingPlanEntity)
 
   @Update
-  fun updatePlan(plan: TrainingPlan)
+  fun updatePlan(planEntity: TrainingPlanEntity)
 }

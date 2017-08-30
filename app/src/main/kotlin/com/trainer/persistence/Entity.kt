@@ -29,8 +29,8 @@ data class TrainingPlanEntity(@PrimaryKey val id: Int,
 data class TrainingDayEntity(val category: String,
                              val trainingPlanId: Int,
                              val workout: Workout,
-                             private var totalDone: Int = 0,
-                             private var lastTrainedDate: String? = null) {
+                             val totalDone: Int = 0,
+                             val lastTrainedDate: String?) {
   companion object {
     const val TABLE_NAME = "TrainingDays"
   }
