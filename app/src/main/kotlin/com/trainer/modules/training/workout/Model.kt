@@ -1,4 +1,4 @@
-package com.trainer.modules.training
+package com.trainer.modules.training.workout
 
 import android.support.annotation.DrawableRes
 import android.support.annotation.Keep
@@ -7,12 +7,12 @@ import com.fasterxml.jackson.annotation.JsonSubTypes
 import com.fasterxml.jackson.annotation.JsonTypeInfo
 import com.trainer.R
 import com.trainer.extensions.daysSince
-import com.trainer.modules.training.ProgressStatus.*
-import com.trainer.modules.training.WeightType.*
-import com.trainer.modules.training.types.cyclic.Cycle
-import com.trainer.modules.training.types.cyclic.CyclicRoutine
-import com.trainer.modules.training.types.standard.Set
-import com.trainer.modules.training.types.standard.SuperSet
+import com.trainer.modules.training.workout.ProgressStatus.*
+import com.trainer.modules.training.workout.WeightType.KG
+import com.trainer.modules.training.workout.types.cyclic.Cycle
+import com.trainer.modules.training.workout.types.cyclic.CyclicRoutine
+import com.trainer.modules.training.workout.types.standard.Set
+import com.trainer.modules.training.workout.types.standard.SuperSet
 import org.threeten.bp.LocalDate
 import org.threeten.bp.format.DateTimeFormatter
 
@@ -117,7 +117,7 @@ data class Repetition(val weight: Float,
                       val weightType: WeightType) {
 
   override fun toString() = when (weightType) {
-    BODY_WEIGHT -> "$repCount reps"
+    WeightType.BODY_WEIGHT -> "$repCount reps"
     else -> "$weight $weightType  [x]  $repCount"
   }
 }
@@ -159,7 +159,7 @@ interface Serie {
 
 @Keep
 abstract class CompositeSerie<T : Serie> constructor(val name: String,
-                                                     val seriesList: MutableList<T>) : Serie {
+                                                                                          val seriesList: MutableList<T>) : Serie {
   override fun id() = seriesList
       .map(Serie::id)
       .reduce { acc, item -> "$acc$item" }

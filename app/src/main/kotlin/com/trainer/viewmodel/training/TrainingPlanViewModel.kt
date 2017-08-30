@@ -4,8 +4,8 @@ import android.arch.lifecycle.Transformations
 import android.arch.lifecycle.ViewModel
 import android.support.annotation.Keep
 import com.trainer.d2.common.AppComponent
-import com.trainer.modules.training.TrainingPlan
-import com.trainer.modules.training.TrainingPlanManager
+import com.trainer.modules.training.workout.TrainingPlan
+import com.trainer.modules.training.plan.TrainingPlanManager
 import javax.inject.Inject
 
 /**

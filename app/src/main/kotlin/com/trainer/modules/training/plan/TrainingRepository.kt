@@ -1,10 +1,12 @@
-package com.trainer.modules.training
+package com.trainer.modules.training.plan
 
 import android.content.SharedPreferences
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.trainer.d2.scope.ApplicationScope
 import com.trainer.extensions.saveString
-import com.trainer.modules.training.types.standard.StretchPlan
+import com.trainer.modules.training.workout.TrainingDay
+import com.trainer.modules.training.workout.TrainingPlan
+import com.trainer.modules.training.workout.types.standard.StretchPlan
 import com.trainer.persistence.TrainingPlanDao
 import javax.inject.Inject
 

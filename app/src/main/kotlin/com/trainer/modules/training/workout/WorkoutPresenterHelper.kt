@@ -1,4 +1,4 @@
-package com.trainer.modules.training
+package com.trainer.modules.training.workout
 
 /**
  * Created by dariusz on 15/03/17.

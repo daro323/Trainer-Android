@@ -3,7 +3,7 @@ package com.trainer.ui.training.types.model
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentStatePagerAdapter
 import com.trainer.extensions.with
-import com.trainer.modules.training.types.standard.Set
+import com.trainer.modules.training.workout.types.standard.Set
 import com.trainer.ui.training.types.standard.SetFragment
 import com.trainer.ui.training.types.standard.SetFragment.Companion.ARG_SET_ID
 

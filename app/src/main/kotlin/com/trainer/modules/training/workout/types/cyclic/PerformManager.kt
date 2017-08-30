@@ -1,4 +1,4 @@
-package com.trainer.modules.training.types.cyclic
+package com.trainer.modules.training.workout.types.cyclic
 
 import android.content.Context
 import com.trainer.commons.Lg

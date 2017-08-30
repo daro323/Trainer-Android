@@ -1,7 +1,8 @@
-package com.trainer.modules.training
+package com.trainer.modules.training.plan
 
 import android.arch.lifecycle.Transformations
 import com.trainer.d2.scope.ApplicationScope
+import com.trainer.modules.training.workout.TrainingPlan
 import com.trainer.persistence.TrainingPlanEntity
 import javax.inject.Inject
 

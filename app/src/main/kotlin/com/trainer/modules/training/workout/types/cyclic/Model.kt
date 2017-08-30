@@ -1,11 +1,11 @@
-package com.trainer.modules.training.types.cyclic
+package com.trainer.modules.training.workout.types.cyclic
 
 import android.support.annotation.Keep
-import com.trainer.modules.training.Exercise
-import com.trainer.modules.training.ProgressStatus.*
-import com.trainer.modules.training.Serie
-import com.trainer.modules.training.SerieType
-import com.trainer.modules.training.SerieType.CYCLE
+import com.trainer.modules.training.workout.Exercise
+import com.trainer.modules.training.workout.ProgressStatus.*
+import com.trainer.modules.training.workout.Serie
+import com.trainer.modules.training.workout.SerieType
+import com.trainer.modules.training.workout.SerieType.CYCLE
 
 /**
  * Created by dariusz on 15/03/17.

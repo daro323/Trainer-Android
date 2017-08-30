@@ -8,7 +8,7 @@ import com.trainer.R
 import com.trainer.base.BaseActivity
 import com.trainer.commons.typedviewholder.TypedViewHolderAdapter
 import com.trainer.commons.typedviewholder.registerHolder
-import com.trainer.modules.training.WorkoutManager
+import com.trainer.modules.training.workout.WorkoutManager
 import com.trainer.extensions.ioMain
 import com.trainer.extensions.start
 import com.trainer.modules.export.ExportManager

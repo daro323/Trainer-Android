@@ -1,4 +1,4 @@
-package com.trainer.modules.training
+package com.trainer.modules.training.workout
 
 import android.content.Context
 import android.os.Vibrator

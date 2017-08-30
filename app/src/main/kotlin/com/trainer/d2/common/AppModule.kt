@@ -6,11 +6,6 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.os.PowerManager
 import android.os.Vibrator
-import com.fasterxml.jackson.annotation.JsonAutoDetect
-import com.fasterxml.jackson.annotation.PropertyAccessor
-import com.fasterxml.jackson.databind.DeserializationFeature
-import com.fasterxml.jackson.databind.ObjectMapper
-import com.fasterxml.jackson.module.kotlin.registerKotlinModule
 import com.trainer.base.BaseApplication
 import com.trainer.d2.qualifier.ForApplication
 import com.trainer.d2.scope.ApplicationScope
@@ -22,12 +17,6 @@ class AppModule(private val app: BaseApplication) {
 
   companion object {
     private const val PREFS_NAME = "weff43r2f34f23ff-wef3"
-
-    fun createJackson() = ObjectMapper().apply {
-      registerKotlinModule()
-      setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY)
-      configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
-    }
   }
 
   @Provides @ApplicationScope
@@ -59,8 +48,4 @@ class AppModule(private val app: BaseApplication) {
   fun provideNotificationManager(application: Application): NotificationManager {
     return application.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
   }
-
-  @Provides
-  @ApplicationScope
-  internal fun provideJackson() = createJackson()
 }

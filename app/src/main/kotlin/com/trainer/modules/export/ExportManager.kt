@@ -8,8 +8,8 @@ import com.trainer.R
 import com.trainer.d2.qualifier.ForApplication
 import com.trainer.d2.scope.ApplicationScope
 import com.trainer.extensions.writeString
-import com.trainer.modules.training.WorkoutManager
-import com.trainer.modules.training.TrainingPlan
+import com.trainer.modules.training.workout.WorkoutManager
+import com.trainer.modules.training.workout.TrainingPlan
 import io.reactivex.Completable
 import java.io.File
 import javax.inject.Inject

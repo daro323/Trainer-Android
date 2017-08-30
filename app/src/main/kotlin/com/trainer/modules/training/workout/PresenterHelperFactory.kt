@@ -1,10 +1,10 @@
-package com.trainer.modules.training
+package com.trainer.modules.training.workout
 
 import com.trainer.d2.scope.ApplicationScope
-import com.trainer.modules.training.SerieType.*
-import com.trainer.modules.training.WorkoutPresenterHelper.HelperCallback
-import com.trainer.modules.training.types.cyclic.CyclicPresenterHelper
-import com.trainer.modules.training.types.standard.StandardPresenterHelper
+import com.trainer.modules.training.workout.SerieType.*
+import com.trainer.modules.training.workout.WorkoutPresenterHelper.HelperCallback
+import com.trainer.modules.training.workout.types.cyclic.CyclicPresenterHelper
+import com.trainer.modules.training.workout.types.standard.StandardPresenterHelper
 import javax.inject.Inject
 import javax.inject.Provider
 

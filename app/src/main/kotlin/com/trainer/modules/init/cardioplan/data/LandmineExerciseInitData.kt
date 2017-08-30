@@ -1,9 +1,9 @@
 package com.trainer.modules.init.cardioplan.data
 
-import com.trainer.modules.training.Exercise
-import com.trainer.modules.training.Serie
-import com.trainer.modules.training.Workout
-import com.trainer.modules.training.types.cyclic.CyclicRoutine
+import com.trainer.modules.training.workout.Exercise
+import com.trainer.modules.training.workout.Serie
+import com.trainer.modules.training.workout.Workout
+import com.trainer.modules.training.workout.types.cyclic.CyclicRoutine
 
 /**
  * Created by dariusz on 20/03/17.

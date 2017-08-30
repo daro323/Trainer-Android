@@ -9,9 +9,9 @@ import com.trainer.base.BaseActivity
 import com.trainer.commons.Lg
 import com.trainer.commons.typedviewholder.TypedViewHolderAdapter
 import com.trainer.commons.typedviewholder.registerHolder
-import com.trainer.modules.training.WorkoutManager
-import com.trainer.modules.training.WorkoutPresenter
-import com.trainer.modules.training.ProgressStatus
+import com.trainer.modules.training.workout.WorkoutManager
+import com.trainer.modules.training.workout.WorkoutPresenter
+import com.trainer.modules.training.workout.ProgressStatus
 import com.trainer.extensions.getColorFromRes
 import com.trainer.extensions.ioMain
 import io.reactivex.disposables.Disposables

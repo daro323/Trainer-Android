@@ -1,8 +1,8 @@
 package com.trainer.ui.training.types.cyclic
 
 import android.support.annotation.Keep
-import com.trainer.modules.training.types.cyclic.CycleState
-import com.trainer.modules.training.types.cyclic.CycleState.NEW
+import com.trainer.modules.training.workout.types.cyclic.CycleState
+import com.trainer.modules.training.workout.types.cyclic.CycleState.NEW
 import io.reactivex.Observable
 
 /**

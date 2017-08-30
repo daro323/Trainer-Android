@@ -2,7 +2,7 @@ package com.trainer.ui.training.types.model
 
 import android.support.annotation.DrawableRes
 import android.support.annotation.Keep
-import com.trainer.modules.training.ProgressStatus
+import com.trainer.modules.training.workout.ProgressStatus
 
 /**
  * Created by dariusz on 06/01/17.

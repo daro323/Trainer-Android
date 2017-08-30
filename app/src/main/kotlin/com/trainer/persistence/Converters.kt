@@ -2,8 +2,8 @@ package com.trainer.persistence
 
 import android.arch.persistence.room.TypeConverter
 import com.fasterxml.jackson.core.type.TypeReference
-import com.trainer.d2.common.AppModule
-import com.trainer.modules.training.Workout
+import com.trainer.d2.common.NetworkModule
+import com.trainer.modules.training.workout.Workout
 
 
 /**
@@ -12,7 +12,7 @@ import com.trainer.modules.training.Workout
 class Converters {
 
   companion object {
-    val mapper = AppModule.createJackson()
+    val mapper = NetworkModule.createJackson()
   }
 
   @TypeConverter

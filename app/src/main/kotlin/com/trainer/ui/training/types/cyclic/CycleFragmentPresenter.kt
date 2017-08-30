@@ -1,7 +1,7 @@
 package com.trainer.ui.training.types.cyclic
 
-import com.trainer.modules.training.types.cyclic.CycleState.*
-import com.trainer.modules.training.types.cyclic.CyclicRoutine
+import com.trainer.modules.training.workout.types.cyclic.CycleState.*
+import com.trainer.modules.training.workout.types.cyclic.CyclicRoutine
 import io.reactivex.processors.BehaviorProcessor
 
 /**

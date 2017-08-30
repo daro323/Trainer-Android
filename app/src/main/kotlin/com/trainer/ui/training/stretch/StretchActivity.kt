@@ -4,7 +4,7 @@ import android.app.Activity
 import android.os.Bundle
 import com.trainer.R
 import com.trainer.base.BaseActivity
-import com.trainer.modules.training.WorkoutManager
+import com.trainer.modules.training.workout.WorkoutManager
 import com.trainer.extensions.startWith
 import com.trainer.ui.training.types.model.StretchPagerAdapter
 import kotlinx.android.synthetic.main.activity_stretch_pager.*

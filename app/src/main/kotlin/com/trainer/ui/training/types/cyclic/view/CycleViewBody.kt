@@ -9,8 +9,8 @@ import com.trainer.R
 import com.trainer.extensions.goneView
 import com.trainer.extensions.inflate
 import com.trainer.extensions.visibleView
-import com.trainer.modules.training.types.cyclic.CycleState
-import com.trainer.modules.training.types.cyclic.CycleState.*
+import com.trainer.modules.training.workout.types.cyclic.CycleState
+import com.trainer.modules.training.workout.types.cyclic.CycleState.*
 import com.trainer.ui.training.types.cyclic.CycleViewCallback
 import com.trainer.ui.training.types.cyclic.CycleViewEvent
 import com.trainer.ui.training.types.cyclic.CycleViewModel

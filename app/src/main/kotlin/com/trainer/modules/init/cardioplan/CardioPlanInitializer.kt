@@ -3,9 +3,9 @@ package com.trainer.modules.init.buffplan
 import android.support.annotation.DrawableRes
 import android.support.annotation.Keep
 import com.trainer.commons.Lg
-import com.trainer.modules.training.WorkoutManager
-import com.trainer.modules.training.TrainingDay
-import com.trainer.modules.training.TrainingPlan
+import com.trainer.modules.training.workout.WorkoutManager
+import com.trainer.modules.training.workout.TrainingDay
+import com.trainer.modules.training.workout.TrainingPlan
 import com.trainer.d2.scope.ApplicationScope
 import com.trainer.modules.init.cardioplan.data.BoxingExerciseInitData.Companion.BOXING_WORKOUT
 import com.trainer.modules.init.cardioplan.data.KettlebellExerciseInitData.Companion.KETTLEBELL_WORKOUT

@@ -1,12 +1,13 @@
-package com.trainer.modules.training
+package com.trainer.modules.training.workout
 
 import com.trainer.R
-import com.trainer.modules.training.WorkoutPresenterHelper.HelperCallback
-import com.trainer.modules.training.CoreConstants.Companion.VALUE_NOT_SET
-import com.trainer.modules.training.ProgressStatus.COMPLETE
-import com.trainer.modules.training.ProgressStatus.STARTED
-import com.trainer.modules.training.WorkoutEvent.*
+import com.trainer.modules.training.workout.WorkoutPresenterHelper.HelperCallback
+import com.trainer.modules.training.workout.CoreConstants.Companion.VALUE_NOT_SET
+import com.trainer.modules.training.workout.ProgressStatus.COMPLETE
+import com.trainer.modules.training.workout.ProgressStatus.STARTED
+import com.trainer.modules.training.workout.WorkoutEvent.*
 import com.trainer.modules.countdown.CountDownNotification
+import com.trainer.modules.training.plan.TrainingRepository
 import com.trainer.ui.training.rest.RestActivity
 import io.reactivex.processors.BehaviorProcessor
 import javax.inject.Inject
