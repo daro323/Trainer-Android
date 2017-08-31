@@ -4,8 +4,10 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect
 import com.fasterxml.jackson.annotation.PropertyAccessor
 import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.databind.module.SimpleModule
 import com.fasterxml.jackson.module.kotlin.registerKotlinModule
 import com.trainer.BuildConfig
+import com.trainer.commons.SerieResponseDeserializer
 import com.trainer.d2.scope.ApplicationScope
 import com.trainer.modules.training.plan.TrainingPlanApi
 import dagger.Module
@@ -25,6 +27,7 @@ class NetworkModule {
   companion object {
     fun createJackson() = ObjectMapper().apply {
       registerKotlinModule()
+      registerModule(SimpleModule().apply { addDeserializer(TrainingPlanApi.SerieResponse::class.java, SerieResponseDeserializer()) })
       setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY)
       configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
     }

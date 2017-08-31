@@ -1,10 +1,7 @@
 package com.trainer.modules.training.plan
 
 import android.support.annotation.Keep
-import com.fasterxml.jackson.annotation.JsonSubTypes
-import com.fasterxml.jackson.annotation.JsonTypeInfo
 import com.trainer.modules.training.workout.Repetition
-import com.trainer.modules.training.workout.SerieType
 import retrofit2.Call
 import retrofit2.http.GET
 
@@ -23,11 +20,6 @@ interface TrainingPlanApi {
 
 
   @Keep
-  @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
-  @JsonSubTypes(
-      JsonSubTypes.Type(value = SetResponse::class, name = "SET"),
-      JsonSubTypes.Type(value = SuperSetResponse::class, name = "SUPER_SET"),
-      JsonSubTypes.Type(value = CycleResponse::class, name = "CYCLE"))
   interface SerieResponse
 
   @Keep
@@ -56,19 +48,19 @@ interface TrainingPlanApi {
                          val restTimeSec: Int,
                          val guidelines: List<String>,
                          val lastProgress: List<Repetition>,
-                         val type: SerieType) : SerieResponse
+                         val type: String) : SerieResponse
 
   @Keep
   data class SuperSetResponse(val name: String,
                               val seriesList: List<SetResponse>,
-                              val type: SerieType) : SerieResponse
+                              val type: String) : SerieResponse
 
   @Keep
   data class CycleResponse(val name: String,
                            val cycleList: List<CyclicRoutineResponse>,
                            val restTimeSec: Int,
                            val lastCyclesCount: Int,
-                           val type: SerieType) : SerieResponse
+                           val type: String) : SerieResponse
 
   @Keep
   data class CyclicRoutineResponse constructor(val exercise_id: String,
