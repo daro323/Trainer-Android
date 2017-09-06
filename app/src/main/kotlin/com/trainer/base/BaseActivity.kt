@@ -1,9 +1,6 @@
 package com.trainer.base
 
-import android.arch.lifecycle.LifecycleRegistry
-import android.arch.lifecycle.LifecycleRegistryOwner
-import android.arch.lifecycle.ViewModel
-import android.arch.lifecycle.ViewModelProviders
+import android.arch.lifecycle.*
 import android.os.Bundle
 import android.support.annotation.LayoutRes
 import android.support.annotation.StringRes
@@ -36,6 +33,14 @@ abstract class BaseActivity(@LayoutRes private val layoutRes: Int = -1) : AppCom
   override fun getLifecycle() = lifecycleRegistry
 
   protected fun <T : ViewModel> getViewModel(clazz: Class<T>) = ViewModelProviders.of(this, ViewModelFactory(application as TrainingApplication)).get(clazz)
+
+  protected fun <T> observeLiveData(data: LiveData<T>, action: (T?) -> Unit) {
+    data.observe(this, Observer<T>(action))
+  }
+
+  protected fun showRetryPopupAlert(@StringRes messageId: Int, retryAction: () -> Unit, cancelAction: () -> Unit) {
+    showConfigurablePopupAlert(R.string.retry, R.string.cancel, messageId, retryAction, cancelAction)
+  }
 
   protected fun showCancelablePopupAlert(@StringRes messageId: Int, action: () -> Unit) {
     showConfigurablePopupAlert(R.string.ok, R.string.cancel, messageId, action, {})

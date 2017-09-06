@@ -1,19 +1,15 @@
 package com.trainer.modules.training.workout
 
+import android.arch.persistence.room.Entity
+import android.arch.persistence.room.ForeignKey
+import android.arch.persistence.room.PrimaryKey
 import android.support.annotation.DrawableRes
 import android.support.annotation.Keep
 import android.support.annotation.Nullable
 import com.fasterxml.jackson.annotation.JsonProperty
-import com.fasterxml.jackson.annotation.JsonSubTypes
-import com.fasterxml.jackson.annotation.JsonTypeInfo
 import com.trainer.R
 import com.trainer.extensions.daysSince
 import com.trainer.modules.training.workout.ProgressStatus.*
-import com.trainer.modules.training.workout.WeightType.KG
-import com.trainer.modules.training.workout.types.cyclic.Cycle
-import com.trainer.modules.training.workout.types.cyclic.CyclicRoutine
-import com.trainer.modules.training.workout.types.standard.Set
-import com.trainer.modules.training.workout.types.standard.SuperSet
 import org.threeten.bp.LocalDate
 import org.threeten.bp.format.DateTimeFormatter
 
@@ -22,15 +18,20 @@ import org.threeten.bp.format.DateTimeFormatter
  */
 @Keep
 enum class SerieType {    // Add new serie types here
-  @JsonProperty("SET") SET,
-  @JsonProperty("SUPER_SET") SUPER_SET,
-  @JsonProperty("CYCLE") CYCLE
+  @JsonProperty("SET")
+  SET,
+  @JsonProperty("SUPER_SET")
+  SUPER_SET,
+  @JsonProperty("CYCLE")
+  CYCLE
 }
 
 @Keep
 enum class WeightType {
-  @JsonProperty("KG") KG,
-  @JsonProperty("BODY_WEIGHT") BODY_WEIGHT   // For this the weight value is not applicable
+  @JsonProperty("KG")
+  KG,
+  @JsonProperty("BODY_WEIGHT")
+  BODY_WEIGHT   // For this the weight value is not applicable
 }
 
 @Keep
@@ -56,18 +57,23 @@ class CoreConstants private constructor() {
 }
 
 @Keep
-data class TrainingPlan(val name: String,
-                        val categories: kotlin.collections.Set<String>,
-                        val trainingDays: MutableList<TrainingDay>) {
-
-  fun getTrainingDay(forCategory: String) = trainingDays.find { it.category == forCategory }
-}
+@Entity(tableName = "TrainingPlans")
+data class TrainingPlan(@PrimaryKey val id: Int,
+                        val name: String,
+                        val categories: kotlin.collections.Set<String>)
 
 @Keep
+@Entity(
+    tableName = "TrainingDays",
+    primaryKeys = arrayOf("category", "trainingPlanId"),
+    foreignKeys = arrayOf(ForeignKey(entity = TrainingPlan::class, onDelete = ForeignKey.CASCADE,
+        parentColumns = arrayOf("id"),
+        childColumns = arrayOf("trainingPlanId"))))
 data class TrainingDay(val category: String, // category should be unique within a training plan
+                       val trainingPlanId: Int,
                        val workout: Workout,
-                       private var totalDone: Int = 0,
-                       private var lastTrainedDate: String? = null) {
+                       var totalDone: Int = 0,
+                       var lastTrainedDate: String? = null) {
 
   companion object {
     private val DATE_FORMATTER = DateTimeFormatter.ISO_LOCAL_DATE
@@ -78,17 +84,23 @@ data class TrainingDay(val category: String, // category should be unique within
     lastTrainedDate = LocalDate.now().format(DATE_FORMATTER)
   }
 
-  fun getTotalDone() = totalDone
-
   fun trainedDaysAgo() = LocalDate.now().daysSince(lastTrainedDate?.run { LocalDate.parse(this, DATE_FORMATTER) } ?: LocalDate.now()).toInt()
 
-  override fun equals(other: Any?) = other is TrainingDay && other.category == category
+  override fun equals(other: Any?) = other is TrainingDay &&
+      other.category == category && other.trainingPlanId == trainingPlanId
 
-  override fun hashCode() = category.hashCode().run {
-    var result = 31 * this + workout.hashCode()
-    result = 31 * result + totalDone
-    result = 31 * result + (lastTrainedDate?.hashCode() ?: 0)
-    result
+  override fun hashCode() = 31 * category.hashCode() + trainingPlanId.hashCode()
+}
+
+@Keep
+@Entity(tableName = "Exercises")
+data class Exercise(@PrimaryKey val id: Int,
+                    val name: String,
+                    val comments: List<String> = emptyList(),
+                    val weightType: WeightType = WeightType.KG) {
+  companion object {
+    @DrawableRes
+    fun getImageResource() = R.mipmap.ic_exercise_default
   }
 }
 
@@ -106,29 +118,20 @@ data class Workout(val series: MutableList<Serie>) {
 }
 
 @Keep
-data class Exercise(val name: String,
-                    val comments: List<String> = emptyList(),
-                    @DrawableRes val imageResource: Int = R.mipmap.ic_exercise_default,
-                    val weightType: WeightType = KG) {
-}
-
-@Keep
 data class Repetition(val weight: Float,
-                      val repCount: Int,
-                      val weightType: WeightType) {
+                      val repCount: Int) {
 
-  override fun toString() = when (weightType) {
+  companion object {
+    fun EMPTY() = Repetition(0f, 0)
+  }
+
+  fun formatFor(weightType: WeightType) = when (weightType) {
     WeightType.BODY_WEIGHT -> "$repCount reps"
     else -> "$weight $weightType  [x]  $repCount"
   }
 }
 
 @Keep
-@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY)
-@JsonSubTypes(
-    JsonSubTypes.Type(value = Set::class, name = "Set"),
-    JsonSubTypes.Type(value = SuperSet::class, name = "SuperSet"),
-    JsonSubTypes.Type(value = Cycle::class, name = "Cycle"))
 interface Serie {
   fun id(): String
   fun name(): String
@@ -137,30 +140,11 @@ interface Serie {
   fun completeAndReset()
   fun abort()
   fun type(): SerieType
-
-  companion object {
-    var instanceCounter: Int = 0
-    /* Automatically adds IDs as instance count */
-    fun createSet(exercise: Exercise,
-                  seriesCount: Int,
-                  restTimeSec: Int,
-                  guidelines: List<String> = emptyList(),
-                  progress: MutableList<Repetition> = mutableListOf(),
-                  lastProgress: List<Repetition> = (1..seriesCount).map { emptyRepetition(exercise) }.toList()) = Set((++instanceCounter).toString(), exercise, guidelines, seriesCount, restTimeSec, progress, lastProgress)
-
-    /* Automatically adds IDs as instance count */
-    fun createCycle(name: String,
-                    cycleList: List<CyclicRoutine>,
-                    restTimeSec: Int,
-                    lastCyclesCount: Int = 0) = Cycle((++instanceCounter).toString(), name, cycleList, restTimeSec, lastCyclesCount)
-
-    private fun emptyRepetition(forExercise: Exercise) = Repetition(0f, 0, forExercise.weightType)
-  }
 }
 
 @Keep
 abstract class CompositeSerie<T : Serie> constructor(val name: String,
-                                                                                          val seriesList: MutableList<T>) : Serie {
+                                                     val seriesList: MutableList<T>) : Serie {
   override fun id() = seriesList
       .map(Serie::id)
       .reduce { acc, item -> "$acc$item" }

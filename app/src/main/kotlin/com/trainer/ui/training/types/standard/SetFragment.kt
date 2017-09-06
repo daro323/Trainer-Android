@@ -2,23 +2,23 @@ package com.trainer.ui.training.types.standard
 
 import android.content.Context
 import android.view.View
-import android.view.View.GONE
 import android.view.View.VISIBLE
-import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.Toast
 import com.trainer.R
 import com.trainer.base.BaseFragment
-import com.trainer.modules.training.workout.WorkoutManager
-import com.trainer.modules.training.workout.WorkoutPresenter
+import com.trainer.d2.common.ActivityComponent
+import com.trainer.extensions.arg
+import com.trainer.extensions.ioMain
+import com.trainer.extensions.reduceWithDefault
+import com.trainer.extensions.start
 import com.trainer.modules.training.workout.CoreConstants.Companion.WEIGHT_VALUE_NOT_APPLICABLE
 import com.trainer.modules.training.workout.ProgressStatus.COMPLETE
 import com.trainer.modules.training.workout.Repetition
-import com.trainer.modules.training.workout.WeightType.BODY_WEIGHT
 import com.trainer.modules.training.workout.WorkoutEvent
-import com.trainer.d2.common.ActivityComponent
-import com.trainer.extensions.*
+import com.trainer.modules.training.workout.WorkoutManager
+import com.trainer.modules.training.workout.WorkoutPresenter
 import com.trainer.modules.training.workout.types.standard.Set
 import com.trainer.modules.training.workout.types.standard.StandardPresenterHelper
 import com.trainer.ui.training.rest.RestActivity
@@ -100,7 +100,8 @@ class SetFragment : BaseFragment(R.layout.fragment_set) {
   }
 
   private fun createUI(forSet: Set) {
-    set = forSet.apply {
+    // TODO Refactor
+    /*set = forSet.apply {
       // create static content
       val weightType = exercise.weightType
       exerciseImage.setImageResource(this.exercise.imageResource)
@@ -138,7 +139,7 @@ class SetFragment : BaseFragment(R.layout.fragment_set) {
       }
       // create dynamic content
       refreshUi(this)
-    }
+    }*/
   }
 
   private fun refreshUi(forSet: Set, onSubmit: Boolean = false) {
@@ -176,7 +177,8 @@ class SetFragment : BaseFragment(R.layout.fragment_set) {
   private fun isRepetitionInValid() = (weightValue() > 0F && repValue() == 0)
 
   private fun setInputActive(isActive: Boolean, forRep: Repetition) {
-    val isActiveVisibility = if (isActive) VISIBLE else GONE
+    // TODO Refactor
+    /*val isActiveVisibility = if (isActive) VISIBLE else GONE
     val alsoForBodyType = if (isActive && forRep.weightType != BODY_WEIGHT) VISIBLE else GONE
 
     repInput.visibility = isActiveVisibility
@@ -185,7 +187,7 @@ class SetFragment : BaseFragment(R.layout.fragment_set) {
 
     weightInput.visibility = alsoForBodyType
     weightTypeTextView.visibility = alsoForBodyType
-    inputSeparatorLabelView.visibility = alsoForBodyType
+    inputSeparatorLabelView.visibility = alsoForBodyType*/
   }
 }
 

@@ -1,8 +1,8 @@
 package com.trainer.modules.training.workout
 
 import com.trainer.d2.scope.ApplicationScope
-import com.trainer.modules.training.workout.ProgressStatus.NEW
 import com.trainer.modules.training.plan.TrainingRepository
+import com.trainer.modules.training.workout.ProgressStatus.NEW
 import com.trainer.modules.training.workout.types.standard.StretchPlan
 import javax.inject.Inject
 import javax.inject.Provider
@@ -17,17 +17,20 @@ class WorkoutManager @Inject constructor(val repo: TrainingRepository,
     private set
 
   fun startWorkout(forCategory: String) {
-    require(isInitialized().not()) { "Can't start new workout - there is one already started!" }
+    // TODO Refactor
+    /*require(isInitialized().not()) { "Can't start new workout - there is one already started!" }
     workoutPresenter = workoutPresenterProvider
         .get()
-        .apply { trainingDay = repo.getTrainingPlan().getTrainingDay(forCategory) ?: throw IllegalStateException("trainingPlan not initialized!") }
+        .apply { trainingDay = repo.getTrainingPlan().getTrainingDay(forCategory) ?: throw IllegalStateException("trainingPlan not initialized!") }*/
   }
 
   /**
    * Automatically starts training for already started workout.
    */
   fun continueWorkout(): Boolean {
-    return getTrainingPlan().run {
+    // TODO Refactor
+    return false
+    /*return getTrainingPlan().run {
       val alreadyStartedDay = trainingDays.find { it.workout.status() != NEW }
       if (alreadyStartedDay != null) {
         startWorkout(alreadyStartedDay.category)
@@ -35,7 +38,7 @@ class WorkoutManager @Inject constructor(val repo: TrainingRepository,
       } else {
         return false
       }
-    }
+    }*/
   }
 
   fun abortWorkout() {

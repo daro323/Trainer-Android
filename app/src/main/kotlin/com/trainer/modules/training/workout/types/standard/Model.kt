@@ -2,9 +2,13 @@ package com.trainer.modules.training.workout.types.standard
 
 import android.support.annotation.DrawableRes
 import android.support.annotation.Keep
+import com.fasterxml.jackson.annotation.JsonProperty
 import com.trainer.R
-import com.trainer.modules.training.workout.*
+import com.trainer.modules.training.workout.CompositeSerie
 import com.trainer.modules.training.workout.ProgressStatus.*
+import com.trainer.modules.training.workout.Repetition
+import com.trainer.modules.training.workout.Serie
+import com.trainer.modules.training.workout.SerieType
 import com.trainer.modules.training.workout.SerieType.SET
 import com.trainer.modules.training.workout.SerieType.SUPER_SET
 
@@ -17,18 +21,18 @@ enum class StandardStateEvent {
 }
 
 @Keep
-data class Set constructor(private val _id: String,
-                           val exercise: Exercise,
+data class Set constructor(val id: String,
+                           val name: String,
+                           @JsonProperty("exercise_id") val exerciseId: String,
                            val guidelines: List<String>,
                            val seriesCount: Int,
                            val restTimeSec: Int,
                            var progress: MutableList<Repetition>,
                            var lastProgress: List<Repetition>,
-                           private val type: SerieType = SET) : Serie {
+                           val type: SerieType = SET) : Serie {
+  override fun id() = id
 
-  override fun id() = _id
-
-  override fun name() = exercise.name
+  override fun name() = name
 
   override fun type() = type
 
@@ -40,7 +44,7 @@ data class Set constructor(private val _id: String,
   }
 
   override fun skipRemaining() {
-    while (progress.size < seriesCount) progress.add(Repetition(0f, 0, exercise.weightType))
+    while (progress.size < seriesCount) progress.add(Repetition.EMPTY())
   }
 
   override fun completeAndReset() {
@@ -55,15 +59,7 @@ data class Set constructor(private val _id: String,
 
   override fun equals(other: Any?) = other is Set && other.id() == this.id()
 
-  override fun hashCode() = _id.hashCode().run {
-    var result = 31 * this + exercise.hashCode()
-    result = 31 * result + guidelines.hashCode()
-    result = 31 * result + seriesCount
-    result = 31 * result + restTimeSec
-    result = 31 * result + progress.hashCode()
-    result = 31 * result + lastProgress.hashCode()
-    result
-  }
+  override fun hashCode() = id.hashCode()
 }
 
 @Keep

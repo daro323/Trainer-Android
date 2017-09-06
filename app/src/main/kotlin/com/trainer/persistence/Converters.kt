@@ -3,6 +3,7 @@ package com.trainer.persistence
 import android.arch.persistence.room.TypeConverter
 import com.fasterxml.jackson.core.type.TypeReference
 import com.trainer.d2.common.NetworkModule
+import com.trainer.modules.training.workout.WeightType
 import com.trainer.modules.training.workout.Workout
 
 
@@ -26,4 +27,16 @@ class Converters {
 
   @TypeConverter
   fun stringSetFromJson(json: String): Set<String> = mapper.readValue(json, object : TypeReference<Set<String>>() {})
+
+  @TypeConverter
+  fun stringListToJson(stringSet: List<String>): String = mapper.writeValueAsString(stringSet)
+
+  @TypeConverter
+  fun stringListFromJson(json: String): List<String> = mapper.readValue(json, object : TypeReference<List<String>>() {})
+
+  @TypeConverter
+  fun weightTypeToJson(weightType: WeightType): String = mapper.writeValueAsString(weightType)
+
+  @TypeConverter
+  fun weightTypeFromJson(json: String): WeightType = mapper.readValue(json, WeightType::class.java)
 }

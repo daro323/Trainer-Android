@@ -1,12 +1,10 @@
 package com.trainer.modules.training.workout.types.standard
 
-import com.trainer.modules.training.workout.WorkoutPresenterHelper
-import com.trainer.modules.training.workout.WorkoutPresenterHelper.HelperCallback
 import com.trainer.modules.training.workout.CoreConstants.Companion.VALUE_NOT_SET
 import com.trainer.modules.training.workout.ProgressStatus.COMPLETE
-import com.trainer.modules.training.workout.Repetition
 import com.trainer.modules.training.workout.Serie
-import com.trainer.modules.training.workout.WeightType.BODY_WEIGHT
+import com.trainer.modules.training.workout.WorkoutPresenterHelper
+import com.trainer.modules.training.workout.WorkoutPresenterHelper.HelperCallback
 import io.reactivex.processors.BehaviorProcessor
 import javax.inject.Inject
 
@@ -55,7 +53,8 @@ class StandardPresenterHelper @Inject constructor() : WorkoutPresenterHelper {
   fun isCurrentSet(set: Set) = if (serie.status() == COMPLETE || callback.hasOtherSerieStarted(serie)) false else getCurrentSet() == set
 
   fun saveSetResult(weight: Float, rep: Int) {
-    val currentSet = getCurrentSet()
+    // TODO Refactor
+    /*val currentSet = getCurrentSet()
     val weightType = currentSet.exercise.weightType
 
     if (weight < 0 && weightType != BODY_WEIGHT) throw IllegalArgumentException("Missing weight value! It's expected in saveSetResult for weight type= $weightType")
@@ -64,7 +63,7 @@ class StandardPresenterHelper @Inject constructor() : WorkoutPresenterHelper {
     if (serie is SuperSet) {
       (serie as SuperSet).seriesList[currentSetIdx] = currentSet
     }
-    callback.onSaveSerie(serie)
+    callback.onSaveSerie(serie)*/
   }
 
   fun getCurrentSet() = when (serie) {

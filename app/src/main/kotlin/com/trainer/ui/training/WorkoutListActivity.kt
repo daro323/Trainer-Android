@@ -20,9 +20,6 @@ import com.trainer.modules.training.workout.Serie
 import com.trainer.modules.training.workout.WorkoutEvent.WORKOUT_COMPLETED
 import com.trainer.modules.training.workout.WorkoutManager
 import com.trainer.modules.training.workout.WorkoutPresenter
-import com.trainer.modules.training.workout.types.cyclic.Cycle
-import com.trainer.modules.training.workout.types.standard.Set
-import com.trainer.modules.training.workout.types.standard.SuperSet
 import com.trainer.ui.training.stretch.StretchActivity
 import com.trainer.ui.training.types.model.CycleItem
 import com.trainer.ui.training.types.model.SetItem
@@ -32,7 +29,6 @@ import kotlinx.android.synthetic.main.activity_list.*
 import kotlinx.android.synthetic.main.item_cycle.view.*
 import kotlinx.android.synthetic.main.item_set.view.*
 import kotlinx.android.synthetic.main.item_super_set_container.view.*
-import java.util.*
 import javax.inject.Inject
 
 /**
@@ -84,8 +80,8 @@ class WorkoutListActivity : BaseActivity(R.layout.activity_list) {
 
   override fun onStart() {
     super.onStart()
-    recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-    recyclerView.adapter = typedAdapter
+    ui_plans_list.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+    ui_plans_list.adapter = typedAdapter
     title = String.format(getString(R.string.workout), presenter.getWorkoutTitle())
     showWorkoutList(presenter.getWorkoutList())
     subscribeForWorkoutEvents()
@@ -153,20 +149,22 @@ class WorkoutListActivity : BaseActivity(R.layout.activity_list) {
   }
 
   private fun showWorkoutList(list: List<Serie>) {
-    val result = ArrayList<Any>(list.size)
+    // TODO Refactor
+    /*val result = ArrayList<Any>(list.size)
 
     list.forEach { serie ->
       when (serie) {
         is SuperSet -> result.add(createSuperSetItem(serie))
-        is Set -> result.add(SetItem(serie.id(), serie.exercise.imageResource, serie.exercise.name, serie.status()))
+        is Set -> result.add(SetItem(serie.id(), Exercise.getImageResource(), serie.exercise.name, serie.status()))
         is Cycle -> result.add(CycleItem(serie.id(), serie.name, serie.status()))
         else -> throw IllegalArgumentException("Unsupported serie type= ${serie.javaClass.name}")
       }
     }
-    typedAdapter.data = result
+    typedAdapter.data = result*/
   }
 
-  private fun createSuperSetItem(superSet: SuperSet): SuperSetItem {
+    // TODO Refactor
+  /*private fun createSuperSetItem(superSet: SuperSet): SuperSetItem {
     val imageResList = ArrayList<Int>(superSet.seriesList.size)
     val namesList = ArrayList<String>(superSet.seriesList.size)
 
@@ -177,7 +175,7 @@ class WorkoutListActivity : BaseActivity(R.layout.activity_list) {
           namesList.add(exercise.name)
         }
     return SuperSetItem(superSet.id(), imageResList, namesList, superSet.status())
-  }
+  }*/
 
   private fun openSerie(serieId: String) {
     presenter.selectSerie(serieId)

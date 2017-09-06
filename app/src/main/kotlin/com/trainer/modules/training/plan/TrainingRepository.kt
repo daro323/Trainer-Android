@@ -19,18 +19,11 @@ class TrainingRepository @Inject constructor(val trainingPlanDao: TrainingPlanDa
                                              val sharedPrefs: SharedPreferences,
                                              val mapper: ObjectMapper) {
 
-  fun getAllTrainingPlans() = trainingPlanDao.listAllPlans()
-
-
-
-
-
-
   // TODO: Remove deprecated stuff
   companion object {
     const private val TRAINING_PLAN_KEY = "TRAINING_PLAN_KEY"
     const private val STRETCH_PLAN_KEY = "STRETCH_PLAN_KEY"
-    private val TRAINING_PLAN_NOT_INITIALIZED = TrainingPlan("Not initialized", setOf(), mutableListOf())
+    private val TRAINING_PLAN_NOT_INITIALIZED = TrainingPlan(1, "Not initialized", setOf())
     private val STRETCH_PLAN_NOT_INITIALIZED = StretchPlan(emptyList())
   }
 
@@ -56,12 +49,6 @@ class TrainingRepository @Inject constructor(val trainingPlanDao: TrainingPlanDa
   }
 
   fun saveTrainingDay(day: TrainingDay) {
-    require(trainingPlan != TRAINING_PLAN_NOT_INITIALIZED) { "Attempt to save uninitialized plan's progress!" }
-
-    trainingPlan.trainingDays.indexOf(day).apply {
-      trainingPlan.trainingDays[this] = day
-    }
-    saveTrainingPlan()
   }
 
   /**

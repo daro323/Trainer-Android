@@ -1,19 +1,17 @@
 package com.trainer.ui.training
 
 import android.os.Bundle
-import android.support.v7.widget.LinearLayoutManager
 import android.view.Menu
 import android.view.MenuItem
 import com.trainer.R
 import com.trainer.base.BaseActivity
 import com.trainer.commons.typedviewholder.TypedViewHolderAdapter
 import com.trainer.commons.typedviewholder.registerHolder
-import com.trainer.modules.training.workout.WorkoutManager
 import com.trainer.extensions.ioMain
 import com.trainer.extensions.start
 import com.trainer.modules.export.ExportManager
+import com.trainer.modules.training.workout.WorkoutManager
 import com.trainer.ui.training.types.model.TrainingDayItem
-import kotlinx.android.synthetic.main.activity_list.*
 import kotlinx.android.synthetic.main.item_training_day.view.*
 import javax.inject.Inject
 
@@ -68,7 +66,7 @@ class TrainingDaysListActivity : BaseActivity(R.layout.activity_list) {
                 .ioMain()
                 .subscribe(
                     { showConfirmPopupAlert(R.string.import_successful) { buildUi() } },
-                    { error -> showConfirmPopupAlert("${getString(R.string.import_failure)}: '${error.message}'") })
+                    { error -> showConfirmPopupAlert("${getString(R.string.failure_import)}: '${error.message}'") })
           }
         } ?: showConfirmPopupAlert(R.string.failure_create_external_storage)
 
@@ -80,7 +78,7 @@ class TrainingDaysListActivity : BaseActivity(R.layout.activity_list) {
               .ioMain()
               .subscribe(
                   { showConfirmPopupAlert(getString(R.string.export_successful) + " ${exportManager.getTrainingStorageDir()}") },
-                  { error -> showConfirmPopupAlert("${getString(R.string.export_failure)}: '${error.message}'") })
+                  { error -> showConfirmPopupAlert("${getString(R.string.failure_export)}: '${error.message}'") })
         }
         return true
       }
@@ -89,12 +87,13 @@ class TrainingDaysListActivity : BaseActivity(R.layout.activity_list) {
   }
 
   private fun buildUi() {
-    title = workoutManager.getTrainingPlan().name
-    recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-    recyclerView.adapter = adapter
+    // TODO Refactor
+    /*title = workoutManager.getTrainingPlan().name
+    ui_plans_list.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+    ui_plans_list.adapter = adapter
 
     workoutManager.getTrainingPlan().trainingDays
         .flatMap { listOf(TrainingDayItem(it.category, it.getTotalDone(), it.trainedDaysAgo())) }
-        .run { adapter.data = this }
+        .run { adapter.data = this }*/
   }
 }

@@ -48,7 +48,7 @@ android {
   productFlavors {
     stage {
       buildConfigField "boolean", "IS_STAGE", 'true'
-      buildConfigField 'String', 'SERVER_ENDPOINT', '"http://192.168.217.113:8080"'
+      buildConfigField 'String', 'SERVER_ENDPOINT', "\"http://${getIP()}:8080\""
     }
 
     live {
@@ -89,10 +89,12 @@ dependencies {
   compile "com.android.support:cardview-v7:$support_lib_version"
 
   // Architecture components
-  compile "android.arch.lifecycle:extensions:1.0.0-alpha4"
-  compile "android.arch.persistence.room:runtime:1.0.0-alpha4"
-  kapt "android.arch.lifecycle:compiler:1.0.0-alpha4"
-  kapt "android.arch.persistence.room:compiler:1.0.0-alpha4"
+  def arch_components_version = '1.0.0-alpha4'
+  compile "android.arch.lifecycle:extensions:$arch_components_version"
+  kapt "android.arch.lifecycle:compiler:$arch_components_version"
+  compile "android.arch.persistence.room:runtime:$arch_components_version"
+  compile "android.arch.persistence.room:rxjava2:$arch_components_version"
+  kapt "android.arch.persistence.room:compiler:$arch_components_version"
 
   // Constraint Layout
   compile 'com.android.support.constraint:constraint-layout:1.0.1'
@@ -105,10 +107,6 @@ dependencies {
 
   // Kotlin
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-
-  // Coroutines
-  compile 'ru.gildor.coroutines:kotlin-coroutines-retrofit:0.7.1'
-  compile 'org.jetbrains.kotlinx:kotlinx-coroutines-core:0.18'
 
   // Dagger 2
   def dagger_version = '2.8'

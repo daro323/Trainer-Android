@@ -3,6 +3,26 @@
 buildscript {
   ext.kotlin_version = '1.1.4-3'
 
+  ext.getIP = {
+    InetAddress result = null;
+    Enumeration<NetworkInterface> interfaces = NetworkInterface.getNetworkInterfaces();
+    while (interfaces.hasMoreElements()) {
+      Enumeration<InetAddress> addresses = interfaces.nextElement().getInetAddresses();
+      while (addresses.hasMoreElements()) {
+        InetAddress address = addresses.nextElement();
+        if (!address.isLoopbackAddress()) {
+          if (address.isSiteLocalAddress()) {
+            return address.getHostAddress();
+          } else if (result == null) {
+            result = address;
+          }
+        }
+      }
+    }
+
+    (result != null ? result : InetAddress.getLocalHost()).getHostAddress();
+  }
+
   repositories {
     jcenter()
     maven { url 'https://jitpack.io' }

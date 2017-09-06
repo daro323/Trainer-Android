@@ -1,9 +1,6 @@
 package com.trainer.modules.init.cardioplan.data
 
 import com.trainer.modules.training.workout.Exercise
-import com.trainer.modules.training.workout.Serie
-import com.trainer.modules.training.workout.Workout
-import com.trainer.modules.training.workout.types.cyclic.CyclicRoutine
 
 /**
  * Created by dariusz on 20/03/17.
@@ -12,22 +9,22 @@ class KettlebellExerciseInitData private constructor() {
 
   companion object {
 
-    private val SWING = Exercise("Swing")
-    private val SQUAT_PRESS_LEFT = Exercise("Squat & Press (Left Arm)")
-    private val SWING_BETWEEN_LEGS = Exercise("Swing Between Legs")
-    private val SQUAT_PRESS_RIGTH = Exercise("Squat & Press (Right Arm)")
-    private val HALO = Exercise("Halo")
-    private val LUNGE_PASS = Exercise("Lunge Pass")
-    private val HIGH_PULL = Exercise("High Pull")
-    private val GOBLET_SQUAT_WITH_ABDUCT_LEFT = Exercise("Goblet Squat (Abduct Left)")
-    private val SNATCH = Exercise("Snatch")
-    private val GOBLET_SQUAT_WITH_ABDUCT_RIGHT = Exercise("Goblet Squat (Abduct Right)")
-    private val SIDE_CHOP_LEFT = Exercise("Side Chop (Left)")
-    private val RUSSIAN_TWIST = Exercise("Russian Twist")
-    private val SIDE_CHOP_RIGHT = Exercise("Side Chop (Right)")
+    private val SWING = Exercise(1, "Swing")
+    private val SQUAT_PRESS_LEFT = Exercise(1, "Squat & Press (Left Arm)")
+    private val SWING_BETWEEN_LEGS = Exercise(1, "Swing Between Legs")
+    private val SQUAT_PRESS_RIGTH = Exercise(1, "Squat & Press (Right Arm)")
+    private val HALO = Exercise(1, "Halo")
+    private val LUNGE_PASS = Exercise(1, "Lunge Pass")
+    private val HIGH_PULL = Exercise(1, "High Pull")
+    private val GOBLET_SQUAT_WITH_ABDUCT_LEFT = Exercise(1, "Goblet Squat (Abduct Left)")
+    private val SNATCH = Exercise(1, "Snatch")
+    private val GOBLET_SQUAT_WITH_ABDUCT_RIGHT = Exercise(1, "Goblet Squat (Abduct Right)")
+    private val SIDE_CHOP_LEFT = Exercise(1, "Side Chop (Left)")
+    private val RUSSIAN_TWIST = Exercise(1, "Russian Twist")
+    private val SIDE_CHOP_RIGHT = Exercise(1, "Side Chop (Right)")
 
 
-    val KETTLEBELL_WORKOUT = Workout(arrayListOf(
+    /*val KETTLEBELL_WORKOUT = Workout(arrayListOf(
         Serie.createCycle("Kettlebell Cycle", arrayListOf(
             CyclicRoutine(SWING, 20, 20),
             CyclicRoutine(SQUAT_PRESS_LEFT, 20, 20),
@@ -42,6 +39,6 @@ class KettlebellExerciseInitData private constructor() {
             CyclicRoutine(SIDE_CHOP_LEFT, 20, 20),
             CyclicRoutine(RUSSIAN_TWIST, 20, 20),
             CyclicRoutine(SIDE_CHOP_RIGHT, 20, 0)),
-            60)))
+            60)))*/
   }
 }

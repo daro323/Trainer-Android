@@ -7,9 +7,10 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.module.SimpleModule
 import com.fasterxml.jackson.module.kotlin.registerKotlinModule
 import com.trainer.BuildConfig
-import com.trainer.commons.SerieResponseDeserializer
+import com.trainer.commons.SerieDeserializer
 import com.trainer.d2.scope.ApplicationScope
 import com.trainer.modules.training.plan.TrainingPlanApi
+import com.trainer.modules.training.workout.Serie
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
@@ -27,7 +28,7 @@ class NetworkModule {
   companion object {
     fun createJackson() = ObjectMapper().apply {
       registerKotlinModule()
-      registerModule(SimpleModule().apply { addDeserializer(TrainingPlanApi.SerieResponse::class.java, SerieResponseDeserializer()) })
+      registerModule(SimpleModule().apply { addDeserializer(Serie::class.java, SerieDeserializer()) })
       setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY)
       configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
     }

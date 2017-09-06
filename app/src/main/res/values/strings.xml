@@ -28,10 +28,6 @@
   <string name="export_plan">Export Plan</string>
   <string name="export_successful">Export Successful to:</string>
   <string name="import_successful">Import Successful</string>
-  <string name="export_failure">Export Failure due to</string>
-  <string name="import_failure">Import Failure due to</string>
-  <string name="failure_external_storage_not_accessible">external storage is not accessible</string>
-  <string name="failure_create_external_storage">Failed to create external storage folder</string>
   <string name="select_plan_file">Select Plan</string>
   <string name="set">Set</string>
   <string name="super_set">Super Set</string>
@@ -45,6 +41,7 @@
   <string name="one_more_btn">One more</string>
   <string name="finish_btn">Finish</string>
   <string name="next_exercise_label" formatted="false">Next: %s</string>
+  <string name="retry">Retry</string>
 
   <string name="cycle_new">New Cycle</string>
   <string name="cycle_get_ready">Get Ready</string>
@@ -56,4 +53,10 @@
 
   <string name="select_training_plan">Select Plan</string>
   <string name="no_training_plans">No training plans available</string>
+
+  <string name="failure_export">Export Failure due to</string>
+  <string name="failure_import">Import Failure due to</string>
+  <string name="failure_external_storage_not_accessible">external storage is not accessible</string>
+  <string name="failure_create_external_storage">Failed to create external storage folder</string>
+  <string name="failure_refresh_training_plans">Failed to refresh training plans</string>
 </resources>
