@@ -19,7 +19,7 @@ android {
     buildConfigField "boolean", "IS_STAGE", 'false'
     buildConfigField "boolean", "IS_LIVE", 'false'
 
-
+    resValue("string", "PORT_NUMBER", "8081")   // For debug database
     project.ext.set("appName", "Trainer")
   }
 
@@ -153,6 +153,9 @@ dependencies {
   androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
     exclude group: 'com.android.support', module: 'support-annotations'
   })
+
+  // Debug database
+  debugCompile 'com.amitshekhar.android:debug-db:1.0.1'
 
   // TESTING
   testCompile "junit:junit:4.12"

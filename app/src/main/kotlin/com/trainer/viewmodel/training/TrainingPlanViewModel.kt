@@ -36,7 +36,7 @@ class TrainingPlanViewModel : BaseViewModel() {
         .doOnSubscribe { viewStatus.value = ViewStatus.BUSY }
         .subscribe(
             { viewStatus.value = ViewStatus.ACTIVE },
-            { viewStatus.value = ViewStatus.ERROR(R.string.failure_refresh_training_plans) }))
+            { error -> viewStatus.value = ViewStatus.ERROR(R.string.failure_refresh_training_plans) }))
   }
 
   fun dismissStatusError() {
