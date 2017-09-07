@@ -23,7 +23,7 @@ class TrainingRepository @Inject constructor(val trainingPlanDao: TrainingPlanDa
   companion object {
     const private val TRAINING_PLAN_KEY = "TRAINING_PLAN_KEY"
     const private val STRETCH_PLAN_KEY = "STRETCH_PLAN_KEY"
-    private val TRAINING_PLAN_NOT_INITIALIZED = TrainingPlan(1, "Not initialized", setOf())
+    private val TRAINING_PLAN_NOT_INITIALIZED = TrainingPlan("1", "Not initialized", setOf())
     private val STRETCH_PLAN_NOT_INITIALIZED = StretchPlan(emptyList())
   }
 

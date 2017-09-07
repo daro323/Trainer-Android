@@ -58,7 +58,7 @@ class CoreConstants private constructor() {
 
 @Keep
 @Entity(tableName = "TrainingPlans")
-data class TrainingPlan(@PrimaryKey val id: Int,
+data class TrainingPlan(@PrimaryKey val id: String,
                         val name: String,
                         val categories: kotlin.collections.Set<String>)
 
@@ -94,7 +94,7 @@ data class TrainingDay(val category: String, // category should be unique within
 
 @Keep
 @Entity(tableName = "Exercises")
-data class Exercise(@PrimaryKey val id: Int,
+data class Exercise(@PrimaryKey val id: String,
                     val name: String,
                     val comments: List<String> = emptyList(),
                     val weightType: WeightType = WeightType.KG) {

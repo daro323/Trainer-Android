@@ -17,10 +17,10 @@ interface TrainingPlanDao {
   @Query("SELECT * FROM TrainingPlans")
   fun listAllPlans(): Flowable<TrainingPlan>
 
-  @Insert
+  @Insert(onConflict = OnConflictStrategy.REPLACE)
   fun addPlan(planEntity: TrainingPlan)
 
-  @Insert
+  @Insert(onConflict = OnConflictStrategy.REPLACE)
   fun addPlans(plansEntityList: List<TrainingPlan>)
 
   @Delete
