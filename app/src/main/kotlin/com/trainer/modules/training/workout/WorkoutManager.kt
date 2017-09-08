@@ -1,7 +1,7 @@
 package com.trainer.modules.training.workout
 
 import com.trainer.d2.scope.ApplicationScope
-import com.trainer.modules.training.plan.TrainingRepository
+import com.trainer.persistence.training.TrainingRepository
 import com.trainer.modules.training.workout.ProgressStatus.NEW
 import com.trainer.modules.training.workout.types.standard.StretchPlan
 import javax.inject.Inject

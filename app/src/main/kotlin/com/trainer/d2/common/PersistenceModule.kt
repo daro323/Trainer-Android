@@ -4,7 +4,7 @@ import android.arch.persistence.room.Room
 import android.content.Context
 import com.trainer.d2.qualifier.ForApplication
 import com.trainer.d2.scope.ApplicationScope
-import com.trainer.persistence.TrainingDatabase
+import com.trainer.persistence.training.TrainingDatabase
 import dagger.Module
 import dagger.Provides
 

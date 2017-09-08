@@ -1,6 +1,5 @@
 package com.trainer.viewmodel.training
 
-import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.Transformations
 import android.support.annotation.Keep
@@ -9,7 +8,7 @@ import com.trainer.R
 import com.trainer.base.BaseViewModel
 import com.trainer.d2.common.AppComponent
 import com.trainer.extensions.ioMain
-import com.trainer.modules.training.plan.TrainingPlanManager
+import com.trainer.persistence.training.TrainingRepository
 import javax.inject.Inject
 
 /**
@@ -17,39 +16,66 @@ import javax.inject.Inject
  */
 class TrainingPlanViewModel : BaseViewModel() {
 
-  @Inject lateinit var trainingPlanManager: TrainingPlanManager
+  @Inject lateinit var trainingRepo: TrainingRepository
 
-  private val viewStatus = MutableLiveData<ViewStatus>()
+  val viewStatusStream = MutableLiveData<ViewStatus>()
+  val trainingPlansStream by lazy {
+    Transformations.switchMap(currentTrainingPlanIdStream, { currentPlanId ->
+      Transformations.map(trainingRepo.trainingPlanDao.listAllPlansLD(), { input -> input?.map { TrainingPlanItem(it.id, it.name, currentPlanId == it.id) } })
+    })
+  }
+  private val currentTrainingPlanIdStream = MutableLiveData<String?>()
 
   override fun inject(component: AppComponent) {
     component.inject(this)
   }
 
-  fun getTrainingPlansStream(): LiveData<List<TrainingPlanItem>> = Transformations.map(trainingPlanManager.getTrainingPlansLD(),
-      { input -> input?.map { TrainingPlanItem(it.name) } })
-
-  fun getLoadingStatusStream() = viewStatus
-
   fun refreshTrainingPlans() {
-    disposables.add(trainingPlanManager.getTrainingPlans()
+    disposables.add(
+        trainingRepo.getCurrentTrainingPlanId()
+            .flatMap {
+              currentTrainingPlanIdStream.value = it
+              trainingRepo.getTrainingPlans()
+            }
+            .ioMain()
+            .doOnSubscribe { viewStatusStream.value = ViewStatus.BUSY }
+            .subscribe(
+                { viewStatusStream.value = ViewStatus.ACTIVE },
+                { viewStatusStream.value = ViewStatus.ERROR(ViewStatus.ErrorType.REFRESH_PLAN_LIST_FAILURE, R.string.failure_refresh_training_plans) }))
+  }
+
+  fun selectTrainingPlan(planId: String) {
+    disposables.add(trainingRepo.setCurrentTrainingPlanId(planId)
         .ioMain()
-        .doOnSubscribe { viewStatus.value = ViewStatus.BUSY }
+        .doOnSubscribe { viewStatusStream.value = ViewStatus.BUSY }
         .subscribe(
-            { viewStatus.value = ViewStatus.ACTIVE },
-            { error -> viewStatus.value = ViewStatus.ERROR(R.string.failure_refresh_training_plans) }))
+            { viewStatusStream.value = ViewStatus.PLAN_SELECTED(planId) },
+            { viewStatusStream.value = ViewStatus.ERROR(ViewStatus.ErrorType.SELECT_PLAN_FAILURE, R.string.failure_sync_on_select_training_plan, planId) }))
   }
 
   fun dismissStatusError() {
-    require(viewStatus.value is ViewStatus.ERROR) { "Attempt to dismissStatusError but current is not of type ERROR!" }
-    viewStatus.value = ViewStatus.ACTIVE
+    require(viewStatusStream.value is ViewStatus.ERROR) { "Attempt to dismissStatusError but current is not of type ERROR!" }
+    viewStatusStream.value = ViewStatus.ACTIVE
   }
 
+  @Keep
   sealed class ViewStatus {
     object ACTIVE : ViewStatus()
     object BUSY : ViewStatus()
-    data class ERROR(@StringRes val messageId: Int) : ViewStatus()
+    data class PLAN_SELECTED(val planId: String) : ViewStatus()
+    data class ERROR(val type: ErrorType,
+                     @StringRes val messageId: Int,
+                     val extra: Any? = null) : ViewStatus()
+
+    enum class ErrorType {
+      REFRESH_PLAN_LIST_FAILURE,
+      SELECT_PLAN_FAILURE
+    }
   }
 }
 
 @Keep
-data class TrainingPlanItem(val planName: String)
+data class TrainingPlanItem(val planId: String,
+                            val planName: String,
+                            val isCurrent: Boolean,
+                            val isAlreadyUsed: Boolean = false)

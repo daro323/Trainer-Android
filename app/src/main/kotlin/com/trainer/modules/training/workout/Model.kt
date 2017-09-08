@@ -1,17 +1,9 @@
 package com.trainer.modules.training.workout
 
-import android.arch.persistence.room.Entity
-import android.arch.persistence.room.ForeignKey
-import android.arch.persistence.room.PrimaryKey
-import android.support.annotation.DrawableRes
 import android.support.annotation.Keep
 import android.support.annotation.Nullable
 import com.fasterxml.jackson.annotation.JsonProperty
-import com.trainer.R
-import com.trainer.extensions.daysSince
 import com.trainer.modules.training.workout.ProgressStatus.*
-import org.threeten.bp.LocalDate
-import org.threeten.bp.format.DateTimeFormatter
 
 /**
  * Created by dariusz on 15/03/17.
@@ -53,54 +45,6 @@ class CoreConstants private constructor() {
   companion object {
     const val WEIGHT_VALUE_NOT_APPLICABLE = -1f   // value for weight which is considered not applicable
     const val VALUE_NOT_SET = -1
-  }
-}
-
-@Keep
-@Entity(tableName = "TrainingPlans")
-data class TrainingPlan(@PrimaryKey val id: String,
-                        val name: String,
-                        val categories: kotlin.collections.Set<String>)
-
-@Keep
-@Entity(
-    tableName = "TrainingDays",
-    primaryKeys = arrayOf("category", "trainingPlanId"),
-    foreignKeys = arrayOf(ForeignKey(entity = TrainingPlan::class, onDelete = ForeignKey.CASCADE,
-        parentColumns = arrayOf("id"),
-        childColumns = arrayOf("trainingPlanId"))))
-data class TrainingDay(val category: String, // category should be unique within a training plan
-                       val trainingPlanId: Int,
-                       val workout: Workout,
-                       var totalDone: Int = 0,
-                       var lastTrainedDate: String? = null) {
-
-  companion object {
-    private val DATE_FORMATTER = DateTimeFormatter.ISO_LOCAL_DATE
-  }
-
-  fun updateAsDone() {
-    totalDone++
-    lastTrainedDate = LocalDate.now().format(DATE_FORMATTER)
-  }
-
-  fun trainedDaysAgo() = LocalDate.now().daysSince(lastTrainedDate?.run { LocalDate.parse(this, DATE_FORMATTER) } ?: LocalDate.now()).toInt()
-
-  override fun equals(other: Any?) = other is TrainingDay &&
-      other.category == category && other.trainingPlanId == trainingPlanId
-
-  override fun hashCode() = 31 * category.hashCode() + trainingPlanId.hashCode()
-}
-
-@Keep
-@Entity(tableName = "Exercises")
-data class Exercise(@PrimaryKey val id: String,
-                    val name: String,
-                    val comments: List<String> = emptyList(),
-                    val weightType: WeightType = WeightType.KG) {
-  companion object {
-    @DrawableRes
-    fun getImageResource() = R.mipmap.ic_exercise_default
   }
 }
 

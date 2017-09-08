@@ -7,7 +7,7 @@ import com.trainer.modules.training.workout.ProgressStatus.COMPLETE
 import com.trainer.modules.training.workout.ProgressStatus.STARTED
 import com.trainer.modules.training.workout.WorkoutEvent.*
 import com.trainer.modules.countdown.CountDownNotification
-import com.trainer.modules.training.plan.TrainingRepository
+import com.trainer.persistence.training.TrainingRepository
 import com.trainer.ui.training.rest.RestActivity
 import io.reactivex.processors.BehaviorProcessor
 import javax.inject.Inject

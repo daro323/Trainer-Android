@@ -59,4 +59,6 @@
   <string name="failure_external_storage_not_accessible">external storage is not accessible</string>
   <string name="failure_create_external_storage">Failed to create external storage folder</string>
   <string name="failure_refresh_training_plans">Failed to refresh training plans</string>
+
+  <string name="failure_sync_on_select_training_plan">Failed to synchronize on training plan selection</string>
 </resources>

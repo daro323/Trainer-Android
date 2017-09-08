@@ -4,8 +4,8 @@ import android.app.Activity
 import android.os.Bundle
 import com.trainer.R
 import com.trainer.base.BaseActivity
-import com.trainer.modules.training.workout.WorkoutManager
 import com.trainer.extensions.startWith
+import com.trainer.modules.training.workout.WorkoutManager
 import com.trainer.ui.training.types.model.StretchPagerAdapter
 import kotlinx.android.synthetic.main.activity_stretch_pager.*
 import javax.inject.Inject
@@ -23,7 +23,7 @@ class StretchActivity : BaseActivity(R.layout.activity_stretch_pager) {
   private val stretchRoutine by lazy { workoutManager.getStretchPlan().getStretchRoutine(category) }
 
   companion object {
-    const val ARG_TRAINING_CATEGORY = "ARG_TRAINING_CATEGORY"
+    const private val ARG_TRAINING_CATEGORY = "ARG_TRAINING_CATEGORY"
 
     fun start(trainingCategory: String, context: Activity) {
       context.startWith<StretchActivity> { putExtra(ARG_TRAINING_CATEGORY, trainingCategory) }

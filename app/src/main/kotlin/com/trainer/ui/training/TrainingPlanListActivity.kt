@@ -8,10 +8,13 @@ import com.trainer.commons.typedviewholder.TypedViewHolderAdapter
 import com.trainer.commons.typedviewholder.registerHolder
 import com.trainer.extensions.invisibleView
 import com.trainer.extensions.showQuickMessage
+import com.trainer.extensions.start
 import com.trainer.extensions.visibleView
 import com.trainer.viewmodel.training.TrainingPlanItem
 import com.trainer.viewmodel.training.TrainingPlanViewModel
 import com.trainer.viewmodel.training.TrainingPlanViewModel.ViewStatus.*
+import com.trainer.viewmodel.training.TrainingPlanViewModel.ViewStatus.ErrorType.REFRESH_PLAN_LIST_FAILURE
+import com.trainer.viewmodel.training.TrainingPlanViewModel.ViewStatus.ErrorType.SELECT_PLAN_FAILURE
 import kotlinx.android.synthetic.main.activity_list.*
 import kotlinx.android.synthetic.main.item_training_plan.view.*
 
@@ -32,8 +35,8 @@ class TrainingPlanListActivity : BaseActivity(R.layout.activity_list) {
     super.onCreate(savedInstanceState)
     component.inject(this)
     trainingPlanVM = getViewModel(TrainingPlanViewModel::class.java).apply {
-      observeLiveData(getTrainingPlansStream(), onShowTrainingPlans)
-      observeLiveData(getLoadingStatusStream(), onLoadingStatus)
+      observeLiveData(trainingPlansStream, onShowTrainingPlans)
+      observeLiveData(viewStatusStream, onViewStatus)
       refreshTrainingPlans()
     }
     title = getString(R.string.select_training_plan)
@@ -47,7 +50,7 @@ class TrainingPlanListActivity : BaseActivity(R.layout.activity_list) {
     } ?: showQuickMessage(R.string.no_training_plans)
   }
 
-  private val onLoadingStatus = { viewStatus: TrainingPlanViewModel.ViewStatus? ->
+  private val onViewStatus = { viewStatus: TrainingPlanViewModel.ViewStatus? ->
     when (viewStatus) {
       is ACTIVE -> {
         ui_plans_list.visibleView()
@@ -56,13 +59,14 @@ class TrainingPlanListActivity : BaseActivity(R.layout.activity_list) {
       is ERROR -> {
         ui_plans_list.visibleView()
         ui_loading_view.invisibleView()
-        showRetryPopupAlert(viewStatus.messageId,
-            { trainingPlanVM.refreshTrainingPlans() },
-            { trainingPlanVM.dismissStatusError() })
+        onHandleError(viewStatus)
       }
       is BUSY -> {
         ui_plans_list.visibleView()
         ui_loading_view.invisibleView()
+      }
+      is PLAN_SELECTED -> {
+        onPlanSelected()
       }
       else -> {
       }  // Ignore
@@ -70,7 +74,25 @@ class TrainingPlanListActivity : BaseActivity(R.layout.activity_list) {
     Unit
   }
 
-  private val openTrainingPlan = { planItem: TrainingPlanItem ->
-    // TODO: Set training plan as current and open it
+  private val openTrainingPlan = { planItem: TrainingPlanItem -> trainingPlanVM.selectTrainingPlan(planItem.planId) }
+
+  private fun onHandleError(error: ERROR) {
+    when (error.type) {
+      REFRESH_PLAN_LIST_FAILURE -> showRetryPopupAlert(error.messageId,
+          { trainingPlanVM.refreshTrainingPlans() },
+          { trainingPlanVM.dismissStatusError() })
+
+      SELECT_PLAN_FAILURE -> showRetryPopupAlert(error.messageId,
+          { trainingPlanVM.selectTrainingPlan(error.extra as String) },
+          {
+            trainingPlanVM.dismissStatusError()
+            onPlanSelected()
+          })
+    }
+  }
+
+  private fun onPlanSelected() {
+    start<TrainingDaysListActivity>()
+    finish()
   }
 }
