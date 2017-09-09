@@ -3,10 +3,8 @@ package com.trainer.persistence.training
 import android.arch.persistence.room.Database
 import android.arch.persistence.room.RoomDatabase
 import android.arch.persistence.room.TypeConverters
-import com.trainer.modules.training.workout.Exercise
-import com.trainer.modules.training.workout.TrainingDay
-import com.trainer.modules.training.workout.TrainingPlan
 import com.trainer.persistence.Converters
+import com.trainer.persistence.training.TrainingPlanDao.*
 
 /**
  * Created by dariusz on 29.08.17.

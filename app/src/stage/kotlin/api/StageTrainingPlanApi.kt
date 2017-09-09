@@ -1,5 +1,7 @@
-package com.trainer.modules.training.plan
+package api
 
+import com.trainer.modules.training.plan.CurrentTrainingPlanInfo
+import com.trainer.modules.training.plan.TrainingPlanListResponse
 import com.trainer.persistence.training.TrainingPlanDao
 import io.reactivex.Completable
 import io.reactivex.Single
@@ -13,17 +15,17 @@ import retrofit2.http.Path
  */
 const val PLAN_ID = "planId"
 
-interface TrainingPlanApi {
+interface StageTrainingPlanApi {
 
-  @GET("/api/plans")
+  @GET("/plans")
   fun getTrainingPlans(): Single<TrainingPlanListResponse>
 
-  @GET("/api/plans/{planId}")
+  @GET("/plans/{planId}")
   fun getTrainingPlanDetails(@Path(PLAN_ID) planId: String): Single<TrainingPlanDao.TrainingPlan>
 
-  @POST("/api/plans/current")
+  @POST("/currentplan")
   fun setCurrentTrainingPlanId(@Body body: CurrentTrainingPlanInfo): Completable
 
-  @GET("/api/plans/current")
+  @GET("/currentplan")
   fun getCurrentTrainingPlanId(): Single<CurrentTrainingPlanInfo>
 }

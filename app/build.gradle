@@ -17,6 +17,7 @@ android {
     buildConfigField 'String', 'REL_PATH_TO_PLANS', '"/TrainerApp/training_plans/"'
     buildConfigField 'String', 'PLAN_FILE_NAME_TEMPLATE', '"%s.pln"'
     buildConfigField "boolean", "IS_STAGE", 'false'
+    buildConfigField "boolean", "IS_PRELIVE", 'false'
     buildConfigField "boolean", "IS_LIVE", 'false'
 
     resValue("string", "PORT_NUMBER", "8081")   // For debug database
@@ -46,12 +47,17 @@ android {
   }
 
   productFlavors {
-    stage {
+    stage {   // Uses mock server
       buildConfigField "boolean", "IS_STAGE", 'true'
       buildConfigField 'String', 'SERVER_ENDPOINT', "\"http://${getIP()}:8080\""
     }
 
-    live {
+    prelive { // Uses real server but not deployed
+      buildConfigField "boolean", "IS_PRELIVE", 'true'
+      buildConfigField 'String', 'SERVER_ENDPOINT', "\"http://${getIP()}:8080\""
+    }
+
+    live {    // Uses real deployed server
       buildConfigField "boolean", "IS_LIVE", 'true'
       buildConfigField 'String', 'SERVER_ENDPOINT', '"http://dummy-live-server.com"'      // TODO: Fill this when server is deployed
     }
@@ -59,6 +65,7 @@ android {
 
   sourceSets {
     main.java.srcDirs += 'src/main/kotlin'
+    main.java.srcDirs += 'src/stage/kotlin'
   }
   packagingOptions {
     exclude 'META-INF/LICENSE'

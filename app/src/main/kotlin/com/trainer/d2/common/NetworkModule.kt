@@ -1,5 +1,6 @@
 package com.trainer.d2.common
 
+import api.StageTrainingPlanApi
 import com.fasterxml.jackson.annotation.JsonAutoDetect
 import com.fasterxml.jackson.annotation.PropertyAccessor
 import com.fasterxml.jackson.databind.DeserializationFeature
@@ -55,5 +56,6 @@ class NetworkModule {
     addCallAdapterFactory(RxJava2CallAdapterFactory.create())
   }.build()
 
-  @Provides @ApplicationScope fun provideTrainingPlanApi(retrofit: Retrofit) = retrofit.create(TrainingPlanApi::class.java)
+  @Provides @ApplicationScope fun provideTrainingPlanApi(retrofit: Retrofit) =
+      retrofit.create(if (BuildConfig.IS_STAGE) StageTrainingPlanApi::class.java else TrainingPlanApi::class.java)
 }
