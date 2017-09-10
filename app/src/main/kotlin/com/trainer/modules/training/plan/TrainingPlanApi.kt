@@ -1,5 +1,6 @@
 package com.trainer.modules.training.plan
 
+import android.support.annotation.Keep
 import com.trainer.persistence.training.TrainingPlanDao
 import io.reactivex.Completable
 import io.reactivex.Single
@@ -26,4 +27,18 @@ interface TrainingPlanApi {
 
   @GET("/api/plans/current")
   fun getCurrentTrainingPlanId(): Single<CurrentTrainingPlanInfo>
+
+
+
+
+
+
+  @Keep
+  data class TrainingPlanListResponse(val plans: List<TrainingPlanDao.TrainingPlan>)
+
+  @Keep
+  data class TrainingDayResponse(val day: TrainingPlanDao.TrainingDay)
+
+  @Keep
+  data class CurrentTrainingPlanInfo(val currentPlanId: String)
 }

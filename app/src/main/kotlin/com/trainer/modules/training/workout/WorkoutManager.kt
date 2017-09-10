@@ -1,9 +1,10 @@
 package com.trainer.modules.training.workout
 
 import com.trainer.d2.scope.ApplicationScope
-import com.trainer.persistence.training.TrainingRepository
 import com.trainer.modules.training.workout.ProgressStatus.NEW
 import com.trainer.modules.training.workout.types.standard.StretchPlan
+import com.trainer.persistence.training.TrainingPlanDao
+import com.trainer.persistence.training.TrainingRepository
 import javax.inject.Inject
 import javax.inject.Provider
 
@@ -78,7 +79,7 @@ class WorkoutManager @Inject constructor(val repo: TrainingRepository,
 
   fun getTrainingPlan() = repo.getTrainingPlan()
 
-  fun setTrainingPlan(trainingPlan: TrainingPlan) {
+  fun setTrainingPlan(trainingPlan: TrainingPlanDao.TrainingPlan) {
     reset()
     repo.setNewTrainingPlan(trainingPlan)
   }

@@ -1,6 +1,7 @@
 package com.trainer.ui.training
 
 import android.os.Bundle
+import android.support.v4.content.ContextCompat
 import android.support.v7.widget.LinearLayoutManager
 import com.trainer.R
 import com.trainer.base.BaseActivity
@@ -25,7 +26,10 @@ class TrainingPlanListActivity : BaseActivity(R.layout.activity_list) {
   private val adapter = TypedViewHolderAdapter.Builder<Any>().apply {
     registerHolder(R.layout.item_training_plan) { model: TrainingPlanItem ->
       itemView.apply {
-        ui_training_plan_container.setOnClickListener { openTrainingPlan(model) }
+        ui_training_plan_container.apply {
+          setOnClickListener { openTrainingPlan(model) }
+          if(model.isCurrent) setBackgroundColor(ContextCompat.getColor(context, R.color.yellow))
+        }
         ui_name.text = model.planName
       }
     }
@@ -66,7 +70,7 @@ class TrainingPlanListActivity : BaseActivity(R.layout.activity_list) {
         ui_loading_view.invisibleView()
       }
       is PLAN_SELECTED -> {
-        onPlanSelected()
+        showTrainingPlan()
       }
       else -> {
       }  // Ignore
@@ -86,12 +90,12 @@ class TrainingPlanListActivity : BaseActivity(R.layout.activity_list) {
           { trainingPlanVM.selectTrainingPlan(error.extra as String) },
           {
             trainingPlanVM.dismissStatusError()
-            onPlanSelected()
+            showTrainingPlan()
           })
     }
   }
 
-  private fun onPlanSelected() {
+  private fun showTrainingPlan() {
     start<TrainingDaysListActivity>()
     finish()
   }

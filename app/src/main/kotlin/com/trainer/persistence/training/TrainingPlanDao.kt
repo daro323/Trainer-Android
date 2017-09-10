@@ -10,7 +10,6 @@ import com.trainer.modules.training.workout.WeightType
 import com.trainer.modules.training.workout.Workout
 import io.reactivex.Flowable
 import org.threeten.bp.LocalDate
-import org.threeten.bp.LocalDateTime
 import org.threeten.bp.format.DateTimeFormatter
 
 /**
@@ -42,8 +41,7 @@ interface TrainingPlanDao {
   @Entity(tableName = "TrainingPlans")
   data class TrainingPlan(@PrimaryKey val id: String,
                           val name: String,
-                          val categories: kotlin.collections.Set<String>,
-                          val lastModified: LocalDateTime? = null)
+                          val categories: kotlin.collections.Set<String>)
 
   @Keep
   @Entity(
@@ -56,8 +54,7 @@ interface TrainingPlanDao {
                          val trainingPlanId: Int,
                          val workout: Workout,
                          var totalDone: Int = 0,
-                         var lastTrainedDate: String? = null,
-                         val lastModified: LocalDateTime? = null) {
+                         var lastTrainedDate: String? = null) {
 
     companion object {
       private val DATE_FORMATTER = DateTimeFormatter.ISO_LOCAL_DATE
@@ -81,8 +78,7 @@ interface TrainingPlanDao {
   data class Exercise(@PrimaryKey val id: String,
                       val name: String,
                       val comments: List<String> = emptyList(),
-                      val weightType: WeightType = WeightType.KG,
-                      val lastModified: LocalDateTime? = null) {
+                      val weightType: WeightType = WeightType.KG) {
     companion object {
       @DrawableRes
       fun getImageResource() = R.mipmap.ic_exercise_default

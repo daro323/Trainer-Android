@@ -52,11 +52,6 @@ android {
       buildConfigField 'String', 'SERVER_ENDPOINT', "\"http://${getIP()}:8080\""
     }
 
-    prelive { // Uses real server but not deployed
-      buildConfigField "boolean", "IS_PRELIVE", 'true'
-      buildConfigField 'String', 'SERVER_ENDPOINT', "\"http://${getIP()}:8080\""
-    }
-
     live {    // Uses real deployed server
       buildConfigField "boolean", "IS_LIVE", 'true'
       buildConfigField 'String', 'SERVER_ENDPOINT', '"http://dummy-live-server.com"'      // TODO: Fill this when server is deployed
@@ -65,7 +60,6 @@ android {
 
   sourceSets {
     main.java.srcDirs += 'src/main/kotlin'
-    main.java.srcDirs += 'src/stage/kotlin'
   }
   packagingOptions {
     exclude 'META-INF/LICENSE'

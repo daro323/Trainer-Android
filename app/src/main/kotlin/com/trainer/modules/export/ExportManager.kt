@@ -9,7 +9,7 @@ import com.trainer.d2.qualifier.ForApplication
 import com.trainer.d2.scope.ApplicationScope
 import com.trainer.extensions.writeString
 import com.trainer.modules.training.workout.WorkoutManager
-import com.trainer.modules.training.workout.TrainingPlan
+import com.trainer.persistence.training.TrainingPlanDao
 import io.reactivex.Completable
 import java.io.File
 import javax.inject.Inject
@@ -40,7 +40,7 @@ class ExportManager @Inject constructor(val mapper: ObjectMapper,
     checkExternalStorageAccess()
 
     File(filePath)
-        .run { mapper.readValue(readText(), TrainingPlan::class.java) }
+        .run { mapper.readValue(readText(), TrainingPlanDao.TrainingPlan::class.java) }
         .run { workoutManager.setTrainingPlan(this) }
   }
 

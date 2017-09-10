@@ -32,15 +32,17 @@ class TrainingPlanViewModel : BaseViewModel() {
 
   fun refreshTrainingPlans() {
     disposables.add(
-        trainingRepo.getCurrentTrainingPlanId()
+        trainingRepo.getTrainingPlans()
             .flatMap {
-              currentTrainingPlanIdStream.value = it
-              trainingRepo.getTrainingPlans()
+              trainingRepo.getCurrentTrainingPlanId()
             }
             .ioMain()
             .doOnSubscribe { viewStatusStream.value = ViewStatus.BUSY }
             .subscribe(
-                { viewStatusStream.value = ViewStatus.ACTIVE },
+                {
+                  currentTrainingPlanIdStream.value = it
+                  viewStatusStream.value = ViewStatus.ACTIVE
+                },
                 { viewStatusStream.value = ViewStatus.ERROR(ViewStatus.ErrorType.REFRESH_PLAN_LIST_FAILURE, R.string.failure_refresh_training_plans) }))
   }
 

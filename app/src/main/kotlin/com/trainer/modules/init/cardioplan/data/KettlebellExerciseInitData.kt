@@ -1,6 +1,6 @@
 package com.trainer.modules.init.cardioplan.data
 
-import com.trainer.modules.training.workout.Exercise
+import com.trainer.persistence.training.TrainingPlanDao.Exercise
 
 /**
  * Created by dariusz on 20/03/"1"7.

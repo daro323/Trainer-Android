@@ -1,12 +1,13 @@
 package com.trainer.modules.training.workout
 
 import com.trainer.R
-import com.trainer.modules.training.workout.WorkoutPresenterHelper.HelperCallback
+import com.trainer.modules.countdown.CountDownNotification
 import com.trainer.modules.training.workout.CoreConstants.Companion.VALUE_NOT_SET
 import com.trainer.modules.training.workout.ProgressStatus.COMPLETE
 import com.trainer.modules.training.workout.ProgressStatus.STARTED
 import com.trainer.modules.training.workout.WorkoutEvent.*
-import com.trainer.modules.countdown.CountDownNotification
+import com.trainer.modules.training.workout.WorkoutPresenterHelper.HelperCallback
+import com.trainer.persistence.training.TrainingPlanDao
 import com.trainer.persistence.training.TrainingRepository
 import com.trainer.ui.training.rest.RestActivity
 import io.reactivex.processors.BehaviorProcessor
@@ -23,7 +24,7 @@ class WorkoutPresenter @Inject constructor(val repo: TrainingRepository,
                                            val restManager: RestManager,
                                            val helperFactory: PresenterHelperFactory) : HelperCallback {
 
-  lateinit var trainingDay: TrainingDay
+  lateinit var trainingDay: TrainingPlanDao.TrainingDay
   private val workoutEventsProcessor = BehaviorProcessor.create<WorkoutEvent>()
   private lateinit var helper: WorkoutPresenterHelper
   private var currentSerieIdx: Int = VALUE_NOT_SET

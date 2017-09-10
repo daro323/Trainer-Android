@@ -4,7 +4,6 @@ import android.content.SharedPreferences
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.trainer.d2.scope.ApplicationScope
 import com.trainer.extensions.saveString
-import com.trainer.modules.training.plan.CurrentTrainingPlanInfo
 import com.trainer.modules.training.plan.TrainingPlanApi
 import com.trainer.modules.training.workout.types.standard.StretchPlan
 import com.trainer.persistence.training.TrainingPlanDao.TrainingDay
@@ -47,12 +46,12 @@ class TrainingRepository @Inject constructor(val trainingPlanDao: TrainingPlanDa
         }
   }
 
-  fun setCurrentTrainingPlanId(planId: String) = trainingPlanApi.setCurrentTrainingPlanId(CurrentTrainingPlanInfo(planId))
+  fun setCurrentTrainingPlanId(planId: String) = trainingPlanApi.setCurrentTrainingPlanId(TrainingPlanApi.CurrentTrainingPlanInfo(planId))
       .doFinally { currentPlanId = planId }
 
   fun getCurrentTrainingPlanId() = trainingPlanApi.getCurrentTrainingPlanId()
       .map { it.currentPlanId.apply { currentPlanId = this } }
-
+      .onErrorReturn { currentPlanId }
 
 
 
