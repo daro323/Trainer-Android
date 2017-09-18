@@ -38,11 +38,12 @@ class TrainingRepository @Inject constructor(val trainingPlanDao: TrainingPlanDa
       field = value
     }
 
-  fun getTrainingPlans(): Single<List<TrainingPlan>> {
+  fun getTrainingPlans(): Single<TrainingPlansList> {
     return trainingPlanApi.getTrainingPlans()
-        .map { it.plans }
+        .map { TrainingPlansList(it.plans) }
+        .onErrorReturn { TrainingPlansList(trainingPlanDao.getAllPlans(), true)  }
         .flatMap {
-          Single.fromCallable { it.apply { trainingPlanDao.addPlans(it) } }
+          Single.fromCallable { it.apply { trainingPlanDao.addPlans(it.plans) } }
         }
   }
 

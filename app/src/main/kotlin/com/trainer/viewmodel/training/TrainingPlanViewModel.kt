@@ -21,7 +21,7 @@ class TrainingPlanViewModel : BaseViewModel() {
   val viewStatusStream = MutableLiveData<ViewStatus>()
   val trainingPlansStream by lazy {
     Transformations.switchMap(currentTrainingPlanIdStream, { currentPlanId ->
-      Transformations.map(trainingRepo.trainingPlanDao.listAllPlansLD(), { input -> input?.map { TrainingPlanItem(it.id, it.name, currentPlanId == it.id) } })
+      Transformations.map(trainingRepo.trainingPlanDao.getAllPlansStream(), { input -> input?.map { TrainingPlanItem(it.id, it.name, currentPlanId == it.id) } })
     })
   }
   private val currentTrainingPlanIdStream = MutableLiveData<String?>()

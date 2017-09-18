@@ -8,7 +8,6 @@ import com.trainer.R
 import com.trainer.extensions.daysSince
 import com.trainer.modules.training.workout.WeightType
 import com.trainer.modules.training.workout.Workout
-import io.reactivex.Flowable
 import org.threeten.bp.LocalDate
 import org.threeten.bp.format.DateTimeFormatter
 
@@ -19,10 +18,10 @@ import org.threeten.bp.format.DateTimeFormatter
 interface TrainingPlanDao {
 
   @Query("SELECT * FROM TrainingPlans")
-  fun listAllPlansLD(): LiveData<List<TrainingPlan>>
+  fun getAllPlans(): List<TrainingPlan>
 
   @Query("SELECT * FROM TrainingPlans")
-  fun listAllPlans(): Flowable<TrainingPlan>
+  fun getAllPlansStream(): LiveData<List<TrainingPlan>>
 
   @Insert(onConflict = OnConflictStrategy.REPLACE)
   fun addPlan(planEntity: TrainingPlan)

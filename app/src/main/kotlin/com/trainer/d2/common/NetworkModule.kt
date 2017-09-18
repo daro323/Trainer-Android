@@ -19,6 +19,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.jackson.JacksonConverterFactory
+import java.util.concurrent.TimeUnit
 
 /**
  * Created by dariusz on 30.08.17.
@@ -44,6 +45,7 @@ class NetworkModule {
   @ApplicationScope
   fun provideOkHttpClient() = OkHttpClient.Builder().apply {
     addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
+        .connectTimeout(3, TimeUnit.SECONDS)
   }.build()
 
   @Provides
