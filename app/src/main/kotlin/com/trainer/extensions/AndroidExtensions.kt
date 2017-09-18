@@ -83,11 +83,11 @@ private fun Bundle.fillWith(extras: Array<out Pair<String, Any?>> = emptyArray()
 
 @Suppress("UNCHECKED_CAST")
 private fun <T, A> required(key: String, bundle: () -> Bundle?, default: A?)
-    = Lazy { t: T, desc -> (bundle()?.get(key) as A) ?: default ?: argumentNotFound(desc) }
+    = Lazy { _: T, desc -> (bundle()?.get(key) as A) ?: default ?: argumentNotFound(desc) }
 
 @Suppress("UNCHECKED_CAST")
 private fun <T, A> optional(key: String, bundle: () -> Bundle?, default: A?)
-    = OptionalLazy { t: T, desc -> bundle()?.get(key) as A ?: default }
+    = OptionalLazy { _: T, _ -> bundle()?.get(key) as A ?: default }
 
 private fun argumentNotFound(desc: KProperty<*>): Nothing =
     throw IllegalStateException("Argument for '${desc.name}' not found.")

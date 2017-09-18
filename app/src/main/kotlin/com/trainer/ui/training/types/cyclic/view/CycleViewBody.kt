@@ -2,9 +2,7 @@ package com.trainer.ui.training.types.cyclic.view
 
 import android.content.Context
 import android.util.AttributeSet
-import android.widget.Button
 import android.widget.FrameLayout
-import android.widget.TextView
 import com.trainer.R
 import com.trainer.extensions.goneView
 import com.trainer.extensions.inflate
@@ -14,19 +12,13 @@ import com.trainer.modules.training.workout.types.cyclic.CycleState.*
 import com.trainer.ui.training.types.cyclic.CycleViewCallback
 import com.trainer.ui.training.types.cyclic.CycleViewEvent
 import com.trainer.ui.training.types.cyclic.CycleViewModel
-import io.netopen.hotbitmapgg.library.view.RingProgressBar
+import kotlinx.android.synthetic.main.activity_rest.view.*
+import kotlinx.android.synthetic.main.cycle_view_body.view.*
 
 /**
  * Created by dariusz on 18/03/17.
  */
 class CycleViewBody: FrameLayout {
-
-  private lateinit var startBtn: Button
-  private lateinit var doMoreBtn: Button
-  private lateinit var getReadyCountDown: TextView
-  private lateinit var progressContainer: FrameLayout
-  private lateinit var progressView: RingProgressBar
-  private lateinit var exerciseCountDown: TextView
 
   private lateinit var callback: CycleViewCallback
 
@@ -51,58 +43,54 @@ class CycleViewBody: FrameLayout {
 
     when (state) {
       NEW -> {
-        if (cycleViewModel.isActive) startBtn.visibleView() else startBtn.goneView()
-        doMoreBtn.goneView()
-        getReadyCountDown.goneView()
-        progressContainer.goneView()
+        if (cycleViewModel.isActive) start_button.visibleView() else start_button.goneView()
+        do_more_button.goneView()
+        get_ready_countdown.goneView()
+        progress_container.goneView()
       }
 
       GET_READY -> {
-        startBtn.goneView()
-        doMoreBtn.goneView()
-        progressContainer.goneView()
-        getReadyCountDown.apply {
+        start_button.goneView()
+        do_more_button.goneView()
+        progress_container.goneView()
+        get_ready_countdown.apply {
           visibleView()
           text = bodyViewModel.countDown.toString()
         }
       }
 
       PERFORMING, RESTING -> {
-        startBtn.goneView()
-        doMoreBtn.goneView()
-        getReadyCountDown.goneView()
-        progressContainer.visibleView()
+        start_button.goneView()
+        do_more_button.goneView()
+        get_ready_countdown.goneView()
+        progress_container.visibleView()
         progressView.apply {
           max = bodyViewModel.totalCountDown
           progress = bodyViewModel.countDown
         }
-        exerciseCountDown.text = String.format(context.getString(R.string.countdown_text), bodyViewModel.countDown)
+        exercise_countdown.text = String.format(context.getString(R.string.countdown_text), bodyViewModel.countDown)
       }
 
       DONE -> {
-        startBtn.goneView()
-        doMoreBtn.visibleView()
-        getReadyCountDown.goneView()
-        progressContainer.goneView()
+        start_button.goneView()
+        do_more_button.visibleView()
+        get_ready_countdown.goneView()
+        progress_container.goneView()
       }
 
       COMPLETE -> {
-        startBtn.goneView()
-        doMoreBtn.goneView()
-        getReadyCountDown.goneView()
-        progressContainer.goneView()
+        start_button.goneView()
+        do_more_button.goneView()
+        get_ready_countdown.goneView()
+        progress_container.goneView()
       }
     }
   }
 
   private fun inflateLayout() {
     inflate(R.layout.cycle_view_body, this, true).apply {
-      startBtn = (findViewById(R.id.start_button) as Button).apply { setOnClickListener { callback.onViewEvent(CycleViewEvent.START) } }
-      doMoreBtn = (findViewById(R.id.do_more_button) as Button).apply { setOnClickListener { callback.onViewEvent(CycleViewEvent.ONE_MORE) } }
-      getReadyCountDown = findViewById(R.id.get_ready_countdown) as TextView
-      progressContainer = findViewById(R.id.progress_container) as FrameLayout
-      progressView = findViewById(R.id.progress_view) as RingProgressBar
-      exerciseCountDown = findViewById(R.id.exercise_countdown) as TextView
+      start_button.apply { setOnClickListener { callback.onViewEvent(CycleViewEvent.START) } }
+      do_more_button.apply { setOnClickListener { callback.onViewEvent(CycleViewEvent.ONE_MORE) } }
     }
   }
 }

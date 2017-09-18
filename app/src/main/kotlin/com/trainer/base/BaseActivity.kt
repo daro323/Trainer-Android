@@ -55,11 +55,11 @@ abstract class BaseActivity(@LayoutRes private val layoutRes: Int = -1) : AppCom
     val dialog = AlertDialog.Builder(this)
         .setMessage(messageId)
         .setCancelable(true)
-        .setPositiveButton(yesLabel, { dialog, which ->
+        .setPositiveButton(yesLabel, { dialog, _ ->
           yesAction()
           dialog.dismiss()
         })
-        .setNegativeButton(noLabel, { dialog, which ->
+        .setNegativeButton(noLabel, { dialog, _ ->
           noAction()
           dialog.dismiss() })
         .create()
@@ -72,7 +72,7 @@ abstract class BaseActivity(@LayoutRes private val layoutRes: Int = -1) : AppCom
     val dialog = AlertDialog.Builder(this)
         .setMessage(messageId)
         .setCancelable(false)
-        .setPositiveButton(R.string.ok, { dialog, which ->
+        .setPositiveButton(R.string.ok, { dialog, _ ->
           action()
           dialog.dismiss()
         })
@@ -86,7 +86,7 @@ abstract class BaseActivity(@LayoutRes private val layoutRes: Int = -1) : AppCom
     val dialog = AlertDialog.Builder(this)
         .setMessage(message)
         .setCancelable(false)
-        .setPositiveButton(R.string.ok, { dialog, which ->
+        .setPositiveButton(R.string.ok, { dialog, _ ->
           action()
           dialog.dismiss()
         })

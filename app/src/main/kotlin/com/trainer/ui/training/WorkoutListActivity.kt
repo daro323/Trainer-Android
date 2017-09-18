@@ -5,8 +5,6 @@ import android.support.annotation.DrawableRes
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.LinearLayoutManager
 import android.view.*
-import android.widget.ImageView
-import android.widget.TextView
 import com.trainer.R
 import com.trainer.base.BaseActivity
 import com.trainer.commons.StyleUtils
@@ -27,7 +25,9 @@ import com.trainer.ui.training.types.model.SuperSetItem
 import io.reactivex.disposables.Disposables
 import kotlinx.android.synthetic.main.activity_list.*
 import kotlinx.android.synthetic.main.item_cycle.view.*
+import kotlinx.android.synthetic.main.item_set.*
 import kotlinx.android.synthetic.main.item_set.view.*
+import kotlinx.android.synthetic.main.item_super_set.*
 import kotlinx.android.synthetic.main.item_super_set_container.view.*
 import javax.inject.Inject
 
@@ -185,13 +185,13 @@ class WorkoutListActivity : BaseActivity(R.layout.activity_list) {
   private fun createSetView(inflater: LayoutInflater, @DrawableRes setImageRes: Int, setName: String, isLast: Boolean, container: ViewGroup): View {
     if (isLast) {
       val view = inflater.inflate(R.layout.item_set, container, false)
-      (view.findViewById(R.id.setItemImage) as ImageView).setImageResource(setImageRes)
-      (view.findViewById(R.id.setItemName) as TextView).text = setName
+      setItemImage.setImageResource(setImageRes)
+      setItemName.text = setName
       return view
     } else {
       val view = inflater.inflate(R.layout.item_super_set, container, false)
-      (view.findViewById(R.id.superSetItemImage) as ImageView).setImageResource(setImageRes)
-      (view.findViewById(R.id.superSetItemName) as TextView).text = setName
+      superSetItemImage.setImageResource(setImageRes)
+      superSetItemName.text = setName
       return view
     }
   }

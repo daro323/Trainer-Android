@@ -3,7 +3,6 @@ package com.trainer.ui.training.types.cyclic.view
 import android.content.Context
 import android.util.AttributeSet
 import android.widget.FrameLayout
-import android.widget.TextView
 import com.trainer.R
 import com.trainer.extensions.goneView
 import com.trainer.extensions.inflate
@@ -12,15 +11,12 @@ import com.trainer.modules.training.workout.types.cyclic.CycleState
 import com.trainer.modules.training.workout.types.cyclic.CycleState.*
 import com.trainer.ui.training.types.cyclic.CycleViewCallback
 import com.trainer.ui.training.types.cyclic.HeaderViewModel
+import kotlinx.android.synthetic.main.cycle_view_header.view.*
 
 /**
  * Created by dariusz on 18/03/17.
  */
 class CycleViewHeader : FrameLayout {
-
-  private lateinit var header: TextView
-  private lateinit var cyclesCount: TextView
-  private lateinit var lastCyclesCount: TextView
 
   private lateinit var callback: CycleViewCallback
 
@@ -43,75 +39,75 @@ class CycleViewHeader : FrameLayout {
   private fun updateUI(state: CycleState, headerViewModel: HeaderViewModel) {
     when (state) {
       NEW -> {
-        header.apply {
+        cycle_header.apply {
           visibleView()
           text = context.getString(R.string.cycle_new)
         }
-        cyclesCount.goneView()
-        lastCyclesCount.apply {
+        cycle_count.goneView()
+        last_cycle_count.apply {
           visibleView()
           text = String.format(context.getString(R.string.last_cycles), headerViewModel.lastCycleCount.toString())
         }
       }
 
       GET_READY -> {
-        header.apply {
+        cycle_header.apply {
           visibleView()
           text = context.getString(R.string.cycle_get_ready)
         }
-        cyclesCount.goneView()
-        lastCyclesCount.goneView()
+        cycle_count.goneView()
+        last_cycle_count.goneView()
       }
 
       PERFORMING -> {
-        header.apply {
+        cycle_header.apply {
           visibleView()
           text = headerViewModel.exerciseName
         }
-        cyclesCount.apply {
+        cycle_count.apply {
           visibleView()
           text = String.format(context.getString(R.string.current_cycle), headerViewModel.cycleCount.toString())
         }
-        lastCyclesCount.apply {
+        last_cycle_count.apply {
           visibleView()
           text = String.format(context.getString(R.string.last_cycles), headerViewModel.lastCycleCount.toString())
         }
       }
 
       RESTING -> {
-        header.apply {
+        cycle_header.apply {
           visibleView()
           text = context.getString(R.string.cycle_resting)
         }
-        cyclesCount.goneView()
-        lastCyclesCount.goneView()
+        cycle_count.goneView()
+        last_cycle_count.goneView()
       }
 
       DONE -> {
-        header.apply {
+        cycle_header.apply {
           visibleView()
           text = context.getString(R.string.cycle_done)
         }
-        cyclesCount.apply {
+        cycle_count.apply {
           visibleView()
           text = String.format(context.getString(R.string.current_cycle), headerViewModel.cycleCount.toString())
         }
-        lastCyclesCount.apply {
+        last_cycle_count.apply {
           visibleView()
           text = String.format(context.getString(R.string.last_cycles), headerViewModel.lastCycleCount.toString())
         }
       }
 
       COMPLETE -> {
-        header.apply {
+        cycle_header.apply {
           visibleView()
           text = context.getString(R.string.cycle_complete)
         }
-        cyclesCount.apply {
+        cycle_count.apply {
           visibleView()
           text = String.format(context.getString(R.string.current_cycle), headerViewModel.cycleCount.toString())
         }
-        lastCyclesCount.apply {
+        last_cycle_count.apply {
           visibleView()
           text = String.format(context.getString(R.string.last_cycles), headerViewModel.lastCycleCount.toString())
         }
@@ -120,10 +116,6 @@ class CycleViewHeader : FrameLayout {
   }
 
   private fun inflateLayout() {
-    inflate(R.layout.cycle_view_header, this, true).apply {
-      header = findViewById(R.id.cycle_header) as TextView
-      cyclesCount = findViewById(R.id.cycle_count) as TextView
-      lastCyclesCount = findViewById(R.id.last_cycle_count) as TextView
-    }
+    inflate(R.layout.cycle_view_header, this, true)
   }
 }

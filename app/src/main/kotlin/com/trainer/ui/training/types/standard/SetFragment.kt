@@ -163,7 +163,7 @@ class SetFragment : BaseFragment(R.layout.fragment_set) {
   private fun weightValue() = if (weightInput.visibility == VISIBLE) weightInput.text.toString().toFloat() else WEIGHT_VALUE_NOT_APPLICABLE
   private fun repValue() = repInput.text.toString().toInt()
 
-  private val onSubmitHandler = { v: View ->
+  private val onSubmitHandler = { _: View ->
     if (FormValidator.validate(activity, fieldsToValidate, SimpleErrorPopupCallback(activity))) {
       if (isRepetitionInValid()) {
         Toast.makeText(activity, R.string.result_missing_rep_count, Toast.LENGTH_SHORT).show()

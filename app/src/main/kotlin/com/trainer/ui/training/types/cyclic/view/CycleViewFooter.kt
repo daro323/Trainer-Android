@@ -2,7 +2,7 @@ package com.trainer.ui.training.types.cyclic.view
 
 import android.content.Context
 import android.util.AttributeSet
-import android.widget.*
+import android.widget.FrameLayout
 import com.trainer.R
 import com.trainer.extensions.goneView
 import com.trainer.extensions.inflate
@@ -12,18 +12,12 @@ import com.trainer.modules.training.workout.types.cyclic.CycleState.*
 import com.trainer.ui.training.types.cyclic.CycleViewCallback
 import com.trainer.ui.training.types.cyclic.CycleViewEvent
 import com.trainer.ui.training.types.cyclic.FooterViewModel
+import kotlinx.android.synthetic.main.cycle_view_footer.view.*
 
 /**
  * Created by dariusz on 18/03/17.
  */
 class CycleViewFooter: FrameLayout {
-
-  private lateinit var finishView: Button
-  private lateinit var nextExercise: TextView
-  private lateinit var cycleProgressContainer: RelativeLayout
-  private lateinit var cycleProgressCount: TextView
-  private lateinit var totalCycleProgressCount: TextView
-  private lateinit var cycleProgressBar: ProgressBar
 
   private lateinit var callback: CycleViewCallback
 
@@ -46,46 +40,41 @@ class CycleViewFooter: FrameLayout {
   private fun updateUI(state: CycleState, footerViewModel: FooterViewModel) {
     when (state) {
       NEW, GET_READY, RESTING -> {
-        nextExercise.apply {
+        next_exercise_label.apply {
           visibleView()
           text = String.format(context.getString(R.string.next_exercise_label), footerViewModel.nextExerciseName)
         }
-        finishView.goneView()
-        cycleProgressContainer.goneView()
+        finish_view.goneView()
+        cycle_progress_container.goneView()
       }
 
       PERFORMING -> {
-        finishView.goneView()
-        nextExercise.goneView()
-        cycleProgressContainer.visibleView()
-        cycleProgressCount.text = footerViewModel.currentCount.toString()
-        totalCycleProgressCount.text = footerViewModel.totalCount.toString()
-        cycleProgressBar.max = footerViewModel.totalCount
-        cycleProgressBar.progress = footerViewModel.currentCount
+        finish_view.goneView()
+        next_exercise_label.goneView()
+        cycle_progress_container.visibleView()
+        cycle_progress_count.text = footerViewModel.currentCount.toString()
+        total_cycle_progress_count.text = footerViewModel.totalCount.toString()
+        cycle_progress_bar.max = footerViewModel.totalCount
+        cycle_progress_bar.progress = footerViewModel.currentCount
       }
 
       DONE -> {
-        finishView.visibleView()
-        nextExercise.goneView()
-        cycleProgressContainer.goneView()
+        finish_view.visibleView()
+        next_exercise_label.goneView()
+        cycle_progress_container.goneView()
       }
 
       COMPLETE -> {
-        finishView.goneView()
-        nextExercise.goneView()
-        cycleProgressContainer.goneView()
+        finish_view.goneView()
+        next_exercise_label.goneView()
+        cycle_progress_container.goneView()
       }
     }
   }
 
   private fun inflateLayout() {
     inflate(R.layout.cycle_view_footer, this, true).apply {
-      finishView = (findViewById(R.id.finish_view) as Button).apply { setOnClickListener { callback.onViewEvent(CycleViewEvent.FINISH) } }
-      nextExercise = findViewById(R.id.next_exercise_label) as TextView
-      cycleProgressContainer = findViewById(R.id.cycle_progress_container) as RelativeLayout
-      cycleProgressCount = findViewById(R.id.cycle_progress_count) as TextView
-      totalCycleProgressCount = findViewById(R.id.total_cycle_progress_count) as TextView
-      cycleProgressBar = findViewById(R.id.cycle_progress_bar) as ProgressBar
+      finish_view.apply { setOnClickListener { callback.onViewEvent(CycleViewEvent.FINISH) } }
     }
   }
 }
