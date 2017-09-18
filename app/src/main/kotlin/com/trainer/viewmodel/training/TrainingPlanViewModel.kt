@@ -9,6 +9,8 @@ import com.trainer.base.BaseViewModel
 import com.trainer.d2.common.AppComponent
 import com.trainer.extensions.ioMain
 import com.trainer.persistence.training.TrainingRepository
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 /**
@@ -33,16 +35,19 @@ class TrainingPlanViewModel : BaseViewModel() {
   fun refreshTrainingPlans() {
     disposables.add(
         trainingRepo.getTrainingPlans()
+            .observeOn(AndroidSchedulers.mainThread())
+            .doOnSuccess {
+              viewStatusStream.value =
+                  if (it.isLocal) ViewStatus.ERROR(ViewStatus.ErrorType.REFRESH_PLAN_LIST_FAILURE, R.string.failure_refresh_training_plans)
+                  else ViewStatus.ACTIVE
+            }
             .flatMap {
               trainingRepo.getCurrentTrainingPlanId()
             }
-            .ioMain()
+            .subscribeOn(Schedulers.io())
             .doOnSubscribe { viewStatusStream.value = ViewStatus.BUSY }
             .subscribe(
-                {
-                  currentTrainingPlanIdStream.value = it
-                  viewStatusStream.value = ViewStatus.ACTIVE
-                },
+                { currentTrainingPlanIdStream.value = it },
                 { viewStatusStream.value = ViewStatus.ERROR(ViewStatus.ErrorType.REFRESH_PLAN_LIST_FAILURE, R.string.failure_refresh_training_plans) }))
   }
 

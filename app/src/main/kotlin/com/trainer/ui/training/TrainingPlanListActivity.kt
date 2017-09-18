@@ -66,6 +66,7 @@ class TrainingPlanListActivity : BaseActivity(R.layout.activity_list) {
         onHandleError(viewStatus)
       }
       is BUSY -> {
+        ui_plans_list.invisibleView()
         ui_loading_view.visibleView()
       }
       is PLAN_SELECTED -> {
