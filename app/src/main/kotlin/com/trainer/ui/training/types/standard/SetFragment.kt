@@ -8,7 +8,6 @@ import android.widget.EditText
 import android.widget.Toast
 import com.trainer.R
 import com.trainer.base.BaseFragment
-import com.trainer.d2.common.ActivityComponent
 import com.trainer.extensions.arg
 import com.trainer.extensions.ioMain
 import com.trainer.extensions.reduceWithDefault

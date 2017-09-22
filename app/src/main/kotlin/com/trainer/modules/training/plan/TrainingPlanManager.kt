@@ -1,13 +1,13 @@
 package com.trainer.modules.training.plan
 
-import com.trainer.d2.scope.ApplicationScope
 import com.trainer.persistence.training.TrainingRepository
 import javax.inject.Inject
+import javax.inject.Singleton
 
 /**
  * Created by dariusz on 29.08.17.
  */
-@ApplicationScope
+@Singleton
 class TrainingPlanManager @Inject constructor(val trainingPlanApi: TrainingPlanApi,
                                               val trainingRepository: TrainingRepository) {
 

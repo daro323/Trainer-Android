@@ -8,7 +8,6 @@ import android.support.annotation.LayoutRes
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import com.trainer.d2.common.ActivityComponent
 
 /**
  * Created by dariusz on 09/01/17.

@@ -1,35 +1,15 @@
 package com.trainer.d2.common
 
-import android.app.Activity
 import android.content.Context
-import android.support.v4.app.FragmentActivity
-import android.view.LayoutInflater
-import com.trainer.d2.qualifier.ForActivity
+import android.support.v7.app.AppCompatActivity
+import com.trainer.d2.scope.PerActivity
+import dagger.Binds
 import dagger.Module
-import dagger.Provides
 
 @Module
-class ActivityModule(private val mFragmentActivity: FragmentActivity) {
+abstract class ActivityModule {
 
-  @Provides
-  @ForActivity
-  fun provideActivityContext(): Context {
-    return mFragmentActivity
-  }
-
-  @Provides
-  @ForActivity
-  fun provideLayoutInflater(activity: Activity): LayoutInflater {
-    return LayoutInflater.from(activity)
-  }
-
-  @Provides
-  fun provideActivity(): Activity {
-    return mFragmentActivity
-  }
-
-  @Provides
-  fun provideFragmentActivity(): FragmentActivity {
-    return mFragmentActivity
-  }
+  @Binds
+  @PerActivity    // Providing Application, Activity, Fragment, Service, etc does not require scoped annotations since they are the components being
+  internal abstract fun activityContext(activity: AppCompatActivity): Context
 }

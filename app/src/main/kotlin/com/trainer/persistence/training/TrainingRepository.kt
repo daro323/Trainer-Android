@@ -2,7 +2,6 @@ package com.trainer.persistence.training
 
 import android.content.SharedPreferences
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.trainer.d2.scope.ApplicationScope
 import com.trainer.extensions.saveString
 import com.trainer.modules.training.plan.TrainingPlanApi
 import com.trainer.modules.training.workout.types.standard.StretchPlan
@@ -10,13 +9,14 @@ import com.trainer.persistence.training.TrainingPlanDao.TrainingDay
 import com.trainer.persistence.training.TrainingPlanDao.TrainingPlan
 import io.reactivex.Single
 import javax.inject.Inject
+import javax.inject.Singleton
 
 /**
  * Responsible for providing data to the app (abstracts the source)
  *
  * Created by dariusz on 05/01/17.
  */
-@ApplicationScope
+@Singleton
 class TrainingRepository @Inject constructor(val trainingPlanDao: TrainingPlanDao,
                                              val trainingPlanApi: TrainingPlanApi,
                                              val sharedPrefs: SharedPreferences,

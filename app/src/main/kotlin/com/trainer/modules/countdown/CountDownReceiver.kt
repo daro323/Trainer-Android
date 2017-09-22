@@ -1,11 +1,11 @@
 package com.trainer.modules.countdown
 
+import android.app.Application
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.support.v4.content.LocalBroadcastManager
-import com.trainer.d2.qualifier.ForApplication
 
 /**
  * Created by dariusz on 23/03/2017.
@@ -29,11 +29,11 @@ class CountDownReceiver constructor(private val onCountDownAction: (Int) -> Unit
     }
   }
 
-  fun register(@ForApplication context: Context) {
+  fun register(context: Application) {
     LocalBroadcastManager.getInstance(context).registerReceiver(receiver, IntentFilter(COUNT_DOWN_EVENT_ACTION))
   }
 
-  fun unregister(@ForApplication context: Context) {
+  fun unregister(context: Application) {
     LocalBroadcastManager.getInstance(context).unregisterReceiver(receiver)
   }
 }

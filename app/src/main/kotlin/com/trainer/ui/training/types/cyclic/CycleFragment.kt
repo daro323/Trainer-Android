@@ -8,7 +8,6 @@ import com.trainer.base.OnBackSupportingFragment
 import com.trainer.modules.training.workout.WorkoutManager
 import com.trainer.modules.training.workout.WorkoutPresenter
 import com.trainer.modules.training.workout.WorkoutEvent
-import com.trainer.d2.common.ActivityComponent
 import com.trainer.extensions.ioMain
 import com.trainer.extensions.start
 import com.trainer.modules.countdown.CountingDownTimer

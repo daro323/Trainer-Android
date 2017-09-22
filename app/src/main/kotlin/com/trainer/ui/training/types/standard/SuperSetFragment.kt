@@ -5,7 +5,6 @@ import android.view.View
 import com.trainer.R
 import com.trainer.base.BaseFragment
 import com.trainer.modules.training.workout.WorkoutManager
-import com.trainer.d2.common.ActivityComponent
 import com.trainer.extensions.ioMain
 import com.trainer.modules.training.workout.types.standard.StandardPresenterHelper
 import com.trainer.modules.training.workout.types.standard.StandardStateEvent

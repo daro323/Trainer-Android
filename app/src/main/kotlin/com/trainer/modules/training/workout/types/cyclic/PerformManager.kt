@@ -1,20 +1,19 @@
 package com.trainer.modules.training.workout.types.cyclic
 
-import android.content.Context
+import android.app.Application
 import com.trainer.commons.Lg
-import com.trainer.d2.qualifier.ForApplication
-import com.trainer.d2.scope.ApplicationScope
 import com.trainer.modules.countdown.CountDownNotification
 import com.trainer.modules.countdown.CountDownReceiver
 import com.trainer.modules.countdown.CountDownService
 import io.reactivex.processors.BehaviorProcessor
 import javax.inject.Inject
+import javax.inject.Singleton
 
 /**
  * Created by dariusz on 21/03/17.
  */
-@ApplicationScope
-class PerformManager @Inject constructor(@ForApplication val context: Context) {
+@Singleton
+class PerformManager @Inject constructor(val context: Application) {
 
   private var countDownReceiver: CountDownReceiver? = null
   private val performEventsProcessor = BehaviorProcessor.create<Int>()

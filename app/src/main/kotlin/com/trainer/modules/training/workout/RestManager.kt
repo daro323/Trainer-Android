@@ -1,23 +1,22 @@
 package com.trainer.modules.training.workout
 
-import android.content.Context
+import android.app.Application
 import android.os.Vibrator
 import com.trainer.commons.Lg
-import com.trainer.d2.qualifier.ForApplication
-import com.trainer.d2.scope.ApplicationScope
 import com.trainer.modules.countdown.CountDownNotification
 import com.trainer.modules.countdown.CountDownReceiver
 import com.trainer.modules.countdown.CountDownService
 import io.reactivex.processors.BehaviorProcessor
 import javax.inject.Inject
+import javax.inject.Singleton
 
 /**
  * This class needs to be explicitly started/aborted/finished in order to correctly handle lifecycle of ForegroundService cooperator
  * Created by dariusz on 18/01/17.
  */
-@ApplicationScope
+@Singleton
 class RestManager @Inject constructor(val vibrator: Vibrator,
-                                      @ForApplication val context: Context) {
+                                      val context: Application) {
 
   companion object {
     private const val VIBRATE_DURATION_MS = 1200L

@@ -1,20 +1,14 @@
 package com.trainer.d2.common
 
-import com.trainer.base.BaseApplication
-import com.trainer.modules.countdown.CountDownService
-import com.trainer.viewmodel.training.TrainingPlanViewModel
+import com.trainer.TrainingApplication
+import dagger.Component
+import dagger.android.AndroidInjector
+import javax.inject.Singleton
 
-interface AppComponent {
+@Singleton
+@Component(modules = arrayOf(AppModule::class))
+interface AppComponent : AndroidInjector<TrainingApplication> {
 
-  fun plusActivity(activityModule: ActivityModule): ActivityComponent
-
-  fun inject(app: BaseApplication)
-
-  fun inject(service: CountDownService)
-
-  fun inject(viewModel: TrainingPlanViewModel)
-
-  interface Injectable {
-    fun inject(component: AppComponent)
-  }
+  @Component.Builder
+  abstract class Builder : AndroidInjector.Builder<TrainingApplication>()
 }

@@ -9,7 +9,6 @@ import com.fasterxml.jackson.module.kotlin.registerKotlinModule
 import com.trainer.BuildConfig
 import com.trainer.commons.SerieDeserializer
 import com.trainer.commons.typeadapters.jackson.ThreeTenAbpModule
-import com.trainer.d2.scope.ApplicationScope
 import com.trainer.modules.training.plan.TrainingPlanApi
 import com.trainer.modules.training.workout.Serie
 import dagger.Module
@@ -20,6 +19,7 @@ import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.jackson.JacksonConverterFactory
 import java.util.concurrent.TimeUnit
+import javax.inject.Singleton
 
 /**
  * Created by dariusz on 30.08.17.
@@ -38,18 +38,18 @@ class NetworkModule {
   }
 
   @Provides
-  @ApplicationScope
+  @Singleton
   fun provideJackson() = createJackson()
 
   @Provides
-  @ApplicationScope
+  @Singleton
   fun provideOkHttpClient() = OkHttpClient.Builder().apply {
     addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
         .connectTimeout(3, TimeUnit.SECONDS)
   }.build()
 
   @Provides
-  @ApplicationScope
+  @Singleton
   fun provideRetrofit(okHttpClient: OkHttpClient, jackson: ObjectMapper) = Retrofit.Builder().apply {
     baseUrl(BuildConfig.SERVER_ENDPOINT)
     client(okHttpClient)
@@ -57,5 +57,7 @@ class NetworkModule {
     addCallAdapterFactory(RxJava2CallAdapterFactory.create())
   }.build()
 
-  @Provides @ApplicationScope fun provideTrainingPlanApi(retrofit: Retrofit) = retrofit.create(TrainingPlanApi::class.java)
+  @Provides
+  @Singleton
+  fun provideTrainingPlanApi(retrofit: Retrofit) = retrofit.create(TrainingPlanApi::class.java)
 }

@@ -1,27 +1,26 @@
 package com.trainer.modules.export
 
-import android.content.Context
+import android.app.Application
 import android.os.Environment
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.trainer.BuildConfig
 import com.trainer.R
-import com.trainer.d2.qualifier.ForApplication
-import com.trainer.d2.scope.ApplicationScope
 import com.trainer.extensions.writeString
 import com.trainer.modules.training.workout.WorkoutManager
 import com.trainer.persistence.training.TrainingPlanDao
 import io.reactivex.Completable
 import java.io.File
 import javax.inject.Inject
+import javax.inject.Singleton
 
 /**
  * This class handles import & export of training plan's data
  * Created by dariusz on 12/01/17.
  */
-@ApplicationScope
+@Singleton
 class ExportManager @Inject constructor(val mapper: ObjectMapper,
                                         val workoutManager: WorkoutManager,
-                                        @ForApplication val context: Context) {
+                                        val context: Application) {
 
   companion object {
     val TRAINING_EXTERNAL_STORAGE_PATH = "${Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM)}${BuildConfig.REL_PATH_TO_PLANS}"

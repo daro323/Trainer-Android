@@ -1,6 +1,5 @@
 package com.trainer.ui.training
 
-import android.os.Bundle
 import android.support.annotation.DrawableRes
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.LinearLayoutManager
@@ -72,11 +71,6 @@ class WorkoutListActivity : BaseActivity(R.layout.activity_list) {
       }
     }
   }.build()
-
-  override fun onCreate(savedInstanceState: Bundle?) {
-    super.onCreate(savedInstanceState)
-    component.inject(this)
-  }
 
   override fun onStart() {
     super.onStart()

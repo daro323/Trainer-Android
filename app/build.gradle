@@ -81,9 +81,6 @@ kapt { generateStubs = true }
 
 dependencies {
   compile fileTree(dir: 'libs', include: ['*.jar'])
-  androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
-    exclude group: 'com.android.support', module: 'support-annotations'
-  })
 
   // Google
   def support_lib_version = '25.4.0'
@@ -114,9 +111,13 @@ dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 
   // Dagger 2
-  def dagger_version = '2.8'
+  def dagger_version = '2.11'
   compile "com.google.dagger:dagger:$dagger_version"
   kapt "com.google.dagger:dagger-compiler:$dagger_version"
+
+  // Dagger Android
+  compile "com.google.dagger:dagger-android-support:$dagger_version"
+  kapt "com.google.dagger:dagger-android-processor:$dagger_version"
 
   // RxJava 2
   compile "io.reactivex.rxjava2:rxjava:2.0.6"
@@ -155,19 +156,14 @@ dependencies {
   // File picker
   compile 'com.github.angads25:filepicker:1.0.6'
 
-  androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
-    exclude group: 'com.android.support', module: 'support-annotations'
-  })
-
   // Debug database
   debugCompile 'com.amitshekhar.android:debug-db:1.0.1'
 
   // TESTING
   testCompile "junit:junit:4.12"
   testCompile 'org.mockito:mockito-core:2.8.9'
-  androidTestCompile 'org.mockito:mockito-android:2.6.3'
-
 }
+
 repositories {
   mavenCentral()
   google()

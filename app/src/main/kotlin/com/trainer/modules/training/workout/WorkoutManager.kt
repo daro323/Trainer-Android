@@ -1,17 +1,17 @@
 package com.trainer.modules.training.workout
 
-import com.trainer.d2.scope.ApplicationScope
 import com.trainer.modules.training.workout.ProgressStatus.NEW
 import com.trainer.modules.training.workout.types.standard.StretchPlan
 import com.trainer.persistence.training.TrainingPlanDao
 import com.trainer.persistence.training.TrainingRepository
 import javax.inject.Inject
 import javax.inject.Provider
+import javax.inject.Singleton
 
 /**
  * Created by dariusz on 06/01/17.
  */
-@ApplicationScope
+@Singleton
 class WorkoutManager @Inject constructor(val repo: TrainingRepository,
                                          val workoutPresenterProvider: Provider<WorkoutPresenter>) {
   var workoutPresenter: WorkoutPresenter? = null

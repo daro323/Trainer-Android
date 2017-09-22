@@ -5,7 +5,6 @@ import com.trainer.R
 import com.trainer.base.BaseFragment
 import com.trainer.modules.training.workout.WorkoutManager
 import com.trainer.modules.training.workout.CoreConstants.Companion.VALUE_NOT_SET
-import com.trainer.d2.common.ActivityComponent
 import com.trainer.extensions.arg
 import com.trainer.extensions.reduceWithDefault
 import kotlinx.android.synthetic.main.fragment_stretch.*

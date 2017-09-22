@@ -1,5 +1,6 @@
 package com.trainer.modules.countdown
 
+import android.app.Application
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.app.Service
@@ -12,7 +13,6 @@ import android.support.annotation.Keep
 import android.support.annotation.StringRes
 import android.support.v4.app.NotificationCompat
 import com.trainer.R
-import com.trainer.d2.qualifier.ForApplication
 import paperparcel.PaperParcel
 
 /**
@@ -24,7 +24,7 @@ class CountDownNotification {
   private val notificationBuilder: NotificationCompat.Builder
   private val notificationManager: NotificationManager
 
-  constructor(initData: InitData, @ForApplication context: Context, notificationManager: NotificationManager) {
+  constructor(initData: InitData, context: Application, notificationManager: NotificationManager) {
     this.context = context
     this.notificationId = initData.notificationId
     this.notificationManager = notificationManager

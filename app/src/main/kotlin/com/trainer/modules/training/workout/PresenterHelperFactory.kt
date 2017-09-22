@@ -1,17 +1,17 @@
 package com.trainer.modules.training.workout
 
-import com.trainer.d2.scope.ApplicationScope
 import com.trainer.modules.training.workout.SerieType.*
 import com.trainer.modules.training.workout.WorkoutPresenterHelper.HelperCallback
 import com.trainer.modules.training.workout.types.cyclic.CyclicPresenterHelper
 import com.trainer.modules.training.workout.types.standard.StandardPresenterHelper
 import javax.inject.Inject
 import javax.inject.Provider
+import javax.inject.Singleton
 
 /**
  * Created by dariusz on 16/03/17.
  */
-@ApplicationScope
+@Singleton
 class PresenterHelperFactory @Inject constructor(private val standardHelperProvider: Provider<StandardPresenterHelper>,
                                                  private val cycleHelperPresenter: Provider<CyclicPresenterHelper>) {
 

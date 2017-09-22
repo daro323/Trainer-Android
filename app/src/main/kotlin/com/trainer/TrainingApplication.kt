@@ -1,26 +1,24 @@
 package com.trainer
 
+import android.app.Activity
 import com.trainer.base.BaseApplication
-import com.trainer.d2.common.AppComponent
-import com.trainer.d2.common.AppModule
-import com.trainer.d2.common.NetworkModule
-import com.trainer.d2.common.PersistenceModule
-import com.trainer.d2.scope.ApplicationScope
-import dagger.Component
+import com.trainer.d2.common.DaggerAppComponent
+import dagger.android.AndroidInjector
+import dagger.android.DispatchingAndroidInjector
+import dagger.android.HasActivityInjector
+import javax.inject.Inject
 
 /**
  * Created by dariusz on 05/01/17.
  */
-class TrainingApplication : BaseApplication() {
+class TrainingApplication : BaseApplication(), HasActivityInjector {
 
-  override fun onCreateAppComponent(): AppComponent {
-    return DaggerTrainingApplication_TrainingAppComponent.builder().appModule(AppModule(this)).build()
+  @Inject lateinit var activityInjector: DispatchingAndroidInjector<Activity>
+
+  override fun activityInjector(): AndroidInjector<Activity> = activityInjector
+
+  override fun onCreate() {
+    super.onCreate()
+    DaggerAppComponent.builder().create(this).inject(this)
   }
-
-  @ApplicationScope
-  @Component(modules = arrayOf(
-      AppModule::class,
-      PersistenceModule::class,
-      NetworkModule::class))
-  interface TrainingAppComponent : AppComponent
 }

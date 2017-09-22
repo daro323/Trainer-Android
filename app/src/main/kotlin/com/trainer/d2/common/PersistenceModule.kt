@@ -1,12 +1,11 @@
 package com.trainer.d2.common
 
+import android.app.Application
 import android.arch.persistence.room.Room
-import android.content.Context
-import com.trainer.d2.qualifier.ForApplication
-import com.trainer.d2.scope.ApplicationScope
 import com.trainer.persistence.training.TrainingDatabase
 import dagger.Module
 import dagger.Provides
+import javax.inject.Singleton
 
 /**
  * Created by dariusz on 29.08.17.
@@ -19,10 +18,10 @@ class PersistenceModule {
   }
 
   @Provides
-  @ApplicationScope
-  fun provideTrainingDatabase(@ForApplication context: Context) = Room.databaseBuilder(context, TrainingDatabase::class.java, TRAINING_DATABASE_NAME).build()
+  @Singleton
+  fun provideTrainingDatabase(context: Application) = Room.databaseBuilder(context, TrainingDatabase::class.java, TRAINING_DATABASE_NAME).build()
 
   @Provides
-  @ApplicationScope
+  @Singleton
   fun provideTrainingPlanDao(trainingDatabase: TrainingDatabase) = trainingDatabase.trainingPlanDao()
 }

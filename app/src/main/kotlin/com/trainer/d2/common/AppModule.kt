@@ -3,49 +3,105 @@ package com.trainer.d2.common
 import android.app.Application
 import android.app.NotificationManager
 import android.content.Context
-import android.content.SharedPreferences
 import android.os.PowerManager
 import android.os.Vibrator
-import com.trainer.base.BaseApplication
-import com.trainer.d2.qualifier.ForApplication
-import com.trainer.d2.scope.ApplicationScope
+import com.trainer.TrainingApplication
+import com.trainer.d2.scope.PerActivity
+import com.trainer.d2.scope.PerFragment
+import com.trainer.d2.scope.PerService
+import com.trainer.modules.countdown.CountDownService
+import com.trainer.ui.training.SerieActivity
+import com.trainer.ui.training.TrainingDaysListActivity
+import com.trainer.ui.training.WorkoutListActivity
+import com.trainer.ui.training.rest.RestActivity
+import com.trainer.ui.training.stretch.StretchActivity
+import com.trainer.ui.training.stretch.StretchFragment
+import com.trainer.ui.training.types.cyclic.CycleFragment
+import com.trainer.ui.training.types.standard.SetFragment
+import com.trainer.ui.training.types.standard.SuperSetFragment
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
+import dagger.android.AndroidInjectionModule
+import dagger.android.ContributesAndroidInjector
+import javax.inject.Singleton
 
-@Module
-class AppModule(private val app: BaseApplication) {
+@Module(includes = arrayOf(
+    AndroidInjectionModule::class,
+    NetworkModule::class,
+    PersistenceModule::class))
+abstract class AppModule {
 
+  @Module
   companion object {
     private const val PREFS_NAME = "weff43r2f34f23ff-wef3"
+
+    @Provides
+    @Singleton
+    @JvmStatic
+    fun provideSharedPreferences(application: Application) = application.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+
+    @Provides
+    @Singleton
+    @JvmStatic
+    fun provideVibrator(application: Application) = application.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+
+    @Provides
+    @Singleton
+    @JvmStatic
+    fun providePowerManager(application: Application) = application.getSystemService(Context.POWER_SERVICE) as PowerManager
+
+    @Provides
+    @Singleton
+    @JvmStatic
+    fun provideNotificationManager(application: Application) = application.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
   }
 
-  @Provides @ApplicationScope
-  fun provideApplication(): Application {
-    return app
-  }
+  @Binds
+  @Singleton
+  abstract fun provideApplication(app: TrainingApplication): Application
 
-  @Provides @ApplicationScope @ForApplication
-  fun provideApplicationContext(): Context {
-    return app.applicationContext
-  }
+  @PerActivity
+  @ContributesAndroidInjector()
+  internal abstract fun trainingDaysListActivityInjector(): TrainingDaysListActivity
 
-  @Provides @ApplicationScope
-  fun provideSharedPreferences(application: Application): SharedPreferences {
-    return application.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
-  }
+  @PerActivity
+  @ContributesAndroidInjector()
+  internal abstract fun workoutListActivityInjector(): WorkoutListActivity
 
-  @Provides @ApplicationScope
-  fun provideVibrator(application: Application): Vibrator {
-    return application.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
-  }
+  @PerActivity
+  @ContributesAndroidInjector()
+  internal abstract fun serieActivityInjector(): SerieActivity
 
-  @Provides @ApplicationScope
-  fun providePowerManager(application: Application): PowerManager {
-    return application.getSystemService(Context.POWER_SERVICE) as PowerManager
-  }
+  @PerActivity
+  @ContributesAndroidInjector()
+  internal abstract fun stretchActivityInjector(): StretchActivity
 
-  @Provides @ApplicationScope
-  fun provideNotificationManager(application: Application): NotificationManager {
-    return application.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-  }
+  @PerActivity
+  @ContributesAndroidInjector()
+  internal abstract fun sestActivityInjector(): RestActivity
+
+
+
+  @PerFragment
+  @ContributesAndroidInjector()
+  internal abstract fun setFragmentInjector(): SetFragment
+
+  @PerFragment
+  @ContributesAndroidInjector()
+  internal abstract fun stretchFragmentInjector(): StretchFragment
+
+  @PerFragment
+  @ContributesAndroidInjector()
+  internal abstract fun superSetFragmentInjector(): SuperSetFragment
+
+  @PerFragment
+  @ContributesAndroidInjector()
+  internal abstract fun cycleFragmentInjector(): CycleFragment
+
+
+
+  @PerService
+  @ContributesAndroidInjector()
+  internal abstract fun countDownServiceInjector(): CountDownService
 }
